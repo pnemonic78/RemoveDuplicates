@@ -20,6 +20,9 @@ package com.github.android.removeduplicates;
 import android.app.Activity;
 import android.os.Bundle;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Main activity.
  *
@@ -31,5 +34,36 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.item_alarms)
+    void removeDuplicateAlarms() {
+        //TODO implement me!
+    }
+
+    @OnClick(R.id.item_bookmarks)
+    void removeDuplicateBookmarks() {
+        //TODO implement me!
+    }
+
+    @OnClick(R.id.item_calendar)
+    void removeDuplicateCalendar() {
+        //TODO implement me!
+    }
+
+    @OnClick(R.id.item_call_log)
+    void removeDuplicateCallLog() {
+        //TODO implement me!
+    }
+
+    @OnClick(R.id.item_contacts)
+    void removeDuplicateContacts() {
+        //TODO implement me!
+    }
+
+    @OnClick(R.id.item_messages)
+    void removeDuplicateMessages() {
+        //TODO implement me!
     }
 }

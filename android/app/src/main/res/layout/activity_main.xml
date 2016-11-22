@@ -3,47 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="40dp">
 
     <Button
         android:id="@+id/item_alarms"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
         android:text="@string/item_alarms"/>
 
     <Button
         android:id="@+id/item_bookmarks"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
         android:text="@string/item_bookmarks"/>
 
     <Button
         android:id="@+id/item_calendar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
         android:text="@string/item_calendar"/>
 
     <Button
         android:id="@+id/item_call_log"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
         android:text="@string/item_call_log"/>
 
     <Button
         android:id="@+id/item_contacts"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
         android:text="@string/item_contacts"/>
 
     <Button
         android:id="@+id/item_messages"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
         android:text="@string/item_messages"/>
 </LinearLayout>
