@@ -10,6 +10,7 @@
         android:id="@+id/item_alarms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_alarm_black"
         android:enabled="false"
         android:text="@string/item_alarms"/>
 
@@ -17,6 +18,7 @@
         android:id="@+id/item_bookmarks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_bookmark_black"
         android:enabled="false"
         android:text="@string/item_bookmarks"/>
 
@@ -24,6 +26,7 @@
         android:id="@+id/item_calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_event_black"
         android:enabled="false"
         android:text="@string/item_calendar"/>
 
@@ -31,6 +34,7 @@
         android:id="@+id/item_call_log"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_call_black"
         android:enabled="false"
         android:text="@string/item_call_log"/>
 
@@ -38,6 +42,7 @@
         android:id="@+id/item_contacts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_contacts_black"
         android:enabled="false"
         android:text="@string/item_contacts"/>
 
@@ -45,5 +50,6 @@
         android:id="@+id/item_messages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_chat_black"
         android:text="@string/item_messages"/>
 </LinearLayout>
