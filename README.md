@@ -1,9 +1,10 @@
-# RemoveDuplicates
+# Remove Duplicates
 Remove duplicates of: 
+* Alarms;
+* Bookmarks;
 * Calendar events;
-* Contacts;
-* SMSs;
 * Call logs;
-* Bookmarks.
+* Contacts;
+* Messages (MMS and SMS);
 
 The most common use case is after restoration of a backup file.
