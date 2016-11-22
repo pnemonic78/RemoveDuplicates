@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Remove Duplicates</string>
     <string name="title_item_detail">Item Detail</string>
+
+    <string name="alarms">Alarms</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="calendar">Calendar</string>
+    <string name="call_log">Call log</string>
+    <string name="contacts">Contacts</string>
+    <string name="messages">Messages</string>
+
+    <string name="item_alarms" translatable="false">@string/alarms</string>
+    <string name="item_bookmarks" translatable="false">@string/bookmarks</string>
+    <string name="item_calendar" translatable="false">@string/calendar</string>
+    <string name="item_call_log" translatable="false">@string/call_log</string>
+    <string name="item_contacts" translatable="false">@string/contacts</string>
+    <string name="item_messages" translatable="false">@string/messages</string>
 </resources>
