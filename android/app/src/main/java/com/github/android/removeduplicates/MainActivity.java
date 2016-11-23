@@ -18,8 +18,8 @@
 package com.github.android.removeduplicates;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -27,7 +27,6 @@ import android.widget.Spinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 
 /**
  * Main activity.
@@ -43,7 +42,7 @@ public class MainActivity extends Activity {
     @BindView(android.R.id.list)
     RecyclerView list;
 
-    private AsyncTask<Void, Void, Void> task;
+    private DuplicateTask task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,37 +53,25 @@ public class MainActivity extends Activity {
         spinner.setAdapter(new MainSpinnerAdapter());
     }
 
-    @OnItemSelected(R.id.spinner)
-    void onItemSelected(Spinner spinner, int position) {
-    }
-
     @OnClick(R.id.spinner_action)
     void onActionClicked() {
         if (task != null) {
             task.cancel(true);
             spinnerAction.setImageResource(android.R.drawable.ic_media_play);
         } else {
-            spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
-            removeDuplicates(item);
-            task = new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... params) {
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-                    spinnerAction.setImageResource(android.R.drawable.ic_media_play);
-                    task = null;
-                }
-            };
-            task.execute();
+            task = createTask(item);
+            if (task != null) {
+                spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
+                task.execute();
+            } else {
+                spinnerAction.setImageResource(android.R.drawable.ic_media_play);
+            }
         }
     }
 
-    private void removeDuplicates(MainSpinnerItem item) {
+    @Nullable
+    private DuplicateTask createTask(MainSpinnerItem item) {
         switch (item) {
             case ALARMS:
                 //TODO implement me!
@@ -105,5 +92,19 @@ public class MainActivity extends Activity {
                 //TODO implement me!
                 break;
         }
+
+        return new DuplicateTask<Object, Void, Void>() {
+            @Override
+            protected Void doInBackground(Object... params) {
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                spinnerAction.setImageResource(android.R.drawable.ic_media_play);
+                task = null;
+            }
+        };
     }
 }
