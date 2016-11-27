@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
 
     @BindView(R.id.spinner)
     Spinner spinner;
-    @BindView(R.id.spinner_action)
+    @BindView(R.id.search)
     ImageButton spinnerAction;
     @BindView(android.R.id.list)
     RecyclerView list;
@@ -55,11 +55,11 @@ public class MainActivity extends Activity {
         spinner.setAdapter(new MainSpinnerAdapter());
     }
 
-    @OnClick(R.id.spinner_action)
-    void onActionClicked() {
+    @OnClick(R.id.search)
+    void search() {
         if (task != null) {
             task.cancel(true);
-            spinnerAction.setImageResource(android.R.drawable.ic_media_play);
+            spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
         } else {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
             task = createTask(item);
@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
                 spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
                 task.execute();
             } else {
-                spinnerAction.setImageResource(android.R.drawable.ic_media_play);
+                spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
             }
         }
     }
@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                spinnerAction.setImageResource(android.R.drawable.ic_media_play);
+                spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
                 task = null;
             }
         };

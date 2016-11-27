@@ -20,11 +20,11 @@
             android:spinnerMode="dropdown"/>
 
         <ImageButton
-            android:id="@+id/spinner_action"
+            android:id="@+id/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/ok"
-            android:src="@android:drawable/ic_media_play"/>
+            android:src="@android:drawable/ic_menu_search"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
