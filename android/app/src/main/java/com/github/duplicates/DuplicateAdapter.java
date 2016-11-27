@@ -15,14 +15,14 @@
  *   Moshe Waisberg
  *
  */
-package com.github.android.removeduplicates;
+package com.github.duplicates;
 
-import java.util.Comparator;
+import android.support.v7.widget.RecyclerView;
 
 /**
- * Comparator to determine if it is a duplicate.
+ * List adapter for duplicate items.
  *
  * @author moshe.w
  */
-public abstract class DuplicateComparator<T extends DuplicateItem> implements Comparator<T> {
+public abstract class DuplicateAdapter<VH extends DuplicateViewHolder> extends RecyclerView.Adapter<VH> {
 }

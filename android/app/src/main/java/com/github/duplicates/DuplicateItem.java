@@ -15,21 +15,22 @@
  *   Moshe Waisberg
  *
  */
-package com.github.android.removeduplicates;
-
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+package com.github.duplicates;
 
 /**
- * View holder for a duplicate item.
+ * Item that is a duplicate of some other item.
  *
  * @author moshe.w
  */
-public abstract class DuplicateViewHolder<T extends DuplicateItem> extends RecyclerView.ViewHolder {
+public abstract class DuplicateItem {
 
-    public DuplicateViewHolder(View itemView) {
-        super(itemView);
+    private long id;
+
+    public long getId() {
+        return id;
     }
 
-    public abstract void bind(T item);
+    public void setId(long id) {
+        this.id = id;
+    }
 }

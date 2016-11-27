@@ -15,10 +15,12 @@
  *   Moshe Waisberg
  *
  */
-package com.github.android.removeduplicates;
+package com.github.duplicates;
 
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+
+import com.github.android.removeduplicates.R;
 
 /**
  * Main spinner items.

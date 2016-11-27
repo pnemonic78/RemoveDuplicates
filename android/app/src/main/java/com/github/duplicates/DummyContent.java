@@ -15,7 +15,7 @@
  *   Moshe Waisberg
  *
  */
-package com.github.android.removeduplicates.dummy;
+package com.github.duplicates;
 
 import java.util.ArrayList;
 import java.util.HashMap;

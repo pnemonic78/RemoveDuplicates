@@ -15,7 +15,7 @@
  *   Moshe Waisberg
  *
  */
-package com.github.android.removeduplicates;
+package com.github.duplicates;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,6 +23,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+
+import com.github.android.removeduplicates.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

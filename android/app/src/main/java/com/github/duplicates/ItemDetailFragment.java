@@ -15,7 +15,7 @@
  *   Moshe Waisberg
  *
  */
-package com.github.android.removeduplicates;
+package com.github.duplicates;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -25,7 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.android.removeduplicates.dummy.DummyContent;
+import com.github.android.removeduplicates.R;
 
 /**
  * A fragment representing a single Item detail screen.

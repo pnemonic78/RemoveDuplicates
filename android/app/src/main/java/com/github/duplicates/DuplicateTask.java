@@ -15,7 +15,7 @@
  *   Moshe Waisberg
  *
  */
-package com.github.android.removeduplicates;
+package com.github.duplicates;
 
 import android.os.AsyncTask;
 
