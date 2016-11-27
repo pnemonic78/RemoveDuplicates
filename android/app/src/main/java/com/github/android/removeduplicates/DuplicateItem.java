@@ -23,4 +23,14 @@ package com.github.android.removeduplicates;
  * @author moshe.w
  */
 public abstract class DuplicateItem {
+
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
