@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.github.android.removeduplicates.R;
+import com.github.duplicates.message.MessageTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,22 +92,21 @@ public class MainActivity extends Activity {
                 //TODO implement me!
                 break;
             case MESSAGES:
-                //TODO implement me!
-                break;
+                return new MessageTask(this);
         }
 
-        return new DuplicateTask<Object, Void, Void>() {
-            @Override
-            protected Void doInBackground(Object... params) {
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
-                task = null;
-            }
-        };
+//        return new DuplicateTask<DuplicateItem, Object, Void, List<DuplicateItem>>(this) {
+//            @Override
+//            protected DuplicateProvider<DuplicateItem> createProvider(Context context) {
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(List<DuplicateItem> items) {
+//                spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
+//                task = null;
+//            }
+//        };
+        return null;
     }
 }

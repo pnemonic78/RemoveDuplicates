@@ -27,7 +27,7 @@ import com.github.duplicates.DuplicateComparator;
 public class MessageComparator extends DuplicateComparator<MessageItem> {
 
     @Override
-    public int compare(MessageItem lhs, MessageItem rhs) {
+    protected int similar(MessageItem lhs, MessageItem rhs) {
         //TODO implement me!
         return 0;
     }

@@ -18,25 +18,41 @@
 package com.github.duplicates.message;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 
 import com.github.duplicates.DuplicateProvider;
-import com.github.duplicates.DuplicateTask;
-
-import java.util.List;
 
 /**
- * Task to find duplicate messages.
+ * Provide duplicate messages for Jellybean versions and older.
  *
  * @author moshe.w
  */
-public class MessageTask extends DuplicateTask<MessageItem, Object, Void, List<MessageItem>> {
+public class JellybeanMessageProvider extends DuplicateProvider<MessageItem> {
 
-    public MessageTask(Context context) {
+    private static final String[] PROJECTION = null;
+
+    public JellybeanMessageProvider(Context context) {
         super(context);
     }
 
     @Override
-    protected DuplicateProvider<MessageItem> createProvider(Context context) {
-        return new MessageProvider(context);
+    protected Uri getCursorUri() {
+        return Uri.parse("content://sms/");
+    }
+
+    @Override
+    protected String[] getCursorProjection() {
+        return PROJECTION;
+    }
+
+    @Override
+    public MessageItem createItem() {
+        return new MessageItem();
+    }
+
+    @Override
+    public void populateItem(Cursor cursor, MessageItem item) {
+        //TODO implement me!
     }
 }

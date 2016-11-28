@@ -25,4 +25,20 @@ import java.util.Comparator;
  * @author moshe.w
  */
 public abstract class DuplicateComparator<T extends DuplicateItem> implements Comparator<T> {
+
+    protected static final int MAX_LEVEL = 10000;
+
+    @Override
+    public int compare(T lhs, T rhs) {
+        return MAX_LEVEL - similar(lhs, rhs);
+    }
+
+    /**
+     * How similar are the two items?
+     *
+     * @param lhs the first item.
+     * @param rhs the other item.
+     * @return the similarity, on a scale of {@code 0} (completely dissimilar) to {@code {@link #MAX_LEVEL}} (definitely similar).
+     */
+    protected abstract int similar(T lhs, T rhs);
 }
