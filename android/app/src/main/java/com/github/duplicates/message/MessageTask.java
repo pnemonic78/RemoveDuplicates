@@ -19,24 +19,21 @@ package com.github.duplicates.message;
 
 import android.content.Context;
 
-import com.github.duplicates.DuplicateProvider;
 import com.github.duplicates.DuplicateTask;
-
-import java.util.List;
 
 /**
  * Task to find duplicate messages.
  *
  * @author moshe.w
  */
-public class MessageTask extends DuplicateTask<MessageItem, Object, Void, List<MessageItem>> {
+public class MessageTask extends DuplicateTask<MessageItem> {
 
     public MessageTask(Context context) {
         super(context);
     }
 
     @Override
-    protected DuplicateProvider<MessageItem> createProvider(Context context) {
+    protected MessageProvider createProvider(Context context) {
         return new MessageProvider(context);
     }
 }

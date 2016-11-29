@@ -26,6 +26,7 @@ import android.provider.Telephony;
 
 import com.github.duplicates.DuplicateProvider;
 
+import static android.provider.BaseColumns._ID;
 import static android.provider.Telephony.TextBasedSmsColumns.ADDRESS;
 import static android.provider.Telephony.TextBasedSmsColumns.BODY;
 import static android.provider.Telephony.TextBasedSmsColumns.DATE;
@@ -50,6 +51,7 @@ import static android.provider.Telephony.TextBasedSmsColumns.TYPE;
 public class KitkatMessageProvider extends DuplicateProvider<MessageItem> {
 
     private static final String[] PROJECTION = {
+            _ID,
             ADDRESS,
             BODY,
             DATE,
@@ -66,20 +68,21 @@ public class KitkatMessageProvider extends DuplicateProvider<MessageItem> {
             TYPE
     };
 
-    private static final int INDEX_ADDRESS = 0;
-    private static final int INDEX_BODY = 1;
-    private static final int INDEX_DATE = 2;
-    private static final int INDEX_DATE_SENT = 3;
-    private static final int INDEX_ERROR_CODE = 4;
-    private static final int INDEX_LOCKED = 5;
-    private static final int INDEX_PERSON = 6;
-    private static final int INDEX_PROTOCOL = 7;
-    private static final int INDEX_READ = 8;
-    private static final int INDEX_SEEN = 9;
-    private static final int INDEX_STATUS = 10;
-    private static final int INDEX_SUBJECT = 11;
-    private static final int INDEX_THREAD_ID = 12;
-    private static final int INDEX_TYPE = 13;
+    private static final int INDEX_ID = 0;
+    private static final int INDEX_ADDRESS = 1;
+    private static final int INDEX_BODY = 2;
+    private static final int INDEX_DATE_RECEIVED = 3;
+    private static final int INDEX_DATE_SENT = 4;
+    private static final int INDEX_ERROR_CODE = 5;
+    private static final int INDEX_LOCKED = 6;
+    private static final int INDEX_PERSON = 7;
+    private static final int INDEX_PROTOCOL = 8;
+    private static final int INDEX_READ = 9;
+    private static final int INDEX_SEEN = 10;
+    private static final int INDEX_STATUS = 11;
+    private static final int INDEX_SUBJECT = 12;
+    private static final int INDEX_THREAD_ID = 13;
+    private static final int INDEX_TYPE = 14;
 
     public KitkatMessageProvider(Context context) {
         super(context);
@@ -102,9 +105,10 @@ public class KitkatMessageProvider extends DuplicateProvider<MessageItem> {
 
     @Override
     public void populateItem(Cursor cursor, MessageItem item) {
+        item.setId(cursor.getLong(INDEX_ID));
         item.setAddress(cursor.getString(INDEX_ADDRESS));
         item.setBody(cursor.getString(INDEX_BODY));
-        item.setDate(cursor.getLong(INDEX_DATE));
+        item.setDateReceived(cursor.getLong(INDEX_DATE_RECEIVED));
         item.setDateSent(cursor.getLong(INDEX_DATE_SENT));
         item.setErrorCode(cursor.getInt(INDEX_ERROR_CODE));
         item.setLocked(cursor.getInt(INDEX_LOCKED) != 0);

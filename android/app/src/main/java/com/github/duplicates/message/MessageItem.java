@@ -31,7 +31,7 @@ public class MessageItem extends DuplicateItem {
 
     private String address;
     private String body;
-    private long date;
+    private long dateReceived;
     private long dateSent;
     private int errorCode;
     private boolean locked;
@@ -60,12 +60,12 @@ public class MessageItem extends DuplicateItem {
         this.body = body;
     }
 
-    public long getDate() {
-        return date;
+    public long getDateReceived() {
+        return dateReceived;
     }
 
-    public void setDate(long date) {
-        this.date = date;
+    public void setDateReceived(long dateReceived) {
+        this.dateReceived = dateReceived;
     }
 
     public long getDateSent() {

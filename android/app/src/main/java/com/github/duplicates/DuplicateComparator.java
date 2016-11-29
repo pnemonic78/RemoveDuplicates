@@ -26,19 +26,23 @@ import java.util.Comparator;
  */
 public abstract class DuplicateComparator<T extends DuplicateItem> implements Comparator<T> {
 
-    protected static final int MAX_LEVEL = 10000;
+    public static final int SAME = 0;
 
     @Override
     public int compare(T lhs, T rhs) {
-        return MAX_LEVEL - similar(lhs, rhs);
+        return similar(lhs, rhs);
     }
 
     /**
-     * How similar are the two items?
+     * How similar are the two items?<p>
+     * Up to 32 different attributes can be compared.
+     * The least-significant attributes are located in the least-significant bits.<br>
+     * When the attributes are similar, the bit is {@code 0}.
+     * When the attributes are dissimilar, the bit is {@code 1}.
      *
      * @param lhs the first item.
      * @param rhs the other item.
-     * @return the similarity, on a scale of {@code 0} (completely dissimilar) to {@code {@link #MAX_LEVEL}} (definitely similar).
+     * @return the similarity.
      */
     protected abstract int similar(T lhs, T rhs);
 }
