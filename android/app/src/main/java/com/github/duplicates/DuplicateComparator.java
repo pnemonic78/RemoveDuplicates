@@ -27,10 +27,12 @@ import java.util.Comparator;
 public abstract class DuplicateComparator<T extends DuplicateItem> implements Comparator<T> {
 
     public static final int SAME = 0;
+    protected static final int LHS = +1;
+    protected static final int RHS = -1;
 
     @Override
     public int compare(T lhs, T rhs) {
-        return similar(lhs, rhs);
+        return compare(lhs.getId(), rhs.getId());
     }
 
     /**
@@ -44,5 +46,21 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
      * @param rhs the other item.
      * @return the similarity.
      */
-    protected abstract int similar(T lhs, T rhs);
+    public abstract int similar(T lhs, T rhs);
+
+    protected int compare(int lhs, int rhs) {
+        return lhs - rhs;
+    }
+
+    protected int compare(long lhs, long rhs) {
+        return (lhs > rhs) ? LHS : ((lhs < rhs) ? RHS : SAME);
+    }
+
+    protected int compare(String lhs, String rhs) {
+        return (lhs == null) ? ((rhs == null) ? SAME : RHS) : lhs.compareTo(rhs);
+    }
+
+    protected int compare(boolean lhs, boolean rhs) {
+        return lhs == rhs ? SAME : (lhs ? LHS : RHS);
+    }
 }
