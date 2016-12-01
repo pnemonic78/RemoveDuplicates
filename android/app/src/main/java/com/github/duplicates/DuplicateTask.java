@@ -27,10 +27,11 @@ import java.util.List;
  *
  * @author moshe.w
  */
-public abstract class DuplicateTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends AsyncTask<Object, Integer, List<T>> {
+public abstract class DuplicateTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends AsyncTask<Object, Object, List<T>> {
 
     private final Context context;
     private final DuplicateTaskListener listener;
+    private DuplicateComparator<T> comparator;
 
     public DuplicateTask(Context context, DuplicateTaskListener listener) {
         this.context = context;
@@ -49,6 +50,8 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
 
     public abstract DuplicateAdapter<T, VH> createAdapter();
 
+    public abstract DuplicateComparator<T> createComparator();
+
     @Override
     protected void onPreExecute() {
         listener.onDuplicateTaskStarted(this);
@@ -57,21 +60,24 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
     @Override
     protected List<T> doInBackground(Object... params) {
         DuplicateProvider<T> provider = createProvider(getContext());
+        this.comparator = createComparator();
         List<T> items = provider.getItems();
-        //TODO find duplicates and add to the recycler list.
-        for (int i = 0; i < 100; i++) {
-            try {
-                publishProgress(i);
-                Thread.sleep(50L);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        //TODO find duplicates.
+        int size = items.size() - 1;
+        for (int i = 0; i < size; i += 2) {
+            publishProgress(i + 1, items.get(i), items.get(i + 1));
         }
         return items;
     }
 
-    protected void onProgressUpdate(Integer... progress) {
-        listener.onDuplicateTaskProgress(this, progress[0]);
+    protected void onProgressUpdate(Object... progress) {
+        listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
+
+        T item1 = (T) progress[1];
+        T item2 = (T) progress[2];
+        if (comparator.match(item1, item2) > 0.8) {
+            listener.onDuplicateTaskMatch(this, item1, item2);
+        }
     }
 
     @Override

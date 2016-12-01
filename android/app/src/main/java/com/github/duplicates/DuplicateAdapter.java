@@ -28,14 +28,9 @@ import java.util.List;
  *
  * @author moshe.w
  */
-public class DuplicateAdapter<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends RecyclerView.Adapter<VH> {
+public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends RecyclerView.Adapter<VH> {
 
     private final List<DuplicateItemPair<T>> pairs = new ArrayList<>();
-
-    @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;//TODO implement me!
-    }
 
     @Override
     public void onBindViewHolder(VH holder, int position) {

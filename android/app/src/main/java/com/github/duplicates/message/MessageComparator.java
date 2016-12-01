@@ -157,6 +157,6 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
 
     @Override
     public float match(MessageItem lhs, MessageItem rhs) {
-        return 0;//TODO implement me!
+        return 1f;//TODO implement me!
     }
 }
