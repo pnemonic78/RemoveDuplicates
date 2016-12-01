@@ -157,6 +157,54 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
 
     @Override
     public float match(MessageItem lhs, MessageItem rhs) {
-        return 1f;//TODO implement me!
+        int diff = different(lhs, rhs);
+        float match = 0f;
+
+        if ((diff & TYPE) == SAME){
+            match += 0.125f;
+        }
+        if ((diff & DATE_RECEIVED) == SAME){
+            match += 0.125f;
+        }
+        if ((diff & DATE_SENT) == SAME){
+            match += 0.125f;
+        }
+        if ((diff & ADDRESS) == SAME){
+            match += 0.125f;
+        }
+        if ((diff & PERSON) == SAME){
+            match += 0.125f;
+        }
+        if ((diff & BODY) == SAME){
+            match += 0.125f;
+        }
+
+        if ((diff & SUBJECT) == SAME){
+            match += 0.05f;
+        }
+        if ((diff & THREAD_ID) == SAME){
+            match += 0.05f;
+        }
+
+        if ((diff & STATUS) == SAME){
+            match += 0.025f;
+        }
+        if ((diff & ERROR_CODE) == SAME){
+            match += 0.025f;
+        }
+        if ((diff & LOCKED) == SAME){
+            match += 0.025f;
+        }
+        if ((diff & PROTOCOL) == SAME){
+            match += 0.025f;
+        }
+        if ((diff & READ) == SAME){
+            match += 0.025f;
+        }
+        if ((diff & SEEN) == SAME){
+            match += 0.025f;
+        }
+
+        return Math.min(match, 1f);
     }
 }

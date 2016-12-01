@@ -63,7 +63,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
         this.comparator = createComparator();
         List<T> items = provider.getItems();
         //TODO find duplicates.
-        int size = Math.min(items.size(), 100) - 1;
+        int size = items.size() - 1;
         for (int i = 0; i < size; i += 2) {
             publishProgress(i + 1, items.get(i), items.get(i + 1));
         }

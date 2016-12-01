@@ -67,7 +67,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     }
 
     protected int compare(String lhs, String rhs) {
-        return (lhs == null) ? ((rhs == null) ? SAME : RHS) : lhs.compareTo(rhs);
+        return (lhs == null) ? ((rhs == null) ? SAME : RHS) : ((rhs == null) ? LHS : lhs.compareTo(rhs));
     }
 
     protected int compare(boolean lhs, boolean rhs) {

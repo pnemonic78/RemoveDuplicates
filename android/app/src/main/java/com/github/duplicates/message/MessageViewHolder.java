@@ -39,6 +39,35 @@ import butterknife.ButterKnife;
  */
 public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
 
+    /**
+     * Message type: all messages.
+     */
+    public static final int MESSAGE_TYPE_ALL = 0;//TextBasedSmsColumns.MESSAGE_TYPE_ALL
+    /**
+     * Message type: inbox.
+     */
+    public static final int MESSAGE_TYPE_INBOX = 1;//TextBasedSmsColumns.MESSAGE_TYPE_INBOX
+    /**
+     * Message type: sent messages.
+     */
+    public static final int MESSAGE_TYPE_SENT = 2;//TextBasedSmsColumns.MESSAGE_TYPE_SENT
+    /**
+     * Message type: drafts.
+     */
+    public static final int MESSAGE_TYPE_DRAFT = 3;//TextBasedSmsColumns.MESSAGE_TYPE_DRAFT
+    /**
+     * Message type: outbox.
+     */
+    public static final int MESSAGE_TYPE_OUTBOX = 4;//TextBasedSmsColumns.MESSAGE_TYPE_OUTBOX
+    /**
+     * Message type: failed outgoing message.
+     */
+    public static final int MESSAGE_TYPE_FAILED = 5;//TextBasedSmsColumns.MESSAGE_TYPE_FAILED
+    /**
+     * Message type: queued to send later.
+     */
+    public static final int MESSAGE_TYPE_QUEUED = 6;//TextBasedSmsColumns.MESSAGE_TYPE_QUEUED
+
     @BindView(R.id.match)
     TextView match;
     @BindView(R.id.checkbox1)
@@ -80,13 +109,33 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
         checkbox1.setChecked(false);
         date1.setText(DateUtils.formatDateTime(context, item1.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address1.setText(item1.getAddress());
-        type1.setText(Integer.toString(item1.getType()));
+        type1.setText(getTypeName(context, item1.getType()));
         body1.setText(item1.getBody());
 
         checkbox2.setChecked(true);
         date2.setText(DateUtils.formatDateTime(context, item2.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address2.setText(item2.getAddress());
-        type2.setText(Integer.toString(item2.getType()));
+        type2.setText(getTypeName(context, item2.getType()));
         body2.setText(item2.getBody());
+    }
+
+    private CharSequence getTypeName(Context context, int type) {
+        switch (type) {
+            case MESSAGE_TYPE_ALL:
+                return context.getText(R.string.message_type_all);
+            case MESSAGE_TYPE_DRAFT:
+                return context.getText(R.string.message_type_drafts);
+            case MESSAGE_TYPE_FAILED:
+                return context.getText(R.string.message_type_failed);
+            case MESSAGE_TYPE_INBOX:
+                return context.getText(R.string.message_type_inbox);
+            case MESSAGE_TYPE_OUTBOX:
+                return context.getText(R.string.message_type_outbox);
+            case MESSAGE_TYPE_QUEUED:
+                return context.getText(R.string.message_type_queued);
+            case MESSAGE_TYPE_SENT:
+                return context.getText(R.string.message_type_sent);
+        }
+        return null;
     }
 }

@@ -25,4 +25,14 @@
     <string name="dummy_text_long" translatable="false">The quick brown fox jumped over the lazy dog.</string>
     <string name="dummy_date" translatable="false">2016/12/31</string>
     <string name="dummy_date_time" translatable="false">2016/12/31 12:34</string>
+
+    <!-- Messages -->
+    <string name="message_type_all">all</string>
+    <string name="message_type_inbox">inbox</string>
+    <string name="message_type_sent">sent</string>
+    <string name="message_type_drafts">drafts</string>
+    <string name="message_type_outbox">outbox</string>
+    <string name="message_type_failed">failed</string>
+    <string name="message_type_queued">queued</string>
+
 </resources>
