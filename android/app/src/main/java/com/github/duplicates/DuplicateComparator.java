@@ -36,17 +36,27 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     }
 
     /**
-     * How similar are the two items?<p>
+     * How different are the two items?<p>
      * Up to 32 different attributes can be compared.
      * The least-significant attributes are located in the least-significant bits.<br>
-     * When the attributes are similar, the bit is {@code 0}.
+     * When the attributes are different, the bit is {@code 0}.
      * When the attributes are dissimilar, the bit is {@code 1}.
      *
      * @param lhs the first item.
      * @param rhs the other item.
-     * @return the similarity.
+     * @return the differences.
      */
-    public abstract int similar(T lhs, T rhs);
+    public abstract int different(T lhs, T rhs);
+
+    /**
+     * How similar are the two items?<p>
+     * Should compare the differences from the {@link #different(DuplicateItem, DuplicateItem)} function.
+     *
+     * @param lhs the first item.
+     * @param rhs the other item.
+     * @return the match as a percentage between {@code 0.0} (dissimilar) and {@code 1.0} (identical) inclusive.
+     */
+    public abstract float match(T lhs, T rhs);
 
     protected int compare(int lhs, int rhs) {
         return lhs - rhs;

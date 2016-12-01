@@ -20,6 +20,7 @@ package com.github.duplicates.message;
 import android.content.Context;
 
 import com.github.duplicates.DuplicateTask;
+import com.github.duplicates.DuplicateTaskListener;
 
 /**
  * Task to find duplicate messages.
@@ -28,8 +29,8 @@ import com.github.duplicates.DuplicateTask;
  */
 public class MessageTask extends DuplicateTask<MessageItem> {
 
-    public MessageTask(Context context) {
-        super(context);
+    public MessageTask(Context context, DuplicateTaskListener listener) {
+        super(context, listener);
     }
 
     @Override

@@ -42,7 +42,7 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
     private static final int TYPE = 1 << 31;
 
     @Override
-    public int similar(MessageItem lhs, MessageItem rhs) {
+    public int different(MessageItem lhs, MessageItem rhs) {
         int similar = SAME;
 
         if (compare(lhs.getAddress(), rhs.getAddress()) != SAME) {
@@ -153,5 +153,10 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
         }
 
         return super.compare(lhs, rhs);
+    }
+
+    @Override
+    public float match(MessageItem lhs, MessageItem rhs) {
+        return 0;//TODO implement me!
     }
 }

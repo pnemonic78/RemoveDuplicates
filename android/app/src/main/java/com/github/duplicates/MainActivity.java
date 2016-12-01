@@ -18,11 +18,15 @@
 package com.github.duplicates;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.message.MessageTask;
@@ -36,12 +40,18 @@ import butterknife.OnClick;
  *
  * @author moshe.w
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements DuplicateTaskListener {
 
     @BindView(R.id.spinner)
     Spinner spinner;
     @BindView(R.id.search)
     ImageButton spinnerAction;
+    @BindView(R.id.statusBar)
+    View statusBar;
+    @BindView(R.id.counter)
+    TextView counter;
+    @BindView(R.id.progress)
+    ProgressBar progressBar;
     @BindView(android.R.id.list)
     RecyclerView list;
 
@@ -54,59 +64,89 @@ public class MainActivity extends Activity {
         ButterKnife.bind(this);
 
         spinner.setAdapter(new MainSpinnerAdapter());
+        searchStopped();
     }
 
     @OnClick(R.id.search)
     void search() {
-        if (task != null) {
+        if ((task != null) && !task.isCancelled()) {
             task.cancel(true);
-            spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
         } else {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
-            task = createTask(item);
+            DuplicateTask task = createTask(item);
+            this.task = task;
             if (task != null) {
-                spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
                 task.execute();
             } else {
-                spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
+                searchStopped();
             }
         }
     }
 
+    private void searchStarted() {
+        spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
+        counter.setText(getString(R.string.counter, 0));
+        statusBar.setVisibility(View.VISIBLE);
+    }
+
+    private void searchStopped() {
+        spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
+        statusBar.setVisibility(View.GONE);
+        task = null;
+    }
+
     @Nullable
     private DuplicateTask createTask(MainSpinnerItem item) {
-        switch (item) {
-            case ALARMS:
-                //TODO implement me!
-                break;
-            case BOOKMARKS:
-                //TODO implement me!
-                break;
-            case CALENDAR:
-                //TODO implement me!
-                break;
-            case CALL_LOG:
-                //TODO implement me!
-                break;
-            case CONTACTS:
-                //TODO implement me!
-                break;
-            case MESSAGES:
-                return new MessageTask(this);
-        }
+        Context context = this;
+        DuplicateTaskListener listener = this;
 
-//        return new DuplicateTask<DuplicateItem, Object, Void, List<DuplicateItem>>(this) {
-//            @Override
-//            protected DuplicateProvider<DuplicateItem> createProvider(Context context) {
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(List<DuplicateItem> items) {
-//                spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
-//                task = null;
-//            }
-//        };
+        switch (item) {
+//            case ALARMS:
+//                //TODO implement me!
+//                break;
+//            case BOOKMARKS:
+//                //TODO implement me!
+//                break;
+//            case CALENDAR:
+//                //TODO implement me!
+//                break;
+//            case CALL_LOG:
+//                //TODO implement me!
+//                break;
+//            case CONTACTS:
+//                //TODO implement me!
+//                break;
+            case MESSAGES:
+                return new MessageTask(context, listener);
+        }
         return null;
+    }
+
+    @Override
+    public void onDuplicateTaskStarted(DuplicateTask task) {
+        if (task == this.task) {
+            searchStarted();
+        }
+    }
+
+    @Override
+    public void onDuplicateTaskFinished(DuplicateTask task) {
+        if (task == this.task) {
+            searchStopped();
+        }
+    }
+
+    @Override
+    public void onDuplicateTaskCancelled(DuplicateTask task) {
+        if (task == this.task) {
+            searchStopped();
+        }
+    }
+
+    @Override
+    public void onDuplicateTaskProgress(DuplicateTask task, int count) {
+        if (task == this.task) {
+            counter.setText(getString(R.string.counter, count));
+        }
     }
 }

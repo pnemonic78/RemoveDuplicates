@@ -15,4 +15,6 @@
     <string name="item_call_log" translatable="false">@string/call_log</string>
     <string name="item_contacts" translatable="false">@string/contacts</string>
     <string name="item_messages" translatable="false">@string/messages</string>
+
+    <string name="counter" translatable="false">%d</string>
 </resources>

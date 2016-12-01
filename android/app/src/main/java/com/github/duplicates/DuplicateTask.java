@@ -30,18 +30,26 @@ import java.util.List;
 public abstract class DuplicateTask<T extends DuplicateItem> extends AsyncTask<Object, Integer, List<T>> {
 
     private final Context context;
+    private final DuplicateTaskListener listener;
 
-    public DuplicateTask(Context context) {
+    public DuplicateTask(Context context, DuplicateTaskListener listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     protected Context getContext() {
         return context;
     }
 
+    protected DuplicateTaskListener getListener() {
+        return listener;
+    }
+
+    protected abstract DuplicateProvider<T> createProvider(Context context);
+
     @Override
     protected void onPreExecute() {
-        //TODO clear the recycler list.
+        listener.onDuplicateTaskStarted(this);
     }
 
     @Override
@@ -49,12 +57,28 @@ public abstract class DuplicateTask<T extends DuplicateItem> extends AsyncTask<O
         DuplicateProvider<T> provider = createProvider(getContext());
         List<T> items = provider.getItems();
         //TODO find duplicates and add to the recycler list.
+        for (int i = 0; i < 100; i++) {
+            try {
+                publishProgress(i);
+                Thread.sleep(50L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return items;
     }
 
     protected void onProgressUpdate(Integer... progress) {
-        //TODO setProgressPercent(progress[0]);
+        listener.onDuplicateTaskProgress(this, progress[0]);
     }
 
-    protected abstract DuplicateProvider<T> createProvider(Context context);
+    @Override
+    protected void onPostExecute(List<T> result) {
+        listener.onDuplicateTaskFinished(this);
+    }
+
+    @Override
+    protected void onCancelled() {
+        listener.onDuplicateTaskCancelled(this);
+    }
 }
