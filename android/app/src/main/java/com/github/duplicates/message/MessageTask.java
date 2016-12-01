@@ -19,6 +19,7 @@ package com.github.duplicates.message;
 
 import android.content.Context;
 
+import com.github.duplicates.DuplicateAdapter;
 import com.github.duplicates.DuplicateTask;
 import com.github.duplicates.DuplicateTaskListener;
 
@@ -27,7 +28,7 @@ import com.github.duplicates.DuplicateTaskListener;
  *
  * @author moshe.w
  */
-public class MessageTask extends DuplicateTask<MessageItem> {
+public class MessageTask extends DuplicateTask<MessageItem, MessageViewHolder> {
 
     public MessageTask(Context context, DuplicateTaskListener listener) {
         super(context, listener);
@@ -36,5 +37,10 @@ public class MessageTask extends DuplicateTask<MessageItem> {
     @Override
     protected MessageProvider createProvider(Context context) {
         return new MessageProvider(context);
+    }
+
+    @Override
+    public DuplicateAdapter<MessageItem, MessageViewHolder> createAdapter() {
+        return new MessageAdapter();
     }
 }

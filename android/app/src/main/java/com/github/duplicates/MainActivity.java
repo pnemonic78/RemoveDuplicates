@@ -56,6 +56,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     RecyclerView list;
 
     private DuplicateTask task;
+    private DuplicateAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
             DuplicateTask task = createTask(item);
             this.task = task;
             if (task != null) {
+                this.adapter = task.createAdapter();
+                list.setAdapter(adapter);
                 task.execute();
             } else {
                 searchStopped();
@@ -87,6 +90,9 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
         counter.setText(getString(R.string.counter, 0));
         statusBar.setVisibility(View.VISIBLE);
+        if (adapter != null) {
+            adapter.clear();
+        }
     }
 
     private void searchStopped() {
@@ -102,20 +108,15 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
         switch (item) {
 //            case ALARMS:
-//                //TODO implement me!
-//                break;
+//                return new AlarmTask(context, listener);
 //            case BOOKMARKS:
-//                //TODO implement me!
-//                break;
+//                return new BookmarkTask(context, listener);
 //            case CALENDAR:
-//                //TODO implement me!
-//                break;
+//                return new CalendarTask(context, listener);
 //            case CALL_LOG:
-//                //TODO implement me!
-//                break;
+//                return new CallLogTask(context, listener);
 //            case CONTACTS:
-//                //TODO implement me!
-//                break;
+//                return new ContactTask(context, listener);
             case MESSAGES:
                 return new MessageTask(context, listener);
         }
@@ -147,6 +148,13 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     public void onDuplicateTaskProgress(DuplicateTask task, int count) {
         if (task == this.task) {
             counter.setText(getString(R.string.counter, count));
+        }
+    }
+
+    @Override
+    public void onDuplicateTaskMatch(DuplicateTask task, DuplicateItem item1, DuplicateItem item2) {
+        if (task == this.task) {
+            adapter.add(item1, item2);
         }
     }
 }

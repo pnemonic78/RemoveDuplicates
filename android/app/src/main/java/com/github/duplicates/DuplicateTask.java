@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author moshe.w
  */
-public abstract class DuplicateTask<T extends DuplicateItem> extends AsyncTask<Object, Integer, List<T>> {
+public abstract class DuplicateTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends AsyncTask<Object, Integer, List<T>> {
 
     private final Context context;
     private final DuplicateTaskListener listener;
@@ -46,6 +46,8 @@ public abstract class DuplicateTask<T extends DuplicateItem> extends AsyncTask<O
     }
 
     protected abstract DuplicateProvider<T> createProvider(Context context);
+
+    public abstract DuplicateAdapter<T, VH> createAdapter();
 
     @Override
     protected void onPreExecute() {

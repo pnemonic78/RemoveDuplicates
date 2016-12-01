@@ -22,7 +22,7 @@ package com.github.duplicates;
  *
  * @author moshe.w
  */
-public interface DuplicateTaskListener<T extends DuplicateTask> {
+public interface DuplicateTaskListener<T extends DuplicateTask, I extends DuplicateItem> {
 
     /**
      * Notification that the task has started executing.
@@ -52,4 +52,13 @@ public interface DuplicateTaskListener<T extends DuplicateTask> {
      * @param count the number of items processed.
      */
     void onDuplicateTaskProgress(T task, int count);
+
+    /**
+     * Notification that the task has found a possible match where the similarity is above 80%.
+     *
+     * @param task  the task.
+     * @param item1 the first item.
+     * @param item2 the second item.
+     */
+    void onDuplicateTaskMatch(T task, I item1, I item2);
 }

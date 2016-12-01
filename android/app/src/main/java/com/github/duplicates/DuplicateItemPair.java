@@ -15,26 +15,39 @@
  *   Moshe Waisberg
  *
  */
-package com.github.duplicates.message;
-
-import android.view.View;
-
-import com.github.duplicates.DuplicateItemPair;
-import com.github.duplicates.DuplicateViewHolder;
+package com.github.duplicates;
 
 /**
- * View holder of a duplicate message.
+ * Item that is a possible duplicate of two items.
  *
  * @author moshe.w
  */
-public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
+public class DuplicateItemPair<T extends DuplicateItem> {
 
-    public MessageViewHolder(View itemView) {
-        super(itemView);
+    private T item1;
+    private T item2;
+
+    public DuplicateItemPair() {
     }
 
-    @Override
-    public void bind(DuplicateItemPair<MessageItem> item) {
-        //TODO implement me!
+    public DuplicateItemPair(T item1, T item2) {
+        this.item1 = item1;
+        this.item2 = item2;
+    }
+
+    public T getItem1() {
+        return item1;
+    }
+
+    public void setItem1(T item1) {
+        this.item1 = item1;
+    }
+
+    public T getItem2() {
+        return item2;
+    }
+
+    public void setItem2(T item2) {
+        this.item2 = item2;
     }
 }

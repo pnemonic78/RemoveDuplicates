@@ -17,24 +17,12 @@
  */
 package com.github.duplicates.message;
 
-import android.view.View;
-
-import com.github.duplicates.DuplicateItemPair;
-import com.github.duplicates.DuplicateViewHolder;
+import com.github.duplicates.DuplicateAdapter;
 
 /**
- * View holder of a duplicate message.
+ * List adapter for duplicate messages.
  *
  * @author moshe.w
  */
-public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
-
-    public MessageViewHolder(View itemView) {
-        super(itemView);
-    }
-
-    @Override
-    public void bind(DuplicateItemPair<MessageItem> item) {
-        //TODO implement me!
-    }
+public class MessageAdapter extends DuplicateAdapter<MessageItem, MessageViewHolder> {
 }

@@ -31,5 +31,5 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
         super(itemView);
     }
 
-    public abstract void bind(T item);
+    public abstract void bind(DuplicateItemPair<T> pair);
 }

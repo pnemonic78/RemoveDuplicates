@@ -21,59 +21,52 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
- * List adapter for duplicate items.
+ * List adapter for duplicate pairs.
  *
  * @author moshe.w
  */
-public class DuplicateAdapter<VH extends DuplicateViewHolder, T extends DuplicateItem> extends RecyclerView.Adapter<VH> {
+public class DuplicateAdapter<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends RecyclerView.Adapter<VH> {
 
-    private final List<T> items = new ArrayList<>();
+    private final List<DuplicateItemPair<T>> pairs = new ArrayList<>();
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        return null;//TODO implement me!
     }
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        T item = items.get(position);
-        holder.bind(item);
+        DuplicateItemPair<T> pair = pairs.get(position);
+        holder.bind(pair);
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return pairs.size();
     }
 
     /**
-     * Clear the items.
+     * Clear the pairs.
      */
     public void clear() {
-        items.clear();
+        pairs.clear();
         notifyDataSetChanged();
     }
 
     /**
-     * Add an item.
+     * Add a pair.
      *
-     * @param item the item.
+     * @param item1 the first item.
+     * @param item2 the second item.
      */
-    public void add(T item) {
-        items.add(item);
-        notifyDataSetChanged();
-    }
-
-    /**
-     * Add items.
-     *
-     * @param items the list of items.
-     */
-    public void addAll(Collection<T> items) {
-        this.items.addAll(items);
-        notifyDataSetChanged();
+    public void add(T item1, T item2) {
+        int position = pairs.size();
+        DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2);
+        if (pairs.add(pair)) {
+            notifyItemInserted(position);
+        }
     }
 }
