@@ -27,6 +27,8 @@ import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
 
+import java.text.NumberFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -60,6 +62,8 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     @BindView(R.id.body2)
     TextView body2;
 
+    private final NumberFormat formatter = NumberFormat.getPercentInstance();
+
     public MessageViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -71,16 +75,16 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
         MessageItem item2 = pair.getItem2();
         Context context = itemView.getContext();
 
-        match.setText(context.getString(R.string.match, "80%"));
+        match.setText(context.getString(R.string.match, formatter.format(pair.getMatch())));
 
         checkbox1.setChecked(false);
-        date1.setText(DateUtils.formatDateTime(context, item1.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
+        date1.setText(DateUtils.formatDateTime(context, item1.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address1.setText(item1.getAddress());
         type1.setText(Integer.toString(item1.getType()));
         body1.setText(item1.getBody());
 
         checkbox2.setChecked(true);
-        date2.setText(DateUtils.formatDateTime(context, item2.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
+        date2.setText(DateUtils.formatDateTime(context, item2.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address2.setText(item2.getAddress());
         type2.setText(Integer.toString(item2.getType()));
         body2.setText(item2.getBody());

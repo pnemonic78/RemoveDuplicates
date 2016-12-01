@@ -18,7 +18,6 @@
 package com.github.duplicates;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +57,19 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param item2 the second item.
      */
     public void add(T item1, T item2) {
+        add(item1, item2, 1f);
+    }
+
+    /**
+     * Add a pair.
+     *
+     * @param item1 the first item.
+     * @param item2 the second item.
+     * @param match the matching percentage.
+     */
+    public void add(T item1, T item2, float match) {
         int position = pairs.size();
-        DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2);
+        DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match);
         if (pairs.add(pair)) {
             notifyItemInserted(position);
         }

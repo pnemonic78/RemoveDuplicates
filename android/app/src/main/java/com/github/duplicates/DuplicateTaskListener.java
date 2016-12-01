@@ -59,6 +59,7 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
      * @param task  the task.
      * @param item1 the first item.
      * @param item2 the second item.
+     * @param match the match percentage.
      */
-    void onDuplicateTaskMatch(T task, I item1, I item2);
+    void onDuplicateTaskMatch(T task, I item1, I item2, float match);
 }

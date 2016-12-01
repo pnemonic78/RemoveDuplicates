@@ -26,13 +26,19 @@ public class DuplicateItemPair<T extends DuplicateItem> {
 
     private T item1;
     private T item2;
+    private float match;
 
     public DuplicateItemPair() {
     }
 
     public DuplicateItemPair(T item1, T item2) {
+        this(item1, item2, 1f);
+    }
+
+    public DuplicateItemPair(T item1, T item2, float match) {
         this.item1 = item1;
         this.item2 = item2;
+        this.match = match;
     }
 
     public T getItem1() {
@@ -49,5 +55,13 @@ public class DuplicateItemPair<T extends DuplicateItem> {
 
     public void setItem2(T item2) {
         this.item2 = item2;
+    }
+
+    public float getMatch() {
+        return match;
+    }
+
+    public void setMatch(float match) {
+        this.match = match;
     }
 }

@@ -63,7 +63,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
         this.comparator = createComparator();
         List<T> items = provider.getItems();
         //TODO find duplicates.
-        int size = items.size() - 1;
+        int size = Math.min(items.size(), 100) - 1;
         for (int i = 0; i < size; i += 2) {
             publishProgress(i + 1, items.get(i), items.get(i + 1));
         }
@@ -75,8 +75,9 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
 
         T item1 = (T) progress[1];
         T item2 = (T) progress[2];
-        if (comparator.match(item1, item2) > 0.8) {
-            listener.onDuplicateTaskMatch(this, item1, item2);
+        float match = comparator.match(item1, item2);
+        if (match > 0.8) {
+            listener.onDuplicateTaskMatch(this, item1, item2, match);
         }
     }
 
