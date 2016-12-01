@@ -20,6 +20,7 @@ package com.github.duplicates;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,11 +28,14 @@ import java.util.List;
  *
  * @author moshe.w
  */
-public abstract class DuplicateTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends AsyncTask<Object, Object, List<T>> {
+public abstract class DuplicateTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends AsyncTask<Object, Object, List<T>>
+        implements DuplicateProviderListener<T, DuplicateProvider<T>> {
 
     private final Context context;
     private final DuplicateTaskListener listener;
+    private DuplicateProvider<T> provider;
     private DuplicateComparator<T> comparator;
+    private final List<T> items = new ArrayList<>();
 
     public DuplicateTask(Context context, DuplicateTaskListener listener) {
         this.context = context;
@@ -55,28 +59,25 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
     @Override
     protected void onPreExecute() {
         listener.onDuplicateTaskStarted(this);
+        items.clear();
+        this.provider = createProvider(getContext());
+        provider.setListener(this);
+        this.comparator = createComparator();
     }
 
     @Override
     protected List<T> doInBackground(Object... params) {
-        DuplicateProvider<T> provider = createProvider(getContext());
-        this.comparator = createComparator();
-        List<T> items = provider.getItems();
-        //TODO find duplicates.
-        int size = items.size() - 1;
-        for (int i = 0; i < size; i += 2) {
-            publishProgress(i + 1, items.get(i), items.get(i + 1));
-        }
+        provider.fetchItems();
         return items;
     }
 
     protected void onProgressUpdate(Object... progress) {
-        listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
-
-        T item1 = (T) progress[1];
-        T item2 = (T) progress[2];
-        float match = comparator.match(item1, item2);
-        if (match > 0.8) {
+        if (progress.length == 1) {
+            listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
+        } else {
+            T item1 = (T) progress[1];
+            T item2 = (T) progress[2];
+            float match = (float) progress[3];
             listener.onDuplicateTaskMatch(this, item1, item2, match);
         }
     }
@@ -89,5 +90,23 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
     @Override
     protected void onCancelled() {
         listener.onDuplicateTaskCancelled(this);
+    }
+
+    @Override
+    public void onItemFetched(DuplicateProvider<T> provider, T item) {
+        int size = items.size();
+
+        // Is it a duplicate?
+        float match;
+        for (T item1 : items) {
+            match = comparator.match(item1, item);
+            if (match > 0.8) {
+                publishProgress(size, item1, item, match);
+            }
+        }
+
+        if (items.add(item)) {
+            publishProgress(size + 1);
+        }
     }
 }

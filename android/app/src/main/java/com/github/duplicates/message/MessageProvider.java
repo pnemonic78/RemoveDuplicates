@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.Build;
 
 import com.github.duplicates.DuplicateProvider;
+import com.github.duplicates.DuplicateProviderListener;
 
 import java.util.List;
 
@@ -55,6 +56,11 @@ public class MessageProvider extends DuplicateProvider<MessageItem> {
     }
 
     @Override
+    public void fetchItems() {
+        delegate.fetchItems();
+    }
+
+    @Override
     public MessageItem createItem() {
         return delegate.createItem();
     }
@@ -62,5 +68,15 @@ public class MessageProvider extends DuplicateProvider<MessageItem> {
     @Override
     public void populateItem(Cursor cursor, MessageItem item) {
         delegate.populateItem(cursor, item);
+    }
+
+    @Override
+    public void setListener(DuplicateProviderListener<MessageItem, DuplicateProvider<MessageItem>> listener) {
+        delegate.setListener(listener);
+    }
+
+    @Override
+    public DuplicateProviderListener<MessageItem, DuplicateProvider<MessageItem>> getListener() {
+        return delegate.getListener();
     }
 }
