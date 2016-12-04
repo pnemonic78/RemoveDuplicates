@@ -17,8 +17,12 @@
  */
 package com.github.duplicates;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +45,11 @@ import butterknife.OnClick;
  * @author moshe.w
  */
 public class MainActivity extends Activity implements DuplicateTaskListener {
+
+    /**
+     * Activity id for requesting location permissions.
+     */
+    protected static final int ACTIVITY_PERMISSIONS = 2;
 
     @BindView(R.id.spinner)
     Spinner spinner;
@@ -74,14 +83,16 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
             task.cancel(true);
         } else {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
-            DuplicateTask task = createTask(item);
-            this.task = task;
-            if (task != null) {
-                this.adapter = task.createAdapter();
-                list.setAdapter(adapter);
-                task.execute();
-            } else {
-                searchStopped();
+            if (checkPermissions(item)) {
+                DuplicateTask task = createTask(item);
+                this.task = task;
+                if (task != null) {
+                    this.adapter = task.createAdapter();
+                    list.setAdapter(adapter);
+                    task.execute();
+                } else {
+                    searchStopped();
+                }
             }
         }
     }
@@ -156,5 +167,37 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         if (task == this.task) {
             adapter.add(item1, item2, match);
         }
+    }
+
+    protected boolean checkPermissions(MainSpinnerItem item) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return checkPermissionsImpl(item);
+        }
+        return true;
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    protected boolean checkPermissionsImpl(MainSpinnerItem item) {
+        String permission = null;
+        switch (item) {
+//            case ALARMS:
+//            break;
+//            case BOOKMARKS:
+//            break;
+//            case CALENDAR:
+//            break;
+//            case CALL_LOG:
+//            break;
+//            case CONTACTS:
+//            break;
+            case MESSAGES:
+                permission = Manifest.permission.READ_SMS;
+                break;
+        }
+        if ((permission != null) && checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{permission}, ACTIVITY_PERMISSIONS);
+            return false;
+        }
+        return true;
     }
 }
