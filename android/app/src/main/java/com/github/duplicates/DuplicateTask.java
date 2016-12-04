@@ -23,6 +23,8 @@ import android.os.AsyncTask;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.duplicates.DuplicateTaskListener.MATCH_GOOD;
+
 /**
  * Task to find duplicates.
  *
@@ -98,9 +100,12 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
 
         // Is it a duplicate?
         float match;
-        for (T item1 : items) {
+        T item1;
+        // Most likely that a matching item is a neighbour.
+        for (int i = size - 1; i >= 0; i--) {
+            item1 = items.get(i);
             match = comparator.match(item1, item);
-            if (match > 0.7) {
+            if (match > MATCH_GOOD) {
                 publishProgress(size, item1, item, match);
             }
         }

@@ -25,6 +25,11 @@ package com.github.duplicates;
 public interface DuplicateTaskListener<T extends DuplicateTask, I extends DuplicateItem> {
 
     /**
+     * Percentage for two items to be considered a good match.
+     */
+    float MATCH_GOOD = 0.8f;
+
+    /**
      * Notification that the task has started executing.
      *
      * @param task the task.
@@ -54,7 +59,7 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
     void onDuplicateTaskProgress(T task, int count);
 
     /**
-     * Notification that the task has found a possible match where the similarity is above 70%.
+     * Notification that the task has found a possible match where the similarity is above 80%.
      *
      * @param task  the task.
      * @param item1 the first item.
