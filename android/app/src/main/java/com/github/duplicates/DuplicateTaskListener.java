@@ -54,7 +54,7 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
     void onDuplicateTaskProgress(T task, int count);
 
     /**
-     * Notification that the task has found a possible match where the similarity is above 80%.
+     * Notification that the task has found a possible match where the similarity is above 70%.
      *
      * @param task  the task.
      * @param item1 the first item.

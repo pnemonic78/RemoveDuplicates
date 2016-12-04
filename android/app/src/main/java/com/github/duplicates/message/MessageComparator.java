@@ -42,56 +42,6 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
     private static final int TYPE = 1 << 31;
 
     @Override
-    public int different(MessageItem lhs, MessageItem rhs) {
-        int similar = SAME;
-
-        if (compare(lhs.getAddress(), rhs.getAddress()) != SAME) {
-            similar |= ADDRESS;
-        }
-        if (compare(lhs.getBody(), rhs.getBody()) != SAME) {
-            similar |= BODY;
-        }
-        if (lhs.getDateReceived() != rhs.getDateReceived()) {
-            similar |= DATE_RECEIVED;
-        }
-        if (lhs.getDateSent() != rhs.getDateSent()) {
-            similar |= DATE_SENT;
-        }
-        if (lhs.getErrorCode() != rhs.getErrorCode()) {
-            similar |= ERROR_CODE;
-        }
-        if (lhs.isLocked() != rhs.isLocked()) {
-            similar |= LOCKED;
-        }
-        if (lhs.getPerson() != rhs.getPerson()) {
-            similar |= PERSON;
-        }
-        if (lhs.getProtocol() != rhs.getProtocol()) {
-            similar |= PROTOCOL;
-        }
-        if (lhs.isRead() != rhs.isRead()) {
-            similar |= READ;
-        }
-        if (lhs.isSeen() != rhs.isSeen()) {
-            similar |= SEEN;
-        }
-        if (lhs.getStatus() != rhs.getStatus()) {
-            similar |= STATUS;
-        }
-        if (compare(lhs.getSubject(), rhs.getSubject()) != SAME) {
-            similar |= SUBJECT;
-        }
-        if (lhs.getThreadId() != rhs.getThreadId()) {
-            similar |= THREAD_ID;
-        }
-        if (lhs.getType() != rhs.getType()) {
-            similar |= TYPE;
-        }
-
-        return similar;
-    }
-
-    @Override
     public int compare(MessageItem lhs, MessageItem rhs) {
         int c;
 
@@ -157,64 +107,53 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
 
     @Override
     public float match(MessageItem lhs, MessageItem rhs) {
-        int diff = different(lhs, rhs);
-        float match = 0f;
+        float match = 1f;
 
-        if ((diff & TYPE) == SAME) {
-            match += 0.125f;
-        } else {
-            match -= 0.125f;
+        if (lhs.getType() != rhs.getType()) {
+            match *= 0.8f;
         }
-        if ((diff & DATE_RECEIVED) == SAME) {
-            match += 0.125f;
-        } else {
-            match -= 0.125f;
+        if (lhs.getDateReceived() != rhs.getDateReceived()) {
+            match *= 0.8f;
         }
-        if ((diff & DATE_SENT) == SAME) {
-            match += 0.125f;
-        } else {
-            match -= 0.125f;
+        if (lhs.getDateSent() != rhs.getDateSent()) {
+            match *= 0.8f;
         }
-        if ((diff & ADDRESS) == SAME) {
-            match += 0.125f;
-        } else {
-            match -= 0.125f;
+        if (compare(lhs.getAddress(), rhs.getAddress()) != SAME) {
+            match *= 0.8f;
         }
-        if ((diff & PERSON) == SAME) {
-            match += 0.125f;
+        if (lhs.getPerson() != rhs.getPerson()) {
+            match *= 0.8f;
         }
-        if ((diff & BODY) == SAME) {
-            match += 0.125f;
-        } else {
-            match -= 0.125f;
+        if (compare(lhs.getBody(), rhs.getBody()) != SAME) {
+            match *= 0.8f;
         }
 
-        if ((diff & SUBJECT) == SAME) {
-            match += 0.05f;
+        if (compare(lhs.getSubject(), rhs.getSubject()) != SAME) {
+            match *= 0.9f;
         }
-        if ((diff & THREAD_ID) == SAME) {
-            match += 0.05f;
-        }
-
-        if ((diff & STATUS) == SAME) {
-            match += 0.025f;
-        }
-        if ((diff & ERROR_CODE) == SAME) {
-            match += 0.025f;
-        }
-        if ((diff & LOCKED) == SAME) {
-            match += 0.025f;
-        }
-        if ((diff & PROTOCOL) == SAME) {
-            match += 0.025f;
-        }
-        if ((diff & READ) == SAME) {
-            match += 0.025f;
-        }
-        if ((diff & SEEN) == SAME) {
-            match += 0.025f;
+        if (lhs.getThreadId() != rhs.getThreadId()) {
+            match *= 0.9f;
         }
 
-        return Math.max(0f, Math.min(match, 1f));
+        if (lhs.getStatus() != rhs.getStatus()) {
+            match *= 0.95f;
+        }
+        if (lhs.getErrorCode() != rhs.getErrorCode()) {
+            match *= 0.95f;
+        }
+        if (lhs.isLocked() != rhs.isLocked()) {
+            match *= 0.95f;
+        }
+        if (lhs.getProtocol() != rhs.getProtocol()) {
+            match *= 0.95f;
+        }
+        if (lhs.isRead() != rhs.isRead()) {
+            match *= 0.95f;
+        }
+        if (lhs.isSeen() != rhs.isSeen()) {
+            match *= 0.95f;
+        }
+
+        return match;
     }
 }

@@ -100,7 +100,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
         float match;
         for (T item1 : items) {
             match = comparator.match(item1, item);
-            if (match > 0.8) {
+            if (match > 0.7) {
                 publishProgress(size, item1, item, match);
             }
         }

@@ -36,21 +36,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     }
 
     /**
-     * How different are the two items?<p>
-     * Up to 32 different attributes can be compared.
-     * The least-significant attributes are located in the least-significant bits.<br>
-     * When the attributes are different, the bit is {@code 0}.
-     * When the attributes are dissimilar, the bit is {@code 1}.
-     *
-     * @param lhs the first item.
-     * @param rhs the other item.
-     * @return the differences.
-     */
-    public abstract int different(T lhs, T rhs);
-
-    /**
-     * How similar are the two items?<p>
-     * Should compare the differences from the {@link #different(DuplicateItem, DuplicateItem)} function.
+     * How similar are the two items?
      *
      * @param lhs the first item.
      * @param rhs the other item.
