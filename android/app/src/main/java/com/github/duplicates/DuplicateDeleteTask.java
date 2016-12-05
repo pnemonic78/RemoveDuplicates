@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author moshe.w
  */
-public abstract class DuplicateDeleteTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends DuplicateTask<T, T, Object, Void> {
+public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends DuplicateTask<T, T, Object, Void> {
 
     private final List<T> items = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem, VH extends Du
     protected Void doInBackground(T... params) {
         if (params != null) {
             for (T item : params) {
-                if (item.isChecked() && (item.getId() != 0L)) {
+                if (item.getId() != 0L) {
                     items.add(item);
                 }
             }

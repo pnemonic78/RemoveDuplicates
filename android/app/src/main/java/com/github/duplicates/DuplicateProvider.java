@@ -88,10 +88,11 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 T item;
+                int count = 0;
                 do {
                     item = createItem();
                     populateItem(cursor, item);
-                    listener.onItemFetched(this, item);
+                    listener.onItemFetched(this, ++count, item);
                 } while (cursor.moveToNext());
             }
             cursor.close();

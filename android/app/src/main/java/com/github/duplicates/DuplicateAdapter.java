@@ -19,8 +19,11 @@ package com.github.duplicates;
 
 import android.support.v7.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * List adapter for duplicate pairs.
@@ -78,6 +81,40 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     }
 
     /**
+     * Remove an item and its pair.
+     *
+     * @param item the item.
+     */
+    public void remove(T item) {
+        List<Integer> positions = findPairs(item);
+        if ((positions != null) && !positions.isEmpty()) {
+            for (int position : positions) {
+                pairs.remove(position);
+                notifyItemRemoved(position);
+            }
+        }
+    }
+
+    /**
+     * Find the pairs containing the item.
+     *
+     * @param item the item to find.
+     * @return the list of indexes/positions - {@code null} otherwise.
+     */
+    protected List<Integer> findPairs(T item) {
+        List<Integer> positions = new ArrayList<>();
+        int size = pairs.size();
+        DuplicateItemPair<T> pair;
+        for (int i = 0; i < size; i++) {
+            pair = pairs.get(i);
+            if ((pair.getItem1() == item) || (pair.getItem2() == item)) {
+                positions.add(i);
+            }
+        }
+        return positions;
+    }
+
+    /**
      * Mark all the items as checked.
      */
     public void selectAll() {
@@ -86,5 +123,30 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
             pair.getItem2().setChecked(true);
         }
         notifyDataSetChanged();
+    }
+
+    /**
+     * Get the list of items that are checked for deletion.
+     *
+     * @return the array of items.
+     */
+    public T[] getCheckedItems() {
+        Set<T> items = new TreeSet<>();
+        T item = null;
+        for (DuplicateItemPair<T> pair : pairs) {
+            item = pair.getItem1();
+            if (item.isChecked()) {
+                items.add(item);
+            }
+            item = pair.getItem2();
+            if (item.isChecked()) {
+                items.add(item);
+            }
+        }
+        if (item == null) {
+            return null;
+        }
+        T[] array = (T[]) Array.newInstance(item.getClass(), items.size());
+        return items.toArray(array);
     }
 }

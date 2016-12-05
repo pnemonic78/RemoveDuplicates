@@ -44,19 +44,19 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
      */
     public abstract float match(T lhs, T rhs);
 
-    protected int compare(int lhs, int rhs) {
+    public static int compare(int lhs, int rhs) {
         return lhs - rhs;
     }
 
-    protected int compare(long lhs, long rhs) {
+    public static int compare(long lhs, long rhs) {
         return (lhs > rhs) ? LHS : ((lhs < rhs) ? RHS : SAME);
     }
 
-    protected int compare(String lhs, String rhs) {
+    public static int compare(String lhs, String rhs) {
         return (lhs == null) ? ((rhs == null) ? SAME : RHS) : ((rhs == null) ? LHS : lhs.compareTo(rhs));
     }
 
-    protected int compare(boolean lhs, boolean rhs) {
+    public static int compare(boolean lhs, boolean rhs) {
         return lhs == rhs ? SAME : (lhs ? LHS : RHS);
     }
 }

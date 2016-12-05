@@ -15,36 +15,27 @@
  *   Moshe Waisberg
  *
  */
-package com.github.duplicates;
+package com.github.duplicates.message;
+
+import android.content.Context;
+
+import com.github.duplicates.DuplicateDeleteTask;
+import com.github.duplicates.DuplicateProvider;
+import com.github.duplicates.DuplicateTaskListener;
 
 /**
- * Item that is a duplicate of some other item.
+ * Task to find duplicate messages.
  *
  * @author moshe.w
  */
-public abstract class DuplicateItem implements Comparable<DuplicateItem> {
+public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
 
-    private long id;
-    private boolean checked;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
+    public MessageDeleteTask(Context context, DuplicateTaskListener listener) {
+        super(context, listener);
     }
 
     @Override
-    public int compareTo(DuplicateItem another) {
-        return DuplicateComparator.compare(this.getId(), another.getId());
+    protected DuplicateProvider createProvider(Context context) {
+        return new MessageProvider(context);
     }
 }

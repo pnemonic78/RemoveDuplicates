@@ -33,9 +33,9 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.android.removeduplicates.R;
+import com.github.duplicates.message.MessageDeleteTask;
 import com.github.duplicates.message.MessageFindTask;
 
 import butterknife.BindView;
@@ -68,6 +68,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     RecyclerView list;
 
     private DuplicateFindTask finderTask;
+    private DuplicateDeleteTask deleteTask;
     private DuplicateAdapter adapter;
 
     @Override
@@ -84,10 +85,12 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     void search() {
         if ((finderTask != null) && !finderTask.isCancelled()) {
             finderTask.cancel(true);
+        } else if ((deleteTask != null) && !deleteTask.isCancelled()) {
+            deleteTask.cancel(true);
         } else {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
             if (checkPermissions(item)) {
-                DuplicateFindTask task = createTask(item);
+                DuplicateFindTask task = createFindTask(item);
                 this.finderTask = task;
                 if (task != null) {
                     this.adapter = task.createAdapter();
@@ -101,6 +104,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     private void searchStarted() {
+        spinner.setEnabled(false);
         spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
         counter.setText(getString(R.string.counter, 0));
         statusBar.setVisibility(View.VISIBLE);
@@ -111,6 +115,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     private void searchStopped(boolean cancelled) {
+        spinner.setEnabled(true);
         spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
         statusBar.setVisibility(View.GONE);
         finderTask = null;
@@ -120,66 +125,99 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     @Nullable
-    private DuplicateFindTask createTask(MainSpinnerItem item) {
+    private DuplicateFindTask createFindTask(MainSpinnerItem item) {
         Context context = this;
         DuplicateTaskListener listener = this;
 
         switch (item) {
 //            case ALARMS:
-//                return new AlarmTask(context, listener);
+//                return new AlarmFindTask(context, listener);
 //            case BOOKMARKS:
-//                return new BookmarkTask(context, listener);
+//                return new BookmarkFindTask(context, listener);
 //            case CALENDAR:
-//                return new CalendarTask(context, listener);
+//                return new CalendarFindTask(context, listener);
 //            case CALL_LOG:
-//                return new CallLogTask(context, listener);
+//                return new CallLogFindTask(context, listener);
 //            case CONTACTS:
-//                return new ContactTask(context, listener);
+//                return new ContactFindTask(context, listener);
             case MESSAGES:
                 return new MessageFindTask(context, listener);
         }
         return null;
     }
 
+    @Nullable
+    private DuplicateDeleteTask createDeleteTask(MainSpinnerItem item) {
+        Context context = this;
+        DuplicateTaskListener listener = this;
+
+        switch (item) {
+//            case ALARMS:
+//                return new AlarmDeleteTask(context, listener);
+//            case BOOKMARKS:
+//                return new BookmarkDeleteTask(context, listener);
+//            case CALENDAR:
+//                return new CalendarDeleteTask(context, listener);
+//            case CALL_LOG:
+//                return new CallLogDeleteTask(context, listener);
+//            case CONTACTS:
+//                return new ContactDeleteTask(context, listener);
+            case MESSAGES:
+                return new MessageDeleteTask(context, listener);
+        }
+        return null;
+    }
+
     @Override
     public void onDuplicateTaskStarted(DuplicateTask task) {
-        if (task == this.finderTask) {
+        if (task == finderTask) {
             searchStarted();
+        } else if (task == deleteTask) {
+            deleteStarted();
         }
     }
 
     @Override
     public void onDuplicateTaskFinished(DuplicateTask task) {
-        if (task == this.finderTask) {
+        if (task == finderTask) {
             searchStopped(false);
+            invalidateOptionsMenu();
+        } else if (task == deleteTask) {
+            deleteStopped(false);
             invalidateOptionsMenu();
         }
     }
 
     @Override
     public void onDuplicateTaskCancelled(DuplicateTask task) {
-        if (task == this.finderTask) {
+        if (task == finderTask) {
             searchStopped(true);
+        } else if (task == deleteTask) {
+            deleteStopped(true);
         }
     }
 
     @Override
     public void onDuplicateTaskProgress(DuplicateTask task, int count) {
-        if (task == this.finderTask) {
+        if (task == finderTask) {
+            counter.setText(getString(R.string.counter, count));
+        } else if (task == deleteTask) {
             counter.setText(getString(R.string.counter, count));
         }
     }
 
     @Override
     public void onDuplicateTaskMatch(DuplicateTask task, DuplicateItem item1, DuplicateItem item2, float match) {
-        if (task == this.finderTask) {
+        if (task == finderTask) {
             adapter.add(item1, item2, match);
         }
     }
 
     @Override
     public void onDuplicateTaskItemDeleted(DuplicateTask task, DuplicateItem item) {
-        //TODO
+        if (task == deleteTask) {
+            adapter.remove(item);
+        }
     }
 
     protected boolean checkPermissions(MainSpinnerItem item) {
@@ -239,8 +277,19 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     private void deleteItems() {
-        if ((adapter != null) && (adapter.getItemCount() > 0)) {
-            Toast.makeText(this, "Delete...", Toast.LENGTH_SHORT).show();
+        if ((deleteTask != null) && !deleteTask.isCancelled()) {
+            deleteTask.cancel(true);
+        } else if ((adapter != null) && (adapter.getItemCount() > 0)) {
+            MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
+            if (checkPermissions(item)) {
+                DuplicateDeleteTask task = createDeleteTask(item);
+                this.deleteTask = task;
+                if (task != null) {
+                    task.execute(adapter.getCheckedItems());
+                } else {
+                    searchStopped(false);
+                }
+            }
         }
     }
 
@@ -248,5 +297,17 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         if ((adapter != null) && (adapter.getItemCount() > 0)) {
             adapter.selectAll();
         }
+    }
+
+    private void deleteStarted() {
+        spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
+        counter.setText(getString(R.string.counter, 0));
+        statusBar.setVisibility(View.VISIBLE);
+    }
+
+    private void deleteStopped(boolean cancelled) {
+        spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
+        statusBar.setVisibility(View.GONE);
+        deleteTask = null;
     }
 }
