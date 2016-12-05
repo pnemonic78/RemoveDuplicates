@@ -99,15 +99,24 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
         int size = items.size();
 
         // Is it a duplicate?
+        float bestMatch = 0f;
+        T bestItem = null;
         float match;
         T item1;
-        // Most likely that a matching item is a neighbour.
+        // Most likely that a matching item is a neighbour,so count backwards.
         for (int i = size - 1; i >= 0; i--) {
             item1 = items.get(i);
             match = comparator.match(item1, item);
-            if (match > MATCH_GOOD) {
-                publishProgress(size, item1, item, match);
+            if ((match > MATCH_GOOD) && (match > bestMatch)) {
+                bestMatch = match;
+                bestItem = item1;
+                if (match == 1f) {
+                    break;
+                }
             }
+        }
+        if (bestItem != null) {
+            publishProgress(size, bestItem, item, bestMatch);
         }
 
         if (items.add(item)) {
