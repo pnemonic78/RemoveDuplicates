@@ -220,27 +220,25 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_delete:
-                if ((adapter != null) && (adapter.getItemCount() > 0)) {
-                    deleteItems();
-                    return true;
-                }
-                break;
+                deleteItems();
+                return true;
             case R.id.menu_select_all:
-                if ((adapter != null) && (adapter.getItemCount() > 0)) {
-                    selectAllItems();
-                    return true;
-                }
-                break;
+                selectAllItems();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void deleteItems() {
-        Toast.makeText(this, "Delete...", Toast.LENGTH_SHORT).show();
+        if ((adapter != null) && (adapter.getItemCount() > 0)) {
+            Toast.makeText(this, "Delete...", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void selectAllItems() {
-        Toast.makeText(this, "Select All...", Toast.LENGTH_SHORT).show();
+        if ((adapter != null) && (adapter.getItemCount() > 0)) {
+            Toast.makeText(this, "Select All...", Toast.LENGTH_SHORT).show();
+        }
     }
 }

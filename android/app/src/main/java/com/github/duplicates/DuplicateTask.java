@@ -73,6 +73,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
         return items;
     }
 
+    @Override
     protected void onProgressUpdate(Object... progress) {
         if (progress.length == 1) {
             listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
