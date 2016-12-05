@@ -36,7 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.android.removeduplicates.R;
-import com.github.duplicates.message.MessageFinderTask;
+import com.github.duplicates.message.MessageFindTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     @BindView(android.R.id.list)
     RecyclerView list;
 
-    private DuplicateFinderTask finderTask;
+    private DuplicateFindTask finderTask;
     private DuplicateAdapter adapter;
 
     @Override
@@ -87,7 +87,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         } else {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
             if (checkPermissions(item)) {
-                DuplicateFinderTask task = createTask(item);
+                DuplicateFindTask task = createTask(item);
                 this.finderTask = task;
                 if (task != null) {
                     this.adapter = task.createAdapter();
@@ -120,7 +120,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     @Nullable
-    private DuplicateFinderTask createTask(MainSpinnerItem item) {
+    private DuplicateFindTask createTask(MainSpinnerItem item) {
         Context context = this;
         DuplicateTaskListener listener = this;
 
@@ -136,20 +136,20 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 //            case CONTACTS:
 //                return new ContactTask(context, listener);
             case MESSAGES:
-                return new MessageFinderTask(context, listener);
+                return new MessageFindTask(context, listener);
         }
         return null;
     }
 
     @Override
-    public void onDuplicateTaskStarted(DuplicateFinderTask task) {
+    public void onDuplicateTaskStarted(DuplicateFindTask task) {
         if (task == this.finderTask) {
             searchStarted();
         }
     }
 
     @Override
-    public void onDuplicateTaskFinished(DuplicateFinderTask task) {
+    public void onDuplicateTaskFinished(DuplicateFindTask task) {
         if (task == this.finderTask) {
             searchStopped(false);
             invalidateOptionsMenu();
@@ -157,21 +157,21 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     @Override
-    public void onDuplicateTaskCancelled(DuplicateFinderTask task) {
+    public void onDuplicateTaskCancelled(DuplicateFindTask task) {
         if (task == this.finderTask) {
             searchStopped(true);
         }
     }
 
     @Override
-    public void onDuplicateTaskProgress(DuplicateFinderTask task, int count) {
+    public void onDuplicateTaskProgress(DuplicateFindTask task, int count) {
         if (task == this.finderTask) {
             counter.setText(getString(R.string.counter, count));
         }
     }
 
     @Override
-    public void onDuplicateTaskMatch(DuplicateFinderTask task, DuplicateItem item1, DuplicateItem item2, float match) {
+    public void onDuplicateTaskMatch(DuplicateFindTask task, DuplicateItem item1, DuplicateItem item2, float match) {
         if (task == this.finderTask) {
             adapter.add(item1, item2, match);
         }

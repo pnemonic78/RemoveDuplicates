@@ -19,7 +19,7 @@ package com.github.duplicates.message;
 
 import android.content.Context;
 
-import com.github.duplicates.DuplicateFinderTask;
+import com.github.duplicates.DuplicateFindTask;
 import com.github.duplicates.DuplicateTaskListener;
 
 /**
@@ -27,9 +27,9 @@ import com.github.duplicates.DuplicateTaskListener;
  *
  * @author moshe.w
  */
-public class MessageFinderTask extends DuplicateFinderTask<MessageItem, MessageViewHolder> {
+public class MessageFindTask extends DuplicateFindTask<MessageItem, MessageViewHolder> {
 
-    public MessageFinderTask(Context context, DuplicateTaskListener listener) {
+    public MessageFindTask(Context context, DuplicateTaskListener listener) {
         super(context, listener);
     }
 
