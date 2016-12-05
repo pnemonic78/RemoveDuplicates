@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         ButterKnife.bind(this);
 
         spinner.setAdapter(new MainSpinnerAdapter());
-        searchStopped();
+        searchStopped(false);
     }
 
     @OnClick(R.id.search)
@@ -94,7 +94,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
                     list.setAdapter(adapter);
                     task.execute();
                 } else {
-                    searchStopped();
+                    searchStopped(false);
                 }
             }
         }
@@ -110,10 +110,13 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         invalidateOptionsMenu();
     }
 
-    private void searchStopped() {
+    private void searchStopped(boolean cancelled) {
         spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
         statusBar.setVisibility(View.GONE);
         finderTask = null;
+        if (!cancelled) {
+            invalidateOptionsMenu();
+        }
     }
 
     @Nullable
@@ -148,7 +151,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     @Override
     public void onDuplicateTaskFinished(DuplicateFinderTask task) {
         if (task == this.finderTask) {
-            searchStopped();
+            searchStopped(false);
             invalidateOptionsMenu();
         }
     }
@@ -156,7 +159,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     @Override
     public void onDuplicateTaskCancelled(DuplicateFinderTask task) {
         if (task == this.finderTask) {
-            searchStopped();
+            searchStopped(true);
         }
     }
 
