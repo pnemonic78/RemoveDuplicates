@@ -17,6 +17,7 @@
  */
 package com.github.duplicates.message;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -46,7 +47,7 @@ public class MessageProvider extends DuplicateProvider<MessageItem> {
     }
 
     @Override
-    protected Uri getCursorUri() {
+    protected Uri getContentUri() {
         return null;
     }
 
@@ -78,5 +79,10 @@ public class MessageProvider extends DuplicateProvider<MessageItem> {
     @Override
     public DuplicateProviderListener<MessageItem, DuplicateProvider<MessageItem>> getListener() {
         return delegate.getListener();
+    }
+
+    @Override
+    public boolean deleteItem(ContentResolver cr, MessageItem item) {
+        return delegate.deleteItem(cr, item);
     }
 }

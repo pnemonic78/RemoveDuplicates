@@ -124,4 +124,8 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
             publishProgress(size + 1);
         }
     }
+
+    @Override
+    public void onItemDeleted(DuplicateProvider<T> provider, T item) {
+    }
 }

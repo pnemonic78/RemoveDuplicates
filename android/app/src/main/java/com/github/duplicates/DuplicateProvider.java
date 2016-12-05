@@ -18,11 +18,13 @@
 package com.github.duplicates;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -53,7 +55,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
-        Cursor cursor = cr.query(getCursorUri(), getCursorProjection(), null, null, null);
+        Cursor cursor = cr.query(getContentUri(), getCursorProjection(), null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 T item;
@@ -82,7 +84,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
-        Cursor cursor = cr.query(getCursorUri(), getCursorProjection(), null, null, null);
+        Cursor cursor = cr.query(getContentUri(), getCursorProjection(), null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 T item;
@@ -96,7 +98,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         }
     }
 
-    protected abstract Uri getCursorUri();
+    protected abstract Uri getContentUri();
 
     protected String[] getCursorProjection() {
         return null;
@@ -112,5 +114,44 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
 
     public void setListener(DuplicateProviderListener<T, DuplicateProvider<T>> listener) {
         this.listener = listener;
+    }
+
+    /**
+     * Delete the items from the system provider.
+     *
+     * @param items the list of items.
+     */
+    public void deleteItems(Collection<T> items) {
+        DuplicateProviderListener<T, DuplicateProvider<T>> listener = getListener();
+        if (listener == null) {
+            return;
+        }
+        Context context = getContext();
+        ContentResolver cr = context.getContentResolver();
+
+        for (T item : items) {
+            if (deleteItem(cr, item)) {
+                listener.onItemDeleted(this, item);
+            }
+        }
+    }
+
+    /**
+     * Delete an item from the system provider.
+     *
+     * @param item the item.
+     */
+    public boolean deleteItem(T item) {
+        return deleteItem(getContext().getContentResolver(), item);
+    }
+
+    /**
+     * Delete an item from the system provider.
+     *
+     * @param cr   the content resolver.
+     * @param item the item.
+     */
+    public boolean deleteItem(ContentResolver cr, T item) {
+        return cr.delete(ContentUris.withAppendedId(getContentUri(), item.getId()), null, null) > 0;
     }
 }

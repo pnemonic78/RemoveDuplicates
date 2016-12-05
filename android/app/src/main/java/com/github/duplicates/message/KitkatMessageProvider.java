@@ -89,7 +89,7 @@ public class KitkatMessageProvider extends DuplicateProvider<MessageItem> {
     }
 
     @Override
-    protected Uri getCursorUri() {
+    protected Uri getContentUri() {
         return Telephony.Sms.CONTENT_URI;
     }
 
