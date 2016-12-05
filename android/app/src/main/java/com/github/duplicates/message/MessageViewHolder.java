@@ -110,13 +110,13 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
 
         match.setText(context.getString(R.string.match, formatter.format(pair.getMatch())));
 
-        checkbox1.setChecked(false);
+        checkbox1.setChecked(item1.isChecked());
         date1.setText(DateUtils.formatDateTime(context, item1.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address1.setText(item1.getAddress());
         type1.setText(getTypeName(context, item1.getType()));
         body1.setText(item1.getBody());
 
-        checkbox2.setChecked(true);
+        checkbox2.setChecked(item2.isChecked());
         date2.setText(DateUtils.formatDateTime(context, item2.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address2.setText(item2.getAddress());
         type2.setText(getTypeName(context, item2.getType()));

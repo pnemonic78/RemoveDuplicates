@@ -241,7 +241,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
     private void selectAllItems() {
         if ((adapter != null) && (adapter.getItemCount() > 0)) {
-            Toast.makeText(this, "Select All...", Toast.LENGTH_SHORT).show();
+            adapter.selectAll();
         }
     }
 }

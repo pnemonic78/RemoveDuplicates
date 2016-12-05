@@ -76,4 +76,15 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
             }
         }
     }
+
+    /**
+     * Mark all the items as checked.
+     */
+    public void selectAll() {
+        for (DuplicateItemPair<T> pair : pairs) {
+            pair.getItem1().setChecked(true);
+            pair.getItem2().setChecked(true);
+        }
+        notifyDataSetChanged();
+    }
 }
