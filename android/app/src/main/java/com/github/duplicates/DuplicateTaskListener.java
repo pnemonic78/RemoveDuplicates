@@ -22,7 +22,7 @@ package com.github.duplicates;
  *
  * @author moshe.w
  */
-public interface DuplicateTaskListener<T extends DuplicateTask, I extends DuplicateItem> {
+public interface DuplicateTaskListener<T extends DuplicateFinderTask, I extends DuplicateItem> {
 
     /**
      * Percentage for two items to be considered a good match.

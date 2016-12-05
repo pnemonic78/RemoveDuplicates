@@ -30,7 +30,7 @@ import static com.github.duplicates.DuplicateTaskListener.MATCH_GOOD;
  *
  * @author moshe.w
  */
-public abstract class DuplicateTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends AsyncTask<Object, Object, List<T>>
+public abstract class DuplicateFinderTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends AsyncTask<Object, Object, List<T>>
         implements DuplicateProviderListener<T, DuplicateProvider<T>> {
 
     private final Context context;
@@ -39,7 +39,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, VH extends Duplicat
     private DuplicateComparator<T> comparator;
     private final List<T> items = new ArrayList<>();
 
-    public DuplicateTask(Context context, DuplicateTaskListener listener) {
+    public DuplicateFinderTask(Context context, DuplicateTaskListener listener) {
         this.context = context;
         this.listener = listener;
     }

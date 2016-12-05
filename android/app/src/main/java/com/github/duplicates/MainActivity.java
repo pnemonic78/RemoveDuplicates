@@ -36,7 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.android.removeduplicates.R;
-import com.github.duplicates.message.MessageTask;
+import com.github.duplicates.message.MessageFinderTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     @BindView(android.R.id.list)
     RecyclerView list;
 
-    private DuplicateTask task;
+    private DuplicateFinderTask finderTask;
     private DuplicateAdapter adapter;
 
     @Override
@@ -82,13 +82,13 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
     @OnClick(R.id.search)
     void search() {
-        if ((task != null) && !task.isCancelled()) {
-            task.cancel(true);
+        if ((finderTask != null) && !finderTask.isCancelled()) {
+            finderTask.cancel(true);
         } else {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
             if (checkPermissions(item)) {
-                DuplicateTask task = createTask(item);
-                this.task = task;
+                DuplicateFinderTask task = createTask(item);
+                this.finderTask = task;
                 if (task != null) {
                     this.adapter = task.createAdapter();
                     list.setAdapter(adapter);
@@ -113,11 +113,11 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     private void searchStopped() {
         spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
         statusBar.setVisibility(View.GONE);
-        task = null;
+        finderTask = null;
     }
 
     @Nullable
-    private DuplicateTask createTask(MainSpinnerItem item) {
+    private DuplicateFinderTask createTask(MainSpinnerItem item) {
         Context context = this;
         DuplicateTaskListener listener = this;
 
@@ -133,43 +133,43 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 //            case CONTACTS:
 //                return new ContactTask(context, listener);
             case MESSAGES:
-                return new MessageTask(context, listener);
+                return new MessageFinderTask(context, listener);
         }
         return null;
     }
 
     @Override
-    public void onDuplicateTaskStarted(DuplicateTask task) {
-        if (task == this.task) {
+    public void onDuplicateTaskStarted(DuplicateFinderTask task) {
+        if (task == this.finderTask) {
             searchStarted();
         }
     }
 
     @Override
-    public void onDuplicateTaskFinished(DuplicateTask task) {
-        if (task == this.task) {
+    public void onDuplicateTaskFinished(DuplicateFinderTask task) {
+        if (task == this.finderTask) {
             searchStopped();
             invalidateOptionsMenu();
         }
     }
 
     @Override
-    public void onDuplicateTaskCancelled(DuplicateTask task) {
-        if (task == this.task) {
+    public void onDuplicateTaskCancelled(DuplicateFinderTask task) {
+        if (task == this.finderTask) {
             searchStopped();
         }
     }
 
     @Override
-    public void onDuplicateTaskProgress(DuplicateTask task, int count) {
-        if (task == this.task) {
+    public void onDuplicateTaskProgress(DuplicateFinderTask task, int count) {
+        if (task == this.finderTask) {
             counter.setText(getString(R.string.counter, count));
         }
     }
 
     @Override
-    public void onDuplicateTaskMatch(DuplicateTask task, DuplicateItem item1, DuplicateItem item2, float match) {
-        if (task == this.task) {
+    public void onDuplicateTaskMatch(DuplicateFinderTask task, DuplicateItem item1, DuplicateItem item2, float match) {
+        if (task == this.finderTask) {
             adapter.add(item1, item2, match);
         }
     }
