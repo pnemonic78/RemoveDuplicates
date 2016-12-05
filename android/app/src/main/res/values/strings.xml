@@ -2,20 +2,6 @@
     <string name="app_name">Remove Duplicates</string>
     <string name="title_item_detail">Item Detail</string>
 
-    <string name="alarms">Alarms</string>
-    <string name="bookmarks">Bookmarks</string>
-    <string name="calendar">Calendar</string>
-    <string name="call_log">Call log</string>
-    <string name="contacts">Contacts</string>
-    <string name="messages">Messages</string>
-
-    <string name="item_alarms" translatable="false">@string/alarms</string>
-    <string name="item_bookmarks" translatable="false">@string/bookmarks</string>
-    <string name="item_calendar" translatable="false">@string/calendar</string>
-    <string name="item_call_log" translatable="false">@string/call_log</string>
-    <string name="item_contacts" translatable="false">@string/contacts</string>
-    <string name="item_messages" translatable="false">@string/messages</string>
-
     <string name="counter" translatable="false">%d</string>
     <string name="match" translatable="false">%s match</string>
 
@@ -26,7 +12,24 @@
     <string name="dummy_date" translatable="false">2016/12/31</string>
     <string name="dummy_date_time" translatable="false">2016/12/31 12:34</string>
 
+    <string name="alarms">Alarms</string>
+    <string name="item_alarms" translatable="false">@string/alarms</string>
+
+    <string name="bookmarks">Bookmarks</string>
+    <string name="item_bookmarks" translatable="false">@string/bookmarks</string>
+
+    <string name="calendar">Calendar</string>
+    <string name="item_calendar" translatable="false">@string/calendar</string>
+
+    <string name="call_log">Call log</string>
+    <string name="item_call_log" translatable="false">@string/call_log</string>
+
+    <string name="contacts">Contacts</string>
+    <string name="item_contacts" translatable="false">@string/contacts</string>
+
     <!-- Messages -->
+    <string name="messages">Messages</string>
+    <string name="item_messages" translatable="false">@string/messages</string>
     <string name="message_type_all">all</string>
     <string name="message_type_inbox">inbox</string>
     <string name="message_type_sent">sent</string>
@@ -34,5 +37,9 @@
     <string name="message_type_outbox">outbox</string>
     <string name="message_type_failed">failed</string>
     <string name="message_type_queued">queued</string>
+
+    <!-- Menu -->
+    <string name="menu_delete">Delete</string>
+    <string name="menu_select_all">Select All</string>
 
 </resources>

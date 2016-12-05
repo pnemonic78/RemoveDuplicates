@@ -26,11 +26,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.message.MessageTask;
@@ -104,6 +107,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         if (adapter != null) {
             adapter.clear();
         }
+        invalidateOptionsMenu();
     }
 
     private void searchStopped() {
@@ -145,6 +149,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     public void onDuplicateTaskFinished(DuplicateTask task) {
         if (task == this.task) {
             searchStopped();
+            invalidateOptionsMenu();
         }
     }
 
@@ -194,10 +199,48 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
                 permission = Manifest.permission.READ_SMS;
                 break;
         }
-        if ((permission != null) && checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+        if ((permission != null) && (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)) {
             requestPermissions(new String[]{permission}, ACTIVITY_PERMISSIONS);
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+        if ((adapter != null) && (adapter.getItemCount() > 0)) {
+            getMenuInflater().inflate(R.menu.main, menu);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_delete:
+                if ((adapter != null) && (adapter.getItemCount() > 0)) {
+                    deleteItems();
+                    return true;
+                }
+                break;
+            case R.id.menu_select_all:
+                if ((adapter != null) && (adapter.getItemCount() > 0)) {
+                    selectAllItems();
+                    return true;
+                }
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteItems() {
+        Toast.makeText(this, "Delete...", Toast.LENGTH_SHORT).show();
+    }
+
+    private void selectAllItems() {
+        Toast.makeText(this, "Select All...", Toast.LENGTH_SHORT).show();
     }
 }
