@@ -31,6 +31,7 @@ import java.text.NumberFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * View holder of a duplicate message.
@@ -93,6 +94,9 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
 
     private final NumberFormat formatter = NumberFormat.getPercentInstance();
 
+    private MessageItem item1;
+    private MessageItem item2;
+
     public MessageViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -100,8 +104,8 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
 
     @Override
     public void bind(DuplicateItemPair<MessageItem> pair) {
-        MessageItem item1 = pair.getItem1();
-        MessageItem item2 = pair.getItem2();
+        this.item1 = pair.getItem1();
+        this.item2 = pair.getItem2();
         Context context = itemView.getContext();
 
         match.setText(context.getString(R.string.match, formatter.format(pair.getMatch())));
@@ -137,5 +141,15 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
                 return context.getText(R.string.message_type_sent);
         }
         return null;
+    }
+
+    @OnClick(R.id.checkbox1)
+    void checkbox1Clicked() {
+        item1.setChecked(checkbox1.isChecked());
+    }
+
+    @OnClick(R.id.checkbox2)
+    void checkbox2Clicked() {
+        item2.setChecked(checkbox2.isChecked());
     }
 }

@@ -69,9 +69,11 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      */
     public void add(T item1, T item2, float match) {
         int position = pairs.size();
-        DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match);
-        if (pairs.add(pair)) {
-            notifyItemInserted(position);
+        if (!item1.isChecked() && !item2.isChecked()) {
+            DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match);
+            if (pairs.add(pair)) {
+                notifyItemInserted(position);
+            }
         }
     }
 }

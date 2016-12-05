@@ -25,6 +25,7 @@ package com.github.duplicates;
 public abstract class DuplicateItem {
 
     private long id;
+    private boolean checked;
 
     public long getId() {
         return id;
@@ -32,5 +33,13 @@ public abstract class DuplicateItem {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }
