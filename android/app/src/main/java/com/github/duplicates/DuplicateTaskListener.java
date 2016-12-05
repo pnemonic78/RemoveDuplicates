@@ -22,7 +22,7 @@ package com.github.duplicates;
  *
  * @author moshe.w
  */
-public interface DuplicateTaskListener<T extends DuplicateFindTask, I extends DuplicateItem> {
+public interface DuplicateTaskListener<T extends DuplicateTask, I extends DuplicateItem> {
 
     /**
      * Percentage for two items to be considered a good match.
@@ -67,4 +67,12 @@ public interface DuplicateTaskListener<T extends DuplicateFindTask, I extends Du
      * @param match the match percentage.
      */
     void onDuplicateTaskMatch(T task, I item1, I item2, float match);
+
+    /**
+     * Notification that the task has deleted a duplicate item.
+     *
+     * @param task the task.
+     * @param item the item.
+     */
+    void onDuplicateTaskItemDeleted(T task, I item);
 }

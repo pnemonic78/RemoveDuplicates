@@ -129,9 +129,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
+        int count = 0;
         for (T item : items) {
             if (deleteItem(cr, item)) {
-                listener.onItemDeleted(this, item);
+                listener.onItemDeleted(this, ++count, item);
             }
         }
     }

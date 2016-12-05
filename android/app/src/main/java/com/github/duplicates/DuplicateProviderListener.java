@@ -28,15 +28,17 @@ public interface DuplicateProviderListener<I extends DuplicateItem, P extends Du
      * Notification that the provider has fetched an item.
      *
      * @param provider the provider.
+     * @param count    the number of items fetched.
      * @param item     the item.
      */
-    void onItemFetched(P provider, I item);
+    void onItemFetched(P provider, int count, I item);
 
     /**
      * Notification that the provider has deleted an item.
      *
      * @param provider the provider.
+     * @param count    the number of items deleted.
      * @param item     the item.
      */
-    void onItemDeleted(P provider, I item);
+    void onItemDeleted(P provider, int count, I item);
 }

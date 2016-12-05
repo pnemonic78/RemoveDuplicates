@@ -142,14 +142,14 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     @Override
-    public void onDuplicateTaskStarted(DuplicateFindTask task) {
+    public void onDuplicateTaskStarted(DuplicateTask task) {
         if (task == this.finderTask) {
             searchStarted();
         }
     }
 
     @Override
-    public void onDuplicateTaskFinished(DuplicateFindTask task) {
+    public void onDuplicateTaskFinished(DuplicateTask task) {
         if (task == this.finderTask) {
             searchStopped(false);
             invalidateOptionsMenu();
@@ -157,24 +157,29 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     @Override
-    public void onDuplicateTaskCancelled(DuplicateFindTask task) {
+    public void onDuplicateTaskCancelled(DuplicateTask task) {
         if (task == this.finderTask) {
             searchStopped(true);
         }
     }
 
     @Override
-    public void onDuplicateTaskProgress(DuplicateFindTask task, int count) {
+    public void onDuplicateTaskProgress(DuplicateTask task, int count) {
         if (task == this.finderTask) {
             counter.setText(getString(R.string.counter, count));
         }
     }
 
     @Override
-    public void onDuplicateTaskMatch(DuplicateFindTask task, DuplicateItem item1, DuplicateItem item2, float match) {
+    public void onDuplicateTaskMatch(DuplicateTask task, DuplicateItem item1, DuplicateItem item2, float match) {
         if (task == this.finderTask) {
             adapter.add(item1, item2, match);
         }
+    }
+
+    @Override
+    public void onDuplicateTaskItemDeleted(DuplicateTask task, DuplicateItem item) {
+        //TODO
     }
 
     protected boolean checkPermissions(MainSpinnerItem item) {
