@@ -17,7 +17,6 @@
  */
 package com.github.duplicates;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -38,6 +37,7 @@ import android.widget.Toast;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.message.MessageDeleteTask;
 import com.github.duplicates.message.MessageFindTask;
+import com.github.duplicates.message.MessageProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -245,7 +245,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 //            case CONTACTS:
 //            break;
             case MESSAGES:
-                permissions = new String[]{Manifest.permission.READ_SMS, "android.permission.WRITE_SMS"};
+                permissions = MessageProvider.PERMISSIONS;
                 break;
         }
         if (!checkSelfPermissions(permissions)) {

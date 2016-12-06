@@ -17,6 +17,7 @@
  */
 package com.github.duplicates.message;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,6 +35,8 @@ import java.util.List;
  * @author moshe.w
  */
 public class MessageProvider extends DuplicateProvider<MessageItem> {
+
+    public static String[] PERMISSIONS = {Manifest.permission.READ_SMS, "android.permission.WRITE_SMS"};
 
     private final DuplicateProvider<MessageItem> delegate;
 
