@@ -229,7 +229,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
     @TargetApi(Build.VERSION_CODES.M)
     protected boolean checkPermissionsImpl(MainSpinnerItem item) {
-        String permission = null;
+        String[] permissions = null;
         switch (item) {
 //            case ALARMS:
 //            break;
@@ -242,12 +242,24 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 //            case CONTACTS:
 //            break;
             case MESSAGES:
-                permission = Manifest.permission.READ_SMS;
+                permissions = new String[]{Manifest.permission.READ_SMS, "android.permission.WRITE_SMS"};
                 break;
         }
-        if ((permission != null) && (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)) {
-            requestPermissions(new String[]{permission}, ACTIVITY_PERMISSIONS);
+        if (!checkSelfPermissions(permissions)) {
+            requestPermissions(permissions, ACTIVITY_PERMISSIONS);
             return false;
+        }
+        return true;
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    protected boolean checkSelfPermissions(String[] permissions) {
+        if (permissions != null) {
+            for (String permission : permissions) {
+                if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
         }
         return true;
     }
