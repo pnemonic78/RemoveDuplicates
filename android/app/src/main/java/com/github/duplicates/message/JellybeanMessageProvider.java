@@ -72,7 +72,7 @@ public class JellybeanMessageProvider extends DuplicateProvider<MessageItem> {
 
     @Override
     protected Uri getContentUri() {
-        return Uri.parse("content://sms/");
+        return Uri.parse("content://sms");
     }
 
     @Override
