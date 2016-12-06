@@ -4,6 +4,7 @@
 
     <string name="counter" translatable="false">%d</string>
     <string name="match" translatable="false">%s match</string>
+    <string name="permissions_denied">Not allowed! Please grant permissions.</string>
 
     <!-- Debug -->
     <string name="dummy_match" translatable="false">80%</string>

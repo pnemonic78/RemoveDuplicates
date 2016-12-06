@@ -33,6 +33,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.message.MessageDeleteTask;
@@ -99,6 +100,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
                 } else {
                     searchStopped(false);
                 }
+            } else {
+                Toast.makeText(this, R.string.permissions_denied, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -301,6 +304,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
                 } else {
                     searchStopped(false);
                 }
+            } else {
+                Toast.makeText(this, R.string.permissions_denied, Toast.LENGTH_LONG).show();
             }
         }
     }
