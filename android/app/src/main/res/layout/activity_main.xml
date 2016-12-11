@@ -36,6 +36,11 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <TextView
             android:id="@+id/counter"
             android:layout_width="0dp"
@@ -43,11 +48,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/counter"/>
-
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
