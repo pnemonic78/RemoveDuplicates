@@ -17,7 +17,6 @@
  */
 package com.github.duplicates.message;
 
-import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -35,8 +34,6 @@ import java.util.List;
  * @author moshe.w
  */
 public class MessageProvider extends DuplicateProvider<MessageItem> {
-
-    public static String[] PERMISSIONS = {Manifest.permission.READ_SMS, "android.permission.WRITE_SMS"};
 
     private final DuplicateProvider<MessageItem> delegate;
 
@@ -87,5 +84,25 @@ public class MessageProvider extends DuplicateProvider<MessageItem> {
     @Override
     public boolean deleteItem(ContentResolver cr, MessageItem item) {
         return delegate.deleteItem(cr, item);
+    }
+
+    @Override
+    public void onPreExecute() {
+        delegate.onPreExecute();
+    }
+
+    @Override
+    public void onPostExecute() {
+        delegate.onPostExecute();
+    }
+
+    @Override
+    public String[] getReadPermissions() {
+        return delegate.getReadPermissions();
+    }
+
+    @Override
+    public String[] getDeletePermissions() {
+        return delegate.getDeletePermissions();
     }
 }

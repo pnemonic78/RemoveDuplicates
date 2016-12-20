@@ -73,4 +73,9 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends Dupli
     public void onItemDeleted(DuplicateProvider<T> provider, int count, T item) {
         publishProgress(count, item);
     }
+
+    @Override
+    protected String[] getPermissions() {
+        return getProvider().getDeletePermissions();
+    }
 }

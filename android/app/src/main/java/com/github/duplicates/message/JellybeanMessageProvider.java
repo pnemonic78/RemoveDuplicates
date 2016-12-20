@@ -17,6 +17,7 @@
  */
 package com.github.duplicates.message;
 
+import android.Manifest;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -31,6 +32,9 @@ import static android.provider.BaseColumns._ID;
  * @author moshe.w
  */
 public class JellybeanMessageProvider extends DuplicateProvider<MessageItem> {
+
+    private static String[] PERMISSIONS_READ = {Manifest.permission.READ_SMS};
+    private static String[] PERMISSIONS_WRITE = {"android.permission.WRITE_SMS"};
 
     private static final String[] PROJECTION = {
             _ID,
@@ -102,5 +106,15 @@ public class JellybeanMessageProvider extends DuplicateProvider<MessageItem> {
         item.setSubject(cursor.getString(INDEX_SUBJECT));
         item.setThreadId(cursor.getLong(INDEX_THREAD_ID));
         item.setType(cursor.getInt(INDEX_TYPE));
+    }
+
+    @Override
+    public String[] getReadPermissions() {
+        return PERMISSIONS_READ;
+    }
+
+    @Override
+    public String[] getDeletePermissions() {
+        return PERMISSIONS_WRITE;
     }
 }

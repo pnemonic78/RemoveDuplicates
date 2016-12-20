@@ -24,8 +24,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Telephony;
 
-import com.github.duplicates.DuplicateProvider;
-
 import static android.provider.BaseColumns._ID;
 import static android.provider.Telephony.TextBasedSmsColumns.ADDRESS;
 import static android.provider.Telephony.TextBasedSmsColumns.BODY;
@@ -48,7 +46,7 @@ import static android.provider.Telephony.TextBasedSmsColumns.TYPE;
  * @author moshe.w
  */
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class KitkatMessageProvider extends DuplicateProvider<MessageItem> {
+public class KitkatMessageProvider extends JellybeanMessageProvider {
 
     private static final String[] PROJECTION = {
             _ID,
@@ -96,11 +94,6 @@ public class KitkatMessageProvider extends DuplicateProvider<MessageItem> {
     @Override
     protected String[] getCursorProjection() {
         return PROJECTION;
-    }
-
-    @Override
-    public MessageItem createItem() {
-        return new MessageItem();
     }
 
     @Override

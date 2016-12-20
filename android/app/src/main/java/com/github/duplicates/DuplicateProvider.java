@@ -156,4 +156,30 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
     public boolean deleteItem(ContentResolver cr, T item) {
         return cr.delete(ContentUris.withAppendedId(getContentUri(), item.getId()), null, null) > 0;
     }
+
+    /**
+     * Execute some code before task does background work.
+     */
+    public void onPreExecute() {
+    }
+
+    /**
+     * Execute some code after the task did background work.
+     */
+    public void onPostExecute() {
+    }
+
+    /**
+     * Get the permissions necessary for reading content from the system provider.
+     *
+     * @return the array of permissions.
+     */
+    public abstract String[] getReadPermissions();
+
+    /**
+     * Get the permissions necessary for deleting content from the system provider.
+     *
+     * @return the array of permissions.
+     */
+    public abstract String[] getDeletePermissions();
 }

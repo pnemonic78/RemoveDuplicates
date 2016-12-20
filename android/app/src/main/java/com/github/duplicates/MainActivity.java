@@ -20,7 +20,6 @@ package com.github.duplicates;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,12 +31,10 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.message.MessageDeleteTask;
 import com.github.duplicates.message.MessageFindTask;
-import com.github.duplicates.message.MessageProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,11 +46,6 @@ import butterknife.OnClick;
  * @author moshe.w
  */
 public class MainActivity extends Activity implements DuplicateTaskListener {
-
-    /**
-     * Activity id for requesting location permissions.
-     */
-    protected static final int ACTIVITY_PERMISSIONS = 2;
 
     @BindView(R.id.spinner)
     Spinner spinner;
@@ -90,18 +82,14 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
             deleteTask.cancel(true);
         } else {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
-            if (checkPermissions(item)) {
-                DuplicateFindTask task = createFindTask(item);
-                this.finderTask = task;
-                if (task != null) {
-                    this.adapter = task.createAdapter();
-                    list.setAdapter(adapter);
-                    task.execute();
-                } else {
-                    searchStopped(false);
-                }
+            DuplicateFindTask task = createFindTask(item);
+            this.finderTask = task;
+            if (task != null) {
+                this.adapter = task.createAdapter();
+                list.setAdapter(adapter);
+                task.start(this);
             } else {
-                Toast.makeText(this, R.string.permissions_denied, Toast.LENGTH_LONG).show();
+                searchStopped(false);
             }
         }
     }
@@ -223,48 +211,15 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         }
     }
 
-    protected boolean checkPermissions(MainSpinnerItem item) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return checkPermissionsImpl(item);
-        }
-        return true;
-    }
-
     @TargetApi(Build.VERSION_CODES.M)
-    protected boolean checkPermissionsImpl(MainSpinnerItem item) {
-        String[] permissions = null;
-        switch (item) {
-//            case ALARMS:
-//            break;
-//            case BOOKMARKS:
-//            break;
-//            case CALENDAR:
-//            break;
-//            case CALL_LOG:
-//            break;
-//            case CONTACTS:
-//            break;
-            case MESSAGES:
-                permissions = MessageProvider.PERMISSIONS;
-                break;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (finderTask != null) {
+            finderTask.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        } else if (deleteTask != null) {
+            deleteTask.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-        if (!checkSelfPermissions(permissions)) {
-            requestPermissions(permissions, ACTIVITY_PERMISSIONS);
-            return false;
-        }
-        return true;
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    protected boolean checkSelfPermissions(String[] permissions) {
-        if (permissions != null) {
-            for (String permission : permissions) {
-                if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     @Override
@@ -296,16 +251,12 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
             deleteTask.cancel(true);
         } else if ((adapter != null) && (adapter.getItemCount() > 0)) {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
-            if (checkPermissions(item)) {
-                DuplicateDeleteTask task = createDeleteTask(item);
-                this.deleteTask = task;
-                if (task != null) {
-                    task.execute(adapter.getCheckedItems());
-                } else {
-                    searchStopped(false);
-                }
+            DuplicateDeleteTask task = createDeleteTask(item);
+            this.deleteTask = task;
+            if (task != null) {
+                task.start(this, adapter.getCheckedItems());
             } else {
-                Toast.makeText(this, R.string.permissions_denied, Toast.LENGTH_LONG).show();
+                searchStopped(false);
             }
         }
     }
