@@ -20,6 +20,7 @@ package com.github.duplicates;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -277,5 +278,15 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
         statusBar.setVisibility(View.GONE);
         deleteTask = null;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (finderTask != null) {
+            finderTask.onActivityResult(this, requestCode, resultCode, data);
+        } else if (deleteTask != null) {
+            deleteTask.onActivityResult(this, requestCode, resultCode, data);
+        }
     }
 }

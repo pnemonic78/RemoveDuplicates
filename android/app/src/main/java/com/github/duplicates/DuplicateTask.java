@@ -20,6 +20,7 @@ package com.github.duplicates;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -180,5 +181,8 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      */
     protected void onPermissionDenied() {
         Toast.makeText(getContext(), R.string.permissions_denied, Toast.LENGTH_LONG).show();
+    }
+
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
     }
 }
