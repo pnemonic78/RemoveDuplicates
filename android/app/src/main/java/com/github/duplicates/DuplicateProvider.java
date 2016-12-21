@@ -26,6 +26,7 @@ import android.net.Uri;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 
 /**
  * Provider of duplicate items.
@@ -36,21 +37,44 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
 
     private final Context context;
     private DuplicateProviderListener<T, DuplicateProvider<T>> listener;
+    private boolean cancelled;
 
     protected DuplicateProvider(Context context) {
         this.context = context;
+    }
+
+    public DuplicateProviderListener<T, DuplicateProvider<T>> getListener() {
+        return listener;
+    }
+
+    public void setListener(DuplicateProviderListener<T, DuplicateProvider<T>> listener) {
+        this.listener = listener;
     }
 
     protected Context getContext() {
         return context;
     }
 
+    protected abstract Uri getContentUri();
+
+    protected String[] getCursorProjection() {
+        return null;
+    }
+
+    public abstract T createItem();
+
+    public abstract void populateItem(Cursor cursor, T item);
+
     /**
      * Get the items from the system provider.
      *
      * @return the list of items.
+     * @throws CancellationException if the provider has been cancelled.
      */
-    public List<T> getItems() {
+    public List<T> getItems() throws CancellationException {
+        if (isCancelled()) {
+            throw new CancellationException();
+        }
         List<T> items = new ArrayList<>();
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
@@ -60,6 +84,9 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
             if (cursor.moveToFirst()) {
                 T item;
                 do {
+                    if (isCancelled()) {
+                        break;
+                    }
                     item = createItem();
                     populateItem(cursor, item);
                     items.add(item);
@@ -75,8 +102,12 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * Fetch the items from the system provider into the listener.
      *
      * @return the list of items.
+     * @throws CancellationException if the provider has been cancelled.
      */
-    public void fetchItems() {
+    public void fetchItems() throws CancellationException {
+        if (isCancelled()) {
+            throw new CancellationException();
+        }
         DuplicateProviderListener<T, DuplicateProvider<T>> listener = getListener();
         if (listener == null) {
             return;
@@ -90,6 +121,9 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
                 T item;
                 int count = 0;
                 do {
+                    if (isCancelled()) {
+                        break;
+                    }
                     item = createItem();
                     populateItem(cursor, item);
                     listener.onItemFetched(this, ++count, item);
@@ -99,30 +133,16 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         }
     }
 
-    protected abstract Uri getContentUri();
-
-    protected String[] getCursorProjection() {
-        return null;
-    }
-
-    public abstract T createItem();
-
-    public abstract void populateItem(Cursor cursor, T item);
-
-    public DuplicateProviderListener<T, DuplicateProvider<T>> getListener() {
-        return listener;
-    }
-
-    public void setListener(DuplicateProviderListener<T, DuplicateProvider<T>> listener) {
-        this.listener = listener;
-    }
-
     /**
      * Delete the items from the system provider.
      *
      * @param items the list of items.
+     * @throws CancellationException if the provider has been cancelled.
      */
-    public void deleteItems(Collection<T> items) {
+    public void deleteItems(Collection<T> items) throws CancellationException {
+        if (isCancelled()) {
+            throw new CancellationException();
+        }
         DuplicateProviderListener<T, DuplicateProvider<T>> listener = getListener();
         if (listener == null) {
             return;
@@ -132,6 +152,9 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
 
         int count = 0;
         for (T item : items) {
+            if (isCancelled()) {
+                break;
+            }
             if (deleteItem(cr, item)) {
                 listener.onItemDeleted(this, ++count, item);
             }
@@ -144,6 +167,9 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @param item the item.
      */
     public boolean deleteItem(T item) {
+        if (isCancelled()) {
+            return false;
+        }
         return deleteItem(getContext().getContentResolver(), item);
     }
 
@@ -182,4 +208,20 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @return the array of permissions.
      */
     public abstract String[] getDeletePermissions();
+
+    /**
+     * Cancel all operations.
+     */
+    public void cancel() {
+        cancelled = true;
+    }
+
+    /**
+     * Are current operations cancelled?
+     *
+     * @return {@code true} if cancelled.
+     */
+    public boolean isCancelled() {
+        return cancelled;
+    }
 }

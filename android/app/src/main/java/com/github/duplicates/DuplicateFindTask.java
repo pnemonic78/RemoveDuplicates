@@ -21,6 +21,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 
 import static com.github.duplicates.DuplicateTaskListener.MATCH_GOOD;
 
@@ -51,7 +52,10 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
 
     @Override
     protected List<T> doInBackground(Object... params) {
-        getProvider().fetchItems();
+        try {
+            getProvider().fetchItems();
+        } catch (CancellationException e) {
+        }
         return items;
     }
 

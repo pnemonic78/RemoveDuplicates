@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     @OnClick(R.id.search)
     void searchClicked() {
         if ((task != null) && !task.isCancelled()) {
-            task.cancel(true);
+            task.cancel();
         } else {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
             DuplicateFindTask task = createFindTask(item);
@@ -242,7 +242,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
     private void deleteItems() {
         if ((task != null) && !task.isCancelled()) {
-            task.cancel(true);
+            task.cancel();
         } else if ((adapter != null) && (adapter.getItemCount() > 0)) {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
             DuplicateDeleteTask task = createDeleteTask(item);

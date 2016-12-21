@@ -26,7 +26,9 @@ import android.os.Build;
 import com.github.duplicates.DuplicateProvider;
 import com.github.duplicates.DuplicateProviderListener;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 
 /**
  * Provide duplicate messages.
@@ -47,18 +49,18 @@ public class MessageProvider extends DuplicateProvider<MessageItem> {
     }
 
     @Override
+    public void setListener(DuplicateProviderListener<MessageItem, DuplicateProvider<MessageItem>> listener) {
+        delegate.setListener(listener);
+    }
+
+    @Override
+    public DuplicateProviderListener<MessageItem, DuplicateProvider<MessageItem>> getListener() {
+        return delegate.getListener();
+    }
+
+    @Override
     protected Uri getContentUri() {
         return null;
-    }
-
-    @Override
-    public List<MessageItem> getItems() {
-        return delegate.getItems();
-    }
-
-    @Override
-    public void fetchItems() {
-        delegate.fetchItems();
     }
 
     @Override
@@ -67,18 +69,28 @@ public class MessageProvider extends DuplicateProvider<MessageItem> {
     }
 
     @Override
+    public List<MessageItem> getItems() throws CancellationException {
+        return delegate.getItems();
+    }
+
+    @Override
+    public void fetchItems() throws CancellationException {
+        delegate.fetchItems();
+    }
+
+    @Override
     public void populateItem(Cursor cursor, MessageItem item) {
         delegate.populateItem(cursor, item);
     }
 
     @Override
-    public void setListener(DuplicateProviderListener<MessageItem, DuplicateProvider<MessageItem>> listener) {
-        delegate.setListener(listener);
+    public void deleteItems(Collection<MessageItem> items) throws CancellationException {
+        delegate.deleteItems(items);
     }
 
     @Override
-    public DuplicateProviderListener<MessageItem, DuplicateProvider<MessageItem>> getListener() {
-        return delegate.getListener();
+    public boolean deleteItem(MessageItem item) {
+        return delegate.deleteItem(item);
     }
 
     @Override
@@ -104,5 +116,11 @@ public class MessageProvider extends DuplicateProvider<MessageItem> {
     @Override
     public String[] getDeletePermissions() {
         return delegate.getDeletePermissions();
+    }
+
+    @Override
+    public void cancel() {
+        super.cancel();
+        delegate.cancel();
     }
 }

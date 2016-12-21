@@ -21,6 +21,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 
 /**
  * Task to delete duplicates.
@@ -51,7 +52,10 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends Dupli
             }
         }
         publishProgress(items.size());
-        getProvider().deleteItems(items);
+        try {
+            getProvider().deleteItems(items);
+        } catch (CancellationException e) {
+        }
         return null;
     }
 

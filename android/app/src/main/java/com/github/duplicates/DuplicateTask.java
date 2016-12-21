@@ -185,4 +185,15 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
 
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
     }
+
+    /**
+     * Cancel the task.
+     *
+     * @return {@code false} if the task could not be cancelled.
+     */
+    public boolean cancel() {
+        boolean result = cancel(true);
+        getProvider().cancel();
+        return result;
+    }
 }
