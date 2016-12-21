@@ -76,7 +76,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     @OnClick(R.id.search)
-    void search() {
+    void searchClicked() {
         if ((finderTask != null) && !finderTask.isCancelled()) {
             finderTask.cancel(true);
         } else if ((deleteTask != null) && !deleteTask.isCancelled()) {

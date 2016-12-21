@@ -174,6 +174,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      */
     protected void onPermissionGranted() {
         execute(params);
+        this.params = null;
     }
 
     /**
