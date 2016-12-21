@@ -61,8 +61,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     @BindView(android.R.id.list)
     RecyclerView list;
 
-    private DuplicateFindTask finderTask;
-    private DuplicateDeleteTask deleteTask;
+    private DuplicateTask task;
     private DuplicateAdapter adapter;
 
     @Override
@@ -77,14 +76,12 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
     @OnClick(R.id.search)
     void searchClicked() {
-        if ((finderTask != null) && !finderTask.isCancelled()) {
-            finderTask.cancel(true);
-        } else if ((deleteTask != null) && !deleteTask.isCancelled()) {
-            deleteTask.cancel(true);
+        if ((task != null) && !task.isCancelled()) {
+            task.cancel(true);
         } else {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
             DuplicateFindTask task = createFindTask(item);
-            this.finderTask = task;
+            this.task = task;
             if (task != null) {
                 this.adapter = task.createAdapter();
                 list.setAdapter(adapter);
@@ -110,7 +107,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         spinner.setEnabled(true);
         spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
         statusBar.setVisibility(View.GONE);
-        finderTask = null;
+        task = null;
         if (!cancelled) {
             invalidateOptionsMenu();
         }
@@ -162,19 +159,19 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
     @Override
     public void onDuplicateTaskStarted(DuplicateTask task) {
-        if (task == finderTask) {
+        if (task instanceof DuplicateFindTask) {
             searchStarted();
-        } else if (task == deleteTask) {
+        } else if (task instanceof DuplicateDeleteTask) {
             deleteStarted();
         }
     }
 
     @Override
     public void onDuplicateTaskFinished(DuplicateTask task) {
-        if (task == finderTask) {
+        if (task instanceof DuplicateFindTask) {
             searchStopped(false);
             invalidateOptionsMenu();
-        } else if (task == deleteTask) {
+        } else if (task instanceof DuplicateDeleteTask) {
             deleteStopped(false);
             invalidateOptionsMenu();
         }
@@ -182,32 +179,30 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
     @Override
     public void onDuplicateTaskCancelled(DuplicateTask task) {
-        if (task == finderTask) {
+        if (task instanceof DuplicateFindTask) {
             searchStopped(true);
-        } else if (task == deleteTask) {
+        } else if (task instanceof DuplicateDeleteTask) {
             deleteStopped(true);
         }
     }
 
     @Override
     public void onDuplicateTaskProgress(DuplicateTask task, int count) {
-        if (task == finderTask) {
-            counter.setText(getString(R.string.counter, count));
-        } else if (task == deleteTask) {
+        if (task == this.task) {
             counter.setText(getString(R.string.counter, count));
         }
     }
 
     @Override
     public void onDuplicateTaskMatch(DuplicateTask task, DuplicateItem item1, DuplicateItem item2, float match) {
-        if (task == finderTask) {
+        if (task == this.task) {
             adapter.add(item1, item2, match);
         }
     }
 
     @Override
     public void onDuplicateTaskItemDeleted(DuplicateTask task, DuplicateItem item) {
-        if (task == deleteTask) {
+        if (task == this.task) {
             adapter.remove(item);
         }
     }
@@ -216,10 +211,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (finderTask != null) {
-            finderTask.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        } else if (deleteTask != null) {
-            deleteTask.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (task != null) {
+            task.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -248,12 +241,12 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     private void deleteItems() {
-        if ((deleteTask != null) && !deleteTask.isCancelled()) {
-            deleteTask.cancel(true);
+        if ((task != null) && !task.isCancelled()) {
+            task.cancel(true);
         } else if ((adapter != null) && (adapter.getItemCount() > 0)) {
             MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
             DuplicateDeleteTask task = createDeleteTask(item);
-            this.deleteTask = task;
+            this.task = task;
             if (task != null) {
                 task.start(this, adapter.getCheckedItems());
             } else {
@@ -277,16 +270,14 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     private void deleteStopped(boolean cancelled) {
         spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
         statusBar.setVisibility(View.GONE);
-        deleteTask = null;
+        task = null;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (finderTask != null) {
-            finderTask.onActivityResult(this, requestCode, resultCode, data);
-        } else if (deleteTask != null) {
-            deleteTask.onActivityResult(this, requestCode, resultCode, data);
+        if (task != null) {
+            task.onActivityResult(this, requestCode, resultCode, data);
         }
     }
 }
