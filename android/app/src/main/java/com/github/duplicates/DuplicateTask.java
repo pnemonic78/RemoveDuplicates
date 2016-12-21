@@ -154,7 +154,6 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
         if (requestCode == ACTIVITY_PERMISSIONS) {
             if (permissions.length > 0) {
                 if (grantResults.length > 0) {
-                    // getContext().getContentResolver().takePersistableUriPermission(provider.getContentUri(), grantResults[0]);
                     if (grantResults[0] == PERMISSION_GRANTED) {//FIXME: check entire array.
                         onPermissionGranted();
                     } else {
