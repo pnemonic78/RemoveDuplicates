@@ -63,8 +63,8 @@ public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
+    protected void onPostExecute(Void result) {
+        super.onPostExecute(result);
         restoreDefaultSmsPackage();
     }
 
@@ -129,5 +129,11 @@ public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
                 super.checkPermissions(activity);
             }
         }
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        restoreDefaultSmsPackage();
     }
 }
