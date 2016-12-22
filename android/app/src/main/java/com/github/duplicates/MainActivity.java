@@ -74,6 +74,14 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         searchStopped(false);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if ((task != null) && !task.isCancelled()) {
+            task.cancel();
+        }
+    }
+
     @OnClick(R.id.search)
     void searchClicked() {
         if ((task != null) && !task.isCancelled()) {
