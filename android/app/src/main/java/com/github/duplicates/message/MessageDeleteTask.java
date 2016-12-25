@@ -65,7 +65,9 @@ public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-        restoreDefaultSmsPackage();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            restoreDefaultSmsPackage();
+        }
     }
 
     /**
@@ -134,6 +136,8 @@ public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
     @Override
     protected void onCancelled() {
         super.onCancelled();
-        restoreDefaultSmsPackage();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            restoreDefaultSmsPackage();
+        }
     }
 }
