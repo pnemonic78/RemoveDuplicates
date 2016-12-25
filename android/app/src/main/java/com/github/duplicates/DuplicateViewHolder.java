@@ -17,8 +17,11 @@
  */
 package com.github.duplicates;
 
+import android.content.res.ColorStateList;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.github.android.removeduplicates.R;
 
 /**
  * View holder for a duplicate item.
@@ -27,8 +30,11 @@ import android.view.View;
  */
 public abstract class DuplicateViewHolder<T extends DuplicateItem> extends RecyclerView.ViewHolder {
 
+    protected final ColorStateList colorDifferent;
+
     public DuplicateViewHolder(View itemView) {
         super(itemView);
+        colorDifferent = ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.different));
     }
 
     public abstract void bind(DuplicateItemPair<T> pair);

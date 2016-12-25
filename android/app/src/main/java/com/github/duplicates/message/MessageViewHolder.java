@@ -18,12 +18,14 @@
 package com.github.duplicates.message;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.github.android.removeduplicates.R;
+import com.github.duplicates.DuplicateComparator;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
 
@@ -93,6 +95,10 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     TextView body2;
 
     private final NumberFormat formatter = NumberFormat.getPercentInstance();
+    private final ColorStateList colorDate;
+    private final ColorStateList colorAddress;
+    private final ColorStateList colorType;
+    private final ColorStateList colorBody;
 
     private MessageItem item1;
     private MessageItem item2;
@@ -100,6 +106,10 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     public MessageViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        colorDate = date1.getTextColors();
+        colorAddress = address1.getTextColors();
+        colorType = type1.getTextColors();
+        colorBody = body1.getTextColors();
     }
 
     @Override
@@ -121,6 +131,42 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
         address2.setText(item2.getAddress());
         type2.setText(getTypeName(context, item2.getType()));
         body2.setText(item2.getBody());
+
+        highlightDifferences(item1, item2);
+    }
+
+    protected void highlightDifferences(MessageItem item1, MessageItem item2) {
+        if (DuplicateComparator.compare(item1.getDateReceived(), item2.getDateReceived()) != 0) {
+            date1.setTextColor(colorDifferent);
+            date2.setTextColor(colorDifferent);
+        } else {
+            date1.setTextColor(colorDate);
+            date2.setTextColor(colorDate);
+        }
+
+        if (DuplicateComparator.compare(item1.getAddress(), item2.getAddress()) != 0) {
+            address1.setTextColor(colorDifferent);
+            address2.setTextColor(colorDifferent);
+        } else {
+            address1.setTextColor(colorAddress);
+            address2.setTextColor(colorAddress);
+        }
+
+        if (DuplicateComparator.compare(item1.getType(), item2.getType()) != 0) {
+            type1.setTextColor(colorDifferent);
+            type2.setTextColor(colorDifferent);
+        } else {
+            type1.setTextColor(colorType);
+            type2.setTextColor(colorType);
+        }
+
+        if (DuplicateComparator.compare(item1.getBody(), item2.getBody()) != 0) {
+            body1.setTextColor(colorDifferent);
+            body2.setTextColor(colorDifferent);
+        } else {
+            body1.setTextColor(colorBody);
+            body2.setTextColor(colorBody);
+        }
     }
 
     private CharSequence getTypeName(Context context, int type) {
