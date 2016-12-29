@@ -19,15 +19,15 @@ package com.github.duplicates.message;
 
 import com.github.duplicates.DuplicateItem;
 
-import static android.provider.Telephony.TextBasedSmsColumns.MESSAGE_TYPE_ALL;
-import static android.provider.Telephony.TextBasedSmsColumns.STATUS_NONE;
-
 /**
  * Duplicate message item.
  *
  * @author moshe.w
  */
 public class MessageItem extends DuplicateItem {
+
+    public static final int MESSAGE_TYPE_ALL = 0;// TextBasedSmsColumns.MESSAGE_TYPE_ALL
+    public static final int STATUS_NONE = -1;// TextBasedSmsColumns.STATUS_NONE
 
     private String address;
     private String body;
