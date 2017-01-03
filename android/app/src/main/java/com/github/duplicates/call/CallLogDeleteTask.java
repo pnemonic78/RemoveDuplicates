@@ -17,12 +17,24 @@
  */
 package com.github.duplicates.call;
 
-import com.github.duplicates.DuplicateItem;
+import android.content.Context;
+
+import com.github.duplicates.DuplicateDeleteTask;
+import com.github.duplicates.DuplicateTaskListener;
 
 /**
- * Duplicate call log entry.
+ * Task to find duplicate calls.
  *
  * @author moshe.w
  */
-public class DuplicateCall extends DuplicateItem {
+public class CallLogDeleteTask extends DuplicateDeleteTask<CallLogItem> {
+
+    public CallLogDeleteTask(Context context, DuplicateTaskListener listener) {
+        super(context, listener);
+    }
+
+    @Override
+    protected CallLogProvider createProvider(Context context) {
+        return new CallLogProvider(context);
+    }
 }

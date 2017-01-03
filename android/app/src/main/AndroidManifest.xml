@@ -3,6 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.android.removeduplicates">
 
+    <!-- Call Log. -->
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
+    <!-- Messages. -->
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.WRITE_SMS"/>
 
