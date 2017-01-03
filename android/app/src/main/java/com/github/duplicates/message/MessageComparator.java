@@ -26,21 +26,6 @@ import com.github.duplicates.DuplicateComparator;
  */
 public class MessageComparator extends DuplicateComparator<MessageItem> {
 
-    private static final int ADDRESS = 1 << 28;
-    private static final int BODY = 1 << 26;
-    private static final int DATE_RECEIVED = 1 << 30;
-    private static final int DATE_SENT = 1 << 29;
-    private static final int ERROR_CODE = 1 << 4;
-    private static final int LOCKED = 1 << 5;
-    private static final int PERSON = 1 << 27;
-    private static final int PROTOCOL = 1 << 7;
-    private static final int READ = 1 << 8;
-    private static final int SEEN = 1 << 9;
-    private static final int STATUS = 1 << 14;
-    private static final int SUBJECT = 1 << 25;
-    private static final int THREAD_ID = 1 << 15;
-    private static final int TYPE = 1 << 31;
-
     @Override
     public int compare(MessageItem lhs, MessageItem rhs) {
         int c;
