@@ -23,6 +23,8 @@ import android.view.View;
 
 import com.github.android.removeduplicates.R;
 
+import java.text.NumberFormat;
+
 /**
  * View holder for a duplicate item.
  *
@@ -31,6 +33,7 @@ import com.github.android.removeduplicates.R;
 public abstract class DuplicateViewHolder<T extends DuplicateItem> extends RecyclerView.ViewHolder {
 
     protected final ColorStateList colorDifferent;
+    protected final NumberFormat percentFormatter = NumberFormat.getPercentInstance();
 
     public DuplicateViewHolder(View itemView) {
         super(itemView);

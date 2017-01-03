@@ -29,8 +29,6 @@ import com.github.duplicates.DuplicateComparator;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
 
-import java.text.NumberFormat;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -94,7 +92,6 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     @BindView(R.id.body2)
     TextView body2;
 
-    private final NumberFormat formatter = NumberFormat.getPercentInstance();
     private final ColorStateList colorDate;
     private final ColorStateList colorAddress;
     private final ColorStateList colorType;
@@ -118,7 +115,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
         this.item2 = pair.getItem2();
         Context context = itemView.getContext();
 
-        match.setText(context.getString(R.string.match, formatter.format(pair.getMatch())));
+        match.setText(context.getString(R.string.match, percentFormatter.format(pair.getMatch())));
 
         checkbox1.setChecked(item1.isChecked());
         date1.setText(DateUtils.formatDateTime(context, item1.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
