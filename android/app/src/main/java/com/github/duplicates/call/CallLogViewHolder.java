@@ -121,22 +121,22 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
         match.setText(context.getString(R.string.match, formatter.format(pair.getMatch())));
 
         checkbox1.setChecked(item1.isChecked());
-        date1.setText(DateUtils.formatDateTime(context, item1.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        address1.setText(item1.getAddress());
+        date1.setText(DateUtils.formatDateTime(context, item1.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+//        address1.setText(item1.getAddress());
         type1.setText(getTypeName(context, item1.getType()));
-        body1.setText(item1.getBody());
+//        body1.setText(item1.getBody());
 
         checkbox2.setChecked(item2.isChecked());
-        date2.setText(DateUtils.formatDateTime(context, item2.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        address2.setText(item2.getAddress());
+        date2.setText(DateUtils.formatDateTime(context, item2.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+//        address2.setText(item2.getAddress());
         type2.setText(getTypeName(context, item2.getType()));
-        body2.setText(item2.getBody());
+//        body2.setText(item2.getBody());
 
         highlightDifferences(item1, item2);
     }
 
     protected void highlightDifferences(CallLogItem item1, CallLogItem item2) {
-        if (DuplicateComparator.compare(item1.getDateReceived(), item2.getDateReceived()) != 0) {
+        if (DuplicateComparator.compare(item1.getDate(), item2.getDate()) != 0) {
             date1.setTextColor(colorDifferent);
             date2.setTextColor(colorDifferent);
         } else {
@@ -144,13 +144,13 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             date2.setTextColor(colorDate);
         }
 
-        if (DuplicateComparator.compare(item1.getAddress(), item2.getAddress()) != 0) {
-            address1.setTextColor(colorDifferent);
-            address2.setTextColor(colorDifferent);
-        } else {
-            address1.setTextColor(colorAddress);
-            address2.setTextColor(colorAddress);
-        }
+//        if (DuplicateComparator.compare(item1.getAddress(), item2.getAddress()) != 0) {
+//            address1.setTextColor(colorDifferent);
+//            address2.setTextColor(colorDifferent);
+//        } else {
+//            address1.setTextColor(colorAddress);
+//            address2.setTextColor(colorAddress);
+//        }
 
         if (DuplicateComparator.compare(item1.getType(), item2.getType()) != 0) {
             type1.setTextColor(colorDifferent);
@@ -160,13 +160,13 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             type2.setTextColor(colorType);
         }
 
-        if (DuplicateComparator.compare(item1.getBody(), item2.getBody()) != 0) {
-            body1.setTextColor(colorDifferent);
-            body2.setTextColor(colorDifferent);
-        } else {
-            body1.setTextColor(colorBody);
-            body2.setTextColor(colorBody);
-        }
+//        if (DuplicateComparator.compare(item1.getBody(), item2.getBody()) != 0) {
+//            body1.setTextColor(colorDifferent);
+//            body2.setTextColor(colorDifferent);
+//        } else {
+//            body1.setTextColor(colorBody);
+//            body2.setTextColor(colorBody);
+//        }
     }
 
     private CharSequence getTypeName(Context context, int type) {

@@ -34,6 +34,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.android.removeduplicates.R;
+import com.github.duplicates.call.CallLogDeleteTask;
+import com.github.duplicates.call.CallLogFindTask;
 import com.github.duplicates.message.MessageDeleteTask;
 import com.github.duplicates.message.MessageFindTask;
 
@@ -133,8 +135,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 //                return new BookmarkFindTask(context, listener);
 //            case CALENDAR:
 //                return new CalendarFindTask(context, listener);
-//            case CALL_LOG:
-//                return new CallLogFindTask(context, listener);
+            case CALL_LOG:
+                return new CallLogFindTask(context, listener);
 //            case CONTACTS:
 //                return new ContactFindTask(context, listener);
             case MESSAGES:
@@ -155,8 +157,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 //                return new BookmarkDeleteTask(context, listener);
 //            case CALENDAR:
 //                return new CalendarDeleteTask(context, listener);
-//            case CALL_LOG:
-//                return new CallLogDeleteTask(context, listener);
+            case CALL_LOG:
+                return new CallLogDeleteTask(context, listener);
 //            case CONTACTS:
 //                return new ContactDeleteTask(context, listener);
             case MESSAGES:

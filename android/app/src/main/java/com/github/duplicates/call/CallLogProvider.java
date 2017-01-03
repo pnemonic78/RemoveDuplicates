@@ -17,18 +17,25 @@
  */
 package com.github.duplicates.call;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
 
 import com.github.duplicates.DuplicateProvider;
-import com.github.duplicates.DuplicateProviderListener;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.CancellationException;
+import static android.provider.BaseColumns._ID;
+import static android.provider.CallLog.Calls.CACHED_NAME;
+import static android.provider.CallLog.Calls.CACHED_NUMBER_LABEL;
+import static android.provider.CallLog.Calls.CACHED_NUMBER_TYPE;
+import static android.provider.CallLog.Calls.CONTENT_ITEM_TYPE;
+import static android.provider.CallLog.Calls.CONTENT_TYPE;
+import static android.provider.CallLog.Calls.DATE;
+import static android.provider.CallLog.Calls.DURATION;
+import static android.provider.CallLog.Calls.IS_READ;
+import static android.provider.CallLog.Calls.NEW;
+import static android.provider.CallLog.Calls.NUMBER;
+import static android.provider.CallLog.Calls.TYPE;
 
 /**
  * Provide duplicate calls.
@@ -40,18 +47,36 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
     private static String[] PERMISSIONS_READ = {"android.permission.READ_CALL_LOG"};
     private static String[] PERMISSIONS_WRITE = {"android.permission.WRITE_CALL_LOG"};
 
+    private static final String[] PROJECTION = {
+            _ID,
+            CACHED_NAME,
+            CACHED_NUMBER_LABEL,
+            CACHED_NUMBER_TYPE,
+            CONTENT_ITEM_TYPE,
+            CONTENT_TYPE,
+            DATE,
+            DURATION,
+            IS_READ,
+            NEW,
+            NUMBER,
+            TYPE
+    };
+
+    private static final int INDEX_ID = 0;
+    private static final int INDEX_CACHED_NAME = 1;
+    private static final int INDEX_CACHED_NUMBER_LABEL = 2;
+    private static final int INDEX_CACHED_NUMBER_TYPE = 3;
+    private static final int INDEX_CONTENT_ITEM_TYPE = 4;
+    private static final int INDEX_CONTENT_TYPE = 5;
+    private static final int INDEX_DATE = 6;
+    private static final int INDEX_DURATION = 7;
+    private static final int INDEX_READ = 8;
+    private static final int INDEX_NEW = 9;
+    private static final int INDEX_NUMBER = 10;
+    private static final int INDEX_TYPE = 11;
+
     public CallLogProvider(Context context) {
         super(context);
-    }
-
-    @Override
-    public void setListener(DuplicateProviderListener<CallLogItem, DuplicateProvider<CallLogItem>> listener) {
-        //TODO implement me!
-    }
-
-    @Override
-    public DuplicateProviderListener<CallLogItem, DuplicateProvider<CallLogItem>> getListener() {
-        return null;
     }
 
     @Override
@@ -60,38 +85,29 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
     }
 
     @Override
+    protected String[] getCursorProjection() {
+        return PROJECTION;
+    }
+
+    @Override
     public CallLogItem createItem() {
         return new CallLogItem();
     }
 
     @Override
-    public List<CallLogItem> getItems() throws CancellationException {
-        return null;
-    }
-
-    @Override
-    public void fetchItems() throws CancellationException {
-        //TODO implement me!
-    }
-
-    @Override
     public void populateItem(Cursor cursor, CallLogItem item) {
-        //TODO implement me!
-    }
-
-    @Override
-    public void deleteItems(Collection<CallLogItem> items) throws CancellationException {
-        //TODO implement me!
-    }
-
-    @Override
-    public boolean deleteItem(CallLogItem item) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteItem(ContentResolver cr, CallLogItem item) {
-        return false;
+        item.setId(cursor.getLong(INDEX_ID));
+        item.setCachedName(cursor.getString(INDEX_CACHED_NAME));
+        item.setCachedNumberLabel(cursor.getString(INDEX_CACHED_NUMBER_LABEL));
+        item.setCachedNumberType(cursor.getInt(INDEX_CACHED_NUMBER_TYPE));
+        item.setContentItemType(cursor.getString(INDEX_CONTENT_ITEM_TYPE));
+        item.setContentType(cursor.getString(INDEX_CONTENT_TYPE));
+        item.setDate(cursor.getLong(INDEX_DATE));
+        item.setDuration(cursor.getLong(INDEX_DURATION));
+        item.setNew(cursor.getInt(INDEX_NEW) != 0);
+        item.setNumber(cursor.getString(INDEX_NUMBER));
+        item.setRead(cursor.getInt(INDEX_READ) != 0);
+        item.setType(cursor.getInt(INDEX_TYPE));
     }
 
     @Override
