@@ -77,6 +77,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
 
     private final ColorStateList colorDate;
     private final ColorStateList colorDuration;
+    private final ColorStateList colorName;
     private final ColorStateList colorNumber;
     private final ColorStateList colorType;
 
@@ -88,6 +89,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
         ButterKnife.bind(this, itemView);
         colorDate = date1.getTextColors();
         colorDuration = duration1.getTextColors();
+        colorName = name1.getTextColors();
         colorNumber = number1.getTextColors();
         colorType = type1.getTextColors();
     }
@@ -148,6 +150,14 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
         } else {
             number1.setTextColor(colorNumber);
             number2.setTextColor(colorNumber);
+        }
+
+        if (DuplicateComparator.compare(item1.getName(), item2.getName()) != 0) {
+            name1.setTextColor(colorDifferent);
+            name2.setTextColor(colorDifferent);
+        } else {
+            name1.setTextColor(colorName);
+            name2.setTextColor(colorName);
         }
     }
 
