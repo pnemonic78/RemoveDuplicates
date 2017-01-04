@@ -217,6 +217,13 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         }
     }
 
+    @Override
+    public void onDuplicateTaskPairDeleted(DuplicateTask task, DuplicateItemPair pair) {
+        if (task == this.task) {
+            adapter.remove(pair);
+        }
+    }
+
     @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -258,7 +265,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
             DuplicateDeleteTask task = createDeleteTask(item);
             this.task = task;
             if (task != null) {
-                task.start(this, adapter.getCheckedItems());
+                task.start(this, adapter.getCheckedPairs());
             } else {
                 searchStopped(false);
             }

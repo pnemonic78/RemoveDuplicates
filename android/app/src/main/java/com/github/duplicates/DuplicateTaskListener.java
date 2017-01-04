@@ -75,4 +75,12 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
      * @param item the item.
      */
     void onDuplicateTaskItemDeleted(T task, I item);
+
+    /**
+     * Notification that the task has deleted a duplicate item.
+     *
+     * @param task the task.
+     * @param pair the pair of items.
+     */
+    void onDuplicateTaskPairDeleted(T task, DuplicateItemPair<I> pair);
 }

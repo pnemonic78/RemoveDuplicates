@@ -107,6 +107,11 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
     }
 
     @Override
+    public void onPairDeleted(DuplicateProvider<T> provider, int count, DuplicateItemPair<T> pair) {
+        // Nothing to do.
+    }
+
+    @Override
     protected String[] getPermissions() {
         return getProvider().getReadPermissions();
     }

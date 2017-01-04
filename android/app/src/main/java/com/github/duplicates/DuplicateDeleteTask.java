@@ -28,9 +28,9 @@ import java.util.concurrent.CancellationException;
  *
  * @author moshe.w
  */
-public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends DuplicateTask<T, T, Object, Void> {
+public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends DuplicateTask<T, DuplicateItemPair<T>, Object, Void> {
 
-    private final List<T> items = new ArrayList<>();
+    private final List<DuplicateItemPair<T>> pairs = new ArrayList<>();
 
     public DuplicateDeleteTask(Context context, DuplicateTaskListener listener) {
         super(context, listener);
@@ -39,21 +39,19 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends Dupli
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        items.clear();
+        pairs.clear();
     }
 
     @Override
-    protected Void doInBackground(T... params) {
+    protected Void doInBackground(DuplicateItemPair<T>... params) {
         if (params != null) {
-            for (T item : params) {
-                if (item.getId() != 0L) {
-                    items.add(item);
-                }
+            for (DuplicateItemPair<T> pair : params) {
+                pairs.add(pair);
             }
         }
-        publishProgress(items.size());
+        publishProgress(pairs.size());
         try {
-            getProvider().deleteItems(items);
+            getProvider().deletePairs(pairs);
         } catch (CancellationException e) {
         }
         return null;
@@ -63,8 +61,14 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends Dupli
     protected void onProgressUpdate(Object... progress) {
         getListener().onDuplicateTaskProgress(this, (Integer) progress[0]);
         if (progress.length > 1) {
-            T item = (T) progress[1];
-            getListener().onDuplicateTaskItemDeleted(this, item);
+            Object arg1 = progress[1];
+            if (arg1 instanceof DuplicateItem) {
+                T item = (T) arg1;
+                getListener().onDuplicateTaskItemDeleted(this, item);
+            } else {
+                DuplicateItemPair<T> pair = (DuplicateItemPair<T>) arg1;
+                getListener().onDuplicateTaskPairDeleted(this, pair);
+            }
         }
     }
 
@@ -76,6 +80,11 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends Dupli
     @Override
     public void onItemDeleted(DuplicateProvider<T> provider, int count, T item) {
         publishProgress(count, item);
+    }
+
+    @Override
+    public void onPairDeleted(DuplicateProvider<T> provider, int count, DuplicateItemPair<T> pair) {
+        publishProgress(count, pair);
     }
 
     @Override

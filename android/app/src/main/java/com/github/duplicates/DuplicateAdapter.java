@@ -96,6 +96,19 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     }
 
     /**
+     * Remove a pair.
+     *
+     * @param pair the item pair.
+     */
+    public void remove(DuplicateItemPair<T> pair) {
+        int position = pairs.indexOf(pair);
+        if (position >= 0) {
+            pairs.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    /**
      * Find the pairs containing the item.
      *
      * @param item the item to find.
@@ -148,5 +161,24 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
         }
         T[] array = (T[]) Array.newInstance(item.getClass(), items.size());
         return items.toArray(array);
+    }
+
+    /**
+     * Get the list of pairs that have checked items for deletion.
+     *
+     * @return the array of items.
+     */
+    public DuplicateItemPair<T>[] getCheckedPairs() {
+        List<DuplicateItemPair<T>> checked = new ArrayList<>(pairs.size());
+        for (DuplicateItemPair<T> pair : pairs) {
+            if (pair.getItem1().isChecked() || pair.getItem2().isChecked()) {
+                checked.add(pair);
+            }
+        }
+        if (checked.isEmpty()) {
+            return null;
+        }
+        DuplicateItemPair[] array = new DuplicateItemPair[checked.size()];
+        return checked.toArray(array);
     }
 }

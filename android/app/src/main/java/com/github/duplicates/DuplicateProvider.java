@@ -184,6 +184,40 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
     }
 
     /**
+     * Delete the pairs from the system provider.
+     *
+     * @param pairs the list of item pairs.
+     * @throws CancellationException if the provider has been cancelled.
+     */
+    public void deletePairs(Collection<DuplicateItemPair<T>> pairs) throws CancellationException {
+        if (isCancelled()) {
+            throw new CancellationException();
+        }
+        DuplicateProviderListener<T, DuplicateProvider<T>> listener = getListener();
+        if (listener == null) {
+            return;
+        }
+        Context context = getContext();
+        ContentResolver cr = context.getContentResolver();
+
+        int count = 0;
+        T item1, item2;
+        boolean deleted1, deleted2;
+        for (DuplicateItemPair<T> pair : pairs) {
+            if (isCancelled()) {
+                break;
+            }
+            item1 = pair.getItem1();
+            item2 = pair.getItem2();
+            deleted1 = item1.isChecked() && deleteItem(cr, item1);
+            deleted2 = item2.isChecked() && deleteItem(cr, item2);
+            if (deleted1 || deleted2) {
+                listener.onPairDeleted(this, ++count, pair);
+            }
+        }
+    }
+
+    /**
      * Execute some code before task does background work.
      */
     public void onPreExecute() {
