@@ -47,6 +47,7 @@ android {
         disable "InconsistentLayout"
         disable "LocaleFolder"
         disable "UnusedAttribute"
+        disable "UnusedResources"
     }
 }
 
@@ -56,7 +57,7 @@ dependencies {
     compile project(':lib')
 
     // Views
-    compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
     compile group: 'com.jakewharton', name: 'butterknife', version: '8.4.0'
     annotationProcessor group: 'com.jakewharton', name: 'butterknife-compiler', version: '8.4.0'
 }
