@@ -17,6 +17,7 @@
  */
 package com.github.duplicates.call;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -28,8 +29,6 @@ import static android.provider.BaseColumns._ID;
 import static android.provider.CallLog.Calls.CACHED_NAME;
 import static android.provider.CallLog.Calls.CACHED_NUMBER_LABEL;
 import static android.provider.CallLog.Calls.CACHED_NUMBER_TYPE;
-import static android.provider.CallLog.Calls.CONTENT_ITEM_TYPE;
-import static android.provider.CallLog.Calls.CONTENT_TYPE;
 import static android.provider.CallLog.Calls.DATE;
 import static android.provider.CallLog.Calls.DURATION;
 import static android.provider.CallLog.Calls.IS_READ;
@@ -102,6 +101,11 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
         item.setNumber(cursor.getString(INDEX_NUMBER));
         item.setRead(cursor.getInt(INDEX_READ) != 0);
         item.setType(cursor.getInt(INDEX_TYPE));
+    }
+
+    @Override
+    public boolean deleteItem(ContentResolver cr, CallLogItem item) {
+        return cr.delete(getContentUri(), _ID + "=" + item.getId(), null) > 0;
     }
 
     @Override
