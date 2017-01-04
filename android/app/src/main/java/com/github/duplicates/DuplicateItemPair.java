@@ -40,8 +40,10 @@ public class DuplicateItemPair<T extends DuplicateItem> {
         this.item2 = item2;
         this.match = match;
 
-        if (!item1.isChecked() && !item2.isChecked()) {
+        if (!item2.isChecked()) {
             item2.setChecked(true);
+        } else {
+            item1.setChecked(true);
         }
     }
 
