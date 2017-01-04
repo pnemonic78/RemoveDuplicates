@@ -24,6 +24,14 @@
 
     <string name="call_log">Call log</string>
     <string name="item_call_log" translatable="false">@string/call_log</string>
+    <string name="call_type_incoming">incoming</string>
+    <string name="call_type_outgoing">outgoing</string>
+    <string name="call_type_missed">missed</string>
+    <string name="call_type_voicemail">voicemail</string>
+    <string name="call_type_rejected">rejected</string>
+    <string name="call_type_blocked">blocked</string>
+    <string name="call_type_external">external</string>
+    <string name="call_type_other">other</string>
 
     <string name="contacts">Contacts</string>
     <string name="item_contacts" translatable="false">@string/contacts</string>

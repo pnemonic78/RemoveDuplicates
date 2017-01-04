@@ -33,6 +33,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.provider.CallLog.Calls.ANSWERED_EXTERNALLY_TYPE;
+import static android.provider.CallLog.Calls.BLOCKED_TYPE;
+import static android.provider.CallLog.Calls.INCOMING_TYPE;
+import static android.provider.CallLog.Calls.MISSED_TYPE;
+import static android.provider.CallLog.Calls.OUTGOING_TYPE;
+import static android.provider.CallLog.Calls.REJECTED_TYPE;
+import static android.provider.CallLog.Calls.VOICEMAIL_TYPE;
+
 /**
  * View holder of a duplicate call.
  *
@@ -40,62 +48,37 @@ import butterknife.OnClick;
  */
 public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
 
-    /**
-     * CallLog type: all messages.
-     */
-    public static final int MESSAGE_TYPE_ALL = 0;//TextBasedSmsColumns.MESSAGE_TYPE_ALL
-    /**
-     * CallLog type: inbox.
-     */
-    public static final int MESSAGE_TYPE_INBOX = 1;//TextBasedSmsColumns.MESSAGE_TYPE_INBOX
-    /**
-     * CallLog type: sent messages.
-     */
-    public static final int MESSAGE_TYPE_SENT = 2;//TextBasedSmsColumns.MESSAGE_TYPE_SENT
-    /**
-     * CallLog type: drafts.
-     */
-    public static final int MESSAGE_TYPE_DRAFT = 3;//TextBasedSmsColumns.MESSAGE_TYPE_DRAFT
-    /**
-     * CallLog type: outbox.
-     */
-    public static final int MESSAGE_TYPE_OUTBOX = 4;//TextBasedSmsColumns.MESSAGE_TYPE_OUTBOX
-    /**
-     * CallLog type: failed outgoing message.
-     */
-    public static final int MESSAGE_TYPE_FAILED = 5;//TextBasedSmsColumns.MESSAGE_TYPE_FAILED
-    /**
-     * CallLog type: queued to send later.
-     */
-    public static final int MESSAGE_TYPE_QUEUED = 6;//TextBasedSmsColumns.MESSAGE_TYPE_QUEUED
-
     @BindView(R.id.match)
     TextView match;
     @BindView(R.id.checkbox1)
     CheckBox checkbox1;
     @BindView(R.id.date1)
     TextView date1;
-    @BindView(R.id.address1)
-    TextView address1;
+    @BindView(R.id.duration1)
+    TextView duration1;
+    @BindView(R.id.number1)
+    TextView number1;
     @BindView(R.id.type1)
     TextView type1;
-    @BindView(R.id.body1)
-    TextView body1;
+    @BindView(R.id.name1)
+    TextView name1;
     @BindView(R.id.checkbox2)
     CheckBox checkbox2;
     @BindView(R.id.date2)
     TextView date2;
-    @BindView(R.id.address2)
-    TextView address2;
+    @BindView(R.id.duration2)
+    TextView duration2;
+    @BindView(R.id.number2)
+    TextView number2;
     @BindView(R.id.type2)
     TextView type2;
-    @BindView(R.id.body2)
-    TextView body2;
+    @BindView(R.id.name2)
+    TextView name2;
 
     private final ColorStateList colorDate;
-    private final ColorStateList colorAddress;
+    private final ColorStateList colorDuration;
+    private final ColorStateList colorNumber;
     private final ColorStateList colorType;
-    private final ColorStateList colorBody;
 
     private CallLogItem item1;
     private CallLogItem item2;
@@ -104,9 +87,9 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
         super(itemView);
         ButterKnife.bind(this, itemView);
         colorDate = date1.getTextColors();
-        colorAddress = address1.getTextColors();
+        colorDuration = duration1.getTextColors();
+        colorNumber = number1.getTextColors();
         colorType = type1.getTextColors();
-        colorBody = body1.getTextColors();
     }
 
     @Override
@@ -119,15 +102,17 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
 
         checkbox1.setChecked(item1.isChecked());
         date1.setText(DateUtils.formatDateTime(context, item1.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-//        address1.setText(item1.getAddress());
+        duration1.setText(DateUtils.formatElapsedTime(item1.getDuration()));
         type1.setText(getTypeName(context, item1.getType()));
-//        body1.setText(item1.getBody());
+        number1.setText(item1.getNumber());
+        name1.setText(item1.getName());
 
         checkbox2.setChecked(item2.isChecked());
         date2.setText(DateUtils.formatDateTime(context, item2.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-//        address2.setText(item2.getAddress());
+        duration2.setText(DateUtils.formatElapsedTime(item2.getDuration()));
         type2.setText(getTypeName(context, item2.getType()));
-//        body2.setText(item2.getBody());
+        number2.setText(item2.getNumber());
+        name2.setText(item2.getName());
 
         highlightDifferences(item1, item2);
     }
@@ -141,13 +126,13 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             date2.setTextColor(colorDate);
         }
 
-//        if (DuplicateComparator.compare(item1.getAddress(), item2.getAddress()) != 0) {
-//            address1.setTextColor(colorDifferent);
-//            address2.setTextColor(colorDifferent);
-//        } else {
-//            address1.setTextColor(colorAddress);
-//            address2.setTextColor(colorAddress);
-//        }
+        if (DuplicateComparator.compare(item1.getDuration(), item2.getDuration()) != 0) {
+            duration1.setTextColor(colorDifferent);
+            duration2.setTextColor(colorDifferent);
+        } else {
+            duration1.setTextColor(colorDuration);
+            duration2.setTextColor(colorDuration);
+        }
 
         if (DuplicateComparator.compare(item1.getType(), item2.getType()) != 0) {
             type1.setTextColor(colorDifferent);
@@ -157,33 +142,33 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             type2.setTextColor(colorType);
         }
 
-//        if (DuplicateComparator.compare(item1.getBody(), item2.getBody()) != 0) {
-//            body1.setTextColor(colorDifferent);
-//            body2.setTextColor(colorDifferent);
-//        } else {
-//            body1.setTextColor(colorBody);
-//            body2.setTextColor(colorBody);
-//        }
+        if (DuplicateComparator.compare(item1.getNumber(), item2.getNumber()) != 0) {
+            number1.setTextColor(colorDifferent);
+            number2.setTextColor(colorDifferent);
+        } else {
+            number1.setTextColor(colorNumber);
+            number2.setTextColor(colorNumber);
+        }
     }
 
     private CharSequence getTypeName(Context context, int type) {
         switch (type) {
-            case MESSAGE_TYPE_ALL:
-                return context.getText(R.string.message_type_all);
-            case MESSAGE_TYPE_DRAFT:
-                return context.getText(R.string.message_type_drafts);
-            case MESSAGE_TYPE_FAILED:
-                return context.getText(R.string.message_type_failed);
-            case MESSAGE_TYPE_INBOX:
-                return context.getText(R.string.message_type_inbox);
-            case MESSAGE_TYPE_OUTBOX:
-                return context.getText(R.string.message_type_outbox);
-            case MESSAGE_TYPE_QUEUED:
-                return context.getText(R.string.message_type_queued);
-            case MESSAGE_TYPE_SENT:
-                return context.getText(R.string.message_type_sent);
+            case INCOMING_TYPE:
+                return context.getText(R.string.call_type_incoming);
+            case OUTGOING_TYPE:
+                return context.getText(R.string.call_type_outgoing);
+            case MISSED_TYPE:
+                return context.getText(R.string.call_type_missed);
+            case VOICEMAIL_TYPE:
+                return context.getText(R.string.call_type_voicemail);
+            case REJECTED_TYPE:
+                return context.getText(R.string.call_type_rejected);
+            case BLOCKED_TYPE:
+                return context.getText(R.string.call_type_blocked);
+            case ANSWERED_EXTERNALLY_TYPE:
+                return context.getText(R.string.call_type_external);
         }
-        return null;
+        return context.getText(R.string.call_type_other);
     }
 
     @OnClick(R.id.checkbox1)
