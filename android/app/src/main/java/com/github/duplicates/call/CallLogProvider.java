@@ -52,8 +52,6 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
             CACHED_NAME,
             CACHED_NUMBER_LABEL,
             CACHED_NUMBER_TYPE,
-            CONTENT_ITEM_TYPE,
-            CONTENT_TYPE,
             DATE,
             DURATION,
             IS_READ,
@@ -66,14 +64,12 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
     private static final int INDEX_CACHED_NAME = 1;
     private static final int INDEX_CACHED_NUMBER_LABEL = 2;
     private static final int INDEX_CACHED_NUMBER_TYPE = 3;
-    private static final int INDEX_CONTENT_ITEM_TYPE = 4;
-    private static final int INDEX_CONTENT_TYPE = 5;
-    private static final int INDEX_DATE = 6;
-    private static final int INDEX_DURATION = 7;
-    private static final int INDEX_READ = 8;
-    private static final int INDEX_NEW = 9;
-    private static final int INDEX_NUMBER = 10;
-    private static final int INDEX_TYPE = 11;
+    private static final int INDEX_DATE = 4;
+    private static final int INDEX_DURATION = 5;
+    private static final int INDEX_READ = 6;
+    private static final int INDEX_NEW = 7;
+    private static final int INDEX_NUMBER = 8;
+    private static final int INDEX_TYPE = 9;
 
     public CallLogProvider(Context context) {
         super(context);
@@ -81,7 +77,7 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
 
     @Override
     protected Uri getContentUri() {
-        return CallLog.CONTENT_URI;
+        return CallLog.Calls.CONTENT_URI;
     }
 
     @Override
@@ -100,8 +96,6 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
         item.setName(cursor.getString(INDEX_CACHED_NAME));
         item.setNumberLabel(cursor.getString(INDEX_CACHED_NUMBER_LABEL));
         item.setNumberType(cursor.getInt(INDEX_CACHED_NUMBER_TYPE));
-        item.setContentItemType(cursor.getString(INDEX_CONTENT_ITEM_TYPE));
-        item.setContentType(cursor.getString(INDEX_CONTENT_TYPE));
         item.setDate(cursor.getLong(INDEX_DATE));
         item.setDuration(cursor.getLong(INDEX_DURATION));
         item.setNew(cursor.getInt(INDEX_NEW) != 0);

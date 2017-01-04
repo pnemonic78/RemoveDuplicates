@@ -26,18 +26,6 @@ import com.github.duplicates.DuplicateComparator;
  */
 public class CallLogComparator extends DuplicateComparator<CallLogItem> {
 
-//    private String name;
-//    private String numberLabel;
-//    private int numberType;
-//    private String contentItemType;
-//    private String contentType;
-//    private long date;
-//    private long duration;
-//    private boolean read;
-//    private boolean acknowledged;
-//    private String number;
-//    private int type;
-
     @Override
     public int compare(CallLogItem lhs, CallLogItem rhs) {
         int c;
@@ -50,54 +38,30 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
         if (c != 0) {
             return c;
         }
-//        c = compare(lhs.getDateSent(), rhs.getDateSent());
-//        if (c != 0) {
-//            return c;
-//        }
-//        c = compare(lhs.getAddress(), rhs.getAddress());
-//        if (c != 0) {
-//            return c;
-//        }
-//        c = compare(lhs.getPerson(), rhs.getPerson());
-//        if (c != 0) {
-//            return c;
-//        }
-//        c = compare(lhs.getBody(), rhs.getBody());
-//        if (c != 0) {
-//            return c;
-//        }
-//        c = compare(lhs.getSubject(), rhs.getSubject());
-//        if (c != 0) {
-//            return c;
-//        }
-//        c = compare(lhs.getThreadId(), rhs.getThreadId());
-//        if (c != 0) {
-//            return c;
-//        }
-//        c = compare(lhs.getStatus(), rhs.getStatus());
-//        if (c != 0) {
-//            return c;
-//        }
-//        c = compare(lhs.getErrorCode(), rhs.getErrorCode());
-//        if (c != 0) {
-//            return c;
-//        }
-//        c = compare(lhs.isLocked(), rhs.isLocked());
-//        if (c != 0) {
-//            return c;
-//        }
-//        c = compare(lhs.getProtocol(), rhs.getProtocol());
-//        if (c != 0) {
-//            return c;
-//        }
+        c = compare(lhs.getDuration(), rhs.getDuration());
+        if (c != 0) {
+            return c;
+        }
+        c = compare(lhs.getNumber(), rhs.getNumber());
+        if (c != 0) {
+            return c;
+        }
+        c = compare(lhs.getNumberType(), rhs.getNumberType());
+        if (c != 0) {
+            return c;
+        }
+        c = compare(lhs.getName(), rhs.getName());
+        if (c != 0) {
+            return c;
+        }
         c = compare(lhs.isRead(), rhs.isRead());
         if (c != 0) {
             return c;
         }
-//        c = compare(lhs.isSeen(), rhs.isSeen());
-//        if (c != 0) {
-//            return c;
-//        }
+        c = compare(lhs.isNew(), rhs.isNew());
+        if (c != 0) {
+            return c;
+        }
 
         return super.compare(lhs, rhs);
     }
@@ -112,44 +76,26 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
         if (lhs.getDate() != rhs.getDate()) {
             match *= 0.8f;
         }
-//        if (lhs.getDateSent() != rhs.getDateSent()) {
-//            match *= 0.8f;
-//        }
-//        if (compare(lhs.getAddress(), rhs.getAddress()) != SAME) {
-//            match *= 0.8f;
-//        }
-//        if (lhs.getPerson() != rhs.getPerson()) {
-//            match *= 0.8f;
-//        }
-//        if (compare(lhs.getBody(), rhs.getBody()) != SAME) {
-//            match *= 0.8f;
-//        }
-//
-//        if (compare(lhs.getSubject(), rhs.getSubject()) != SAME) {
-//            match *= 0.9f;
-//        }
-//        if (lhs.getThreadId() != rhs.getThreadId()) {
-//            match *= 0.9f;
-//        }
-//
-//        if (lhs.getStatus() != rhs.getStatus()) {
-//            match *= 0.95f;
-//        }
-//        if (lhs.getErrorCode() != rhs.getErrorCode()) {
-//            match *= 0.95f;
-//        }
-//        if (lhs.isLocked() != rhs.isLocked()) {
-//            match *= 0.95f;
-//        }
-//        if (lhs.getProtocol() != rhs.getProtocol()) {
-//            match *= 0.95f;
-//        }
+        if (lhs.getDuration() != rhs.getDuration()) {
+            match *= 0.8f;
+        }
+        if (compare(lhs.getNumber(), rhs.getNumber()) != SAME) {
+            match *= 0.8f;
+        }
+
+        if (lhs.getNumberType() != rhs.getNumberType()) {
+            match *= 0.9f;
+        }
+        if (compare(lhs.getName(), rhs.getName()) != SAME) {
+            match *= 0.9f;
+        }
+
         if (lhs.isRead() != rhs.isRead()) {
             match *= 0.95f;
         }
-//        if (lhs.isSeen() != rhs.isSeen()) {
-//            match *= 0.95f;
-//        }
+        if (lhs.isNew() != rhs.isNew()) {
+            match *= 0.95f;
+        }
 
         return match;
     }

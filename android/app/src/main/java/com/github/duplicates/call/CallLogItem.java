@@ -29,8 +29,6 @@ public class CallLogItem extends DuplicateItem {
     private String name;
     private String numberLabel;
     private int numberType;
-    private String contentItemType;
-    private String contentType;
     private long date;
     private long duration;
     private boolean read;
@@ -60,22 +58,6 @@ public class CallLogItem extends DuplicateItem {
 
     public void setNumberType(int numberType) {
         this.numberType = numberType;
-    }
-
-    public String getContentItemType() {
-        return contentItemType;
-    }
-
-    public void setContentItemType(String contentItemType) {
-        this.contentItemType = contentItemType;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 
     public long getDate() {
