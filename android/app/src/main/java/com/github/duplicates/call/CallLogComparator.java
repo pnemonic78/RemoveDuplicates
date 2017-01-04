@@ -26,9 +26,9 @@ import com.github.duplicates.DuplicateComparator;
  */
 public class CallLogComparator extends DuplicateComparator<CallLogItem> {
 
-//    private String cachedName;
-//    private String cachedNumberLabel;
-//    private int cachedNumberType;
+//    private String name;
+//    private String numberLabel;
+//    private int numberType;
 //    private String contentItemType;
 //    private String contentType;
 //    private long date;

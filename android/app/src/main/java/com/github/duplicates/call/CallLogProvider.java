@@ -97,9 +97,9 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
     @Override
     public void populateItem(Cursor cursor, CallLogItem item) {
         item.setId(cursor.getLong(INDEX_ID));
-        item.setCachedName(cursor.getString(INDEX_CACHED_NAME));
-        item.setCachedNumberLabel(cursor.getString(INDEX_CACHED_NUMBER_LABEL));
-        item.setCachedNumberType(cursor.getInt(INDEX_CACHED_NUMBER_TYPE));
+        item.setName(cursor.getString(INDEX_CACHED_NAME));
+        item.setNumberLabel(cursor.getString(INDEX_CACHED_NUMBER_LABEL));
+        item.setNumberType(cursor.getInt(INDEX_CACHED_NUMBER_TYPE));
         item.setContentItemType(cursor.getString(INDEX_CONTENT_ITEM_TYPE));
         item.setContentType(cursor.getString(INDEX_CONTENT_TYPE));
         item.setDate(cursor.getLong(INDEX_DATE));

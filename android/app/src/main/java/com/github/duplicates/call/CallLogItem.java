@@ -26,9 +26,9 @@ import com.github.duplicates.DuplicateItem;
  */
 public class CallLogItem extends DuplicateItem {
 
-    private String cachedName;
-    private String cachedNumberLabel;
-    private int cachedNumberType;
+    private String name;
+    private String numberLabel;
+    private int numberType;
     private String contentItemType;
     private String contentType;
     private long date;
@@ -38,28 +38,28 @@ public class CallLogItem extends DuplicateItem {
     private String number;
     private int type;
 
-    public String getCachedName() {
-        return cachedName;
+    public String getName() {
+        return name;
     }
 
-    public void setCachedName(String cachedName) {
-        this.cachedName = cachedName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCachedNumberLabel() {
-        return cachedNumberLabel;
+    public String getNumberLabel() {
+        return numberLabel;
     }
 
-    public void setCachedNumberLabel(String cachedNumberLabel) {
-        this.cachedNumberLabel = cachedNumberLabel;
+    public void setNumberLabel(String numberLabel) {
+        this.numberLabel = numberLabel;
     }
 
-    public int getCachedNumberType() {
-        return cachedNumberType;
+    public int getNumberType() {
+        return numberType;
     }
 
-    public void setCachedNumberType(int cachedNumberType) {
-        this.cachedNumberType = cachedNumberType;
+    public void setNumberType(int numberType) {
+        this.numberType = numberType;
     }
 
     public String getContentItemType() {
