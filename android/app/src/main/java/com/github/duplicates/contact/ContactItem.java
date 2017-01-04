@@ -15,11 +15,12 @@
  *   Moshe Waisberg
  *
  */
-package com.github.duplicates.calendar;
+package com.github.duplicates.contact;
 
 /**
- * Duplicate calendar event.
+ * Duplicate contact item.
+ *
  * @author moshe.w
  */
-public class DuplicateCalendar extends com.github.duplicates.DuplicateItem {
+public class ContactItem {
 }

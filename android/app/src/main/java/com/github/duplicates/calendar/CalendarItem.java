@@ -15,14 +15,14 @@
  *   Moshe Waisberg
  *
  */
-package com.github.duplicates.bookmark;
+package com.github.duplicates.calendar;
 
 import com.github.duplicates.DuplicateItem;
 
 /**
- * Duplicate bookmark item.
+ * Duplicate calendar event.
  *
  * @author moshe.w
  */
-public class DuplicateBookmark extends DuplicateItem {
+public class CalendarItem extends DuplicateItem {
 }

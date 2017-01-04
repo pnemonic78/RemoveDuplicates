@@ -15,12 +15,14 @@
  *   Moshe Waisberg
  *
  */
-package com.github.duplicates.contact;
+package com.github.duplicates.alarm;
+
+import com.github.duplicates.DuplicateItem;
 
 /**
- * Duplicate contact item.
+ * Duplicate alarm item.
  *
  * @author moshe.w
  */
-public class DuplicateContact {
+public class AlarmItem extends DuplicateItem {
 }

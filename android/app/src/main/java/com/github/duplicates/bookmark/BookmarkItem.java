@@ -15,14 +15,14 @@
  *   Moshe Waisberg
  *
  */
-package com.github.duplicates.alarm;
+package com.github.duplicates.bookmark;
 
 import com.github.duplicates.DuplicateItem;
 
 /**
- * Duplicate alarm item.
+ * Duplicate bookmark item.
  *
  * @author moshe.w
  */
-public class DuplicateAlarm extends DuplicateItem {
+public class BookmarkItem extends DuplicateItem {
 }
