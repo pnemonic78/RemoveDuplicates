@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.provider;
+package com.github.provider;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -25,11 +25,12 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.BrowserContract.Bookmarks;
-import android.provider.BrowserContract.Combined;
-import android.provider.BrowserContract.History;
-import android.provider.BrowserContract.Searches;
+import android.provider.BaseColumns;
+
+import com.github.provider.BrowserContract.Bookmarks;
+import com.github.provider.BrowserContract.Combined;
+import com.github.provider.BrowserContract.History;
+import com.github.provider.BrowserContract.Searches;
 import android.util.Log;
 import android.webkit.WebIconDatabase;
 

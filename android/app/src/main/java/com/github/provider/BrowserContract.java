@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package android.provider;
+package com.github.provider;
 
 import android.accounts.Account;
 import android.content.ContentProviderClient;
@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.RemoteException;
+import android.provider.SyncStateContract;
 import android.util.Pair;
 
 /**
