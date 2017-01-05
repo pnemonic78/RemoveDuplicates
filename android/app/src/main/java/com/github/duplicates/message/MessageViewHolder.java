@@ -33,41 +33,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_ALL;
+import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_DRAFT;
+import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_FAILED;
+import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_INBOX;
+import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_OUTBOX;
+import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_QUEUED;
+import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_SENT;
+
 /**
  * View holder of a duplicate message.
  *
  * @author moshe.w
  */
 public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
-
-    /**
-     * Message type: all messages.
-     */
-    public static final int MESSAGE_TYPE_ALL = 0;//TextBasedSmsColumns.MESSAGE_TYPE_ALL
-    /**
-     * Message type: inbox.
-     */
-    public static final int MESSAGE_TYPE_INBOX = 1;//TextBasedSmsColumns.MESSAGE_TYPE_INBOX
-    /**
-     * Message type: sent messages.
-     */
-    public static final int MESSAGE_TYPE_SENT = 2;//TextBasedSmsColumns.MESSAGE_TYPE_SENT
-    /**
-     * Message type: drafts.
-     */
-    public static final int MESSAGE_TYPE_DRAFT = 3;//TextBasedSmsColumns.MESSAGE_TYPE_DRAFT
-    /**
-     * Message type: outbox.
-     */
-    public static final int MESSAGE_TYPE_OUTBOX = 4;//TextBasedSmsColumns.MESSAGE_TYPE_OUTBOX
-    /**
-     * Message type: failed outgoing message.
-     */
-    public static final int MESSAGE_TYPE_FAILED = 5;//TextBasedSmsColumns.MESSAGE_TYPE_FAILED
-    /**
-     * Message type: queued to send later.
-     */
-    public static final int MESSAGE_TYPE_QUEUED = 6;//TextBasedSmsColumns.MESSAGE_TYPE_QUEUED
 
     @BindView(R.id.match)
     TextView match;

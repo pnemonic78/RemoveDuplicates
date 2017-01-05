@@ -26,7 +26,35 @@ import com.github.duplicates.DuplicateItem;
  */
 public class MessageItem extends DuplicateItem {
 
-    public static final int MESSAGE_TYPE_ALL = 0;// TextBasedSmsColumns.MESSAGE_TYPE_ALL
+    /**
+     * Message type: all messages.
+     */
+    public static final int MESSAGE_TYPE_ALL = 0;//TextBasedSmsColumns.MESSAGE_TYPE_ALL
+    /**
+     * Message type: inbox.
+     */
+    public static final int MESSAGE_TYPE_INBOX = 1;//TextBasedSmsColumns.MESSAGE_TYPE_INBOX
+    /**
+     * Message type: sent messages.
+     */
+    public static final int MESSAGE_TYPE_SENT = 2;//TextBasedSmsColumns.MESSAGE_TYPE_SENT
+    /**
+     * Message type: drafts.
+     */
+    public static final int MESSAGE_TYPE_DRAFT = 3;//TextBasedSmsColumns.MESSAGE_TYPE_DRAFT
+    /**
+     * Message type: outbox.
+     */
+    public static final int MESSAGE_TYPE_OUTBOX = 4;//TextBasedSmsColumns.MESSAGE_TYPE_OUTBOX
+    /**
+     * Message type: failed outgoing message.
+     */
+    public static final int MESSAGE_TYPE_FAILED = 5;//TextBasedSmsColumns.MESSAGE_TYPE_FAILED
+    /**
+     * Message type: queued to send later.
+     */
+    public static final int MESSAGE_TYPE_QUEUED = 6;//TextBasedSmsColumns.MESSAGE_TYPE_QUEUED
+
     public static final int STATUS_NONE = -1;// TextBasedSmsColumns.STATUS_NONE
 
     private String address;

@@ -33,13 +33,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.provider.CallLog.Calls.ANSWERED_EXTERNALLY_TYPE;
-import static android.provider.CallLog.Calls.BLOCKED_TYPE;
-import static android.provider.CallLog.Calls.INCOMING_TYPE;
-import static android.provider.CallLog.Calls.MISSED_TYPE;
-import static android.provider.CallLog.Calls.OUTGOING_TYPE;
-import static android.provider.CallLog.Calls.REJECTED_TYPE;
-import static android.provider.CallLog.Calls.VOICEMAIL_TYPE;
+import static com.github.duplicates.call.CallLogItem.ANSWERED_EXTERNALLY_TYPE;
+import static com.github.duplicates.call.CallLogItem.BLOCKED_TYPE;
+import static com.github.duplicates.call.CallLogItem.INCOMING_TYPE;
+import static com.github.duplicates.call.CallLogItem.MISSED_TYPE;
+import static com.github.duplicates.call.CallLogItem.OUTGOING_TYPE;
+import static com.github.duplicates.call.CallLogItem.REJECTED_TYPE;
+import static com.github.duplicates.call.CallLogItem.VOICEMAIL_TYPE;
 
 /**
  * View holder of a duplicate call.
