@@ -107,10 +107,19 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      * @param activity the activity for permissions.
      * @param params   the execution parameters.
      */
-    @SafeVarargs
-    public final void start(Activity activity, Params... params) {
+    public final void start(Activity activity, Params[] params) {
         this.params = params;
         checkPermissions(activity);
+    }
+
+    /**
+     * Start the task without parameters. Checks for permissions and then executes.
+     *
+     * @param activity the activity for permissions.
+     * @see #start(Activity, Object[])
+     */
+    public final void start(Activity activity) {
+        start(activity, null);
     }
 
     protected void checkPermissions(Activity activity) {
