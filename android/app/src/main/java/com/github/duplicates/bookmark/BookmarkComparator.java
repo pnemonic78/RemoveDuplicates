@@ -15,22 +15,22 @@
  *   Moshe Waisberg
  *
  */
-package com.github.duplicates.call;
+package com.github.duplicates.bookmark;
 
 import com.github.duplicates.DuplicateComparator;
 
 /**
- * Compare duplicate calls.
+ * Compare duplicate bookmarks.
  *
  * @author moshe.w
  */
-public class CallLogComparator extends DuplicateComparator<CallLogItem> {
+public class BookmarkComparator extends DuplicateComparator<BookmarkItem> {
 
     @Override
-    public int compare(CallLogItem lhs, CallLogItem rhs) {
+    public int compare(BookmarkItem lhs, BookmarkItem rhs) {
         int c;
 
-        c = compare(lhs.getType(), rhs.getType());
+        c = compare(lhs.getCreated(), rhs.getCreated());
         if (c != SAME) {
             return c;
         }
@@ -38,27 +38,19 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getDuration(), rhs.getDuration());
+        c = compare(lhs.getFavIcon(), rhs.getFavIcon());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getNumber(), rhs.getNumber());
+        c = compare(lhs.getTitle(), rhs.getTitle());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getNumberType(), rhs.getNumberType());
+        c = compare(lhs.getUrl(), rhs.getUrl());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getName(), rhs.getName());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.isRead(), rhs.isRead());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.isNew(), rhs.isNew());
+        c = compare(lhs.getVisits(), rhs.getVisits());
         if (c != SAME) {
             return c;
         }
@@ -67,33 +59,27 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
     }
 
     @Override
-    public float match(CallLogItem lhs, CallLogItem rhs) {
+    public float match(BookmarkItem lhs, BookmarkItem rhs) {
         float match = 1f;
 
-        if (lhs.getType() != rhs.getType()) {
+        if (lhs.getCreated() != rhs.getCreated()) {
             match *= 0.8f;
         }
+        if (compare(lhs.getUrl(), rhs.getUrl()) != SAME) {
+            match *= 0.8f;
+        }
+
+        if (compare(lhs.getTitle(), rhs.getTitle()) != SAME) {
+            match *= 0.9f;
+        }
+
         if (lhs.getDate() != rhs.getDate()) {
-            match *= 0.8f;
-        }
-        if (lhs.getDuration() != rhs.getDuration()) {
-            match *= 0.8f;
-        }
-        if (compare(lhs.getNumber(), rhs.getNumber()) != SAME) {
-            match *= 0.8f;
-        }
-
-        if (lhs.getNumberType() != rhs.getNumberType()) {
-            match *= 0.9f;
-        }
-        if (compare(lhs.getName(), rhs.getName()) != SAME) {
-            match *= 0.9f;
-        }
-
-        if (lhs.isRead() != rhs.isRead()) {
             match *= 0.95f;
         }
-        if (lhs.isNew() != rhs.isNew()) {
+        if (lhs.getVisits() != rhs.getVisits()) {
+            match *= 0.95f;
+        }
+        if (compare(lhs.getFavIcon(), rhs.getFavIcon()) != SAME) {
             match *= 0.95f;
         }
 

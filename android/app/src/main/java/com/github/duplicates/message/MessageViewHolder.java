@@ -18,14 +18,12 @@
 package com.github.duplicates.message;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.github.android.removeduplicates.R;
-import com.github.duplicates.DuplicateComparator;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
 
@@ -33,6 +31,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.github.duplicates.DuplicateComparator.SAME;
+import static com.github.duplicates.DuplicateComparator.compare;
 import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_ALL;
 import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_DRAFT;
 import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_FAILED;
@@ -50,6 +50,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
 
     @BindView(R.id.match)
     TextView match;
+
     @BindView(R.id.checkbox1)
     CheckBox checkbox1;
     @BindView(R.id.date1)
@@ -60,6 +61,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     TextView type1;
     @BindView(R.id.body1)
     TextView body1;
+
     @BindView(R.id.checkbox2)
     CheckBox checkbox2;
     @BindView(R.id.date2)
@@ -71,21 +73,12 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     @BindView(R.id.body2)
     TextView body2;
 
-    private final ColorStateList colorDate;
-    private final ColorStateList colorAddress;
-    private final ColorStateList colorType;
-    private final ColorStateList colorBody;
-
     private MessageItem item1;
     private MessageItem item2;
 
     public MessageViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        colorDate = date1.getTextColors();
-        colorAddress = address1.getTextColors();
-        colorType = type1.getTextColors();
-        colorBody = body1.getTextColors();
     }
 
     @Override
@@ -112,36 +105,36 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     }
 
     protected void highlightDifferences(MessageItem item1, MessageItem item2) {
-        if (DuplicateComparator.compare(item1.getDateReceived(), item2.getDateReceived()) != 0) {
-            date1.setTextColor(colorDifferent);
-            date2.setTextColor(colorDifferent);
+        if (compare(item1.getDateReceived(), item2.getDateReceived()) != SAME) {
+            date1.setBackgroundDrawable(colorDifferent);
+            date2.setBackgroundDrawable(colorDifferent);
         } else {
-            date1.setTextColor(colorDate);
-            date2.setTextColor(colorDate);
+            date1.setBackgroundDrawable(null);
+            date2.setBackgroundDrawable(null);
         }
 
-        if (DuplicateComparator.compare(item1.getAddress(), item2.getAddress()) != 0) {
-            address1.setTextColor(colorDifferent);
-            address2.setTextColor(colorDifferent);
+        if (compare(item1.getAddress(), item2.getAddress()) != SAME) {
+            address1.setBackgroundDrawable(colorDifferent);
+            address2.setBackgroundDrawable(colorDifferent);
         } else {
-            address1.setTextColor(colorAddress);
-            address2.setTextColor(colorAddress);
+            address1.setBackgroundDrawable(null);
+            address2.setBackgroundDrawable(null);
         }
 
-        if (DuplicateComparator.compare(item1.getType(), item2.getType()) != 0) {
-            type1.setTextColor(colorDifferent);
-            type2.setTextColor(colorDifferent);
+        if (compare(item1.getType(), item2.getType()) != SAME) {
+            type1.setBackgroundDrawable(colorDifferent);
+            type2.setBackgroundDrawable(colorDifferent);
         } else {
-            type1.setTextColor(colorType);
-            type2.setTextColor(colorType);
+            type1.setBackgroundDrawable(null);
+            type2.setBackgroundDrawable(null);
         }
 
-        if (DuplicateComparator.compare(item1.getBody(), item2.getBody()) != 0) {
-            body1.setTextColor(colorDifferent);
-            body2.setTextColor(colorDifferent);
+        if (compare(item1.getBody(), item2.getBody()) != SAME) {
+            body1.setBackgroundDrawable(colorDifferent);
+            body2.setBackgroundDrawable(colorDifferent);
         } else {
-            body1.setTextColor(colorBody);
-            body2.setTextColor(colorBody);
+            body1.setBackgroundDrawable(null);
+            body2.setBackgroundDrawable(null);
         }
     }
 

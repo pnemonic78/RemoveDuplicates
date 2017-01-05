@@ -31,59 +31,59 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
         int c;
 
         c = compare(lhs.getType(), rhs.getType());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getDateReceived(), rhs.getDateReceived());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getDateSent(), rhs.getDateSent());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getAddress(), rhs.getAddress());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getPerson(), rhs.getPerson());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getBody(), rhs.getBody());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getSubject(), rhs.getSubject());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getThreadId(), rhs.getThreadId());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getStatus(), rhs.getStatus());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getErrorCode(), rhs.getErrorCode());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.isLocked(), rhs.isLocked());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.getProtocol(), rhs.getProtocol());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.isRead(), rhs.isRead());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
         c = compare(lhs.isSeen(), rhs.isSeen());
-        if (c != 0) {
+        if (c != SAME) {
             return c;
         }
 

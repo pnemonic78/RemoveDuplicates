@@ -3,7 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.android.removeduplicates">
 
-    <!-- Call Log. -->
+    <!-- Bookmarks. -->
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>
+    <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS"/>
+    <!-- Call Logs. -->
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
     <!-- Messages. -->

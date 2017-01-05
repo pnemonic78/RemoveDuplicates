@@ -61,6 +61,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         return null;
     }
 
+    protected String getCursorSelection() {
+        return null;
+    }
+
     public abstract T createItem();
 
     public abstract void populateItem(Cursor cursor, T item);
@@ -115,7 +119,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
-        Cursor cursor = cr.query(getContentUri(), getCursorProjection(), null, null, null);
+        Cursor cursor = cr.query(getContentUri(), getCursorProjection(), getCursorSelection(), null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 T item;

@@ -17,6 +17,9 @@
  */
 package com.github.duplicates;
 
+import android.graphics.Bitmap;
+
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -58,5 +61,43 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
 
     public static int compare(boolean lhs, boolean rhs) {
         return lhs == rhs ? SAME : (lhs ? LHS : RHS);
+    }
+
+    public static int compare(byte[] lhs, byte[] rhs) {
+        if (lhs == null) {
+            return (rhs == null) ? SAME : RHS;
+        }
+        if (rhs == null) {
+            return LHS;
+        }
+        int l1 = lhs.length;
+        int l2 = rhs.length;
+        int c = l1 - l2;
+        if ((c == 0) && Arrays.equals(lhs, rhs)) {
+            return SAME;
+        }
+        return c;
+    }
+
+    public static int compare(Bitmap lhs, Bitmap rhs) {
+        if (lhs == null) {
+            return (rhs == null) ? SAME : RHS;
+        }
+        if (rhs == null) {
+            return LHS;
+        }
+        int w1 = lhs.getWidth();
+        int w2 = rhs.getWidth();
+        int c = w1 - w2;
+        if (c != 0) {
+            return c;
+        }
+        int h1 = lhs.getHeight();
+        int h2 = rhs.getHeight();
+        c = h1 - h2;
+        if ((c == 0) && lhs.sameAs(rhs)) {
+            return SAME;
+        }
+        return c;
     }
 }

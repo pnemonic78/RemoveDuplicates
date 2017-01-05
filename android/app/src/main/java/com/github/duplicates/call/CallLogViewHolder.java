@@ -18,14 +18,12 @@
 package com.github.duplicates.call;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.github.android.removeduplicates.R;
-import com.github.duplicates.DuplicateComparator;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
 
@@ -33,6 +31,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.github.duplicates.DuplicateComparator.SAME;
+import static com.github.duplicates.DuplicateComparator.compare;
 import static com.github.duplicates.call.CallLogItem.ANSWERED_EXTERNALLY_TYPE;
 import static com.github.duplicates.call.CallLogItem.BLOCKED_TYPE;
 import static com.github.duplicates.call.CallLogItem.INCOMING_TYPE;
@@ -50,6 +50,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
 
     @BindView(R.id.match)
     TextView match;
+
     @BindView(R.id.checkbox1)
     CheckBox checkbox1;
     @BindView(R.id.date1)
@@ -62,6 +63,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     TextView type1;
     @BindView(R.id.name1)
     TextView name1;
+
     @BindView(R.id.checkbox2)
     CheckBox checkbox2;
     @BindView(R.id.date2)
@@ -75,23 +77,12 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     @BindView(R.id.name2)
     TextView name2;
 
-    private final ColorStateList colorDate;
-    private final ColorStateList colorDuration;
-    private final ColorStateList colorName;
-    private final ColorStateList colorNumber;
-    private final ColorStateList colorType;
-
     private CallLogItem item1;
     private CallLogItem item2;
 
     public CallLogViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        colorDate = date1.getTextColors();
-        colorDuration = duration1.getTextColors();
-        colorName = name1.getTextColors();
-        colorNumber = number1.getTextColors();
-        colorType = type1.getTextColors();
     }
 
     @Override
@@ -120,44 +111,44 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     }
 
     protected void highlightDifferences(CallLogItem item1, CallLogItem item2) {
-        if (DuplicateComparator.compare(item1.getDate(), item2.getDate()) != 0) {
-            date1.setTextColor(colorDifferent);
-            date2.setTextColor(colorDifferent);
+        if (compare(item1.getDate(), item2.getDate()) != SAME) {
+            date1.setBackgroundDrawable(colorDifferent);
+            date2.setBackgroundDrawable(colorDifferent);
         } else {
-            date1.setTextColor(colorDate);
-            date2.setTextColor(colorDate);
+            date1.setBackgroundDrawable(null);
+            date2.setBackgroundDrawable(null);
         }
 
-        if (DuplicateComparator.compare(item1.getDuration(), item2.getDuration()) != 0) {
-            duration1.setTextColor(colorDifferent);
-            duration2.setTextColor(colorDifferent);
+        if (compare(item1.getDuration(), item2.getDuration()) != SAME) {
+            duration1.setBackgroundDrawable(colorDifferent);
+            duration2.setBackgroundDrawable(colorDifferent);
         } else {
-            duration1.setTextColor(colorDuration);
-            duration2.setTextColor(colorDuration);
+            duration1.setBackgroundDrawable(null);
+            duration2.setBackgroundDrawable(null);
         }
 
-        if (DuplicateComparator.compare(item1.getType(), item2.getType()) != 0) {
-            type1.setTextColor(colorDifferent);
-            type2.setTextColor(colorDifferent);
+        if (compare(item1.getType(), item2.getType()) != SAME) {
+            type1.setBackgroundDrawable(colorDifferent);
+            type2.setBackgroundDrawable(colorDifferent);
         } else {
-            type1.setTextColor(colorType);
-            type2.setTextColor(colorType);
+            type1.setBackgroundDrawable(null);
+            type2.setBackgroundDrawable(null);
         }
 
-        if (DuplicateComparator.compare(item1.getNumber(), item2.getNumber()) != 0) {
-            number1.setTextColor(colorDifferent);
-            number2.setTextColor(colorDifferent);
+        if (compare(item1.getNumber(), item2.getNumber()) != SAME) {
+            number1.setBackgroundDrawable(colorDifferent);
+            number2.setBackgroundDrawable(colorDifferent);
         } else {
-            number1.setTextColor(colorNumber);
-            number2.setTextColor(colorNumber);
+            number1.setBackgroundDrawable(null);
+            number2.setBackgroundDrawable(null);
         }
 
-        if (DuplicateComparator.compare(item1.getName(), item2.getName()) != 0) {
-            name1.setTextColor(colorDifferent);
-            name2.setTextColor(colorDifferent);
+        if (compare(item1.getName(), item2.getName()) != SAME) {
+            name1.setBackgroundDrawable(colorDifferent);
+            name2.setBackgroundDrawable(colorDifferent);
         } else {
-            name1.setTextColor(colorName);
-            name2.setTextColor(colorName);
+            name1.setBackgroundDrawable(null);
+            name2.setBackgroundDrawable(null);
         }
     }
 

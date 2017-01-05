@@ -34,6 +34,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.android.removeduplicates.R;
+import com.github.duplicates.bookmark.BookmarkDeleteTask;
+import com.github.duplicates.bookmark.BookmarkFindTask;
 import com.github.duplicates.call.CallLogDeleteTask;
 import com.github.duplicates.call.CallLogFindTask;
 import com.github.duplicates.message.MessageDeleteTask;
@@ -131,8 +133,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         switch (item) {
 //            case ALARMS:
 //                return new AlarmFindTask(context, listener);
-//            case BOOKMARKS:
-//                return new BookmarkFindTask(context, listener);
+            case BOOKMARKS:
+                return new BookmarkFindTask(context, listener);
 //            case CALENDAR:
 //                return new CalendarFindTask(context, listener);
             case CALL_LOG:
@@ -153,8 +155,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         switch (item) {
 //            case ALARMS:
 //                return new AlarmDeleteTask(context, listener);
-//            case BOOKMARKS:
-//                return new BookmarkDeleteTask(context, listener);
+            case BOOKMARKS:
+                return new BookmarkDeleteTask(context, listener);
 //            case CALENDAR:
 //                return new CalendarDeleteTask(context, listener);
             case CALL_LOG:
