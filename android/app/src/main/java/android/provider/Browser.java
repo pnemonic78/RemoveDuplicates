@@ -196,7 +196,7 @@ public class Browser {
      * @param string the string to send
      */
     public static final void sendString(Context context, String string) {
-        sendString(context, string, context.getString(com.android.internal.R.string.sendText));
+        //sendString(context, string, context.getString(android.R.string.sendText));
     }
 
     /**
