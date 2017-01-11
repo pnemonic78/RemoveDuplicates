@@ -92,14 +92,14 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
         date1.setText(DateUtils.formatDateTime(context, item1.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         icon1.setImageBitmap(item1.getIcon());
         title1.setText(item1.getTitle());
-        url1.setText(item1.getUrl());
+        url1.setText(item1.getUrl() != null ? item1.getUrl().toString() : null);
 
         checkbox2.setChecked(item2.isChecked());
         created2.setText(DateUtils.formatDateTime(context, item2.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         date2.setText(DateUtils.formatDateTime(context, item2.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         icon2.setImageBitmap(item2.getIcon());
         title2.setText(item2.getTitle());
-        url2.setText(item2.getUrl());
+        url2.setText(item2.getUrl() != null ? item2.getUrl().toString() : null);
 
         highlightDifferences(item1, item2);
     }

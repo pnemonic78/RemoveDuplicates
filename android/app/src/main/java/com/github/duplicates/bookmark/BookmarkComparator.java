@@ -62,9 +62,6 @@ public class BookmarkComparator extends DuplicateComparator<BookmarkItem> {
     public float match(BookmarkItem lhs, BookmarkItem rhs) {
         float match = 1f;
 
-        if (lhs.getCreated() != rhs.getCreated()) {
-            match *= 0.8f;
-        }
         if (compare(lhs.getUrl(), rhs.getUrl()) != SAME) {
             match *= 0.8f;
         }
@@ -73,14 +70,18 @@ public class BookmarkComparator extends DuplicateComparator<BookmarkItem> {
             match *= 0.9f;
         }
 
-        if (lhs.getDate() != rhs.getDate()) {
-            match *= 0.95f;
-        }
-        if (lhs.getVisits() != rhs.getVisits()) {
+        if (lhs.getCreated() != rhs.getCreated()) {
             match *= 0.95f;
         }
         if (compare(lhs.getFavIcon(), rhs.getFavIcon()) != SAME) {
             match *= 0.95f;
+        }
+
+        if (lhs.getDate() != rhs.getDate()) {
+            match *= 0.975f;
+        }
+        if (lhs.getVisits() != rhs.getVisits()) {
+            match *= 0.975f;
         }
 
         return match;

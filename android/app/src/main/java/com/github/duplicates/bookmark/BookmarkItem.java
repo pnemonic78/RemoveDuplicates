@@ -19,6 +19,7 @@ package com.github.duplicates.bookmark;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 
 import com.github.duplicates.DuplicateItem;
 
@@ -36,7 +37,7 @@ public class BookmarkItem extends DuplicateItem {
     private byte[] favIcon;
     private Bitmap icon;
     private String title;
-    private String url;
+    private Uri url;
     private int visits;
 
     public long getCreated() {
@@ -89,12 +90,16 @@ public class BookmarkItem extends DuplicateItem {
         this.title = title;
     }
 
-    public String getUrl() {
+    public Uri getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(Uri url) {
         this.url = url;
+    }
+
+    public void setUrl(String url) {
+        setUrl(url != null ? Uri.parse(url) : null);
     }
 
     public int getVisits() {

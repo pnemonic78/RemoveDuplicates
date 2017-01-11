@@ -18,6 +18,7 @@
 package com.github.duplicates;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -99,5 +100,23 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
             return SAME;
         }
         return c;
+    }
+
+    public static int compare(Uri lhs, Uri rhs) {
+        if (lhs == null) {
+            return (rhs == null) ? SAME : RHS;
+        }
+        if (rhs == null) {
+            return LHS;
+        }
+        String s1 = lhs.toString();
+        if (s1.endsWith("/")) {
+            s1 = s1.substring(0, s1.length() - 1);
+        }
+        String s2 = rhs.toString();
+        if (s2.endsWith("/")) {
+            s2 = s2.substring(0, s2.length() - 1);
+        }
+        return s1.compareTo(s2);
     }
 }
