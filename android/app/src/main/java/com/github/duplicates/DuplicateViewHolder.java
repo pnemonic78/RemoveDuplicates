@@ -17,6 +17,7 @@
  */
 package com.github.duplicates;
 
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -35,10 +36,34 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
     protected final ColorDrawable colorDifferent;
     protected final NumberFormat percentFormatter = NumberFormat.getPercentInstance();
 
+    protected T item1;
+    protected T item2;
+
     public DuplicateViewHolder(View itemView) {
         super(itemView);
         colorDifferent = new ColorDrawable(itemView.getContext().getResources().getColor(R.color.different));
     }
 
-    public abstract void bind(DuplicateItemPair<T> pair);
+    /**
+     * Bind the pair to the view.
+     *
+     * @param pair the pair of items.
+     */
+    public void bind(DuplicateItemPair<T> pair) {
+        item1 = pair.getItem1();
+        item2 = pair.getItem2();
+        Context context = itemView.getContext();
+        bindHeader(context, pair);
+        bindItem1(context, pair.getItem1());
+        bindItem2(context, pair.getItem2());
+        bindDifference(context, pair);
+    }
+
+    protected abstract void bindHeader(Context context, DuplicateItemPair<T> pair);
+
+    protected abstract void bindItem1(Context context, T item);
+
+    protected abstract void bindItem2(Context context, T item);
+
+    protected abstract void bindDifference(Context context, DuplicateItemPair<T> pair);
 }

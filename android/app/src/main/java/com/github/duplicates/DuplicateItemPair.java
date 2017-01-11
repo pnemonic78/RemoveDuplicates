@@ -29,18 +29,20 @@ public class DuplicateItemPair<T extends DuplicateItem> {
     private T item1;
     private T item2;
     private float match;
+    private boolean[] difference;
 
     public DuplicateItemPair() {
     }
 
     public DuplicateItemPair(T item1, T item2) {
-        this(item1, item2, 1f);
+        this(item1, item2, 1f, null);
     }
 
-    public DuplicateItemPair(T item1, T item2, float match) {
+    public DuplicateItemPair(T item1, T item2, float match, boolean[] difference) {
         this.item1 = item1;
         this.item2 = item2;
         this.match = match;
+        this.difference = difference;
 
         if (match >= MATCH_GREAT) {
             item2.setChecked(true);
@@ -51,23 +53,15 @@ public class DuplicateItemPair<T extends DuplicateItem> {
         return item1;
     }
 
-    public void setItem1(T item1) {
-        this.item1 = item1;
-    }
-
     public T getItem2() {
         return item2;
-    }
-
-    public void setItem2(T item2) {
-        this.item2 = item2;
     }
 
     public float getMatch() {
         return match;
     }
 
-    public void setMatch(float match) {
-        this.match = match;
+    public boolean[] getDifference() {
+        return difference;
     }
 }

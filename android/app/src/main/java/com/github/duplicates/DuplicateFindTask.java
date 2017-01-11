@@ -67,7 +67,8 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
             T item1 = (T) progress[1];
             T item2 = (T) progress[2];
             float match = (float) progress[3];
-            getListener().onDuplicateTaskMatch(this, item1, item2, match);
+            boolean[] difference = (boolean[]) progress[4];
+            getListener().onDuplicateTaskMatch(this, item1, item2, match, difference);
         }
     }
 
@@ -78,14 +79,18 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
         // Is it a duplicate?
         float bestMatch = 0f;
         T bestItem = null;
+        boolean[] bestDifference = null;
+        boolean[] difference;
         float match;
         T item1;
         // Most likely that a matching item is a neighbour,so count backwards.
         for (int i = size - 1; i >= 0; i--) {
             item1 = items.get(i);
-            match = comparator.match(item1, item);
-            if ((match > MATCH_GOOD) && (match > bestMatch)) {
+            difference = comparator.difference(item1, item);
+            match = comparator.match(difference);
+            if ((match >= MATCH_GOOD) && (match > bestMatch)) {
                 bestMatch = match;
+                bestDifference = difference;
                 bestItem = item1;
                 if (match == 1f) {
                     break;
@@ -93,7 +98,7 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
             }
         }
         if (bestItem != null) {
-            publishProgress(size, bestItem, item, bestMatch);
+            publishProgress(size, bestItem, item, bestMatch, bestDifference);
         }
 
         if (items.add(item)) {

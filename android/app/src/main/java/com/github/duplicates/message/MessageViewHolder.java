@@ -31,8 +31,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.github.duplicates.DuplicateComparator.SAME;
-import static com.github.duplicates.DuplicateComparator.compare;
+import static com.github.duplicates.message.MessageComparator.ADDRESS;
+import static com.github.duplicates.message.MessageComparator.BODY;
+import static com.github.duplicates.message.MessageComparator.DATE;
+import static com.github.duplicates.message.MessageComparator.TYPE;
 import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_ALL;
 import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_DRAFT;
 import static com.github.duplicates.message.MessageItem.MESSAGE_TYPE_FAILED;
@@ -73,39 +75,39 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     @BindView(R.id.body2)
     TextView body2;
 
-    private MessageItem item1;
-    private MessageItem item2;
-
     public MessageViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     @Override
-    public void bind(DuplicateItemPair<MessageItem> pair) {
-        this.item1 = pair.getItem1();
-        this.item2 = pair.getItem2();
-        Context context = itemView.getContext();
-
+    protected void bindHeader(Context context, DuplicateItemPair<MessageItem> pair) {
         match.setText(context.getString(R.string.match, percentFormatter.format(pair.getMatch())));
-
-        checkbox1.setChecked(item1.isChecked());
-        date1.setText(DateUtils.formatDateTime(context, item1.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        address1.setText(item1.getAddress());
-        type1.setText(getTypeName(context, item1.getType()));
-        body1.setText(item1.getBody());
-
-        checkbox2.setChecked(item2.isChecked());
-        date2.setText(DateUtils.formatDateTime(context, item2.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        address2.setText(item2.getAddress());
-        type2.setText(getTypeName(context, item2.getType()));
-        body2.setText(item2.getBody());
-
-        highlightDifferences(item1, item2);
     }
 
-    protected void highlightDifferences(MessageItem item1, MessageItem item2) {
-        if (compare(item1.getDateReceived(), item2.getDateReceived()) != SAME) {
+    @Override
+    protected void bindItem1(Context context, MessageItem item) {
+        checkbox1.setChecked(item.isChecked());
+        date1.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        address1.setText(item.getAddress());
+        type1.setText(getTypeName(context, item.getType()));
+        body1.setText(item.getBody());
+    }
+
+    @Override
+    protected void bindItem2(Context context, MessageItem item) {
+        checkbox2.setChecked(item.isChecked());
+        date2.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        address2.setText(item.getAddress());
+        type2.setText(getTypeName(context, item.getType()));
+        body2.setText(item.getBody());
+    }
+
+    @Override
+    protected void bindDifference(Context context, DuplicateItemPair<MessageItem> pair) {
+        boolean[] difference = pair.getDifference();
+
+        if ((difference != null) && difference[DATE]) {
             date1.setBackgroundDrawable(colorDifferent);
             date2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -113,7 +115,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
             date2.setBackgroundDrawable(null);
         }
 
-        if (compare(item1.getAddress(), item2.getAddress()) != SAME) {
+        if ((difference != null) && difference[ADDRESS]) {
             address1.setBackgroundDrawable(colorDifferent);
             address2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -121,7 +123,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
             address2.setBackgroundDrawable(null);
         }
 
-        if (compare(item1.getType(), item2.getType()) != SAME) {
+        if ((difference != null) && difference[TYPE]) {
             type1.setBackgroundDrawable(colorDifferent);
             type2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -129,7 +131,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
             type2.setBackgroundDrawable(null);
         }
 
-        if (compare(item1.getBody(), item2.getBody()) != SAME) {
+        if ((difference != null) && difference[BODY]) {
             body1.setBackgroundDrawable(colorDifferent);
             body2.setBackgroundDrawable(colorDifferent);
         } else {

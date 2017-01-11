@@ -32,8 +32,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.github.duplicates.DuplicateComparator.SAME;
-import static com.github.duplicates.DuplicateComparator.compare;
+import static com.github.duplicates.bookmark.BookmarkComparator.CREATED;
+import static com.github.duplicates.bookmark.BookmarkComparator.DATE;
+import static com.github.duplicates.bookmark.BookmarkComparator.FAVICON;
+import static com.github.duplicates.bookmark.BookmarkComparator.TITLE;
+import static com.github.duplicates.bookmark.BookmarkComparator.URL;
 
 /**
  * View holder of a duplicate bookmark.
@@ -71,69 +74,73 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     @BindView(R.id.url2)
     TextView url2;
 
-    private BookmarkItem item1;
-    private BookmarkItem item2;
-
     public BookmarkViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     @Override
-    public void bind(DuplicateItemPair<BookmarkItem> pair) {
-        this.item1 = pair.getItem1();
-        this.item2 = pair.getItem2();
-        Context context = itemView.getContext();
-
+    protected void bindHeader(Context context, DuplicateItemPair<BookmarkItem> pair) {
         match.setText(context.getString(R.string.match, percentFormatter.format(pair.getMatch())));
-
-        checkbox1.setChecked(item1.isChecked());
-        created1.setText(DateUtils.formatDateTime(context, item1.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        date1.setText(DateUtils.formatDateTime(context, item1.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        icon1.setImageBitmap(item1.getIcon());
-        title1.setText(item1.getTitle());
-        url1.setText(item1.getUrl() != null ? item1.getUrl().toString() : null);
-
-        checkbox2.setChecked(item2.isChecked());
-        created2.setText(DateUtils.formatDateTime(context, item2.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        date2.setText(DateUtils.formatDateTime(context, item2.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        icon2.setImageBitmap(item2.getIcon());
-        title2.setText(item2.getTitle());
-        url2.setText(item2.getUrl() != null ? item2.getUrl().toString() : null);
-
-        highlightDifferences(item1, item2);
     }
 
-    protected void highlightDifferences(BookmarkItem item1, BookmarkItem item2) {
-        if (compare(item1.getCreated(), item2.getCreated()) != SAME) {
+    @Override
+    protected void bindItem1(Context context, BookmarkItem item) {
+        checkbox1.setChecked(item.isChecked());
+        created1.setText(DateUtils.formatDateTime(context, item.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        date1.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        icon1.setImageBitmap(item.getIcon());
+        title1.setText(item.getTitle());
+        url1.setText(item.getUrl() != null ? item.getUrl().toString() : null);
+    }
+
+    @Override
+    protected void bindItem2(Context context, BookmarkItem item) {
+        checkbox2.setChecked(item.isChecked());
+        created2.setText(DateUtils.formatDateTime(context, item.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        date2.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        icon2.setImageBitmap(item.getIcon());
+        title2.setText(item.getTitle());
+        url2.setText(item.getUrl() != null ? item.getUrl().toString() : null);
+    }
+
+    @Override
+    protected void bindDifference(Context context, DuplicateItemPair<BookmarkItem> pair) {
+        boolean[] difference = pair.getDifference();
+
+        if ((difference != null) && difference[CREATED]) {
             created1.setBackgroundDrawable(colorDifferent);
             created2.setBackgroundDrawable(colorDifferent);
         } else {
             created1.setBackgroundDrawable(null);
             created2.setBackgroundDrawable(null);
         }
-        if (compare(item1.getDate(), item2.getDate()) != SAME) {
+
+        if ((difference != null) && difference[DATE]) {
             date1.setBackgroundDrawable(colorDifferent);
             date2.setBackgroundDrawable(colorDifferent);
         } else {
             date1.setBackgroundDrawable(null);
             date2.setBackgroundDrawable(null);
         }
-        if (compare(item1.getFavIcon(), item2.getFavIcon()) != SAME) {
+
+        if ((difference != null) && difference[FAVICON]) {
             icon1.setBackgroundDrawable(colorDifferent);
             icon2.setBackgroundDrawable(colorDifferent);
         } else {
             icon1.setBackgroundDrawable(null);
             icon2.setBackgroundDrawable(null);
         }
-        if (compare(item1.getTitle(), item2.getTitle()) != SAME) {
+
+        if ((difference != null) && difference[TITLE]) {
             title1.setBackgroundDrawable(colorDifferent);
             title2.setBackgroundDrawable(colorDifferent);
         } else {
             title1.setBackgroundDrawable(null);
             title2.setBackgroundDrawable(null);
         }
-        if (compare(item1.getUrl(), item2.getUrl()) != SAME) {
+
+        if ((difference != null) && difference[URL]) {
             url1.setBackgroundDrawable(colorDifferent);
             url2.setBackgroundDrawable(colorDifferent);
         } else {

@@ -60,20 +60,21 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param item2 the second item.
      */
     public void add(T item1, T item2) {
-        add(item1, item2, 1f);
+        add(item1, item2, 1f, null);
     }
 
     /**
      * Add a pair.
      *
-     * @param item1 the first item.
-     * @param item2 the second item.
-     * @param match the matching percentage.
+     * @param item1      the first item.
+     * @param item2      the second item.
+     * @param match      the matching percentage.
+     * @param difference the array of differences.
      */
-    public void add(T item1, T item2, float match) {
+    public void add(T item1, T item2, float match, boolean[] difference) {
         int position = pairs.size();
         if (!item1.isChecked() || !item2.isChecked()) {
-            DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match);
+            DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match, difference);
             if (pairs.add(pair)) {
                 notifyItemInserted(position);
             }

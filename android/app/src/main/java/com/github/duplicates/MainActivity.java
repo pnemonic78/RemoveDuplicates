@@ -206,9 +206,9 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     }
 
     @Override
-    public void onDuplicateTaskMatch(DuplicateTask task, DuplicateItem item1, DuplicateItem item2, float match) {
+    public void onDuplicateTaskMatch(DuplicateTask task, DuplicateItem item1, DuplicateItem item2, float match, boolean[] difference) {
         if (task == this.task) {
-            adapter.add(item1, item2, match);
+            adapter.add(item1, item2, match, difference);
         }
     }
 

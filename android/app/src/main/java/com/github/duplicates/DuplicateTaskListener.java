@@ -65,12 +65,13 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
     /**
      * Notification that the task has found a possible match where the similarity is above 75%.
      *
-     * @param task  the task.
-     * @param item1 the first item.
-     * @param item2 the second item.
-     * @param match the match percentage.
+     * @param task       the task.
+     * @param item1      the first item.
+     * @param item2      the second item.
+     * @param match      the match percentage.
+     * @param difference the array of differences.
      */
-    void onDuplicateTaskMatch(T task, I item1, I item2, float match);
+    void onDuplicateTaskMatch(T task, I item1, I item2, float match, boolean[] difference);
 
     /**
      * Notification that the task has deleted a duplicate item.
