@@ -26,6 +26,21 @@ import com.github.duplicates.DuplicateComparator;
  */
 public class MessageComparator extends DuplicateComparator<MessageItem> {
 
+    public static final int TYPE = 0;
+    public static final int DATE = 1;
+    public static final int DATE_SENT = 2;
+    public static final int ADDRESS = 3;
+    public static final int PERSON = 4;
+    public static final int BODY = 5;
+    public static final int SUBJECT = 6;
+    public static final int THREAD_ID = 7;
+    public static final int STATUS = 8;
+    public static final int ERROR_CODE = 9;
+    public static final int LOCKED = 10;
+    public static final int PROTOCOL = 11;
+    public static final int READ = 12;
+    public static final int SEEN = 13;
+
     @Override
     public int compare(MessageItem lhs, MessageItem rhs) {
         int c;
@@ -91,51 +106,74 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
     }
 
     @Override
-    public float match(MessageItem lhs, MessageItem rhs) {
+    public boolean[] difference(MessageItem lhs, MessageItem rhs) {
+        boolean[] result = new boolean[14];
+
+        result[ADDRESS] = compare(lhs.getAddress(), rhs.getAddress()) != SAME;
+        result[BODY] = compare(lhs.getBody(), rhs.getBody()) != SAME;
+        result[DATE] = compare(lhs.getDateReceived(), rhs.getDateReceived()) != SAME;
+        result[DATE_SENT] = compare(lhs.getDateSent(), rhs.getDateSent()) != SAME;
+        result[ERROR_CODE] = compare(lhs.getErrorCode(), rhs.getErrorCode()) != SAME;
+        result[LOCKED] = compare(lhs.isLocked(), rhs.isLocked()) != SAME;
+        result[PERSON] = compare(lhs.getPerson(), rhs.getPerson()) != SAME;
+        result[PROTOCOL] = compare(lhs.getProtocol(), rhs.getProtocol()) != SAME;
+        result[READ] = compare(lhs.isRead(), rhs.isRead()) != SAME;
+        result[SEEN] = compare(lhs.isSeen(), rhs.isSeen()) != SAME;
+        result[STATUS] = compare(lhs.getStatus(), rhs.getStatus()) != SAME;
+        result[SUBJECT] = compare(lhs.getSubject(), rhs.getSubject()) != SAME;
+        result[THREAD_ID] = compare(lhs.getThreadId(), rhs.getThreadId()) != SAME;
+        result[TYPE] = compare(lhs.getType(), rhs.getType()) != SAME;
+
+        return result;
+    }
+
+    @Override
+    public float match(boolean[] difference) {
         float match = 1f;
 
-        if (lhs.getType() != rhs.getType()) {
+        if (difference[DATE]) {
+            match *= 0.75f;
+        }
+
+        if (difference[TYPE]) {
             match *= 0.8f;
         }
-        if (lhs.getDateReceived() != rhs.getDateReceived()) {
+        if (difference[DATE_SENT]) {
             match *= 0.8f;
         }
-        if (lhs.getDateSent() != rhs.getDateSent()) {
+        if (difference[ADDRESS]) {
             match *= 0.8f;
         }
-        if (compare(lhs.getAddress(), rhs.getAddress()) != SAME) {
+        if (difference[PERSON]) {
             match *= 0.8f;
         }
-        if (lhs.getPerson() != rhs.getPerson()) {
-            match *= 0.8f;
-        }
-        if (compare(lhs.getBody(), rhs.getBody()) != SAME) {
+        if (difference[BODY]) {
             match *= 0.8f;
         }
 
-        if (compare(lhs.getSubject(), rhs.getSubject()) != SAME) {
+        if (difference[SUBJECT]) {
             match *= 0.9f;
         }
-        if (lhs.getThreadId() != rhs.getThreadId()) {
+        if (difference[THREAD_ID]) {
             match *= 0.9f;
         }
 
-        if (lhs.getStatus() != rhs.getStatus()) {
+        if (difference[STATUS]) {
             match *= 0.95f;
         }
-        if (lhs.getErrorCode() != rhs.getErrorCode()) {
+        if (difference[ERROR_CODE]) {
             match *= 0.95f;
         }
-        if (lhs.isLocked() != rhs.isLocked()) {
+        if (difference[LOCKED]) {
             match *= 0.95f;
         }
-        if (lhs.getProtocol() != rhs.getProtocol()) {
+        if (difference[PROTOCOL]) {
             match *= 0.95f;
         }
-        if (lhs.isRead() != rhs.isRead()) {
+        if (difference[READ]) {
             match *= 0.95f;
         }
-        if (lhs.isSeen() != rhs.isSeen()) {
+        if (difference[SEEN]) {
             match *= 0.95f;
         }
 

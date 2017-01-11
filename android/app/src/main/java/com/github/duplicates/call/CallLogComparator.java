@@ -26,6 +26,15 @@ import com.github.duplicates.DuplicateComparator;
  */
 public class CallLogComparator extends DuplicateComparator<CallLogItem> {
 
+    public static final int DATE = 0;
+    public static final int DURATION = 1;
+    public static final int NUMBER = 2;
+    public static final int NUMBER_TYPE = 3;
+    public static final int NAME = 4;
+    public static final int READ = 5;
+    public static final int NEW = 6;
+    public static final int TYPE = 7;
+
     @Override
     public int compare(CallLogItem lhs, CallLogItem rhs) {
         int c;
@@ -67,33 +76,50 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
     }
 
     @Override
-    public float match(CallLogItem lhs, CallLogItem rhs) {
+    public boolean[] difference(CallLogItem lhs, CallLogItem rhs) {
+        boolean[] result = new boolean[8];
+
+        result[DATE] = compare(lhs.getDate(), rhs.getDate()) != SAME;
+        result[DURATION] = compare(lhs.getDuration(), rhs.getDuration()) != SAME;
+        result[NAME] = compare(lhs.getName(), rhs.getName()) != SAME;
+        result[NEW] = compare(lhs.isNew(), rhs.isNew()) != SAME;
+        result[NUMBER] = compare(lhs.getNumber(), rhs.getNumber()) != SAME;
+        result[NUMBER_TYPE] = compare(lhs.getNumberType(), rhs.getNumberType()) != SAME;
+        result[READ] = compare(lhs.isRead(), rhs.isRead()) != SAME;
+        result[TYPE] = compare(lhs.getType(), rhs.getType()) != SAME;
+
+        return result;
+    }
+
+    @Override
+    public float match(boolean[] difference) {
         float match = 1f;
 
-        if (lhs.getType() != rhs.getType()) {
+        if (difference[DATE]) {
+            match *= 0.75f;
+        }
+
+        if (difference[TYPE]) {
             match *= 0.8f;
         }
-        if (lhs.getDate() != rhs.getDate()) {
+        if (difference[DURATION]) {
             match *= 0.8f;
         }
-        if (lhs.getDuration() != rhs.getDuration()) {
-            match *= 0.8f;
-        }
-        if (compare(lhs.getNumber(), rhs.getNumber()) != SAME) {
+        if (difference[NUMBER]) {
             match *= 0.8f;
         }
 
-        if (lhs.getNumberType() != rhs.getNumberType()) {
+        if (difference[NUMBER_TYPE]) {
             match *= 0.9f;
         }
-        if (compare(lhs.getName(), rhs.getName()) != SAME) {
+        if (difference[NAME]) {
             match *= 0.9f;
         }
 
-        if (lhs.isRead() != rhs.isRead()) {
+        if (difference[READ]) {
             match *= 0.95f;
         }
-        if (lhs.isNew() != rhs.isNew()) {
+        if (difference[NEW]) {
             match *= 0.95f;
         }
 

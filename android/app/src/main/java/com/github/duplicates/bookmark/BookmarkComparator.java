@@ -26,6 +26,13 @@ import com.github.duplicates.DuplicateComparator;
  */
 public class BookmarkComparator extends DuplicateComparator<BookmarkItem> {
 
+    public static final int URL = 0;
+    public static final int TITLE = 1;
+    public static final int CREATED = 2;
+    public static final int FAVICON = 3;
+    public static final int DATE = 4;
+    public static final int VISITS = 5;
+
     @Override
     public int compare(BookmarkItem lhs, BookmarkItem rhs) {
         int c;
@@ -59,28 +66,42 @@ public class BookmarkComparator extends DuplicateComparator<BookmarkItem> {
     }
 
     @Override
-    public float match(BookmarkItem lhs, BookmarkItem rhs) {
+    public boolean[] difference(BookmarkItem lhs, BookmarkItem rhs) {
+        boolean[] result = new boolean[6];
+
+        result[CREATED] = compare(lhs.getCreated(), rhs.getCreated()) != SAME;
+        result[DATE] = compare(lhs.getDate(), rhs.getDate()) != SAME;
+        result[FAVICON] = compare(lhs.getFavIcon(), rhs.getFavIcon()) != SAME;
+        result[TITLE] = compare(lhs.getTitle(), rhs.getTitle()) != SAME;
+        result[URL] = compare(lhs.getUrl(), rhs.getUrl()) != SAME;
+        result[VISITS] = compare(lhs.getVisits(), rhs.getVisits()) != SAME;
+
+        return result;
+    }
+
+    @Override
+    public float match(boolean[] difference) {
         float match = 1f;
 
-        if (compare(lhs.getUrl(), rhs.getUrl()) != SAME) {
+        if (difference[URL]) {
             match *= 0.8f;
         }
 
-        if (compare(lhs.getTitle(), rhs.getTitle()) != SAME) {
+        if (difference[TITLE]) {
             match *= 0.9f;
         }
 
-        if (lhs.getCreated() != rhs.getCreated()) {
+        if (difference[CREATED]) {
             match *= 0.95f;
         }
-        if (compare(lhs.getFavIcon(), rhs.getFavIcon()) != SAME) {
+        if (difference[FAVICON]) {
             match *= 0.95f;
         }
 
-        if (lhs.getDate() != rhs.getDate()) {
+        if (difference[DATE]) {
             match *= 0.975f;
         }
-        if (lhs.getVisits() != rhs.getVisits()) {
+        if (difference[VISITS]) {
             match *= 0.975f;
         }
 

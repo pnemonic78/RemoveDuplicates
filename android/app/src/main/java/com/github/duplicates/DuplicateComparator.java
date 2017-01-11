@@ -42,11 +42,32 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     /**
      * How similar are the two items?
      *
+     * @param difference the array of differences.
+     * @return the match as a percentage between {@code 0.0} (dissimilar) and {@code 1.0} (identical) inclusive.
+     */
+    public abstract float match(boolean[] difference);
+
+    /**
+     * How different are the two items?
+     *
+     * @param lhs the first item.
+     * @param rhs the other item.
+     * @return the array of differences.
+     */
+    public abstract boolean[] difference(T lhs, T rhs);
+
+    /**
+     * How similar are the two items?
+     *
      * @param lhs the first item.
      * @param rhs the other item.
      * @return the match as a percentage between {@code 0.0} (dissimilar) and {@code 1.0} (identical) inclusive.
+     * @see #match(boolean[])
+     * @see #difference(DuplicateItem, DuplicateItem)
      */
-    public abstract float match(T lhs, T rhs);
+    public float match(T lhs, T rhs) {
+        return match(difference(lhs, rhs));
+    }
 
     public static int compare(int lhs, int rhs) {
         return lhs - rhs;

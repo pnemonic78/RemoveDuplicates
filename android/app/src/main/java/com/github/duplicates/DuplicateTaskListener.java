@@ -28,6 +28,10 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
      * Percentage for two items to be considered a good match.
      */
     float MATCH_GOOD = 0.75f;
+    /**
+     * Percentage for two items to be considered a very good match.
+     */
+    float MATCH_GREAT = 0.85f;
 
     /**
      * Notification that the task has started executing.

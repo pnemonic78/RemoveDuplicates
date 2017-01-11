@@ -17,6 +17,8 @@
  */
 package com.github.duplicates;
 
+import static com.github.duplicates.DuplicateTaskListener.MATCH_GREAT;
+
 /**
  * Item that is a possible duplicate of two items.
  *
@@ -40,7 +42,9 @@ public class DuplicateItemPair<T extends DuplicateItem> {
         this.item2 = item2;
         this.match = match;
 
-        item2.setChecked(true);
+        if (match >= MATCH_GREAT) {
+            item2.setChecked(true);
+        }
     }
 
     public T getItem1() {
