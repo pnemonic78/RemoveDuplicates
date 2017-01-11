@@ -30,7 +30,7 @@ import java.util.TreeSet;
  *
  * @author moshe.w
  */
-public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends RecyclerView.Adapter<VH> {
+public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends RecyclerView.Adapter<VH> implements DuplicateViewHolder.OnItemCheckedChangeListener<T> {
 
     private final List<DuplicateItemPair<T>> pairs = new ArrayList<>();
 
@@ -181,5 +181,11 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
         }
         DuplicateItemPair[] array = new DuplicateItemPair[checked.size()];
         return checked.toArray(array);
+    }
+
+    @Override
+    public void onItemCheckedChangeListener(T item, boolean checked) {
+        item.setChecked(checked);
+        notifyDataSetChanged();
     }
 }

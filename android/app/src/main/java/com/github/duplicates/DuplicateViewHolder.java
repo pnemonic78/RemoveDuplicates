@@ -38,10 +38,16 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
 
     protected T item1;
     protected T item2;
+    protected final OnItemCheckedChangeListener onCheckedChangeListener;
 
     public DuplicateViewHolder(View itemView) {
+        this(itemView, null);
+    }
+
+    public DuplicateViewHolder(View itemView, OnItemCheckedChangeListener onCheckedChangeListener) {
         super(itemView);
-        colorDifferent = new ColorDrawable(itemView.getContext().getResources().getColor(R.color.different));
+        this.onCheckedChangeListener = onCheckedChangeListener;
+        this.colorDifferent = new ColorDrawable(itemView.getContext().getResources().getColor(R.color.different));
     }
 
     /**
@@ -50,8 +56,8 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
      * @param pair the pair of items.
      */
     public void bind(DuplicateItemPair<T> pair) {
-        item1 = pair.getItem1();
-        item2 = pair.getItem2();
+        this.item1 = pair.getItem1();
+        this.item2 = pair.getItem2();
         Context context = itemView.getContext();
         bindHeader(context, pair);
         bindItem1(context, pair.getItem1());
@@ -66,4 +72,14 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
     protected abstract void bindItem2(Context context, T item);
 
     protected abstract void bindDifference(Context context, DuplicateItemPair<T> pair);
+
+    public interface OnItemCheckedChangeListener<T> {
+        /**
+         * Notification that the item was clicked.
+         *
+         * @param item    the item.
+         * @param checked is checked?
+         */
+        void onItemCheckedChangeListener(T item, boolean checked);
+    }
 }

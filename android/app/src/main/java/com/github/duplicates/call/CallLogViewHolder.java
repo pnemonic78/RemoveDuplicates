@@ -81,7 +81,11 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     TextView name2;
 
     public CallLogViewHolder(View itemView) {
-        super(itemView);
+        this(itemView, null);
+    }
+
+    public CallLogViewHolder(View itemView, OnItemCheckedChangeListener onCheckedChangeListener) {
+        super(itemView, onCheckedChangeListener);
         ButterKnife.bind(this, itemView);
     }
 
@@ -114,7 +118,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     protected void bindDifference(Context context, DuplicateItemPair<CallLogItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        if ((difference!=null)&&difference[DATE]) {
+        if ((difference != null) && difference[DATE]) {
             date1.setBackgroundDrawable(colorDifferent);
             date2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -122,7 +126,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             date2.setBackgroundDrawable(null);
         }
 
-        if ((difference!=null)&&difference[DURATION]) {
+        if ((difference != null) && difference[DURATION]) {
             duration1.setBackgroundDrawable(colorDifferent);
             duration2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -130,7 +134,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             duration2.setBackgroundDrawable(null);
         }
 
-        if ((difference!=null)&&difference[TYPE]) {
+        if ((difference != null) && difference[TYPE]) {
             type1.setBackgroundDrawable(colorDifferent);
             type2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -138,7 +142,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             type2.setBackgroundDrawable(null);
         }
 
-        if ((difference!=null)&&difference[NUMBER]) {
+        if ((difference != null) && difference[NUMBER]) {
             number1.setBackgroundDrawable(colorDifferent);
             number2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -146,7 +150,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             number2.setBackgroundDrawable(null);
         }
 
-        if ((difference!=null)&&difference[NAME]) {
+        if ((difference != null) && difference[NAME]) {
             name1.setBackgroundDrawable(colorDifferent);
             name2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -177,11 +181,15 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
 
     @OnClick(R.id.checkbox1)
     void checkbox1Clicked() {
-        item1.setChecked(checkbox1.isChecked());
+        if (onCheckedChangeListener != null) {
+            onCheckedChangeListener.onItemCheckedChangeListener(item1, checkbox1.isChecked());
+        }
     }
 
     @OnClick(R.id.checkbox2)
     void checkbox2Clicked() {
-        item2.setChecked(checkbox2.isChecked());
+        if (onCheckedChangeListener != null) {
+            onCheckedChangeListener.onItemCheckedChangeListener(item2, checkbox2.isChecked());
+        }
     }
 }

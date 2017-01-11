@@ -35,6 +35,6 @@ public class CallLogAdapter extends DuplicateAdapter<CallLogItem, CallLogViewHol
     @Override
     public CallLogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_call, parent, false);
-        return new CallLogViewHolder(itemView);
+        return new CallLogViewHolder(itemView, this);
     }
 }

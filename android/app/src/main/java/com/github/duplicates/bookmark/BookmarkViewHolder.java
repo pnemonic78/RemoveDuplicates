@@ -75,7 +75,11 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     TextView url2;
 
     public BookmarkViewHolder(View itemView) {
-        super(itemView);
+        this(itemView, null);
+    }
+
+    public BookmarkViewHolder(View itemView, OnItemCheckedChangeListener onCheckedChangeListener) {
+        super(itemView, onCheckedChangeListener);
         ButterKnife.bind(this, itemView);
     }
 
@@ -151,11 +155,15 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
 
     @OnClick(R.id.checkbox1)
     void checkbox1Clicked() {
-        item1.setChecked(checkbox1.isChecked());
+        if (onCheckedChangeListener != null) {
+            onCheckedChangeListener.onItemCheckedChangeListener(item1, checkbox1.isChecked());
+        }
     }
 
     @OnClick(R.id.checkbox2)
     void checkbox2Clicked() {
-        item2.setChecked(checkbox2.isChecked());
+        if (onCheckedChangeListener != null) {
+            onCheckedChangeListener.onItemCheckedChangeListener(item2, checkbox2.isChecked());
+        }
     }
 }

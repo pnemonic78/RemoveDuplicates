@@ -34,6 +34,6 @@ public class BookmarkAdapter extends DuplicateAdapter<BookmarkItem, BookmarkView
     @Override
     public BookmarkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_bookmark, parent, false);
-        return new BookmarkViewHolder(itemView);
+        return new BookmarkViewHolder(itemView, this);
     }
 }

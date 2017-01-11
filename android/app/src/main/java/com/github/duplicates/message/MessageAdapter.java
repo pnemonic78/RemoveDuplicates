@@ -34,6 +34,6 @@ public class MessageAdapter extends DuplicateAdapter<MessageItem, MessageViewHol
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_message, parent, false);
-        return new MessageViewHolder(itemView);
+        return new MessageViewHolder(itemView, this);
     }
 }

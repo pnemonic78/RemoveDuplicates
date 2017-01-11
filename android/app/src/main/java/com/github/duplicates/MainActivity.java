@@ -96,6 +96,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
             this.task = task;
             if (task != null) {
                 this.adapter = task.createAdapter();
+                adapter.setHasStableIds(true);
                 list.setAdapter(adapter);
                 task.start(this);
             } else {
