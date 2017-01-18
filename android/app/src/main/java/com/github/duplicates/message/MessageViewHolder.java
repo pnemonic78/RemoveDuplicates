@@ -111,7 +111,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     protected void bindDifference(Context context, DuplicateItemPair<MessageItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        if ((difference != null) && difference[DATE]) {
+        if (difference[DATE]) {
             date1.setBackgroundDrawable(colorDifferent);
             date2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -119,7 +119,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
             date2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[ADDRESS]) {
+        if (difference[ADDRESS]) {
             address1.setBackgroundDrawable(colorDifferent);
             address2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -127,7 +127,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
             address2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[TYPE]) {
+        if (difference[TYPE]) {
             type1.setBackgroundDrawable(colorDifferent);
             type2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -135,7 +135,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
             type2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[BODY]) {
+        if (difference[BODY]) {
             body1.setBackgroundDrawable(colorDifferent);
             body2.setBackgroundDrawable(colorDifferent);
         } else {

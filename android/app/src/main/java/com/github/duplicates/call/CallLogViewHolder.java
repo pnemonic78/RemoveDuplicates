@@ -118,7 +118,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     protected void bindDifference(Context context, DuplicateItemPair<CallLogItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        if ((difference != null) && difference[DATE]) {
+        if (difference[DATE]) {
             date1.setBackgroundDrawable(colorDifferent);
             date2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -126,7 +126,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             date2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[DURATION]) {
+        if (difference[DURATION]) {
             duration1.setBackgroundDrawable(colorDifferent);
             duration2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -134,7 +134,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             duration2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[TYPE]) {
+        if (difference[TYPE]) {
             type1.setBackgroundDrawable(colorDifferent);
             type2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -142,7 +142,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             type2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[NUMBER]) {
+        if (difference[NUMBER]) {
             number1.setBackgroundDrawable(colorDifferent);
             number2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -150,7 +150,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
             number2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[NAME]) {
+        if (difference[NAME]) {
             name1.setBackgroundDrawable(colorDifferent);
             name2.setBackgroundDrawable(colorDifferent);
         } else {

@@ -112,7 +112,7 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     protected void bindDifference(Context context, DuplicateItemPair<BookmarkItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        if ((difference != null) && difference[CREATED]) {
+        if (difference[CREATED]) {
             created1.setBackgroundDrawable(colorDifferent);
             created2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -120,7 +120,7 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
             created2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[DATE]) {
+        if (difference[DATE]) {
             date1.setBackgroundDrawable(colorDifferent);
             date2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -128,7 +128,7 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
             date2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[FAVICON]) {
+        if (difference[FAVICON]) {
             icon1.setBackgroundDrawable(colorDifferent);
             icon2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -136,7 +136,7 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
             icon2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[TITLE]) {
+        if (difference[TITLE]) {
             title1.setBackgroundDrawable(colorDifferent);
             title2.setBackgroundDrawable(colorDifferent);
         } else {
@@ -144,7 +144,7 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
             title2.setBackgroundDrawable(null);
         }
 
-        if ((difference != null) && difference[URL]) {
+        if (difference[URL]) {
             url1.setBackgroundDrawable(colorDifferent);
             url2.setBackgroundDrawable(colorDifferent);
         } else {
