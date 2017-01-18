@@ -132,7 +132,7 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
         float match = 1f;
 
         if (difference[DATE]) {
-            match *= 0.75f;
+            match *= 0.7f;
         }
 
         if (difference[TYPE]) {
