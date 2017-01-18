@@ -17,6 +17,8 @@
  */
 package com.github.duplicates.message;
 
+import android.text.format.DateUtils;
+
 import com.github.duplicates.DuplicateComparator;
 
 /**
@@ -111,7 +113,7 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
 
         result[ADDRESS] = compare(lhs.getAddress(), rhs.getAddress()) != SAME;
         result[BODY] = compare(lhs.getBody(), rhs.getBody()) != SAME;
-        result[DATE] = compare(lhs.getDateReceived(), rhs.getDateReceived()) != SAME;
+        result[DATE] = Math.abs(compare(lhs.getDateReceived(), rhs.getDateReceived())) <= DateUtils.SECOND_IN_MILLIS;
         result[DATE_SENT] = compare(lhs.getDateSent(), rhs.getDateSent()) != SAME;
         result[ERROR_CODE] = compare(lhs.getErrorCode(), rhs.getErrorCode()) != SAME;
         result[LOCKED] = compare(lhs.isLocked(), rhs.isLocked()) != SAME;

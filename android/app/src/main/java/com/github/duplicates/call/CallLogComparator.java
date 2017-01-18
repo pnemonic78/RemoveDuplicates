@@ -17,6 +17,8 @@
  */
 package com.github.duplicates.call;
 
+import android.text.format.DateUtils;
+
 import com.github.duplicates.DuplicateComparator;
 
 /**
@@ -79,7 +81,7 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
     public boolean[] difference(CallLogItem lhs, CallLogItem rhs) {
         boolean[] result = new boolean[8];
 
-        result[DATE] = compare(lhs.getDate(), rhs.getDate()) != SAME;
+        result[DATE] = Math.abs(compare(lhs.getDate(), rhs.getDate())) <= DateUtils.SECOND_IN_MILLIS;
         result[DURATION] = compare(lhs.getDuration(), rhs.getDuration()) != SAME;
         result[NAME] = compare(lhs.getName(), rhs.getName()) != SAME;
         result[NEW] = compare(lhs.isNew(), rhs.isNew()) != SAME;
