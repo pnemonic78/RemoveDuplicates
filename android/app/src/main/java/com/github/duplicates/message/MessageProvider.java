@@ -20,7 +20,7 @@ package com.github.duplicates.message;
 import android.content.Context;
 import android.os.Build;
 
-import com.github.duplicates.DelegateProvider;
+import com.github.duplicates.WrapperProvider;
 import com.github.duplicates.DuplicateProvider;
 
 /**
@@ -28,7 +28,7 @@ import com.github.duplicates.DuplicateProvider;
  *
  * @author moshe.w
  */
-public class MessageProvider extends DelegateProvider<MessageItem> {
+public class MessageProvider extends WrapperProvider<MessageItem> {
 
     public MessageProvider(Context context) {
         super(context);

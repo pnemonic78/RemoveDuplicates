@@ -27,15 +27,15 @@ import java.util.List;
 import java.util.concurrent.CancellationException;
 
 /**
- * Provider that delegates to another provider.
+ * Provider that wraps functionality to a delegate provider.
  *
  * @author moshe.w
  */
-public abstract class DelegateProvider<T extends DuplicateItem> extends DuplicateProvider<T> {
+public abstract class WrapperProvider<T extends DuplicateItem> extends DuplicateProvider<T> {
 
     protected final DuplicateProvider<T> delegate;
 
-    public DelegateProvider(Context context) {
+    public WrapperProvider(Context context) {
         super(context);
         DuplicateProvider<T> candidate = createDelegate(context);
         delegate = (candidate != null) ? candidate : new DefaultProvider<T>(context);

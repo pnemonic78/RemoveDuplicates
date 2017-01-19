@@ -21,7 +21,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.github.duplicates.DelegateProvider;
+import com.github.duplicates.WrapperProvider;
 import com.github.duplicates.DuplicateProvider;
 
 /**
@@ -29,7 +29,7 @@ import com.github.duplicates.DuplicateProvider;
  *
  * @author moshe.w
  */
-public class AlarmProvider extends DelegateProvider<AlarmItem> {
+public class AlarmProvider extends WrapperProvider<AlarmItem> {
 
     private static Boolean hasSamsungProvider;
 
