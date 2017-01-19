@@ -5,6 +5,7 @@
     <string name="counter" translatable="false">%d</string>
     <string name="match" translatable="false">%s match</string>
     <string name="permissions_denied">Permission denied! Please grant application access.</string>
+    <string name="empty">No duplicate items found</string>
 
     <!-- Debug -->
     <string name="dummy_match" translatable="false">80%</string>
@@ -13,15 +14,19 @@
     <string name="dummy_date" translatable="false">2016/12/31</string>
     <string name="dummy_date_time" translatable="false">2016/12/31 12:34</string>
 
+    <!-- Alarms -->
     <string name="alarms">Alarms</string>
     <string name="item_alarms" translatable="false">@string/alarms</string>
 
+    <!-- Bookmarks -->
     <string name="bookmarks">Bookmarks</string>
     <string name="item_bookmarks" translatable="false">@string/bookmarks</string>
 
+    <!-- Calendar -->
     <string name="calendar">Calendar</string>
     <string name="item_calendar" translatable="false">@string/calendar</string>
 
+    <!-- >Call log -->
     <string name="call_log">Call log</string>
     <string name="item_call_log" translatable="false">@string/call_log</string>
     <string name="call_type_incoming">incoming</string>
@@ -33,6 +38,7 @@
     <string name="call_type_external">external</string>
     <string name="call_type_other">other</string>
 
+    <!-- Contacts -->
     <string name="contacts">Contacts</string>
     <string name="item_contacts" translatable="false">@string/contacts</string>
 

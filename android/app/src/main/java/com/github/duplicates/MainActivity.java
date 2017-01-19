@@ -32,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.alarm.AlarmDeleteTask;
@@ -54,6 +55,9 @@ import butterknife.OnClick;
  */
 public class MainActivity extends Activity implements DuplicateTaskListener {
 
+    private static final int CHILD_LIST = 0;
+    private static final int CHILD_EMPTY = 1;
+
     @BindView(R.id.spinner)
     Spinner spinner;
     @BindView(R.id.search)
@@ -64,6 +68,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     TextView counter;
     @BindView(R.id.progress)
     ProgressBar progressBar;
+    @BindView(R.id.list_switcher)
+    ViewSwitcher listSwitcher;
     @BindView(android.R.id.list)
     RecyclerView list;
 
@@ -115,6 +121,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         if (adapter != null) {
             adapter.clear();
         }
+        listSwitcher.setDisplayedChild(CHILD_LIST);
         invalidateOptionsMenu();
     }
 
@@ -125,6 +132,11 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         task = null;
         if (!cancelled) {
             invalidateOptionsMenu();
+        }
+        if ((adapter != null) && (adapter.getItemCount() > 0)) {
+            listSwitcher.setDisplayedChild(CHILD_LIST);
+        } else {
+            listSwitcher.setDisplayedChild(CHILD_EMPTY);
         }
     }
 
@@ -287,6 +299,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
         counter.setText(getString(R.string.counter, 0));
         statusBar.setVisibility(View.VISIBLE);
+        listSwitcher.setDisplayedChild(CHILD_LIST);
     }
 
     private void deleteStopped(boolean cancelled) {
