@@ -77,7 +77,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return (lhs > rhs) ? LHS : ((lhs < rhs) ? RHS : SAME);
     }
 
-    public static int compare(String lhs, String rhs) {
+    public static <T extends Comparable<T>> int compare(T lhs, T rhs) {
         return (lhs == null) ? ((rhs == null) ? SAME : RHS) : ((rhs == null) ? LHS : lhs.compareTo(rhs));
     }
 
