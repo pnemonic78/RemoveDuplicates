@@ -63,7 +63,7 @@ public class AlarmComparator extends DuplicateComparator<AlarmItem> {
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getRepeatType(), rhs.getRepeatType());
+        c = compare(lhs.getRepeat(), rhs.getRepeat());
         if (c != SAME) {
             return c;
         }
@@ -126,7 +126,7 @@ public class AlarmComparator extends DuplicateComparator<AlarmItem> {
         result[ALARM_TIME] = compare(lhs.getAlarmTime(), rhs.getAlarmTime()) != SAME;
         result[ALERT_TIME] = compare(lhs.getAlertTime(), rhs.getAlertTime()) != SAME;
         result[NAME] = compare(lhs.getName(), rhs.getName()) != SAME;
-        result[REPEAT] = compare(lhs.getRepeatType(), rhs.getRepeatType()) != SAME;
+        result[REPEAT] = compare(lhs.getRepeat(), rhs.getRepeat()) != SAME;
 
         return result;
     }

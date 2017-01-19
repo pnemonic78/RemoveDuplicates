@@ -17,6 +17,8 @@
  */
 package com.github.duplicates.alarm;
 
+import android.support.annotation.NonNull;
+
 import com.github.duplicates.DuplicateItem;
 
 /**
@@ -33,7 +35,7 @@ public class AlarmItem extends DuplicateItem {
     private boolean dailyBriefing;
     private String name;
     private int notificationType;
-    private int repeatType;
+    private DaysOfWeek repeat;
     private boolean snoozeActivate;
     private int snoozeDoneCount;
     private int snoozeDuration;
@@ -103,12 +105,16 @@ public class AlarmItem extends DuplicateItem {
         this.notificationType = notificationType;
     }
 
-    public int getRepeatType() {
-        return repeatType;
+    @NonNull
+    public DaysOfWeek getRepeat() {
+        if (repeat == null) {
+            repeat = new DaysOfWeek(0);
+        }
+        return repeat;
     }
 
-    public void setRepeatType(int repeatType) {
-        this.repeatType = repeatType;
+    public void setRepeat(DaysOfWeek repeat) {
+        this.repeat = repeat;
     }
 
     public boolean isSnoozeActivate() {

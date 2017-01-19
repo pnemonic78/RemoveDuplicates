@@ -28,7 +28,6 @@ import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -93,7 +92,7 @@ public class AlarmViewHolder extends DuplicateViewHolder<AlarmItem> {
         alarm1.setText(formatHourMinutes(context, item.getAlarmTime()));
         alert1.setText(DateUtils.formatDateTime(context, item.getAlertTime(), DateUtils.FORMAT_SHOW_TIME));
         name1.setText(item.getName());
-        repeat1.setText(Integer.toHexString(item.getRepeatType()));
+        repeat1.setText(formatRepeat(context, item));
     }
 
     @Override
@@ -102,7 +101,7 @@ public class AlarmViewHolder extends DuplicateViewHolder<AlarmItem> {
         alarm2.setText(formatHourMinutes(context, item.getAlarmTime()));
         alert2.setText(DateUtils.formatDateTime(context, item.getAlertTime(), DateUtils.FORMAT_SHOW_TIME));
         name2.setText(item.getName());
-        repeat2.setText(Integer.toHexString(item.getRepeatType()));
+        repeat2.setText(formatRepeat(context, item));
     }
 
     @Override
@@ -136,5 +135,9 @@ public class AlarmViewHolder extends DuplicateViewHolder<AlarmItem> {
         java.text.DateFormat format = DateFormat.getTimeFormat(context);
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         return format.format(new Date(time));
+    }
+
+    protected CharSequence formatRepeat(Context context, AlarmItem item) {
+        return item.getRepeat().toString(context, true);
     }
 }

@@ -83,6 +83,17 @@ public class SamsungAlarmProvider extends DuplicateProvider<AlarmItem> {
     private static final int INDEX_ALARMURI = 19;
     private static final int INDEX_NAME = 20;
 
+    private static final int REPEAT_WEEKLY = 0x00000005;
+    private static final int REPEAT_TOMORROW = 0x00000001;
+
+    private static final int DAY_SUNDAY = 0x10000000;
+    private static final int DAY_MONDAY = 0x01000000;
+    private static final int DAY_TUESDAY = 0x00100000;
+    private static final int DAY_WEDNESDAY = 0x00010000;
+    private static final int DAY_THURSDAY = 0x00001000;
+    private static final int DAY_FRIDAY = 0x00000100;
+    private static final int DAY_SATURDAY = 0x10000010;
+
     public SamsungAlarmProvider(Context context) {
         super(context);
     }
@@ -115,7 +126,7 @@ public class SamsungAlarmProvider extends DuplicateProvider<AlarmItem> {
         item.setDailyBriefing(cursor.getInt(INDEX_DAILYBRIEF) != 0);
         item.setName(cursor.getString(INDEX_NAME));
         item.setNotificationType(cursor.getInt(INDEX_NOTITYPE));
-        item.setRepeatType(cursor.getInt(INDEX_REPEATTYPE));
+        item.setRepeat(toDaysOfWeek(cursor.getInt(INDEX_REPEATTYPE)));
         item.setSubdueActivate(cursor.getInt(INDEX_SBDACTIVE) != 0);
         item.setSubdueDuration(cursor.getInt(INDEX_SBDDURATION));
         item.setSubdueTone(cursor.getInt(INDEX_SBDTONE));
@@ -135,5 +146,20 @@ public class SamsungAlarmProvider extends DuplicateProvider<AlarmItem> {
     @Override
     public String[] getDeletePermissions() {
         return PERMISSIONS_WRITE;
+    }
+
+    protected DaysOfWeek toDaysOfWeek(int repeat) {
+        if ((repeat & REPEAT_WEEKLY) != REPEAT_WEEKLY) {
+            return null;
+        }
+        DaysOfWeek daysOfWeek = new DaysOfWeek(0);
+        daysOfWeek.set(0, (repeat & DAY_SUNDAY) == DAY_SUNDAY);
+        daysOfWeek.set(1, (repeat & DAY_MONDAY) == DAY_MONDAY);
+        daysOfWeek.set(2, (repeat & DAY_TUESDAY) == DAY_TUESDAY);
+        daysOfWeek.set(3, (repeat & DAY_WEDNESDAY) == DAY_WEDNESDAY);
+        daysOfWeek.set(4, (repeat & DAY_THURSDAY) == DAY_THURSDAY);
+        daysOfWeek.set(5, (repeat & DAY_FRIDAY) == DAY_FRIDAY);
+        daysOfWeek.set(6, (repeat & DAY_SATURDAY) == DAY_SATURDAY);
+        return daysOfWeek;
     }
 }
