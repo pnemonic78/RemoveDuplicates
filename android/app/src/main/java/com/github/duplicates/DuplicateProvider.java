@@ -119,6 +119,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
+        Uri contentUri = getContentUri();
+        if (contentUri == null) {
+            return;
+        }
         Cursor cursor = cr.query(getContentUri(), getCursorProjection(), getCursorSelection(), null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {

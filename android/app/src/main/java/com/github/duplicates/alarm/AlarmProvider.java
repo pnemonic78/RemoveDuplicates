@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.github.duplicates.DefaultProvider;
 import com.github.duplicates.DuplicateProvider;
 import com.github.duplicates.DuplicateProviderListener;
 
@@ -55,9 +56,11 @@ public class AlarmProvider extends DuplicateProvider<AlarmItem> {
             }
         }
 
-        DuplicateProvider candidate = null;
+        DuplicateProvider<AlarmItem> candidate;
         if (hasSamsungProvider) {
             candidate = new SamsungAlarmProvider(context);
+        } else {
+            candidate = new DefaultProvider<>(context);
         }
         delegate = candidate;
     }
