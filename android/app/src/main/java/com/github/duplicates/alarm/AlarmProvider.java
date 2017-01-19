@@ -17,34 +17,28 @@
  */
 package com.github.duplicates.alarm;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 
-import com.github.duplicates.DefaultProvider;
+import com.github.duplicates.DelegateProvider;
 import com.github.duplicates.DuplicateProvider;
-import com.github.duplicates.DuplicateProviderListener;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.CancellationException;
 
 /**
  * Provide duplicate alarms.
  *
  * @author moshe.w
  */
-public class AlarmProvider extends DuplicateProvider<AlarmItem> {
+public class AlarmProvider extends DelegateProvider<AlarmItem> {
 
     private static Boolean hasSamsungProvider;
-    private final DuplicateProvider<AlarmItem> delegate;
 
     public AlarmProvider(Context context) {
         super(context);
+    }
 
+    @Override
+    protected DuplicateProvider<AlarmItem> createDelegate(Context context) {
         if (hasSamsungProvider == null) {
             PackageManager pm = context.getPackageManager();
             try {
@@ -56,88 +50,9 @@ public class AlarmProvider extends DuplicateProvider<AlarmItem> {
             }
         }
 
-        DuplicateProvider<AlarmItem> candidate;
         if (hasSamsungProvider) {
-            candidate = new SamsungAlarmProvider(context);
-        } else {
-            candidate = new DefaultProvider<>(context);
+            return new SamsungAlarmProvider(context);
         }
-        delegate = candidate;
-    }
-
-    @Override
-    public void setListener(DuplicateProviderListener<AlarmItem, DuplicateProvider<AlarmItem>> listener) {
-        delegate.setListener(listener);
-    }
-
-    @Override
-    public DuplicateProviderListener<AlarmItem, DuplicateProvider<AlarmItem>> getListener() {
-        return delegate.getListener();
-    }
-
-    @Override
-    protected Uri getContentUri() {
         return null;
-    }
-
-    @Override
-    public AlarmItem createItem() {
-        return delegate.createItem();
-    }
-
-    @Override
-    public List<AlarmItem> getItems() throws CancellationException {
-        return delegate.getItems();
-    }
-
-    @Override
-    public void fetchItems() throws CancellationException {
-        delegate.fetchItems();
-    }
-
-    @Override
-    public void populateItem(Cursor cursor, AlarmItem item) {
-        delegate.populateItem(cursor, item);
-    }
-
-    @Override
-    public void deleteItems(Collection<AlarmItem> items) throws CancellationException {
-        delegate.deleteItems(items);
-    }
-
-    @Override
-    public boolean deleteItem(AlarmItem item) {
-        return delegate.deleteItem(item);
-    }
-
-    @Override
-    public boolean deleteItem(ContentResolver cr, AlarmItem item) {
-        return delegate.deleteItem(cr, item);
-    }
-
-    @Override
-    public void onPreExecute() {
-        delegate.onPreExecute();
-    }
-
-    @Override
-    public void onPostExecute() {
-        delegate.onPostExecute();
-    }
-
-    @Override
-    public String[] getReadPermissions() {
-        return delegate.getReadPermissions();
-    }
-
-    @Override
-    public String[] getDeletePermissions() {
-        return delegate.getDeletePermissions();
-    }
-
-    @Override
-    public void cancel() {
-        super.cancel();
-        delegate.cancel();
     }
 }

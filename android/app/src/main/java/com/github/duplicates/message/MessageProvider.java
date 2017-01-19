@@ -17,110 +17,28 @@
  */
 package com.github.duplicates.message;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 
+import com.github.duplicates.DelegateProvider;
 import com.github.duplicates.DuplicateProvider;
-import com.github.duplicates.DuplicateProviderListener;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.CancellationException;
 
 /**
  * Provide duplicate messages.
  *
  * @author moshe.w
  */
-public class MessageProvider extends DuplicateProvider<MessageItem> {
-
-    private final DuplicateProvider<MessageItem> delegate;
+public class MessageProvider extends DelegateProvider<MessageItem> {
 
     public MessageProvider(Context context) {
         super(context);
+    }
+
+    @Override
+    protected DuplicateProvider<MessageItem> createDelegate(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            delegate = new JellybeanMessageProvider(context);
-        } else {
-            delegate = new KitkatMessageProvider(context);
+            return new JellybeanMessageProvider(context);
         }
-    }
-
-    @Override
-    public void setListener(DuplicateProviderListener<MessageItem, DuplicateProvider<MessageItem>> listener) {
-        delegate.setListener(listener);
-    }
-
-    @Override
-    public DuplicateProviderListener<MessageItem, DuplicateProvider<MessageItem>> getListener() {
-        return delegate.getListener();
-    }
-
-    @Override
-    protected Uri getContentUri() {
-        return null;
-    }
-
-    @Override
-    public MessageItem createItem() {
-        return delegate.createItem();
-    }
-
-    @Override
-    public List<MessageItem> getItems() throws CancellationException {
-        return delegate.getItems();
-    }
-
-    @Override
-    public void fetchItems() throws CancellationException {
-        delegate.fetchItems();
-    }
-
-    @Override
-    public void populateItem(Cursor cursor, MessageItem item) {
-        delegate.populateItem(cursor, item);
-    }
-
-    @Override
-    public void deleteItems(Collection<MessageItem> items) throws CancellationException {
-        delegate.deleteItems(items);
-    }
-
-    @Override
-    public boolean deleteItem(MessageItem item) {
-        return delegate.deleteItem(item);
-    }
-
-    @Override
-    public boolean deleteItem(ContentResolver cr, MessageItem item) {
-        return delegate.deleteItem(cr, item);
-    }
-
-    @Override
-    public void onPreExecute() {
-        delegate.onPreExecute();
-    }
-
-    @Override
-    public void onPostExecute() {
-        delegate.onPostExecute();
-    }
-
-    @Override
-    public String[] getReadPermissions() {
-        return delegate.getReadPermissions();
-    }
-
-    @Override
-    public String[] getDeletePermissions() {
-        return delegate.getDeletePermissions();
-    }
-
-    @Override
-    public void cancel() {
-        super.cancel();
-        delegate.cancel();
+        return new KitkatMessageProvider(context);
     }
 }
