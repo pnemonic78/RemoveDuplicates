@@ -73,6 +73,16 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
 
     protected abstract void bindDifference(Context context, DuplicateItemPair<T> pair);
 
+    protected void bindDifference(Context context, View view1, View view2, boolean different) {
+        if (different) {
+            view1.setBackgroundDrawable(colorDifferent);
+            view2.setBackgroundDrawable(colorDifferent);
+        } else {
+            view1.setBackgroundDrawable(null);
+            view2.setBackgroundDrawable(null);
+        }
+    }
+
     public interface OnItemCheckedChangeListener<T> {
         /**
          * Notification that the item was clicked.

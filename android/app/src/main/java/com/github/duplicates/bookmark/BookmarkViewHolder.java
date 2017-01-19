@@ -112,45 +112,11 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     protected void bindDifference(Context context, DuplicateItemPair<BookmarkItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        if (difference[CREATED]) {
-            created1.setBackgroundDrawable(colorDifferent);
-            created2.setBackgroundDrawable(colorDifferent);
-        } else {
-            created1.setBackgroundDrawable(null);
-            created2.setBackgroundDrawable(null);
-        }
-
-        if (difference[DATE]) {
-            date1.setBackgroundDrawable(colorDifferent);
-            date2.setBackgroundDrawable(colorDifferent);
-        } else {
-            date1.setBackgroundDrawable(null);
-            date2.setBackgroundDrawable(null);
-        }
-
-        if (difference[FAVICON]) {
-            icon1.setBackgroundDrawable(colorDifferent);
-            icon2.setBackgroundDrawable(colorDifferent);
-        } else {
-            icon1.setBackgroundDrawable(null);
-            icon2.setBackgroundDrawable(null);
-        }
-
-        if (difference[TITLE]) {
-            title1.setBackgroundDrawable(colorDifferent);
-            title2.setBackgroundDrawable(colorDifferent);
-        } else {
-            title1.setBackgroundDrawable(null);
-            title2.setBackgroundDrawable(null);
-        }
-
-        if (difference[URL]) {
-            url1.setBackgroundDrawable(colorDifferent);
-            url2.setBackgroundDrawable(colorDifferent);
-        } else {
-            url1.setBackgroundDrawable(null);
-            url2.setBackgroundDrawable(null);
-        }
+        bindDifference(context, created1, created2, difference[CREATED]);
+        bindDifference(context, date1, date2, difference[DATE]);
+        bindDifference(context, icon1, icon2, difference[FAVICON]);
+        bindDifference(context, title1, title2, difference[TITLE]);
+        bindDifference(context, url1, url2, difference[URL]);
     }
 
     @OnClick(R.id.checkbox1)

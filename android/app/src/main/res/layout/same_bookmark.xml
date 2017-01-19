@@ -45,11 +45,11 @@
 
         <TextView
             android:id="@+id/title1"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="3"
-            android:text="@string/dummy_text_long"/>
+            tools:text="@string/dummy_text_long"/>
 
         <ImageView
             android:id="@+id/icon1"
@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="3"
-            android:text="@string/dummy_text_long"/>
+            tools:text="@string/dummy_text_long"/>
     </LinearLayout>
 
     <View
@@ -112,11 +112,11 @@
 
         <TextView
             android:id="@+id/title2"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="3"
-            android:text="@string/dummy_text_long"/>
+            tools:text="@string/dummy_text_long"/>
 
         <ImageView
             android:id="@+id/icon2"
@@ -140,7 +140,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="3"
-            android:text="@string/dummy_text_long"/>
+            tools:text="@string/dummy_text_long"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="3"
-            android:text="@string/dummy_text_long"/>
+            tools:text="@string/dummy_text_long"/>
     </LinearLayout>
 
     <View
@@ -114,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="3"
-            android:text="@string/dummy_text_long"/>
+            tools:text="@string/dummy_text_long"/>
     </LinearLayout>
 
 </LinearLayout>

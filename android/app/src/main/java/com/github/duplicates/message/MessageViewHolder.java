@@ -111,37 +111,10 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     protected void bindDifference(Context context, DuplicateItemPair<MessageItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        if (difference[DATE]) {
-            date1.setBackgroundDrawable(colorDifferent);
-            date2.setBackgroundDrawable(colorDifferent);
-        } else {
-            date1.setBackgroundDrawable(null);
-            date2.setBackgroundDrawable(null);
-        }
-
-        if (difference[ADDRESS]) {
-            address1.setBackgroundDrawable(colorDifferent);
-            address2.setBackgroundDrawable(colorDifferent);
-        } else {
-            address1.setBackgroundDrawable(null);
-            address2.setBackgroundDrawable(null);
-        }
-
-        if (difference[TYPE]) {
-            type1.setBackgroundDrawable(colorDifferent);
-            type2.setBackgroundDrawable(colorDifferent);
-        } else {
-            type1.setBackgroundDrawable(null);
-            type2.setBackgroundDrawable(null);
-        }
-
-        if (difference[BODY]) {
-            body1.setBackgroundDrawable(colorDifferent);
-            body2.setBackgroundDrawable(colorDifferent);
-        } else {
-            body1.setBackgroundDrawable(null);
-            body2.setBackgroundDrawable(null);
-        }
+        bindDifference(context, date1, date2, difference[DATE]);
+        bindDifference(context, address1, address2, difference[ADDRESS]);
+        bindDifference(context, type1, type2, difference[TYPE]);
+        bindDifference(context, body1, body2, difference[BODY]);
     }
 
     private CharSequence getTypeName(Context context, int type) {

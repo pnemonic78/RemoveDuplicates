@@ -118,45 +118,11 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     protected void bindDifference(Context context, DuplicateItemPair<CallLogItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        if (difference[DATE]) {
-            date1.setBackgroundDrawable(colorDifferent);
-            date2.setBackgroundDrawable(colorDifferent);
-        } else {
-            date1.setBackgroundDrawable(null);
-            date2.setBackgroundDrawable(null);
-        }
-
-        if (difference[DURATION]) {
-            duration1.setBackgroundDrawable(colorDifferent);
-            duration2.setBackgroundDrawable(colorDifferent);
-        } else {
-            duration1.setBackgroundDrawable(null);
-            duration2.setBackgroundDrawable(null);
-        }
-
-        if (difference[TYPE]) {
-            type1.setBackgroundDrawable(colorDifferent);
-            type2.setBackgroundDrawable(colorDifferent);
-        } else {
-            type1.setBackgroundDrawable(null);
-            type2.setBackgroundDrawable(null);
-        }
-
-        if (difference[NUMBER]) {
-            number1.setBackgroundDrawable(colorDifferent);
-            number2.setBackgroundDrawable(colorDifferent);
-        } else {
-            number1.setBackgroundDrawable(null);
-            number2.setBackgroundDrawable(null);
-        }
-
-        if (difference[NAME]) {
-            name1.setBackgroundDrawable(colorDifferent);
-            name2.setBackgroundDrawable(colorDifferent);
-        } else {
-            name1.setBackgroundDrawable(null);
-            name2.setBackgroundDrawable(null);
-        }
+        bindDifference(context, date1, date2, difference[DATE]);
+        bindDifference(context, duration1, duration2, difference[DURATION]);
+        bindDifference(context, type1, type2, difference[TYPE]);
+        bindDifference(context, number1, number2, difference[NUMBER]);
+        bindDifference(context, name1, name2, difference[NAME]);
     }
 
     private CharSequence getTypeName(Context context, int type) {
