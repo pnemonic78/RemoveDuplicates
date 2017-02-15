@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.alarm;
+package com.github.duplicates;
 
 import android.content.Context;
 
@@ -48,7 +48,7 @@ public final class DaysOfWeek implements Comparable<DaysOfWeek> {
     // Bitmask of all repeating days
     private int mDays;
 
-    DaysOfWeek(int days) {
+    public DaysOfWeek(int days) {
         mDays = days;
     }
 

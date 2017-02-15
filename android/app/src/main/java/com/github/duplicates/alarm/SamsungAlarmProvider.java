@@ -21,6 +21,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.github.duplicates.DaysOfWeek;
 import com.github.duplicates.DuplicateProvider;
 
 import static android.provider.BaseColumns._ID;

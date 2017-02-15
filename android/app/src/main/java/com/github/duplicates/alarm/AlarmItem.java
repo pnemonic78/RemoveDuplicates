@@ -19,6 +19,7 @@ package com.github.duplicates.alarm;
 
 import android.support.annotation.NonNull;
 
+import com.github.duplicates.DaysOfWeek;
 import com.github.duplicates.DuplicateItem;
 
 /**
