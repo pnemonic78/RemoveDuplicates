@@ -17,6 +17,7 @@
  */
 package com.github.duplicates.call;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -43,8 +44,8 @@ import static android.provider.CallLog.Calls.TYPE;
  */
 public class CallLogProvider extends DuplicateProvider<CallLogItem> {
 
-    private static String[] PERMISSIONS_READ = {"android.permission.READ_CALL_LOG"};
-    private static String[] PERMISSIONS_WRITE = {"android.permission.WRITE_CALL_LOG"};
+    private static String[] PERMISSIONS_READ = {"android.permission.READ_CALL_LOG", Manifest.permission.READ_CONTACTS};
+    private static String[] PERMISSIONS_WRITE = {"android.permission.WRITE_CALL_LOG", Manifest.permission.WRITE_CONTACTS};
 
     private static final String[] PROJECTION = {
             _ID,
