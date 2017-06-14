@@ -17,6 +17,7 @@
  */
 package com.github.duplicates.calendar;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,8 +35,8 @@ import static android.provider.BaseColumns._ID;
  */
 public class CalendarProvider extends DuplicateProvider<CalendarItem> {
 
-    private static String[] PERMISSIONS_READ = {"com.android.browser.permission.READ_HISTORY_BOOKMARKS"};
-    private static String[] PERMISSIONS_WRITE = {"com.android.browser.permission.WRITE_HISTORY_BOOKMARKS"};
+    private static String[] PERMISSIONS_READ = {Manifest.permission.READ_CALENDAR};
+    private static String[] PERMISSIONS_WRITE = {Manifest.permission.WRITE_CALENDAR};
 
     private static final String[] PROJECTION = {
             _ID
