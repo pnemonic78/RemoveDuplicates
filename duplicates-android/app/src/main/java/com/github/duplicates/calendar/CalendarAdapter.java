@@ -17,12 +17,23 @@
  */
 package com.github.duplicates.calendar;
 
-import com.github.duplicates.bookmark.BookmarkItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.github.android.removeduplicates.R;
+import com.github.duplicates.DuplicateAdapter;
 
 /**
- * Duplicate calendar event.
+ * List adapter for duplicate calendar events.
  *
  * @author moshe.w
  */
-public class CalendarItem extends BookmarkItem {
+public class CalendarAdapter extends DuplicateAdapter<CalendarItem, CalendarViewHolder> {
+
+    @Override
+    public CalendarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_calendar, parent, false);
+        return new CalendarViewHolder(itemView, this);
+    }
 }

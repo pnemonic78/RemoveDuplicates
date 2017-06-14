@@ -17,12 +17,26 @@
  */
 package com.github.duplicates.calendar;
 
+import android.content.Context;
+
+import com.github.duplicates.DuplicateDeleteTask;
+import com.github.duplicates.DuplicateTaskListener;
 import com.github.duplicates.bookmark.BookmarkItem;
+import com.github.duplicates.bookmark.BookmarkProvider;
 
 /**
- * Duplicate calendar event.
+ * Task to find duplicate calendar events.
  *
  * @author moshe.w
  */
-public class CalendarItem extends BookmarkItem {
+public class CalendarDeleteTask extends DuplicateDeleteTask<BookmarkItem> {
+
+    public CalendarDeleteTask(Context context, DuplicateTaskListener listener) {
+        super(context, listener);
+    }
+
+    @Override
+    protected BookmarkProvider createProvider(Context context) {
+        return new BookmarkProvider(context);
+    }
 }
