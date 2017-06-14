@@ -25,4 +25,7 @@ import com.github.duplicates.bookmark.BookmarkItem;
  * @author moshe.w
  */
 public class CalendarItem extends BookmarkItem {
+
+    private CalendarEntity calendar;
+
 }
