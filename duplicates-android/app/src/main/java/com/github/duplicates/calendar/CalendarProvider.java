@@ -26,6 +26,9 @@ import android.provider.CalendarContract;
 
 import com.github.duplicates.DuplicateProvider;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.provider.BaseColumns._ID;
 import static android.provider.CalendarContract.Events.ALL_DAY;
 import static android.provider.CalendarContract.Events.CALENDAR_ACCESS_LEVEL;
@@ -110,6 +113,8 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
     private static final int INDEX_OWNER_ACCOUNT = 20;
     private static final int INDEX_VISIBLE = 21;
 
+    private final Map<Long, CalendarEntity> calendars = new HashMap<>();
+
     public CalendarProvider(Context context) {
         super(context);
     }
@@ -127,6 +132,12 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
     @Override
     public CalendarItem createItem() {
         return new CalendarItem();
+    }
+
+    @Override
+    public void onPreExecute() {
+        super.onPreExecute();
+        calendars.clear();
     }
 
     @Override
@@ -149,14 +160,19 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
         item.setTitle(cursor.getString(INDEX_TITLE));
 
         // Calendar data.
-        CalendarEntity cal = item.getCalendar();
-        cal.setAccess(cursor.getInt(INDEX_CALENDAR_ACCESS_LEVEL));
-        cal.setColor(cursor.getInt(INDEX_CALENDAR_COLOR));
-        cal.setName(cursor.getString(INDEX_CALENDAR_DISPLAY_NAME));
-        cal.setId(cursor.getLong(INDEX_CALENDAR_ID));
-        cal.setTimeZone(cursor.getString(INDEX_CALENDAR_TIME_ZONE));
-        cal.setAccount(cursor.getString(INDEX_OWNER_ACCOUNT));
-        cal.setVisible(cursor.getInt(INDEX_VISIBLE) != 0);
+        long calendarId = cursor.getLong(INDEX_CALENDAR_ID);
+        CalendarEntity cal = calendars.get(calendarId);
+        if (cal == null) {
+            cal = item.getCalendar();
+            cal.setId(calendarId);
+            cal.setAccess(cursor.getInt(INDEX_CALENDAR_ACCESS_LEVEL));
+            cal.setColor(cursor.getInt(INDEX_CALENDAR_COLOR));
+            cal.setName(cursor.getString(INDEX_CALENDAR_DISPLAY_NAME));
+            cal.setTimeZone(cursor.getString(INDEX_CALENDAR_TIME_ZONE));
+            cal.setAccount(cursor.getString(INDEX_OWNER_ACCOUNT));
+            cal.setVisible(cursor.getInt(INDEX_VISIBLE) != 0);
+            calendars.put(calendarId, cal);
+        }
     }
 
     @Override
