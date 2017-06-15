@@ -18,9 +18,11 @@
 package com.github.duplicates.calendar;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.android.removeduplicates.R;
@@ -57,6 +59,8 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     TextView start1;
     @BindView(R.id.end1)
     TextView end1;
+    @BindView(R.id.recur1)
+    ImageView recur1;
     @BindView(R.id.title1)
     TextView title1;
     @BindView(R.id.description1)
@@ -74,6 +78,8 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     TextView start2;
     @BindView(R.id.end2)
     TextView end2;
+    @BindView(R.id.recur2)
+    ImageView recur2;
     @BindView(R.id.title2)
     TextView title2;
     @BindView(R.id.description2)
@@ -100,6 +106,7 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
         checkbox1.setChecked(item.isChecked());
         start1.setText(DateUtils.formatDateTime(context, item.getStart(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         end1.setText(DateUtils.formatDateTime(context, item.getEnd(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        recur1.setVisibility(TextUtils.isEmpty(item.getRecurrenceRule()) ? View.INVISIBLE : View.VISIBLE);
         title1.setText(item.getTitle());
         description1.setText(item.getDescription());
         location1.setText(item.getLocation());
@@ -112,6 +119,7 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
         checkbox2.setChecked(item.isChecked());
         start2.setText(DateUtils.formatDateTime(context, item.getStart(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         end2.setText(DateUtils.formatDateTime(context, item.getEnd(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        recur2.setVisibility(TextUtils.isEmpty(item.getRecurrenceRule()) ? View.INVISIBLE : View.VISIBLE);
         title2.setText(item.getTitle());
         description2.setText(item.getDescription());
         location2.setText(item.getLocation());

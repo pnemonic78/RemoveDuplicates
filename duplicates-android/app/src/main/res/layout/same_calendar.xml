@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/match"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <CheckBox
@@ -44,6 +45,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             tools:text="@string/dummy_date_time"/>
+
+        <ImageView
+            android:id="@+id/recur1"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_event_repeat"/>
     </LinearLayout>
 
     <View
@@ -78,6 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title1"
+        android:layout_marginTop="4dp"
         android:layout_toRightOf="@+id/color1"
         android:maxLines="2"
         tools:text="@string/dummy_text_long"/>
@@ -87,6 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/description1"
+        android:layout_marginTop="4dp"
         android:layout_toRightOf="@+id/color1"
         android:maxLines="2"
         tools:text="@string/dummy_text_long"/>
@@ -107,6 +116,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <CheckBox
@@ -127,6 +137,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             tools:text="@string/dummy_date_time"/>
+
+        <ImageView
+            android:id="@+id/recur2"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_event_repeat"/>
     </LinearLayout>
 
     <View
@@ -161,6 +177,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title2"
+        android:layout_marginTop="4dp"
         android:layout_toRightOf="@+id/color2"
         android:maxLines="2"
         tools:text="@string/dummy_text_long"/>
@@ -170,6 +187,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/description2"
+        android:layout_marginTop="4dp"
         android:layout_toRightOf="@+id/color2"
         android:maxLines="2"
         tools:text="@string/dummy_text_long"/>
