@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,53 +14,16 @@
         android:id="@+id/match"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
         android:text="@string/match"/>
 
     <LinearLayout
+        android:id="@+id/dates1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/created1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            tools:text="@string/dummy_date_time"/>
-
-        <TextView
-            android:id="@+id/date1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            tools:text="@string/dummy_date_time"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/title1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:maxLines="3"
-            tools:text="@string/dummy_text_long"/>
-
-        <ImageView
-            android:id="@+id/icon1"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            tools:src="@mipmap/ic_launcher"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_below="@+id/match"
         android:orientation="horizontal">
 
         <CheckBox
@@ -69,16 +32,78 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/url1"
-            android:layout_width="match_parent"
+            android:id="@+id/start1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="3"
-            tools:text="@string/dummy_text_long"/>
+            android:layout_weight="2"
+            tools:text="@string/dummy_date_time"/>
+
+        <TextView
+            android:id="@+id/end1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            tools:text="@string/dummy_date_time"/>
     </LinearLayout>
 
     <View
+        android:id="@+id/cal_color1"
+        android:layout_width="4dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/attendees1"
+        android:layout_alignTop="@+id/title1"
+        tools:background="@color/dummy_color"/>
+
+    <View
+        android:id="@+id/color1"
+        android:layout_width="4dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/cal_color1"
+        android:layout_alignTop="@+id/cal_color1"
+        android:layout_toRightOf="@+id/cal_color1"
+        tools:background="@color/dummy_color"/>
+
+    <TextView
+        android:id="@+id/title1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dates1"
+        android:layout_toRightOf="@+id/color1"
+        android:maxLines="3"
+        tools:text="@string/dummy_text_long"/>
+
+    <TextView
+        android:id="@+id/description1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title1"
+        android:layout_toRightOf="@+id/color1"
+        android:maxLines="2"
+        tools:text="@string/dummy_text_long"/>
+
+    <TextView
+        android:id="@+id/location1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description1"
+        android:layout_toRightOf="@+id/color1"
+        android:maxLines="2"
+        tools:text="@string/dummy_text_long"/>
+
+    <TextView
+        android:id="@+id/attendees1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/location1"
+        android:layout_toRightOf="@+id/color1"
+        android:maxLines="4"
+        tools:text="@string/dummy_text_long"/>
+
+    <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/attendees1"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
@@ -86,48 +111,10 @@
         android:background="@android:drawable/divider_horizontal_bright"/>
 
     <LinearLayout
+        android:id="@+id/dates2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/created2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            tools:text="@string/dummy_date_time"/>
-
-        <TextView
-            android:id="@+id/date2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            tools:text="@string/dummy_date_time"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/title2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:maxLines="3"
-            tools:text="@string/dummy_text_long"/>
-
-        <ImageView
-            android:id="@+id/icon2"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            tools:src="@mipmap/ic_launcher"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider"
         android:orientation="horizontal">
 
         <CheckBox
@@ -136,11 +123,71 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/url2"
-            android:layout_width="match_parent"
+            android:id="@+id/start2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="3"
-            tools:text="@string/dummy_text_long"/>
+            android:layout_weight="2"
+            tools:text="@string/dummy_date_time"/>
+
+        <TextView
+            android:id="@+id/end2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            tools:text="@string/dummy_date_time"/>
     </LinearLayout>
 
-</LinearLayout>
+    <View
+        android:id="@+id/cal_color2"
+        android:layout_width="4dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/attendees2"
+        android:layout_alignTop="@+id/title2"
+        tools:background="@color/dummy_color"/>
+
+    <View
+        android:id="@+id/color2"
+        android:layout_width="4dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/cal_color2"
+        android:layout_alignTop="@+id/cal_color2"
+        android:layout_toRightOf="@+id/cal_color2"
+        tools:background="@color/dummy_color"/>
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dates2"
+        android:layout_toRightOf="@+id/color2"
+        android:maxLines="3"
+        tools:text="@string/dummy_text_long"/>
+
+    <TextView
+        android:id="@+id/description2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title2"
+        android:layout_toRightOf="@+id/color2"
+        android:maxLines="2"
+        tools:text="@string/dummy_text_long"/>
+
+    <TextView
+        android:id="@+id/location2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description2"
+        android:layout_toRightOf="@+id/color2"
+        android:maxLines="2"
+        tools:text="@string/dummy_text_long"/>
+
+    <TextView
+        android:id="@+id/attendees2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/location2"
+        android:layout_toRightOf="@+id/color2"
+        android:maxLines="4"
+        tools:text="@string/dummy_text_long"/>
+
+</RelativeLayout>

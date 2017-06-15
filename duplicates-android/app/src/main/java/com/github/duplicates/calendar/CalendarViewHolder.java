@@ -21,7 +21,6 @@ import android.content.Context;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.android.removeduplicates.R;
@@ -32,11 +31,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.github.duplicates.calendar.CalendarComparator.CREATED;
-import static com.github.duplicates.calendar.CalendarComparator.DATE;
-import static com.github.duplicates.calendar.CalendarComparator.FAVICON;
+import static com.github.duplicates.calendar.CalendarComparator.DESCRIPTION;
+import static com.github.duplicates.calendar.CalendarComparator.DTEND;
+import static com.github.duplicates.calendar.CalendarComparator.DTSTART;
+import static com.github.duplicates.calendar.CalendarComparator.LOCATION;
 import static com.github.duplicates.calendar.CalendarComparator.TITLE;
-import static com.github.duplicates.calendar.CalendarComparator.URL;
 
 /**
  * View holder of a duplicate calendar events.
@@ -50,29 +49,41 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
 
     @BindView(R.id.checkbox1)
     CheckBox checkbox1;
-    @BindView(R.id.created1)
-    TextView created1;
-    @BindView(R.id.date1)
-    TextView date1;
-    @BindView(R.id.icon1)
-    ImageView icon1;
+    @BindView(R.id.cal_color1)
+    View calColor1;
+    @BindView(R.id.color1)
+    View color1;
+    @BindView(R.id.start1)
+    TextView start1;
+    @BindView(R.id.end1)
+    TextView end1;
     @BindView(R.id.title1)
     TextView title1;
-    @BindView(R.id.url1)
-    TextView url1;
+    @BindView(R.id.description1)
+    TextView description1;
+    @BindView(R.id.location1)
+    TextView location1;
+    @BindView(R.id.attendees1)
+    TextView attendees1;
 
     @BindView(R.id.checkbox2)
     CheckBox checkbox2;
-    @BindView(R.id.created2)
-    TextView created2;
-    @BindView(R.id.date2)
-    TextView date2;
-    @BindView(R.id.icon2)
-    ImageView icon2;
+    @BindView(R.id.cal_color2)
+    View calColor2;
+    @BindView(R.id.color2)
+    View color2;
+    @BindView(R.id.start2)
+    TextView start2;
+    @BindView(R.id.end2)
+    TextView end2;
     @BindView(R.id.title2)
     TextView title2;
-    @BindView(R.id.url2)
-    TextView url2;
+    @BindView(R.id.description2)
+    TextView description2;
+    @BindView(R.id.location2)
+    TextView location2;
+    @BindView(R.id.attendees2)
+    TextView attendees2;
 
     public CalendarViewHolder(View itemView) {
         this(itemView, null);
@@ -91,32 +102,36 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     @Override
     protected void bindItem1(Context context, CalendarItem item) {
         checkbox1.setChecked(item.isChecked());
-        created1.setText(DateUtils.formatDateTime(context, item.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        date1.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        icon1.setImageBitmap(item.getIcon());
+        start1.setText(DateUtils.formatDateTime(context, item.getStart(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        end1.setText(DateUtils.formatDateTime(context, item.getEnd(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         title1.setText(item.getTitle());
-        url1.setText(item.getUrl() != null ? item.getUrl().toString() : null);
+        description1.setText(item.getDescription());
+        location1.setText(item.getLocation());
+        calColor1.setBackgroundColor(item.getCalendar().getColor());
+        color1.setBackgroundColor(item.getColor());
     }
 
     @Override
     protected void bindItem2(Context context, CalendarItem item) {
         checkbox2.setChecked(item.isChecked());
-        created2.setText(DateUtils.formatDateTime(context, item.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        date2.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        icon2.setImageBitmap(item.getIcon());
+        start2.setText(DateUtils.formatDateTime(context, item.getStart(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        end2.setText(DateUtils.formatDateTime(context, item.getEnd(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         title2.setText(item.getTitle());
-        url2.setText(item.getUrl() != null ? item.getUrl().toString() : null);
+        description2.setText(item.getDescription());
+        location2.setText(item.getLocation());
+        calColor2.setBackgroundColor(item.getCalendar().getColor());
+        color2.setBackgroundColor(item.getColor());
     }
 
     @Override
     protected void bindDifference(Context context, DuplicateItemPair<CalendarItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, created1, created2, difference[CREATED]);
-        bindDifference(context, date1, date2, difference[DATE]);
-        bindDifference(context, icon1, icon2, difference[FAVICON]);
+        bindDifference(context, description1, description2, difference[DESCRIPTION]);
+        bindDifference(context, start1, start2, difference[DTSTART]);
+        bindDifference(context, end1, end2, difference[DTEND]);
+        bindDifference(context, location1, location2, difference[LOCATION]);
         bindDifference(context, title1, title2, difference[TITLE]);
-        bindDifference(context, url1, url2, difference[URL]);
     }
 
     @OnClick(R.id.checkbox1)

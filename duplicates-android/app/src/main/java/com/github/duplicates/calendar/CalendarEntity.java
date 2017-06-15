@@ -17,6 +17,7 @@
  */
 package com.github.duplicates.calendar;
 
+import android.graphics.Color;
 import android.provider.CalendarContract;
 
 import java.util.TimeZone;
@@ -30,11 +31,11 @@ public class CalendarEntity {
 
     private long id;
     private String name;
-    private int color;
+    private int color = Color.TRANSPARENT;
     private TimeZone timeZone;
     private int access = CalendarContract.CalendarEntity.CAL_ACCESS_NONE;
     private String account;
-    private boolean visible;
+    private boolean visible = true;
 
     public long getId() {
         return id;
@@ -69,7 +70,7 @@ public class CalendarEntity {
     }
 
     public void setTimeZone(String timeZone) {
-        setTimeZone(TimeZone.getTimeZone(timeZone));
+        setTimeZone(timeZone != null ? TimeZone.getTimeZone(timeZone) : null);
     }
 
     public int getAccess() {

@@ -26,38 +26,34 @@ import com.github.duplicates.DuplicateComparator;
  */
 public class CalendarComparator extends DuplicateComparator<CalendarItem> {
 
-    public static final int URL = 0;
-    public static final int TITLE = 1;
-    public static final int CREATED = 2;
-    public static final int FAVICON = 3;
-    public static final int DATE = 4;
-    public static final int VISITS = 5;
+    public static final int TITLE = 0;
+    public static final int DTSTART = 1;
+    public static final int DTEND = 2;
+    public static final int DESCRIPTION = 3;
+    public static final int LOCATION = 4;
+    public static final int ATTENDEES = 5;
 
     @Override
     public int compare(CalendarItem lhs, CalendarItem rhs) {
         int c;
 
-        c = compare(lhs.getCreated(), rhs.getCreated());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.getDate(), rhs.getDate());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.getFavIcon(), rhs.getFavIcon());
-        if (c != SAME) {
-            return c;
-        }
         c = compare(lhs.getTitle(), rhs.getTitle());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getUrl(), rhs.getUrl());
+        c = compare(lhs.getDescription(), rhs.getDescription());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getVisits(), rhs.getVisits());
+        c = compare(lhs.getLocation(), rhs.getLocation());
+        if (c != SAME) {
+            return c;
+        }
+        c = compare(lhs.getStart(), rhs.getStart());
+        if (c != SAME) {
+            return c;
+        }
+        c = compare(lhs.getEnd(), rhs.getEnd());
         if (c != SAME) {
             return c;
         }
@@ -69,12 +65,12 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
     public boolean[] difference(CalendarItem lhs, CalendarItem rhs) {
         boolean[] result = new boolean[6];
 
-        result[CREATED] = compare(lhs.getCreated(), rhs.getCreated()) != SAME;
-        result[DATE] = compare(lhs.getDate(), rhs.getDate()) != SAME;
-        result[FAVICON] = compare(lhs.getFavIcon(), rhs.getFavIcon()) != SAME;
+        result[ATTENDEES] = compare(lhs.isHasAttendeeData(), rhs.isHasAttendeeData()) != SAME;
+        result[DESCRIPTION] = compare(lhs.getDescription(), rhs.getDescription()) != SAME;
+        result[DTSTART] = compare(lhs.getStart(), rhs.getStart()) != SAME;
+        result[DTEND] = compare(lhs.getEnd(), rhs.getEnd()) != SAME;
+        result[LOCATION] = compare(lhs.getLocation(), rhs.getLocation()) != SAME;
         result[TITLE] = compare(lhs.getTitle(), rhs.getTitle()) != SAME;
-        result[URL] = compare(lhs.getUrl(), rhs.getUrl()) != SAME;
-        result[VISITS] = compare(lhs.getVisits(), rhs.getVisits()) != SAME;
 
         return result;
     }
@@ -83,7 +79,10 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
     public float match(boolean[] difference) {
         float match = 1f;
 
-        if (difference[URL]) {
+        if (difference[DTSTART]) {
+            match *= 0.8f;
+        }
+        if (difference[DTEND]) {
             match *= 0.8f;
         }
 
@@ -91,18 +90,14 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
             match *= 0.9f;
         }
 
-        if (difference[CREATED]) {
+        if (difference[DESCRIPTION]) {
             match *= 0.95f;
         }
-        if (difference[FAVICON]) {
+        if (difference[LOCATION]) {
             match *= 0.95f;
         }
-
-        if (difference[DATE]) {
-            match *= 0.975f;
-        }
-        if (difference[VISITS]) {
-            match *= 0.975f;
+        if (difference[ATTENDEES]) {
+            match *= 0.95f;
         }
 
         return match;
