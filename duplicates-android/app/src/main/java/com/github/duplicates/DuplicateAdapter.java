@@ -186,6 +186,6 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     @Override
     public void onItemCheckedChangeListener(T item, boolean checked) {
         item.setChecked(checked);
-        notifyDataSetChanged();
+        notifyDataSetChanged();//FIXME Update only the affected rows!
     }
 }

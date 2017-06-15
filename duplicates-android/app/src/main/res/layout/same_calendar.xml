@@ -50,7 +50,7 @@
         android:id="@+id/cal_color1"
         android:layout_width="4dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/attendees1"
+        android:layout_alignBottom="@+id/location1"
         android:layout_alignTop="@+id/title1"
         tools:background="@color/dummy_color"/>
 
@@ -60,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/cal_color1"
         android:layout_alignTop="@+id/cal_color1"
+        android:layout_marginRight="4dp"
         android:layout_toRightOf="@+id/cal_color1"
         tools:background="@color/dummy_color"/>
 
@@ -90,20 +91,11 @@
         android:maxLines="2"
         tools:text="@string/dummy_text_long"/>
 
-    <TextView
-        android:id="@+id/attendees1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/location1"
-        android:layout_toRightOf="@+id/color1"
-        android:maxLines="4"
-        tools:text="@string/dummy_text_long"/>
-
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/attendees1"
+        android:layout_below="@+id/location1"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
@@ -141,7 +133,7 @@
         android:id="@+id/cal_color2"
         android:layout_width="4dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/attendees2"
+        android:layout_alignBottom="@+id/location2"
         android:layout_alignTop="@+id/title2"
         tools:background="@color/dummy_color"/>
 
@@ -151,6 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/cal_color2"
         android:layout_alignTop="@+id/cal_color2"
+        android:layout_marginRight="4dp"
         android:layout_toRightOf="@+id/cal_color2"
         tools:background="@color/dummy_color"/>
 
@@ -179,15 +172,6 @@
         android:layout_below="@+id/description2"
         android:layout_toRightOf="@+id/color2"
         android:maxLines="2"
-        tools:text="@string/dummy_text_long"/>
-
-    <TextView
-        android:id="@+id/attendees2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/location2"
-        android:layout_toRightOf="@+id/color2"
-        android:maxLines="4"
         tools:text="@string/dummy_text_long"/>
 
 </RelativeLayout>

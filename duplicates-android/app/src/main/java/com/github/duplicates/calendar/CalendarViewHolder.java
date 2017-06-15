@@ -63,8 +63,6 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     TextView description1;
     @BindView(R.id.location1)
     TextView location1;
-    @BindView(R.id.attendees1)
-    TextView attendees1;
 
     @BindView(R.id.checkbox2)
     CheckBox checkbox2;
@@ -82,8 +80,6 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     TextView description2;
     @BindView(R.id.location2)
     TextView location2;
-    @BindView(R.id.attendees2)
-    TextView attendees2;
 
     public CalendarViewHolder(View itemView) {
         this(itemView, null);
