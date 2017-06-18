@@ -259,6 +259,7 @@ public class CalendarItem extends DuplicateItem {
 
     public void setLastDate(Long lastDate) {
         this.lastDate = lastDate;
+        this.endEffective = null;
     }
 
     public boolean isHasAttendeeData() {
@@ -310,6 +311,11 @@ public class CalendarItem extends DuplicateItem {
                             Time until = new Time();
                             until.parse(recurrence.until);
                             end = until.normalize(true);
+                        }
+                    }
+                    if (end == NEVER) {
+                        if (getLastDate() != null) {
+                            end = getLastDate();
                         }
                     }
                 }

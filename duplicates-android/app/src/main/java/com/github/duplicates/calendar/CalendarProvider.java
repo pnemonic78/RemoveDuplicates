@@ -46,6 +46,7 @@ import static android.provider.CalendarContract.Events.EVENT_TIMEZONE;
 import static android.provider.CalendarContract.Events.EXDATE;
 import static android.provider.CalendarContract.Events.EXRULE;
 import static android.provider.CalendarContract.Events.HAS_ATTENDEE_DATA;
+import static android.provider.CalendarContract.Events.LAST_DATE;
 import static android.provider.CalendarContract.Events.OWNER_ACCOUNT;
 import static android.provider.CalendarContract.Events.RDATE;
 import static android.provider.CalendarContract.Events.RRULE;
@@ -77,6 +78,7 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
             EXDATE,
             EXRULE,
             HAS_ATTENDEE_DATA,
+            LAST_DATE,
             RDATE,
             RRULE,
             TITLE,
@@ -103,16 +105,17 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
     private static final int INDEX_EXDATE = 9;
     private static final int INDEX_EXRULE = 10;
     private static final int INDEX_HAS_ATTENDEE_DATA = 11;
-    private static final int INDEX_RDATE = 12;
-    private static final int INDEX_RRULE = 13;
-    private static final int INDEX_TITLE = 14;
-    private static final int INDEX_CALENDAR_ACCESS_LEVEL = 15;
-    private static final int INDEX_CALENDAR_COLOR = 16;
-    private static final int INDEX_CALENDAR_DISPLAY_NAME = 17;
-    private static final int INDEX_CALENDAR_ID = 18;
-    private static final int INDEX_CALENDAR_TIME_ZONE = 19;
-    private static final int INDEX_OWNER_ACCOUNT = 20;
-    private static final int INDEX_VISIBLE = 21;
+    private static final int INDEX_LAST_DATE = 12;
+    private static final int INDEX_RDATE = 13;
+    private static final int INDEX_RRULE = 14;
+    private static final int INDEX_TITLE = 15;
+    private static final int INDEX_CALENDAR_ACCESS_LEVEL = 16;
+    private static final int INDEX_CALENDAR_COLOR = 17;
+    private static final int INDEX_CALENDAR_DISPLAY_NAME = 18;
+    private static final int INDEX_CALENDAR_ID = 19;
+    private static final int INDEX_CALENDAR_TIME_ZONE = 20;
+    private static final int INDEX_OWNER_ACCOUNT = 21;
+    private static final int INDEX_VISIBLE = 22;
 
     private final Map<Long, CalendarEntity> calendars = new HashMap<>();
 
@@ -156,6 +159,7 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
         item.setExceptionDate(cursor.getString(INDEX_EXDATE));
         item.setExceptionRule(cursor.getString(INDEX_EXRULE));
         item.setHasAttendeeData(cursor.getInt(INDEX_HAS_ATTENDEE_DATA) != 0);
+        item.setLastDate(cursor.isNull(INDEX_LAST_DATE) ? null : cursor.getLong(INDEX_LAST_DATE));
         item.setRecurrenceDate(cursor.getString(INDEX_RDATE));
         item.setRecurrenceRule(cursor.getString(INDEX_RRULE));
         item.setTitle(cursor.getString(INDEX_TITLE));
