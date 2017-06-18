@@ -19,6 +19,7 @@ package com.github.duplicates.calendar;
 
 import android.graphics.Color;
 import android.provider.CalendarContract;
+import android.text.TextUtils;
 
 import java.util.TimeZone;
 
@@ -95,5 +96,9 @@ public class CalendarEntity {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public String getDisplayName() {
+        return TextUtils.isEmpty(getName()) ? getAccount() : getName();
     }
 }

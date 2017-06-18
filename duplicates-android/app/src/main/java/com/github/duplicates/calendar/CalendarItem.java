@@ -19,9 +19,14 @@ package com.github.duplicates.calendar;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.text.format.Time;
 
+import com.android.calendarcommon2.EventRecurrence;
+import com.android.calendarcommon2.RecurrenceSet;
 import com.github.duplicates.DuplicateItem;
 
+import java.util.Calendar;
 import java.util.TimeZone;
 
 import static android.provider.CalendarContract.Attendees.ATTENDEE_STATUS_NONE;
@@ -35,6 +40,8 @@ import static android.provider.CalendarContract.Events.STATUS_TENTATIVE;
  * @author moshe.w
  */
 public class CalendarItem extends DuplicateItem {
+
+    public static final long NEVER = Long.MIN_VALUE;
 
     private long id;
     private String title;
@@ -62,6 +69,8 @@ public class CalendarItem extends DuplicateItem {
     private String organizer;
 
     private CalendarEntity calendar;
+    private Long endEffective;
+    private RecurrenceSet recurrenceSet;
 
     public long getId() {
         return id;
@@ -133,6 +142,7 @@ public class CalendarItem extends DuplicateItem {
 
     public void setEnd(long end) {
         this.end = end;
+        this.endEffective = null;
     }
 
     public TimeZone getStartTimeZone() {
@@ -148,11 +158,15 @@ public class CalendarItem extends DuplicateItem {
     }
 
     public TimeZone getEndTimeZone() {
+        if (endTimeZone == null) {
+            return getStartTimeZone();
+        }
         return endTimeZone;
     }
 
     public void setEndTimeZone(TimeZone endTimeZone) {
         this.endTimeZone = endTimeZone;
+        this.endEffective = null;
     }
 
     public void setEndTimeZone(String endTimeZone) {
@@ -273,5 +287,51 @@ public class CalendarItem extends DuplicateItem {
 
     public void setCalendar(CalendarEntity calendar) {
         this.calendar = calendar;
+    }
+
+    public long getEndEffective() {
+        if (endEffective == null) {
+            long start = getStart();
+            long end = getEnd();
+            if (end < start) {
+                if (isAllDay()) {
+                    Calendar gcal = Calendar.getInstance(getEndTimeZone());
+                    gcal.setTimeInMillis(start);
+                    gcal.set(Calendar.HOUR_OF_DAY, 23);
+                    gcal.set(Calendar.MINUTE, 0);
+                    gcal.set(Calendar.SECOND, 0);
+                    gcal.set(Calendar.MILLISECOND, 0);
+                    end = gcal.getTimeInMillis();
+                } else {
+                    RecurrenceSet recurrenceSet = getRecurrenceSet();
+                    if ((recurrenceSet.rrules != null) && (recurrenceSet.rrules.length > 0)) {
+                        EventRecurrence recurrence = recurrenceSet.rrules[0];
+                        if (!TextUtils.isEmpty(recurrence.until)) {
+                            Time until = new Time();
+                            until.parse(recurrence.until);
+                            end = until.normalize(true);
+                        }
+                    }
+                }
+            }
+            endEffective = end;
+        }
+        return endEffective;
+    }
+
+    public int getDisplayColor() {
+        return getColor() == Color.TRANSPARENT ? getCalendar().getColor() : getColor();
+    }
+
+    public boolean hasRecurrence() {
+        return getRecurrenceSet().hasRecurrence();
+    }
+
+    @NonNull
+    public RecurrenceSet getRecurrenceSet() {
+        if (recurrenceSet == null) {
+            recurrenceSet = new RecurrenceSet(getRecurrenceRule(), getRecurrenceDate(), getExceptionRule(), getExceptionDate());
+        }
+        return recurrenceSet;
     }
 }

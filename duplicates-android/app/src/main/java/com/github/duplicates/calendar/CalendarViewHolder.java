@@ -18,7 +18,6 @@
 package com.github.duplicates.calendar;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -38,6 +37,7 @@ import static com.github.duplicates.calendar.CalendarComparator.DTEND;
 import static com.github.duplicates.calendar.CalendarComparator.DTSTART;
 import static com.github.duplicates.calendar.CalendarComparator.LOCATION;
 import static com.github.duplicates.calendar.CalendarComparator.TITLE;
+import static com.github.duplicates.calendar.CalendarItem.NEVER;
 
 /**
  * View holder of a duplicate calendar events.
@@ -51,8 +51,6 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
 
     @BindView(R.id.checkbox1)
     CheckBox checkbox1;
-    @BindView(R.id.cal_color1)
-    View calColor1;
     @BindView(R.id.color1)
     View color1;
     @BindView(R.id.start1)
@@ -61,6 +59,8 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     TextView end1;
     @BindView(R.id.recur1)
     ImageView recur1;
+    @BindView(R.id.account1)
+    TextView account1;
     @BindView(R.id.title1)
     TextView title1;
     @BindView(R.id.description1)
@@ -70,8 +70,6 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
 
     @BindView(R.id.checkbox2)
     CheckBox checkbox2;
-    @BindView(R.id.cal_color2)
-    View calColor2;
     @BindView(R.id.color2)
     View color2;
     @BindView(R.id.start2)
@@ -80,6 +78,8 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     TextView end2;
     @BindView(R.id.recur2)
     ImageView recur2;
+    @BindView(R.id.account2)
+    TextView account2;
     @BindView(R.id.title2)
     TextView title2;
     @BindView(R.id.description2)
@@ -104,27 +104,34 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     @Override
     protected void bindItem1(Context context, CalendarItem item) {
         checkbox1.setChecked(item.isChecked());
-        start1.setText(DateUtils.formatDateTime(context, item.getStart(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        end1.setText(DateUtils.formatDateTime(context, item.getEnd(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        recur1.setVisibility(TextUtils.isEmpty(item.getRecurrenceRule()) ? View.INVISIBLE : View.VISIBLE);
+        start1.setText(formatDateTime(context, item.getStart()));
+        end1.setText(formatDateTime(context, item.getEndEffective()));
+        recur1.setVisibility(item.hasRecurrence() ? View.INVISIBLE : View.VISIBLE);
+        account1.setText(item.getCalendar().getDisplayName());
         title1.setText(item.getTitle());
         description1.setText(item.getDescription());
         location1.setText(item.getLocation());
-        calColor1.setBackgroundColor(item.getCalendar().getColor());
-        color1.setBackgroundColor(item.getColor());
+        color1.setBackgroundColor(item.getDisplayColor());
     }
 
     @Override
     protected void bindItem2(Context context, CalendarItem item) {
         checkbox2.setChecked(item.isChecked());
-        start2.setText(DateUtils.formatDateTime(context, item.getStart(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        end2.setText(DateUtils.formatDateTime(context, item.getEnd(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
-        recur2.setVisibility(TextUtils.isEmpty(item.getRecurrenceRule()) ? View.INVISIBLE : View.VISIBLE);
+        start2.setText(formatDateTime(context, item.getStart()));
+        end2.setText(formatDateTime(context, item.getEndEffective()));
+        recur2.setVisibility(item.hasRecurrence() ? View.INVISIBLE : View.VISIBLE);
+        account2.setText(item.getCalendar().getDisplayName());
         title2.setText(item.getTitle());
         description2.setText(item.getDescription());
         location2.setText(item.getLocation());
-        calColor2.setBackgroundColor(item.getCalendar().getColor());
-        color2.setBackgroundColor(item.getColor());
+        color2.setBackgroundColor(item.getDisplayColor());
+    }
+
+    protected CharSequence formatDateTime(Context context, long date) {
+        if (date == NEVER) {
+            return null;
+        }
+        return DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getEnd(), rhs.getEnd());
+        c = compare(lhs.getEndEffective(), rhs.getEndEffective());
         if (c != SAME) {
             return c;
         }
@@ -68,7 +68,7 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
         result[ATTENDEES] = compare(lhs.isHasAttendeeData(), rhs.isHasAttendeeData()) != SAME;
         result[DESCRIPTION] = compare(lhs.getDescription(), rhs.getDescription()) != SAME;
         result[DTSTART] = compare(lhs.getStart(), rhs.getStart()) != SAME;
-        result[DTEND] = compare(lhs.getEnd(), rhs.getEnd()) != SAME;
+        result[DTEND] = compare(lhs.getEndEffective(), rhs.getEndEffective()) != SAME;
         result[LOCATION] = compare(lhs.getLocation(), rhs.getLocation()) != SAME;
         result[TITLE] = compare(lhs.getTitle(), rhs.getTitle()) != SAME;
 
@@ -80,10 +80,10 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
         float match = 1f;
 
         if (difference[DTSTART]) {
-            match *= 0.8f;
+            match *= 0.85f;
         }
         if (difference[DTEND]) {
-            match *= 0.8f;
+            match *= 0.85f;
         }
 
         if (difference[TITLE]) {

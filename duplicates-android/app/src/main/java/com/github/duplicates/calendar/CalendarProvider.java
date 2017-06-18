@@ -51,6 +51,7 @@ import static android.provider.CalendarContract.Events.RDATE;
 import static android.provider.CalendarContract.Events.RRULE;
 import static android.provider.CalendarContract.Events.TITLE;
 import static android.provider.CalendarContract.Events.VISIBLE;
+import static com.github.duplicates.calendar.CalendarItem.NEVER;
 
 /**
  * Provide duplicate calendar events.
@@ -146,8 +147,8 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
         item.setId(cursor.getLong(INDEX_ID));
         item.setAllDay(cursor.getInt(INDEX_ALL_DAY) != 0);
         item.setDescription(cursor.getString(INDEX_DESCRIPTION));
-        item.setEnd(cursor.getLong(INDEX_DTEND));
-        item.setStart(cursor.getLong(INDEX_DTSTART));
+        item.setEnd(cursor.isNull(INDEX_DTEND) ? NEVER : cursor.getLong(INDEX_DTEND));
+        item.setStart(cursor.isNull(INDEX_DTSTART) ? NEVER : cursor.getLong(INDEX_DTSTART));
         item.setColor(cursor.getInt(INDEX_EVENT_COLOR));
         item.setEndTimeZone(cursor.getString(INDEX_EVENT_END_TIMEZONE));
         item.setLocation(cursor.getString(INDEX_EVENT_LOCATION));
@@ -173,6 +174,7 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
             cal.setVisible(cursor.getInt(INDEX_VISIBLE) != 0);
             calendars.put(calendarId, cal);
         }
+        item.setCalendar(cal);
     }
 
     @Override
