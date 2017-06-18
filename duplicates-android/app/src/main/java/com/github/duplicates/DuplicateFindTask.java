@@ -83,7 +83,7 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
         boolean[] difference;
         float match;
         T item1;
-        // Most likely that a matching item is a neighbour,so count backwards.
+        // Most likely that a matching item is a neighbour, so count backwards.
         for (int i = size - 1; i >= 0; i--) {
             item1 = items.get(i);
             difference = comparator.difference(item1, item);

@@ -64,4 +64,10 @@ public class DuplicateItemPair<T extends DuplicateItem> {
     public boolean[] getDifference() {
         return difference;
     }
+
+    public long getId() {
+        long id1 = getItem1().getId();
+        long id2 = getItem2().getId();
+        return ((id1 & 0xFFFFFFFFL) << 32) | (id2 & 0xFFFFFFFFL);
+    }
 }

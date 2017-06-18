@@ -34,6 +34,10 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
 
     private final List<DuplicateItemPair<T>> pairs = new ArrayList<>();
 
+    public DuplicateAdapter() {
+        setHasStableIds(true);
+    }
+
     @Override
     public void onBindViewHolder(VH holder, int position) {
         DuplicateItemPair<T> pair = pairs.get(position);
@@ -43,6 +47,12 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     @Override
     public int getItemCount() {
         return pairs.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        DuplicateItemPair<T> pair = pairs.get(position);
+        return pair.getId();
     }
 
     /**
@@ -72,12 +82,12 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param difference the array of differences.
      */
     public void add(T item1, T item2, float match, boolean[] difference) {
-        int position = pairs.size();
-        if (!item1.isChecked() || !item2.isChecked()) {
-            DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match, difference);
-            if (pairs.add(pair)) {
-                notifyItemInserted(position);
-            }
+        if (item1.isChecked() && item2.isChecked()) {
+            return;
+        }
+        DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match, difference);
+        if (pairs.add(pair)) {
+            notifyItemInserted(pairs.size());
         }
     }
 
