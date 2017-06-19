@@ -79,13 +79,14 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
     public float match(boolean[] difference) {
         float match = 1f;
 
+        if (difference[TITLE]) {
+            match *= 0.825f;
+        }
+
         if (difference[DTSTART]) {
             match *= 0.85f;
         }
         if (difference[DTEND]) {
-            match *= 0.85f;
-        }
-        if (difference[TITLE]) {
             match *= 0.85f;
         }
 
