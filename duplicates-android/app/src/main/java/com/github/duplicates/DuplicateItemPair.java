@@ -17,14 +17,17 @@
  */
 package com.github.duplicates;
 
-import static com.github.duplicates.DuplicateTaskListener.MATCH_GREAT;
-
 /**
  * Item that is a possible duplicate of two items.
  *
  * @author moshe.w
  */
 public class DuplicateItemPair<T extends DuplicateItem> {
+
+    /**
+     * Percentage for two items to be considered a very good match.
+     */
+    public static final float MATCH_GREAT = 0.85f;
 
     private T item1;
     private T item2;

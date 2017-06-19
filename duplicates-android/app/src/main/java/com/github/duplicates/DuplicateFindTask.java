@@ -23,14 +23,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 
-import static com.github.duplicates.DuplicateTaskListener.MATCH_GOOD;
-
 /**
  * Task to find duplicates.
  *
  * @author moshe.w
  */
 public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends DuplicateTask<T, Object, Object, List<T>> {
+
+    /**
+     * Percentage for two items to be considered a good match.
+     */
+    public static final float MATCH_GOOD = 0.75f;
 
     private DuplicateComparator<T> comparator;
     private final List<T> items = new ArrayList<>();

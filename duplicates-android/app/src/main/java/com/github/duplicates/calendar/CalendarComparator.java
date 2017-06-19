@@ -85,9 +85,8 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
         if (difference[DTEND]) {
             match *= 0.85f;
         }
-
         if (difference[TITLE]) {
-            match *= 0.9f;
+            match *= 0.85f;
         }
 
         if (difference[DESCRIPTION]) {
