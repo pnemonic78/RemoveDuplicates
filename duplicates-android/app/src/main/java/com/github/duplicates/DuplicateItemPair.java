@@ -27,7 +27,7 @@ public class DuplicateItemPair<T extends DuplicateItem> {
     /**
      * Percentage for two items to be considered a very good match.
      */
-    public static final float MATCH_GREAT = 0.85f;
+    public static final float MATCH_GREAT = 0.875f;
 
     private T item1;
     private T item2;

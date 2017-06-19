@@ -18,6 +18,8 @@
 package com.github.duplicates.calendar;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -45,6 +47,11 @@ import static com.github.duplicates.calendar.CalendarItem.NEVER;
  * @author moshe.w
  */
 public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
+
+    private static final float SATURATION_ADJUST = 1.3f;
+    private static final float INTENSITY_ADJUST = 0.8f;
+
+    private static final float[] hsv = new float[3];
 
     @BindView(R.id.match)
     TextView match;
@@ -111,7 +118,7 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
         title1.setText(item.getTitle());
         description1.setText(item.getDescription());
         location1.setText(item.getLocation());
-        color1.setBackgroundColor(item.getDisplayColor());
+        color1.setBackgroundColor(getDisplayColorFromColor(item.getDisplayColor()));
     }
 
     @Override
@@ -124,7 +131,7 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
         title2.setText(item.getTitle());
         description2.setText(item.getDescription());
         location2.setText(item.getLocation());
-        color2.setBackgroundColor(item.getDisplayColor());
+        color2.setBackgroundColor(getDisplayColorFromColor(item.getDisplayColor()));
     }
 
     protected CharSequence formatDateTime(Context context, long date) {
@@ -157,5 +164,22 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
         if (onCheckedChangeListener != null) {
             onCheckedChangeListener.onItemCheckedChangeListener(item2, checkbox2.isChecked());
         }
+    }
+
+    /**
+     * For devices with Jellybean or later, darkens the given color to ensure that white text is
+     * clearly visible on top of it.  For devices prior to Jellybean, does nothing, as the
+     * sync adapter handles the color change.
+     *
+     * @param color the raw color.
+     */
+    public static int getDisplayColorFromColor(int color) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            return color;
+        }
+        Color.colorToHSV(color, hsv);
+        hsv[1] = Math.min(hsv[1] * SATURATION_ADJUST, 1.0f);
+        hsv[2] = hsv[2] * INTENSITY_ADJUST;
+        return Color.HSVToColor(hsv);
     }
 }
