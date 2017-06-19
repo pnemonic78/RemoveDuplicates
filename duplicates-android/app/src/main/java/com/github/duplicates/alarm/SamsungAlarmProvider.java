@@ -125,7 +125,7 @@ public class SamsungAlarmProvider extends DuplicateProvider<AlarmItem> {
         item.setAlertTime(cursor.getLong(INDEX_ALERTTIME));
         item.setCreateTime(cursor.getLong(INDEX_CREATETIME));
         item.setDailyBriefing(cursor.getInt(INDEX_DAILYBRIEF) != 0);
-        item.setName(cursor.getString(INDEX_NAME));
+        item.setName(empty(cursor, INDEX_NAME));
         item.setNotificationType(cursor.getInt(INDEX_NOTITYPE));
         item.setRepeat(toDaysOfWeek(cursor.getInt(INDEX_REPEATTYPE)));
         item.setSubdueActivate(cursor.getInt(INDEX_SBDACTIVE) != 0);

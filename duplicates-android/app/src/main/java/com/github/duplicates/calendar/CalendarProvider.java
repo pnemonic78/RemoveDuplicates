@@ -149,12 +149,12 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
         // Event data.
         item.setId(cursor.getLong(INDEX_ID));
         item.setAllDay(cursor.getInt(INDEX_ALL_DAY) != 0);
-        item.setDescription(cursor.getString(INDEX_DESCRIPTION));
+        item.setDescription(empty(cursor, INDEX_DESCRIPTION));
         item.setEnd(cursor.isNull(INDEX_DTEND) ? NEVER : cursor.getLong(INDEX_DTEND));
         item.setStart(cursor.isNull(INDEX_DTSTART) ? NEVER : cursor.getLong(INDEX_DTSTART));
         item.setColor(cursor.getInt(INDEX_EVENT_COLOR));
         item.setEndTimeZone(cursor.getString(INDEX_EVENT_END_TIMEZONE));
-        item.setLocation(cursor.getString(INDEX_EVENT_LOCATION));
+        item.setLocation(empty(cursor, INDEX_EVENT_LOCATION));
         item.setStartTimeZone(cursor.getString(INDEX_EVENT_TIMEZONE));
         item.setExceptionDate(cursor.getString(INDEX_EXDATE));
         item.setExceptionRule(cursor.getString(INDEX_EXRULE));
@@ -162,7 +162,7 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
         item.setLastDate(cursor.isNull(INDEX_LAST_DATE) ? null : cursor.getLong(INDEX_LAST_DATE));
         item.setRecurrenceDate(cursor.getString(INDEX_RDATE));
         item.setRecurrenceRule(cursor.getString(INDEX_RRULE));
-        item.setTitle(cursor.getString(INDEX_TITLE));
+        item.setTitle(empty(cursor, INDEX_TITLE));
 
         // Calendar data.
         long calendarId = cursor.getLong(INDEX_CALENDAR_ID);

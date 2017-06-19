@@ -92,7 +92,7 @@ public class BookmarkProvider extends DuplicateProvider<BookmarkItem> {
         item.setCreated(cursor.getLong(INDEX_CREATED));
         item.setDate(cursor.getLong(INDEX_DATE));
         item.setFavIcon(cursor.getBlob(INDEX_FAVICON));
-        item.setTitle(cursor.getString(INDEX_TITLE));
+        item.setTitle(empty(cursor, INDEX_TITLE));
         item.setUrl(cursor.getString(INDEX_URL));
         item.setVisits(cursor.getInt(INDEX_VISITS));
     }

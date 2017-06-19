@@ -99,8 +99,8 @@ public class KitkatMessageProvider extends JellybeanMessageProvider {
     @Override
     public void populateItem(Cursor cursor, MessageItem item) {
         item.setId(cursor.getLong(INDEX_ID));
-        item.setAddress(cursor.getString(INDEX_ADDRESS));
-        item.setBody(cursor.getString(INDEX_BODY));
+        item.setAddress(empty(cursor, INDEX_ADDRESS));
+        item.setBody(empty(cursor, INDEX_BODY));
         item.setDateReceived(cursor.getLong(INDEX_DATE_RECEIVED));
         item.setDateSent(cursor.getLong(INDEX_DATE_SENT));
         item.setErrorCode(cursor.getInt(INDEX_ERROR_CODE));
@@ -110,7 +110,7 @@ public class KitkatMessageProvider extends JellybeanMessageProvider {
         item.setRead(cursor.getInt(INDEX_READ) != 0);
         item.setSeen(cursor.getInt(INDEX_SEEN) != 0);
         item.setStatus(cursor.getInt(INDEX_STATUS));
-        item.setSubject(cursor.getString(INDEX_SUBJECT));
+        item.setSubject(empty(cursor, INDEX_SUBJECT));
         item.setThreadId(cursor.getLong(INDEX_THREAD_ID));
         item.setType(cursor.getInt(INDEX_TYPE));
     }

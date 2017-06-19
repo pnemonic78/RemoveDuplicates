@@ -266,4 +266,15 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
     public boolean isCancelled() {
         return cancelled;
     }
+
+    /**
+     * Get the non-{@code null} string column.
+     *
+     * @param cursor the database cursor.
+     * @param index  the column index with string value.
+     * @return the string - empty otherwise.
+     */
+    protected String empty(Cursor cursor, int index) {
+        return cursor.isNull(index) ? "" : cursor.getString(index);
+    }
 }
