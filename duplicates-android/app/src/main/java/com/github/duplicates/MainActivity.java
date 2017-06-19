@@ -43,6 +43,8 @@ import com.github.duplicates.calendar.CalendarDeleteTask;
 import com.github.duplicates.calendar.CalendarFindTask;
 import com.github.duplicates.call.CallLogDeleteTask;
 import com.github.duplicates.call.CallLogFindTask;
+import com.github.duplicates.contact.ContactDeleteTask;
+import com.github.duplicates.contact.ContactFindTask;
 import com.github.duplicates.message.MessageDeleteTask;
 import com.github.duplicates.message.MessageFindTask;
 
@@ -156,8 +158,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
                 return new CalendarFindTask(context, listener);
             case CALL_LOG:
                 return new CallLogFindTask(context, listener);
-//            case CONTACTS:
-//                return new ContactFindTask(context, listener);
+            case CONTACTS:
+                return new ContactFindTask(context, listener);
             case MESSAGES:
                 return new MessageFindTask(context, listener);
         }
@@ -178,8 +180,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
                 return new CalendarDeleteTask(context, listener);
             case CALL_LOG:
                 return new CallLogDeleteTask(context, listener);
-//            case CONTACTS:
-//                return new ContactDeleteTask(context, listener);
+            case CONTACTS:
+                return new ContactDeleteTask(context, listener);
             case MESSAGES:
                 return new MessageDeleteTask(context, listener);
         }

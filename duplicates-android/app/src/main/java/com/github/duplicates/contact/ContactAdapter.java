@@ -17,12 +17,23 @@
  */
 package com.github.duplicates.contact;
 
-import com.github.duplicates.message.MessageItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.github.android.removeduplicates.R;
+import com.github.duplicates.DuplicateAdapter;
 
 /**
- * Duplicate contact item.
+ * List adapter for duplicate contacts.
  *
  * @author moshe.w
  */
-public class ContactItem extends MessageItem {
+public class ContactAdapter extends DuplicateAdapter<ContactItem, ContactViewHolder> {
+
+    @Override
+    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_message, parent, false);
+        return new ContactViewHolder(itemView, this);
+    }
 }
