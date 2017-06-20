@@ -33,7 +33,7 @@ public class ContactAdapter extends DuplicateAdapter<ContactItem, ContactViewHol
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_message, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_contact, parent, false);
         return new ContactViewHolder(itemView, this);
     }
 }

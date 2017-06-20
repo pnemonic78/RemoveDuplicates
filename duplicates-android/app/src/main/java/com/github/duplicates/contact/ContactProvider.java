@@ -17,16 +17,16 @@
  */
 package com.github.duplicates.contact;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 
 import com.github.duplicates.DuplicateProvider;
-import com.github.provider.Browser;
 
 import static android.provider.BaseColumns._ID;
-import static com.github.provider.Browser.BookmarkColumns.BOOKMARK;
 import static com.github.provider.Browser.BookmarkColumns.CREATED;
 import static com.github.provider.Browser.BookmarkColumns.DATE;
 import static com.github.provider.Browser.BookmarkColumns.FAVICON;
@@ -41,8 +41,8 @@ import static com.github.provider.Browser.BookmarkColumns.VISITS;
  */
 public class ContactProvider extends DuplicateProvider<ContactItem> {
 
-    private static String[] PERMISSIONS_READ = {"com.android.browser.permission.READ_HISTORY_BOOKMARKS"};
-    private static String[] PERMISSIONS_WRITE = {"com.android.browser.permission.WRITE_HISTORY_BOOKMARKS"};
+    private static String[] PERMISSIONS_READ = {Manifest.permission.READ_CONTACTS};
+    private static String[] PERMISSIONS_WRITE = {Manifest.permission.WRITE_CONTACTS};
 
     private static final String[] PROJECTION = {
             _ID,
@@ -68,17 +68,12 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
 
     @Override
     protected Uri getContentUri() {
-        return Browser.BOOKMARKS_URI;
+        return ContactsContract.Contacts.CONTENT_URI;
     }
 
     @Override
     protected String[] getCursorProjection() {
         return PROJECTION;
-    }
-
-    @Override
-    protected String getCursorSelection() {
-        return BOOKMARK + "=1";
     }
 
     @Override
