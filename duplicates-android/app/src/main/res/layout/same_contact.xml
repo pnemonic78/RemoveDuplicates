@@ -43,14 +43,14 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/email1"
+        android:id="@+id/phone1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
         tools:text="@string/dummy_text"/>
 
     <TextView
-        android:id="@+id/event1"
+        android:id="@+id/email1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
@@ -64,7 +64,7 @@
         tools:text="@string/dummy_text"/>
 
     <TextView
-        android:id="@+id/phone1"
+        android:id="@+id/event1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
@@ -104,14 +104,14 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/email2"
+        android:id="@+id/phone2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
         tools:text="@string/dummy_text"/>
 
     <TextView
-        android:id="@+id/event2"
+        android:id="@+id/email2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
@@ -125,7 +125,7 @@
         tools:text="@string/dummy_text"/>
 
     <TextView
-        android:id="@+id/phone2"
+        android:id="@+id/event2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"

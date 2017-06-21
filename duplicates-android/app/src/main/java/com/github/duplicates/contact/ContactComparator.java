@@ -21,6 +21,7 @@ import com.github.duplicates.DuplicateComparator;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,6 +36,8 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
     public static final int IM = 2;
     public static final int NAME = 3;
     public static final int PHONE = 4;
+
+    private static final float MATCH_DATA = 0.9f;
 
     @Override
     public int compare(ContactItem lhs, ContactItem rhs) {
@@ -85,19 +88,19 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         float match = 1f;
 
         if (difference[EMAIL]) {
-            match *= 0.85f;
+            match *= matchEmails(lhs.getEmails(), rhs.getEmails());
         }
         if (difference[EVENT]) {
-            match *= 0.85f;
+            match *= matchEvents(lhs.getEvents(), rhs.getEvents());
         }
         if (difference[IM]) {
-            match *= 0.85f;
+            match *= matchIms(lhs.getIms(), rhs.getIms());
         }
         if (difference[NAME]) {
-            match *= 0.85f;
+            match *= matchNames(lhs.getNames(), rhs.getNames());
         }
         if (difference[PHONE]) {
-            match *= 0.85f;
+            match *= matchPhones(lhs.getPhones(), rhs.getPhones());
         }
 
         return match;
@@ -112,12 +115,50 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         }
         Set<String> set1 = new HashSet<>(lhs.size());
         for (ContactData datum : lhs) {
-            set1.add(datum.toString());
+            set1.add(datum.toString().toLowerCase());
         }
         Set<String> set2 = new HashSet<>(rhs.size());
         for (ContactData datum : rhs) {
-            set2.add(datum.toString());
+            set2.add(datum.toString().toLowerCase());
         }
         return compare(set1, set2);
+    }
+
+    protected float matchData(List<? extends ContactData> lhs, List<? extends ContactData> rhs) {
+        if (lhs.isEmpty()) {
+            return rhs.isEmpty() ? 1f : MATCH_DATA;
+        }
+        if (rhs.isEmpty()) {
+            return MATCH_DATA;
+        }
+        Set<String> set1 = new HashSet<>(lhs.size());
+        for (ContactData datum : lhs) {
+            set1.add(datum.toString().toLowerCase());
+        }
+        Set<String> set2 = new HashSet<>(rhs.size());
+        for (ContactData datum : rhs) {
+            set2.add(datum.toString().toLowerCase());
+        }
+        return MATCH_DATA;
+    }
+
+    protected float matchEmails(List<EmailData> lhs, List<EmailData> rhs) {
+        return matchData(lhs, rhs);
+    }
+
+    protected float matchEvents(List<EventData> lhs, List<EventData> rhs) {
+        return matchData(lhs, rhs);
+    }
+
+    protected float matchIms(List<ImData> lhs, List<ImData> rhs) {
+        return matchData(lhs, rhs);
+    }
+
+    protected float matchNames(List<StructuredNameData> lhs, List<StructuredNameData> rhs) {
+        return matchData(lhs, rhs);
+    }
+
+    protected float matchPhones(List<PhoneData> lhs, List<PhoneData> rhs) {
+        return matchData(lhs, rhs);
     }
 }
