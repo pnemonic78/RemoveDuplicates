@@ -17,6 +17,10 @@
  */
 package com.github.duplicates.contact;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 import static android.provider.ContactsContract.CommonDataKinds.Photo;
 
 /**
@@ -26,6 +30,8 @@ import static android.provider.ContactsContract.CommonDataKinds.Photo;
  */
 public class PhotoData extends ContactData {
 
+    private Bitmap photo;
+
     public PhotoData() {
         setMimeType(Photo.CONTENT_ITEM_TYPE);
     }
@@ -34,7 +40,22 @@ public class PhotoData extends ContactData {
         return Long.parseLong(getData14());
     }
 
-    public String getPhoto() {
-        return getData15();
+    @Override
+    public void setData15(String data15) {
+        super.setData15(data15);
+        this.photo = null;
+    }
+
+    public Bitmap getPhoto() {
+        if (photo == null) {
+            String data15 = getData15();
+            if (data15 != null) {
+                byte[] blob = Base64.decode(data15, Base64.DEFAULT);
+                if (blob != null) {
+                    this.photo = BitmapFactory.decodeByteArray(blob, 0, blob.length);
+                }
+            }
+        }
+        return photo;
     }
 }

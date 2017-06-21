@@ -23,12 +23,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.util.Base64;
 
 import com.github.duplicates.DuplicateProvider;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.database.Cursor.FIELD_TYPE_BLOB;
+import static android.database.Cursor.FIELD_TYPE_FLOAT;
+import static android.database.Cursor.FIELD_TYPE_INTEGER;
+import static android.database.Cursor.FIELD_TYPE_NULL;
 import static android.provider.BaseColumns._ID;
 import static android.provider.ContactsContract.CommonDataKinds.Email;
 import static android.provider.ContactsContract.CommonDataKinds.Event;
@@ -216,24 +221,40 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
         data.setId(cursor.getLong(INDEX_ID));
         data.setContactId(cursor.getLong(INDEX_CONTACT_ID));
         data.setRawContactId(cursor.getLong(INDEX_RAW_CONTACT_ID));
-        data.setData1(cursor.getString(INDEX_DATA1));
-        data.setData2(cursor.getString(INDEX_DATA2));
-        data.setData3(cursor.getString(INDEX_DATA3));
-        data.setData4(cursor.getString(INDEX_DATA4));
-        data.setData5(cursor.getString(INDEX_DATA5));
-        data.setData6(cursor.getString(INDEX_DATA6));
-        data.setData7(cursor.getString(INDEX_DATA7));
-        data.setData8(cursor.getString(INDEX_DATA8));
-        data.setData9(cursor.getString(INDEX_DATA9));
-        data.setData10(cursor.getString(INDEX_DATA10));
-        data.setData11(cursor.getString(INDEX_DATA11));
-        data.setData12(cursor.getString(INDEX_DATA12));
-        data.setData13(cursor.getString(INDEX_DATA13));
-        data.setData14(cursor.getString(INDEX_DATA14));
-        data.setData15(cursor.getString(INDEX_DATA15));
+        data.setData1(toString(cursor, INDEX_DATA1));
+        data.setData2(toString(cursor, INDEX_DATA2));
+        data.setData3(toString(cursor, INDEX_DATA3));
+        data.setData4(toString(cursor, INDEX_DATA4));
+        data.setData5(toString(cursor, INDEX_DATA5));
+        data.setData6(toString(cursor, INDEX_DATA6));
+        data.setData7(toString(cursor, INDEX_DATA7));
+        data.setData8(toString(cursor, INDEX_DATA8));
+        data.setData9(toString(cursor, INDEX_DATA9));
+        data.setData10(toString(cursor, INDEX_DATA10));
+        data.setData11(toString(cursor, INDEX_DATA11));
+        data.setData12(toString(cursor, INDEX_DATA12));
+        data.setData13(toString(cursor, INDEX_DATA13));
+        data.setData14(toString(cursor, INDEX_DATA14));
+        data.setData15(toString(cursor, INDEX_DATA15));
         data.setDataVersion(cursor.getInt(INDEX_DATA_VERSION));
         if (data.getMimeType() == null) {
             data.setMimeType(cursor.getString(INDEX_MIME_TYPE));
+        }
+    }
+
+    protected String toString(Cursor cursor, int index) {
+        switch (cursor.getType(index)) {
+            case FIELD_TYPE_NULL:
+                return null;
+            case FIELD_TYPE_BLOB:
+                byte[] blob = cursor.getBlob(index);
+                return Base64.encodeToString(blob, Base64.DEFAULT);
+            case FIELD_TYPE_FLOAT:
+                return Float.toString(cursor.getFloat(index));
+            case FIELD_TYPE_INTEGER:
+                return Integer.toString(cursor.getInt(index));
+            default:
+                return cursor.getString(index);
         }
     }
 }
