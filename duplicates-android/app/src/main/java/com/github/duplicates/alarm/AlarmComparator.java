@@ -132,7 +132,10 @@ public class AlarmComparator extends DuplicateComparator<AlarmItem> {
     }
 
     @Override
-    public float match(boolean[] difference) {
+    public float match(AlarmItem lhs, AlarmItem rhs, boolean[] difference) {
+        if (difference == null) {
+            difference = difference(lhs, rhs);
+        }
         float match = 1f;
 
         if (difference[ALARM_TIME]) {

@@ -130,7 +130,10 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
     }
 
     @Override
-    public float match(boolean[] difference) {
+    public float match(MessageItem lhs, MessageItem rhs, boolean[] difference) {
+        if (difference == null) {
+            difference = difference(lhs, rhs);
+        }
         float match = 1f;
 
         if (difference[DATE]) {

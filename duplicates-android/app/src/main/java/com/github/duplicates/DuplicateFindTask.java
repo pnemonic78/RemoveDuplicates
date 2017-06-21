@@ -99,7 +99,7 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
         for (int i = size - 1; i >= 0; i--) {
             item1 = items.get(i);
             difference = comparator.difference(item1, item);
-            match = comparator.match(difference);
+            match = comparator.match(item1, item, difference);
             if ((match >= MATCH_GOOD) && (match > bestMatch)) {
                 bestMatch = match;
                 bestDifference = difference;

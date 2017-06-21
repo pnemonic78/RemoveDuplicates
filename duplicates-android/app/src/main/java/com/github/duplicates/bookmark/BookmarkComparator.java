@@ -80,7 +80,10 @@ public class BookmarkComparator extends DuplicateComparator<BookmarkItem> {
     }
 
     @Override
-    public float match(boolean[] difference) {
+    public float match(BookmarkItem lhs, BookmarkItem rhs, boolean[] difference) {
+        if (difference == null) {
+            difference = difference(lhs, rhs);
+        }
         float match = 1f;
 
         if (difference[URL]) {

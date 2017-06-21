@@ -76,7 +76,10 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
     }
 
     @Override
-    public float match(boolean[] difference) {
+    public float match(CalendarItem lhs, CalendarItem rhs, boolean[] difference) {
+        if (difference == null) {
+            difference = difference(lhs, rhs);
+        }
         float match = 1f;
 
         if (difference[TITLE]) {

@@ -78,7 +78,10 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
     }
 
     @Override
-    public float match(boolean[] difference) {
+    public float match(ContactItem lhs, ContactItem rhs, boolean[] difference) {
+        if (difference == null) {
+            difference = difference(lhs, rhs);
+        }
         float match = 1f;
 
         if (difference[EMAIL]) {
@@ -102,7 +105,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
 
     public static int compareData(Collection<? extends ContactData> lhs, Collection<? extends ContactData> rhs) {
         if (lhs.isEmpty()) {
-            return (rhs.isEmpty()) ? SAME : RHS;
+            return rhs.isEmpty() ? SAME : RHS;
         }
         if (rhs.isEmpty()) {
             return LHS;
