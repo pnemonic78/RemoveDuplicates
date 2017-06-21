@@ -206,7 +206,16 @@ public class ContactData {
     }
 
     @Override
+    public int hashCode() {
+        return (int) getId();
+    }
+
+    @Override
     public String toString() {
         return getData1();
+    }
+
+    public boolean isEmpty() {
+        return getData1() == null;
     }
 }

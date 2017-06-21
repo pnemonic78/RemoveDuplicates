@@ -17,9 +17,9 @@
  */
 package com.github.duplicates.contact;
 
-import android.text.format.DateUtils;
-
 import com.github.duplicates.DuplicateComparator;
+
+import java.util.Collection;
 
 /**
  * Compare duplicate contacts.
@@ -28,78 +28,33 @@ import com.github.duplicates.DuplicateComparator;
  */
 public class ContactComparator extends DuplicateComparator<ContactItem> {
 
-    public static final int TYPE = 0;
-    public static final int DATE = 1;
-    public static final int DATE_SENT = 2;
-    public static final int ADDRESS = 3;
-    public static final int PERSON = 4;
-    public static final int BODY = 5;
-    public static final int SUBJECT = 6;
-    public static final int THREAD_ID = 7;
-    public static final int STATUS = 8;
-    public static final int ERROR_CODE = 9;
-    public static final int LOCKED = 10;
-    public static final int PROTOCOL = 11;
-    public static final int READ = 12;
-    public static final int SEEN = 13;
+    public static final int EMAIL = 0;
+    public static final int EVENT = 1;
+    public static final int IM = 2;
+    public static final int NAME = 3;
+    public static final int PHONE = 4;
 
     @Override
     public int compare(ContactItem lhs, ContactItem rhs) {
         int c;
 
-        c = compare(lhs.getType(), rhs.getType());
+        c = compare(lhs.getEmails(), rhs.getEmails());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getDateReceived(), rhs.getDateReceived());
+        c = compare(lhs.getEvents(), rhs.getEvents());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getDateSent(), rhs.getDateSent());
+        c = compare(lhs.getIms(), rhs.getIms());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getAddress(), rhs.getAddress());
+        c = compare(lhs.getPhones(), rhs.getPhones());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getPerson(), rhs.getPerson());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.getBody(), rhs.getBody());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.getSubject(), rhs.getSubject());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.getThreadId(), rhs.getThreadId());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.getStatus(), rhs.getStatus());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.getErrorCode(), rhs.getErrorCode());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.isLocked(), rhs.isLocked());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.getProtocol(), rhs.getProtocol());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.isRead(), rhs.isRead());
-        if (c != SAME) {
-            return c;
-        }
-        c = compare(lhs.isSeen(), rhs.isSeen());
+        c = compare(lhs.getNames(), rhs.getNames());
         if (c != SAME) {
             return c;
         }
@@ -109,22 +64,13 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
 
     @Override
     public boolean[] difference(ContactItem lhs, ContactItem rhs) {
-        boolean[] result = new boolean[14];
+        boolean[] result = new boolean[5];
 
-        result[ADDRESS] = compare(lhs.getAddress(), rhs.getAddress()) != SAME;
-        result[BODY] = compare(lhs.getBody(), rhs.getBody()) != SAME;
-        result[DATE] = Math.abs(compare(lhs.getDateReceived(), rhs.getDateReceived())) <= DateUtils.SECOND_IN_MILLIS;
-        result[DATE_SENT] = compare(lhs.getDateSent(), rhs.getDateSent()) != SAME;
-        result[ERROR_CODE] = compare(lhs.getErrorCode(), rhs.getErrorCode()) != SAME;
-        result[LOCKED] = compare(lhs.isLocked(), rhs.isLocked()) != SAME;
-        result[PERSON] = compare(lhs.getPerson(), rhs.getPerson()) != SAME;
-        result[PROTOCOL] = compare(lhs.getProtocol(), rhs.getProtocol()) != SAME;
-        result[READ] = compare(lhs.isRead(), rhs.isRead()) != SAME;
-        result[SEEN] = compare(lhs.isSeen(), rhs.isSeen()) != SAME;
-        result[STATUS] = compare(lhs.getStatus(), rhs.getStatus()) != SAME;
-        result[SUBJECT] = compare(lhs.getSubject(), rhs.getSubject()) != SAME;
-        result[THREAD_ID] = compare(lhs.getThreadId(), rhs.getThreadId()) != SAME;
-        result[TYPE] = compare(lhs.getType(), rhs.getType()) != SAME;
+        result[EMAIL] = compare(lhs.getEmails(), rhs.getEmails()) != SAME;
+        result[EVENT] = compare(lhs.getEvents(), rhs.getEvents()) != SAME;
+        result[IM] = compare(lhs.getIms(), rhs.getIms()) != SAME;
+        result[NAME] = compare(lhs.getNames(), rhs.getNames()) != SAME;
+        result[PHONE] = compare(lhs.getPhones(), rhs.getPhones()) != SAME;
 
         return result;
     }
@@ -133,52 +79,26 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
     public float match(boolean[] difference) {
         float match = 1f;
 
-        if (difference[DATE]) {
-            match *= 0.7f;
+        if (difference[EMAIL]) {
+            match *= 0.85f;
         }
-
-        if (difference[TYPE]) {
-            match *= 0.8f;
+        if (difference[EVENT]) {
+            match *= 0.85f;
         }
-        if (difference[DATE_SENT]) {
-            match *= 0.8f;
+        if (difference[IM]) {
+            match *= 0.85f;
         }
-        if (difference[ADDRESS]) {
-            match *= 0.8f;
+        if (difference[NAME]) {
+            match *= 0.85f;
         }
-        if (difference[PERSON]) {
-            match *= 0.8f;
-        }
-        if (difference[BODY]) {
-            match *= 0.8f;
-        }
-
-        if (difference[SUBJECT]) {
-            match *= 0.9f;
-        }
-        if (difference[THREAD_ID]) {
-            match *= 0.9f;
-        }
-
-        if (difference[STATUS]) {
-            match *= 0.95f;
-        }
-        if (difference[ERROR_CODE]) {
-            match *= 0.95f;
-        }
-        if (difference[LOCKED]) {
-            match *= 0.95f;
-        }
-        if (difference[PROTOCOL]) {
-            match *= 0.95f;
-        }
-        if (difference[READ]) {
-            match *= 0.95f;
-        }
-        if (difference[SEEN]) {
-            match *= 0.95f;
+        if (difference[PHONE]) {
+            match *= 0.85f;
         }
 
         return match;
+    }
+
+    public static int compare(Collection<? extends ContactData> lhs, Collection<? extends ContactData> rhs) {
+        return lhs.size() - rhs.size();
     }
 }

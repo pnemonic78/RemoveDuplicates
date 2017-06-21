@@ -58,4 +58,14 @@ public class PhotoData extends ContactData {
         }
         return photo;
     }
+
+    @Override
+    public String toString() {
+        return getData15();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return getData15() == null;
+    }
 }

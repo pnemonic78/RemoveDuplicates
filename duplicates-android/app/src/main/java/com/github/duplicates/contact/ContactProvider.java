@@ -171,32 +171,44 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
             case Email.CONTENT_ITEM_TYPE:
                 data = new EmailData();
                 populateItemData(cursor, data);
-                item.getEmails().add((EmailData) data);
+                if (!data.isEmpty()) {
+                    item.getEmails().add((EmailData) data);
+                }
                 break;
             case Event.CONTENT_ITEM_TYPE:
                 data = new EventData();
                 populateItemData(cursor, data);
-                item.getEvents().add((EventData) data);
+                if (!data.isEmpty()) {
+                    item.getEvents().add((EventData) data);
+                }
                 break;
             case Im.CONTENT_ITEM_TYPE:
                 data = new ImData();
                 populateItemData(cursor, data);
-                item.getIms().add((ImData) data);
+                if (!data.isEmpty()) {
+                    item.getIms().add((ImData) data);
+                }
                 break;
             case Phone.CONTENT_ITEM_TYPE:
                 data = new PhoneData();
                 populateItemData(cursor, data);
-                item.getPhones().add((PhoneData) data);
+                if (!data.isEmpty()) {
+                    item.getPhones().add((PhoneData) data);
+                }
                 break;
             case Photo.CONTENT_ITEM_TYPE:
                 data = new PhotoData();
                 populateItemData(cursor, data);
-                item.getPhotos().add((PhotoData) data);
+                if (!data.isEmpty()) {
+                    item.getPhotos().add((PhotoData) data);
+                }
                 break;
             case StructuredName.CONTENT_ITEM_TYPE:
                 data = new StructuredNameData();
                 populateItemData(cursor, data);
-                item.getNames().add((StructuredNameData) data);
+                if (!data.isEmpty()) {
+                    item.getNames().add((StructuredNameData) data);
+                }
                 break;
         }
     }

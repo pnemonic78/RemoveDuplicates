@@ -27,11 +27,19 @@ import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.github.duplicates.contact.ContactComparator.EMAIL;
+import static com.github.duplicates.contact.ContactComparator.EVENT;
+import static com.github.duplicates.contact.ContactComparator.IM;
+import static com.github.duplicates.contact.ContactComparator.NAME;
+import static com.github.duplicates.contact.ContactComparator.PHONE;
 
 /**
  * View holder of a duplicate contact.
@@ -111,7 +119,6 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
             icon2.setImageURI(item.getPhotoThumbnailUri());
         }
         name2.setText(item.getDisplayName());
-        name2.setText(item.getDisplayName());
         email2.setText(formatData(item.getEmails()));
         event2.setText(formatData(item.getEvents()));
         im2.setText(formatData(item.getIms()));
@@ -122,10 +129,11 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
     protected void bindDifference(Context context, DuplicateItemPair<ContactItem> pair) {
         boolean[] difference = pair.getDifference();
 
-//        bindDifference(context, date1, date2, difference[DATE]);
-//        bindDifference(context, address1, address2, difference[ADDRESS]);
-//        bindDifference(context, type1, type2, difference[TYPE]);
-//        bindDifference(context, body1, body2, difference[BODY]);
+        bindDifference(context, name1, name2, difference[NAME]);
+        bindDifference(context, email1, email2, difference[EMAIL]);
+        bindDifference(context, event1, event2, difference[EVENT]);
+        bindDifference(context, im1, im2, difference[IM]);
+        bindDifference(context, phone1, phone2, difference[PHONE]);
     }
 
     @OnClick(R.id.checkbox1)
@@ -142,17 +150,20 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
         }
     }
 
-    protected CharSequence formatData(List<? extends ContactData> data) {
-        final int size = data.size();
-        if (size == 0) {
+    protected CharSequence formatData(Collection<? extends ContactData> data) {
+        if (data.isEmpty()) {
             return null;
         }
+        Set<String> unique = new HashSet<>(data.size());
+        for (ContactData datum : data) {
+            unique.add(datum.toString());
+        }
         StringBuilder s = new StringBuilder();
-        ContactData datum = data.get(0);
-        s.append(datum.toString());
-        for (int i = 1; i < size; i++) {
-            s.append("; ");
-            s.append(datum.toString());
+        for (String u : unique) {
+            if (s.length() > 0) {
+                s.append("; ");
+            }
+            s.append(u);
         }
         return s;
     }

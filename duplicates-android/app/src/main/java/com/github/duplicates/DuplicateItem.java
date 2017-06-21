@@ -17,6 +17,8 @@
  */
 package com.github.duplicates;
 
+import static com.github.duplicates.DuplicateComparator.compare;
+
 /**
  * Item that is a duplicate of some other item.
  *
@@ -45,6 +47,11 @@ public abstract class DuplicateItem implements Comparable<DuplicateItem> {
 
     @Override
     public int compareTo(DuplicateItem another) {
-        return DuplicateComparator.compare(this.getId(), another.getId());
+        return compare(this.getId(), another.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) getId();
     }
 }
