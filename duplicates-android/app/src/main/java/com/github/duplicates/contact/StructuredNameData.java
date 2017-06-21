@@ -65,4 +65,9 @@ public class StructuredNameData extends ContactData {
     public String getPhoneticFamilyName() {
         return getData9();
     }
+
+    @Override
+    public String toString() {
+        return getDisplayName();
+    }
 }

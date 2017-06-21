@@ -204,4 +204,9 @@ public class ContactData {
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
     }
+
+    @Override
+    public String toString() {
+        return getData1();
+    }
 }

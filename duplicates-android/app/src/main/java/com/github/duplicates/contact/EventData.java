@@ -17,6 +17,8 @@
  */
 package com.github.duplicates.contact;
 
+import android.text.TextUtils;
+
 import static android.provider.ContactsContract.CommonDataKinds.Event;
 
 /**
@@ -40,5 +42,10 @@ public class EventData extends ContactData {
 
     public String getLabel() {
         return getData3();
+    }
+
+    @Override
+    public String toString() {
+        return getStartDate() + (TextUtils.isEmpty(getLabel()) ? "" : " " + getLabel());
     }
 }

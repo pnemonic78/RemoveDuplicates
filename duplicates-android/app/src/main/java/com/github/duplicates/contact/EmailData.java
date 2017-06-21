@@ -41,4 +41,9 @@ public class EmailData extends ContactData {
     public String getLabel() {
         return getData3();
     }
+
+    @Override
+    public String toString() {
+        return getAddress();
+    }
 }

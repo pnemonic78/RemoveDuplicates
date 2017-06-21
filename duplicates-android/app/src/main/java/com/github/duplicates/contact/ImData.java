@@ -17,6 +17,8 @@
  */
 package com.github.duplicates.contact;
 
+import android.text.TextUtils;
+
 import static android.provider.ContactsContract.CommonDataKinds.Im;
 
 /**
@@ -44,5 +46,10 @@ public class ImData extends ContactData {
 
     public String getProtocol() {
         return getData5();
+    }
+
+    @Override
+    public String toString() {
+        return getData() + (TextUtils.isEmpty(getLabel()) ? "" : " " + getLabel());
     }
 }
