@@ -137,11 +137,14 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
 
     @Override
     public ContactItem createItem(Cursor cursor) {
-        ContactItem item = contacts.get(cursor.getLong(INDEX_CONTACT_ID));
+        Long id = cursor.getLong(INDEX_CONTACT_ID);
+        ContactItem item = contacts.get(id);
         if (item != null) {
             return item;
         }
-        return new ContactItem();
+        item = new ContactItem();
+        contacts.put(id, item);
+        return item;
     }
 
     @Override
