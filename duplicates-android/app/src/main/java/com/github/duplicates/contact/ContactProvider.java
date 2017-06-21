@@ -25,10 +25,15 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Base64;
 
+import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateProvider;
+import com.github.duplicates.DuplicateProviderListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 
 import static android.database.Cursor.FIELD_TYPE_BLOB;
 import static android.database.Cursor.FIELD_TYPE_FLOAT;
@@ -210,6 +215,49 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
                     item.getNames().add((StructuredNameData) data);
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void fetchItems() throws CancellationException {
+        DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>> listener = getListener();
+        final List<ContactItem> items = new ArrayList<>();
+        setListener(new DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>>() {
+            @Override
+            public void onItemFetched(DuplicateProvider<ContactItem> provider, int count, ContactItem item) {
+                final int size = items.size();
+
+                // Maybe the item already exists in the list?
+                ContactItem item1;
+                for (int i = size - 1; i >= 0; i--) {
+                    item1 = items.get(i);
+                    if (item == item1) {
+                        return;
+                    }
+                }
+
+                items.add(item);
+            }
+
+            @Override
+            public void onItemDeleted(DuplicateProvider<ContactItem> provider, int count, ContactItem item) {
+            }
+
+            @Override
+            public void onPairDeleted(DuplicateProvider<ContactItem> provider, int count, DuplicateItemPair<ContactItem> pair) {
+            }
+        });
+        super.fetchItems();
+        setListener(listener);
+
+        if (isCancelled()) {
+            return;
+        }
+
+        // Now that we have all the items, we can match them.
+        final int size = items.size();
+        for (int i = 0; i < size; i++) {
+            listener.onItemFetched(this, i, items.get(i));
         }
     }
 

@@ -52,11 +52,11 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         if (c != SAME) {
             return c;
         }
-        c = compareData(lhs.getPhones(), rhs.getPhones());
+        c = compareData(lhs.getNames(), rhs.getNames());
         if (c != SAME) {
             return c;
         }
-        c = compareData(lhs.getNames(), rhs.getNames());
+        c = compareData(lhs.getPhones(), rhs.getPhones());
         if (c != SAME) {
             return c;
         }

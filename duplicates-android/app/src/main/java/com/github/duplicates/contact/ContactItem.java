@@ -141,4 +141,9 @@ public class ContactItem extends MessageItem {
     public void setNames(List<StructuredNameData> names) {
         this.names = names;
     }
+
+    @Override
+    public String toString() {
+        return Long.toString(getId()) + ": " + getDisplayName();
+    }
 }

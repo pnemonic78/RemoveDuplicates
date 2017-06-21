@@ -77,7 +77,16 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
 
     @Override
     public void onItemFetched(DuplicateProvider<T> provider, int count, T item) {
-        int size = items.size();
+        final int size = items.size();
+
+        // Maybe the item already exists in the list?
+        T item1;
+        for (int i = size - 1; i >= 0; i--) {
+            item1 = items.get(i);
+            if (item == item1) {
+                return;
+            }
+        }
 
         // Is it a duplicate?
         float bestMatch = 0f;
@@ -85,15 +94,6 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
         boolean[] bestDifference = null;
         boolean[] difference;
         float match;
-        T item1;
-
-        // Maybe the item already exists in the list?
-        for (int i = size - 1; i >= 0; i--) {
-            item1 = items.get(i);
-            if (item == item1) {
-                return;
-            }
-        }
 
         // Most likely that a matching item is a neighbour, so count backwards.
         for (int i = size - 1; i >= 0; i--) {
