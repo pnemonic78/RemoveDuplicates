@@ -86,7 +86,7 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
     }
 
     @Override
-    public CallLogItem createItem() {
+    public CallLogItem createItem(Cursor cursor) {
         return new CallLogItem();
     }
 

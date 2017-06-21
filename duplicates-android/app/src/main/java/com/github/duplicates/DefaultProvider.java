@@ -38,7 +38,7 @@ public class DefaultProvider<T extends DuplicateItem> extends DuplicateProvider<
     }
 
     @Override
-    public T createItem() {
+    public T createItem(Cursor cursor) {
         return null;
     }
 

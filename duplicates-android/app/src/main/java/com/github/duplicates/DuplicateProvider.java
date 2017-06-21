@@ -65,7 +65,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         return null;
     }
 
-    public abstract T createItem();
+    public abstract T createItem(Cursor cursor);
 
     public abstract void populateItem(Cursor cursor, T item);
 
@@ -91,7 +91,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
                     if (isCancelled()) {
                         break;
                     }
-                    item = createItem();
+                    item = createItem(cursor);
                     populateItem(cursor, item);
                     items.add(item);
                 } while (cursor.moveToNext());
@@ -132,7 +132,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
                     if (isCancelled()) {
                         break;
                     }
-                    item = createItem();
+                    item = createItem(cursor);
                     populateItem(cursor, item);
                     listener.onItemFetched(this, ++count, item);
                 } while (cursor.moveToNext());

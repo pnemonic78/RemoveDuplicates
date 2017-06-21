@@ -134,7 +134,7 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
     }
 
     @Override
-    public CalendarItem createItem() {
+    public CalendarItem createItem(Cursor cursor) {
         return new CalendarItem();
     }
 

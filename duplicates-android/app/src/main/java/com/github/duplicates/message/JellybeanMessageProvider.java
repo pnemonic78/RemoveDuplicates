@@ -85,7 +85,7 @@ public class JellybeanMessageProvider extends DuplicateProvider<MessageItem> {
     }
 
     @Override
-    public MessageItem createItem() {
+    public MessageItem createItem(Cursor cursor) {
         return new MessageItem();
     }
 

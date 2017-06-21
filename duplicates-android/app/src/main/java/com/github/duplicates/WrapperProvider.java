@@ -65,8 +65,8 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
     }
 
     @Override
-    public T createItem() {
-        return delegate.createItem();
+    public T createItem(Cursor cursor) {
+        return delegate.createItem(cursor);
     }
 
     @Override

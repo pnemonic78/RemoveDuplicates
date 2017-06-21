@@ -110,7 +110,7 @@ public class SamsungAlarmProvider extends DuplicateProvider<AlarmItem> {
     }
 
     @Override
-    public AlarmItem createItem() {
+    public AlarmItem createItem(Cursor cursor) {
         return new AlarmItem();
     }
 

@@ -34,7 +34,6 @@ public class ContactItem extends MessageItem {
 
     private String lookup;
     private String displayName;
-    private Uri photoUri;
     private Uri photoThumbnailUri;
     private List<EmailData> emails;
     private List<EventData> events;
@@ -59,14 +58,6 @@ public class ContactItem extends MessageItem {
         this.displayName = displayName;
     }
 
-    public Uri getPhotoUri() {
-        return photoUri;
-    }
-
-    public void setPhotoUri(Uri photoUri) {
-        this.photoUri = photoUri;
-    }
-
     public Uri getPhotoThumbnailUri() {
         return photoThumbnailUri;
     }
@@ -75,7 +66,15 @@ public class ContactItem extends MessageItem {
         this.photoThumbnailUri = photoThumbnailUri;
     }
 
+    public void setPhotoThumbnailUri(String photoThumbnailPath) {
+        setPhotoThumbnailUri(photoThumbnailPath != null ? Uri.parse(photoThumbnailPath) : null);
+    }
+
+    @NonNull
     public List<EmailData> getEmails() {
+        if (emails == null) {
+            emails = new ArrayList<>();
+        }
         return emails;
     }
 
@@ -85,6 +84,9 @@ public class ContactItem extends MessageItem {
 
     @NonNull
     public List<EventData> getEvents() {
+        if (events == null) {
+            events = new ArrayList<>();
+        }
         return events;
     }
 

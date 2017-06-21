@@ -82,7 +82,7 @@ public class BookmarkProvider extends DuplicateProvider<BookmarkItem> {
     }
 
     @Override
-    public BookmarkItem createItem() {
+    public BookmarkItem createItem(Cursor cursor) {
         return new BookmarkItem();
     }
 
