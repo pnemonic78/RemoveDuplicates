@@ -20,8 +20,11 @@ package com.github.duplicates;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Comparator to determine if it is a duplicate.
@@ -78,7 +81,10 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     }
 
     public static <T extends Comparable<T>> int compare(T lhs, T rhs) {
-        return (lhs == null) ? ((rhs == null) ? SAME : RHS) : ((rhs == null) ? LHS : lhs.compareTo(rhs));
+        if (lhs == rhs) {
+            return SAME;
+        }
+        return (lhs == null) ? RHS : ((rhs == null) ? LHS : lhs.compareTo(rhs));
     }
 
     public static int compare(boolean lhs, boolean rhs) {
@@ -86,8 +92,11 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     }
 
     public static int compare(byte[] lhs, byte[] rhs) {
+        if (lhs == rhs) {
+            return SAME;
+        }
         if (lhs == null) {
-            return (rhs == null) ? SAME : RHS;
+            return RHS;
         }
         if (rhs == null) {
             return LHS;
@@ -102,8 +111,11 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     }
 
     public static int compare(Bitmap lhs, Bitmap rhs) {
+        if (lhs == rhs) {
+            return SAME;
+        }
         if (lhs == null) {
-            return (rhs == null) ? SAME : RHS;
+            return RHS;
         }
         if (rhs == null) {
             return LHS;
@@ -124,8 +136,11 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     }
 
     public static int compare(Uri lhs, Uri rhs) {
+        if (lhs == rhs) {
+            return SAME;
+        }
         if (lhs == null) {
-            return (rhs == null) ? SAME : RHS;
+            return RHS;
         }
         if (rhs == null) {
             return LHS;
@@ -139,5 +154,31 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
             s2 = s2.substring(0, s2.length() - 1);
         }
         return s1.compareTo(s2);
+    }
+
+    public static <C extends Comparable> int compare(Collection<? extends C> lhs, Collection<? extends C> rhs) {
+        if (lhs == rhs) {
+            return SAME;
+        }
+        if (lhs == null) {
+            return RHS;
+        }
+        if (rhs == null) {
+            return LHS;
+        }
+        int c = lhs.size() - rhs.size();
+        if (c != 0) {
+            return c;
+        }
+        final int size = lhs.size();
+        List<C> l1 = (lhs instanceof List) ? ((List<C>) lhs) : new ArrayList<>(lhs);
+        List<C> l2 = (rhs instanceof List) ? ((List<C>) rhs) : new ArrayList<>(rhs);
+        for (int i = 0; i < size; i++) {
+            c = compare(l1.get(i), l2.get(i));
+            if (c != 0) {
+                return c;
+            }
+        }
+        return 0;
     }
 }

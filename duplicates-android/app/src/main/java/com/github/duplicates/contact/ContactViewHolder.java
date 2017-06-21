@@ -129,10 +129,10 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
     protected void bindDifference(Context context, DuplicateItemPair<ContactItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, name1, name2, difference[NAME]);
         bindDifference(context, email1, email2, difference[EMAIL]);
         bindDifference(context, event1, event2, difference[EVENT]);
         bindDifference(context, im1, im2, difference[IM]);
+        bindDifference(context, name1, name2, difference[NAME]);
         bindDifference(context, phone1, phone2, difference[PHONE]);
     }
 

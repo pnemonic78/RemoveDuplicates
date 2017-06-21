@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/name1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             tools:text="@string/dummy_text"/>
@@ -97,7 +97,7 @@
 
         <TextView
             android:id="@+id/name2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             tools:text="@string/dummy_text"/>
