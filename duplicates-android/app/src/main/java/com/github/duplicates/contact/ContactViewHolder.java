@@ -103,7 +103,7 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
     protected void bindItem1(Context context, ContactItem item) {
         checkbox1.setChecked(item.isChecked());
         if (item.getPhotoThumbnailUri() == null) {
-            icon1.setImageResource(R.drawable.ic_contact_blank);
+            icon1.setImageResource(R.drawable.ic_contact_picture);
         } else {
             icon1.setImageURI(item.getPhotoThumbnailUri());
         }
@@ -119,7 +119,7 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
     protected void bindItem2(Context context, ContactItem item) {
         checkbox2.setChecked(item.isChecked());
         if (item.getPhotoThumbnailUri() == null) {
-            icon2.setImageResource(R.drawable.ic_contact_blank);
+            icon2.setImageResource(R.drawable.ic_contact_picture);
         } else {
             icon2.setImageURI(item.getPhotoThumbnailUri());
         }
