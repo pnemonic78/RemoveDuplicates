@@ -37,6 +37,8 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     protected static final int LHS = +1;
     protected static final int RHS = -1;
 
+    public static final float MATCH_SAME = 1f;
+
     @Override
     public int compare(T lhs, T rhs) {
         return compare(lhs.getId(), rhs.getId());
@@ -66,7 +68,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
      *
      * @param lhs the first item.
      * @param rhs the other item.
-     * @return the match as a percentage between {@code 0.0} (dissimilar) and {@code 1.0} (identical) inclusive.
+     * @return the match as a percentage between {@code 0.0} (dissimilar) and {@link #MATCH_SAME} (identical) inclusive.
      * @see #match(DuplicateItem, DuplicateItem, boolean[])
      * @see #difference(DuplicateItem, DuplicateItem)
      */
@@ -177,10 +179,10 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         List<C> l2 = (rhs instanceof List) ? ((List<C>) rhs) : new ArrayList<>(rhs);
         for (int i = 0; i < size; i++) {
             c = compare(l1.get(i), l2.get(i));
-            if (c != 0) {
+            if (c != SAME) {
                 return c;
             }
         }
-        return 0;
+        return SAME;
     }
 }

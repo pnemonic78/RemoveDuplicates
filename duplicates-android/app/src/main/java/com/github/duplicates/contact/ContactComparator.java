@@ -17,6 +17,8 @@
  */
 package com.github.duplicates.contact;
 
+import android.telephony.PhoneNumberUtils;
+
 import com.github.duplicates.DuplicateComparator;
 
 import java.util.Collection;
@@ -37,7 +39,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
     public static final int NAME = 3;
     public static final int PHONE = 4;
 
-    private static final float MATCH_DATA = 0.9f;
+    private static final float MATCH_DATA = 0.85f;
 
     @Override
     public int compare(ContactItem lhs, ContactItem rhs) {
@@ -85,7 +87,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         if (difference == null) {
             difference = difference(lhs, rhs);
         }
-        float match = 1f;
+        float match = MATCH_SAME;
 
         if (difference[EMAIL]) {
             match *= matchEmails(lhs.getEmails(), rhs.getEmails());
@@ -126,7 +128,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
 
     protected float matchData(List<? extends ContactData> lhs, List<? extends ContactData> rhs) {
         if (lhs.isEmpty()) {
-            return rhs.isEmpty() ? 1f : MATCH_DATA;
+            return rhs.isEmpty() ? MATCH_SAME : MATCH_DATA;
         }
         if (rhs.isEmpty()) {
             return MATCH_DATA;
@@ -143,15 +145,62 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
     }
 
     protected float matchEmails(List<EmailData> lhs, List<EmailData> rhs) {
-        return matchData(lhs, rhs);
+        if (lhs.isEmpty()) {
+            return rhs.isEmpty() ? MATCH_SAME : MATCH_DATA;
+        }
+        if (rhs.isEmpty()) {
+            return MATCH_DATA;
+        }
+        String s1;
+        for (EmailData d1 : lhs) {
+            s1 = d1.getAddress();
+            for (EmailData d2 : rhs) {
+                if (compare(s1, d2.getAddress()) == SAME) {
+                    return MATCH_SAME;
+                }
+            }
+        }
+        return MATCH_DATA;
     }
 
     protected float matchEvents(List<EventData> lhs, List<EventData> rhs) {
-        return matchData(lhs, rhs);
+        if (lhs.isEmpty()) {
+            return rhs.isEmpty() ? MATCH_SAME : MATCH_DATA;
+        }
+        if (rhs.isEmpty()) {
+            return MATCH_DATA;
+        }
+        String s1;
+        int t1;
+        for (EventData d1 : lhs) {
+            s1 = d1.getStartDate();
+            t1 = d1.getType();
+            for (EventData d2 : rhs) {
+                if ((compare(s1, d2.getStartDate()) == SAME) && (compare(t1, d2.getType()) == SAME)) {
+                    return MATCH_SAME;
+                }
+            }
+        }
+        return MATCH_DATA;
     }
 
     protected float matchIms(List<ImData> lhs, List<ImData> rhs) {
-        return matchData(lhs, rhs);
+        if (lhs.isEmpty()) {
+            return rhs.isEmpty() ? MATCH_SAME : MATCH_DATA;
+        }
+        if (rhs.isEmpty()) {
+            return MATCH_DATA;
+        }
+        String s1;
+        for (ImData d1 : lhs) {
+            s1 = d1.getData();
+            for (ImData d2 : rhs) {
+                if (compare(s1, d2.getData()) == SAME) {
+                    return MATCH_SAME;
+                }
+            }
+        }
+        return MATCH_DATA;
     }
 
     protected float matchNames(List<StructuredNameData> lhs, List<StructuredNameData> rhs) {
@@ -159,6 +208,21 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
     }
 
     protected float matchPhones(List<PhoneData> lhs, List<PhoneData> rhs) {
-        return matchData(lhs, rhs);
+        if (lhs.isEmpty()) {
+            return rhs.isEmpty() ? MATCH_SAME : MATCH_DATA;
+        }
+        if (rhs.isEmpty()) {
+            return MATCH_DATA;
+        }
+        String s1;
+        for (PhoneData d1 : lhs) {
+            s1 = d1.getNumber();
+            for (PhoneData d2 : rhs) {
+                if (PhoneNumberUtils.compare(s1, d2.getNumber())) {
+                    return MATCH_SAME;
+                }
+            }
+        }
+        return MATCH_DATA;
     }
 }

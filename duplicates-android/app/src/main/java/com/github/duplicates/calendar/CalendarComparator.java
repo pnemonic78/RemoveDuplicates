@@ -80,7 +80,7 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
         if (difference == null) {
             difference = difference(lhs, rhs);
         }
-        float match = 1f;
+        float match = MATCH_SAME;
 
         if (difference[TITLE]) {
             match *= 0.8f;

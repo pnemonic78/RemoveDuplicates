@@ -136,7 +136,7 @@ public class AlarmComparator extends DuplicateComparator<AlarmItem> {
         if (difference == null) {
             difference = difference(lhs, rhs);
         }
-        float match = 1f;
+        float match = MATCH_SAME;
 
         if (difference[ALARM_TIME]) {
             match *= 0.7f;

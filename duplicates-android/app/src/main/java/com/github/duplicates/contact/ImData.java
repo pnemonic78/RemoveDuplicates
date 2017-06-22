@@ -44,8 +44,12 @@ public class ImData extends ContactData {
         return getData3();
     }
 
-    public String getProtocol() {
-        return getData5();
+    public int getProtocol() {
+        return Integer.parseInt(getData5());
+    }
+
+    public String getCustomProtocol() {
+        return getData6();
     }
 
     @Override

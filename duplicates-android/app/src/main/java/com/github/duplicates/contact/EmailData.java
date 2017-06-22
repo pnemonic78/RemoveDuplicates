@@ -30,6 +30,11 @@ public class EmailData extends ContactData {
         setMimeType(Email.CONTENT_ITEM_TYPE);
     }
 
+    @Override
+    public void setData1(String data1) {
+        super.setData1(data1 != null ? data1.toLowerCase() : data1);
+    }
+
     public String getAddress() {
         return getData1();
     }
