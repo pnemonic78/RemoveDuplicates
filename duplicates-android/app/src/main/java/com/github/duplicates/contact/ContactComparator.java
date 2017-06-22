@@ -18,6 +18,7 @@
 package com.github.duplicates.contact;
 
 import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
 
 import com.github.duplicates.DuplicateComparator;
 
@@ -204,7 +205,56 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
     }
 
     protected float matchNames(List<StructuredNameData> lhs, List<StructuredNameData> rhs) {
-        return matchData(lhs, rhs);
+        if (lhs.isEmpty()) {
+            return rhs.isEmpty() ? MATCH_SAME : MATCH_DATA;
+        }
+        if (rhs.isEmpty()) {
+            return MATCH_DATA;
+        }
+        String s1, g1, m1, f1;
+        String g2, m2, f2;
+        boolean g1Empty, f1Empty;
+        boolean g2Empty, f2Empty;
+        for (StructuredNameData d1 : lhs) {
+            s1 = d1.getDisplayName();
+            g1 = d1.getGivenName();
+            g1Empty = TextUtils.isEmpty(g1);
+            m1 = d1.getMiddleName();
+            if (g1Empty) {
+                g1 = m1;
+                g1Empty = TextUtils.isEmpty(g1);
+            }
+            f1 = d1.getFamilyName();
+            f1Empty = TextUtils.isEmpty(f1);
+            for (StructuredNameData d2 : rhs) {
+                if (compare(s1, d2.getDisplayName()) == SAME) {
+                    return MATCH_SAME;
+                }
+                g2 = d2.getGivenName();
+                g2Empty = TextUtils.isEmpty(g2);
+                m2 = d2.getMiddleName();
+                if (g2Empty) {
+                    g2 = m2;
+                    g2Empty = TextUtils.isEmpty(g2);
+                }
+                f2 = d2.getFamilyName();
+                f2Empty = TextUtils.isEmpty(f2);
+                // if (g1 = g2 and f1 = f2) or (g1 = g2 and either f1 is empty or f2 is empty) or (f1 = f2 and either g1 is empty or g2 is empty)
+                if (compare(g1, g2) == SAME) {
+                    if (compare(f1, f2) == SAME) {
+                        return MATCH_SAME;
+                    }
+                    if (f1Empty || f2Empty) {
+                        return MATCH_SAME;
+                    }
+                } else if (compare(f1, f2) == SAME) {
+                    if (g1Empty || g2Empty) {
+                        return MATCH_SAME;
+                    }
+                }
+            }
+        }
+        return MATCH_DATA;
     }
 
     protected float matchPhones(List<PhoneData> lhs, List<PhoneData> rhs) {
