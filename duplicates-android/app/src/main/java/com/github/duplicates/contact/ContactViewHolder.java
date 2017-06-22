@@ -55,6 +55,8 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
     CheckBox checkbox1;
     @BindView(R.id.icon1)
     ImageView icon1;
+    @BindView(R.id.account1)
+    TextView account1;
     @BindView(R.id.name1)
     TextView name1;
     @BindView(R.id.email1)
@@ -70,6 +72,8 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
     CheckBox checkbox2;
     @BindView(R.id.icon2)
     ImageView icon2;
+    @BindView(R.id.account2)
+    TextView account2;
     @BindView(R.id.name2)
     TextView name2;
     @BindView(R.id.email2)
@@ -103,6 +107,7 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
         } else {
             icon1.setImageURI(item.getPhotoThumbnailUri());
         }
+        account1.setText(item.getAccountName());
         name1.setText(item.getDisplayName());
         email1.setText(formatData(item.getEmails()));
         event1.setText(formatData(item.getEvents()));
@@ -118,6 +123,7 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
         } else {
             icon2.setImageURI(item.getPhotoThumbnailUri());
         }
+        account2.setText(item.getAccountName());
         name2.setText(item.getDisplayName());
         email2.setText(formatData(item.getEmails()));
         event2.setText(formatData(item.getEvents()));

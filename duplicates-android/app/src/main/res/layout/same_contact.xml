@@ -43,6 +43,12 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/account1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/dummy_text"/>
+
+    <TextView
         android:id="@+id/phone1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -102,6 +108,12 @@
             android:layout_marginLeft="8dp"
             tools:text="@string/dummy_text"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/account2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/dummy_text"/>
 
     <TextView
         android:id="@+id/phone2"

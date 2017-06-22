@@ -33,6 +33,7 @@ import java.util.List;
 public class ContactItem extends MessageItem {
 
     private String lookup;
+    private String accountName;
     private String displayName;
     private Uri photoThumbnailUri;
     private List<EmailData> emails;
@@ -48,6 +49,14 @@ public class ContactItem extends MessageItem {
 
     public void setLookup(String lookup) {
         this.lookup = lookup;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public String getDisplayName() {

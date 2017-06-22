@@ -102,7 +102,8 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
             DATA14,
             DATA15,
             DATA_VERSION,
-            MIMETYPE
+            MIMETYPE,
+            "account_name"
     };
 
     private static final int INDEX_ID = 0;
@@ -128,6 +129,7 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
     private static final int INDEX_DATA15 = 20;
     private static final int INDEX_DATA_VERSION = 21;
     private static final int INDEX_MIME_TYPE = 22;
+    private static final int INDEX_ACCOUNT_NAME = 23;
 
     private final Map<Long, ContactItem> contacts = new HashMap<>();
 
@@ -166,6 +168,7 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
     @Override
     public void populateItem(Cursor cursor, ContactItem item) {
         item.setId(cursor.getLong(INDEX_CONTACT_ID));
+        item.setAccountName(cursor.getString(INDEX_ACCOUNT_NAME));
         item.setLookup(cursor.getString(INDEX_LOOKUP_KEY));
         item.setDisplayName(cursor.getString(INDEX_DISPLAY_NAME));
         item.setPhotoThumbnailUri(cursor.getString(INDEX_PHOTO_THUMBNAIL_URI));
