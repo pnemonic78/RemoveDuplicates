@@ -68,6 +68,7 @@ import static android.provider.ContactsContract.Data.LOOKUP_KEY;
 import static android.provider.ContactsContract.Data.MIMETYPE;
 import static android.provider.ContactsContract.Data.PHOTO_THUMBNAIL_URI;
 import static android.provider.ContactsContract.Data.RAW_CONTACT_ID;
+import static android.provider.ContactsContract.RawContacts.ACCOUNT_NAME;
 
 /**
  * Provide duplicate contacts.
@@ -103,7 +104,7 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
             DATA15,
             DATA_VERSION,
             MIMETYPE,
-            "account_name"
+            ACCOUNT_NAME
     };
 
     private static final int INDEX_ID = 0;
