@@ -18,7 +18,7 @@
 package com.github.duplicates;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -33,7 +33,7 @@ import java.text.NumberFormat;
  */
 public abstract class DuplicateViewHolder<T extends DuplicateItem> extends RecyclerView.ViewHolder {
 
-    protected final ColorDrawable colorDifferent;
+    protected final int colorDifferent;
     protected final NumberFormat percentFormatter = NumberFormat.getPercentInstance();
 
     protected T item1;
@@ -46,8 +46,9 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
 
     public DuplicateViewHolder(View itemView, OnItemCheckedChangeListener onCheckedChangeListener) {
         super(itemView);
+        Context context = itemView.getContext();
         this.onCheckedChangeListener = onCheckedChangeListener;
-        this.colorDifferent = new ColorDrawable(itemView.getContext().getResources().getColor(R.color.different));
+        this.colorDifferent = context.getResources().getColor(R.color.different);
     }
 
     /**
@@ -75,11 +76,11 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
 
     protected void bindDifference(View view1, View view2, boolean different) {
         if (different) {
-            view1.setBackgroundDrawable(colorDifferent);
-            view2.setBackgroundDrawable(colorDifferent);
+            view1.setBackgroundColor(colorDifferent);
+            view2.setBackgroundColor(colorDifferent);
         } else {
-            view1.setBackgroundDrawable(null);
-            view2.setBackgroundDrawable(null);
+            view1.setBackgroundColor(Color.TRANSPARENT);
+            view2.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
