@@ -37,15 +37,15 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
     public int compare(CalendarItem lhs, CalendarItem rhs) {
         int c;
 
-        c = compare(lhs.getTitle(), rhs.getTitle());
+        c = compareIgnoreCase(lhs.getTitle(), rhs.getTitle());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getDescription(), rhs.getDescription());
+        c = compareIgnoreCase(lhs.getDescription(), rhs.getDescription());
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getLocation(), rhs.getLocation());
+        c = compareIgnoreCase(lhs.getLocation(), rhs.getLocation());
         if (c != SAME) {
             return c;
         }
