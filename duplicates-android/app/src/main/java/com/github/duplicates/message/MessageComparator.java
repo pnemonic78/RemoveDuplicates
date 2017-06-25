@@ -111,7 +111,7 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
     public boolean[] difference(MessageItem lhs, MessageItem rhs) {
         boolean[] result = new boolean[14];
 
-        result[ADDRESS] = compare(lhs.getAddress(), rhs.getAddress()) != SAME;
+        result[ADDRESS] = compareIgnoreCase(lhs.getAddress(), rhs.getAddress()) != SAME;
         result[BODY] = compare(lhs.getBody(), rhs.getBody()) != SAME;
         result[DATE] = Math.abs(compare(lhs.getDateReceived(), rhs.getDateReceived())) <= DateUtils.SECOND_IN_MILLIS;
         result[DATE_SENT] = compare(lhs.getDateSent(), rhs.getDateSent()) != SAME;
@@ -122,7 +122,7 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
         result[READ] = compare(lhs.isRead(), rhs.isRead()) != SAME;
         result[SEEN] = compare(lhs.isSeen(), rhs.isSeen()) != SAME;
         result[STATUS] = compare(lhs.getStatus(), rhs.getStatus()) != SAME;
-        result[SUBJECT] = compare(lhs.getSubject(), rhs.getSubject()) != SAME;
+        result[SUBJECT] = compareIgnoreCase(lhs.getSubject(), rhs.getSubject()) != SAME;
         result[THREAD_ID] = compare(lhs.getThreadId(), rhs.getThreadId()) != SAME;
         result[TYPE] = compare(lhs.getType(), rhs.getType()) != SAME;
 

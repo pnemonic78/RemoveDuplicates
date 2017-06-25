@@ -17,6 +17,7 @@
  */
 package com.github.duplicates.call;
 
+import android.telephony.PhoneNumberUtils;
 import android.text.format.DateUtils;
 
 import com.github.duplicates.DuplicateComparator;
@@ -82,10 +83,10 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
         boolean[] result = new boolean[8];
 
         result[DATE] = Math.abs(compare(lhs.getDate(), rhs.getDate())) <= DateUtils.SECOND_IN_MILLIS;
-        result[DURATION] = compare(lhs.getDuration(), rhs.getDuration()) != SAME;
-        result[NAME] = compare(lhs.getName(), rhs.getName()) != SAME;
+        result[DURATION] = Math.abs(compare(lhs.getDuration(), rhs.getDuration())) <= DateUtils.SECOND_IN_MILLIS;
+        result[NAME] = compareIgnoreCase(lhs.getName(), rhs.getName()) != SAME;
         result[NEW] = compare(lhs.isNew(), rhs.isNew()) != SAME;
-        result[NUMBER] = compare(lhs.getNumber(), rhs.getNumber()) != SAME;
+        result[NUMBER] = !PhoneNumberUtils.compare(lhs.getNumber(), rhs.getNumber());
         result[NUMBER_TYPE] = compare(lhs.getNumberType(), rhs.getNumberType()) != SAME;
         result[READ] = compare(lhs.isRead(), rhs.isRead()) != SAME;
         result[TYPE] = compare(lhs.getType(), rhs.getType()) != SAME;
