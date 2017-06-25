@@ -36,6 +36,7 @@ import static android.provider.CalendarContract.Events.CALENDAR_COLOR;
 import static android.provider.CalendarContract.Events.CALENDAR_DISPLAY_NAME;
 import static android.provider.CalendarContract.Events.CALENDAR_ID;
 import static android.provider.CalendarContract.Events.CALENDAR_TIME_ZONE;
+import static android.provider.CalendarContract.Events.DELETED;
 import static android.provider.CalendarContract.Events.DESCRIPTION;
 import static android.provider.CalendarContract.Events.DTEND;
 import static android.provider.CalendarContract.Events.DTSTART;
@@ -131,6 +132,11 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
     @Override
     protected String[] getCursorProjection() {
         return PROJECTION;
+    }
+
+    @Override
+    protected String getCursorSelection() {
+        return DELETED + "=0";
     }
 
     @Override
