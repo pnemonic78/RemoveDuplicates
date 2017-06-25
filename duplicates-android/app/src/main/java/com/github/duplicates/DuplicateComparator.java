@@ -160,7 +160,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return s1.compareTo(s2);
     }
 
-    public static <C extends Comparable> int compare(Collection<? extends C> lhs, Collection<? extends C> rhs) {
+    public static <C extends Comparable<C>> int compare(Collection<? extends C> lhs, Collection<? extends C> rhs) {
         if (lhs == rhs) {
             return SAME;
         }
@@ -184,5 +184,12 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
             }
         }
         return SAME;
+    }
+
+    public static <T extends String> int compareIgnoreCase(T lhs, T rhs) {
+        if (lhs == rhs) {
+            return SAME;
+        }
+        return (lhs == null) ? RHS : ((rhs == null) ? LHS : lhs.compareToIgnoreCase(rhs));
     }
 }

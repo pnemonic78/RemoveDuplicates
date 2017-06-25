@@ -41,6 +41,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
     public static final int PHONE = 4;
 
     private static final float MATCH_DATA = 0.85f;
+    private static final float MATCH_NAME = 0.8f;
 
     @Override
     public int compare(ContactItem lhs, ContactItem rhs) {
@@ -127,24 +128,6 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         return compare(set1, set2);
     }
 
-    protected float matchData(List<? extends ContactData> lhs, List<? extends ContactData> rhs) {
-        if (lhs.isEmpty()) {
-            return rhs.isEmpty() ? MATCH_SAME : MATCH_DATA;
-        }
-        if (rhs.isEmpty()) {
-            return MATCH_DATA;
-        }
-        Set<String> set1 = new HashSet<>(lhs.size());
-        for (ContactData datum : lhs) {
-            set1.add(datum.toString().toLowerCase());
-        }
-        Set<String> set2 = new HashSet<>(rhs.size());
-        for (ContactData datum : rhs) {
-            set2.add(datum.toString().toLowerCase());
-        }
-        return MATCH_DATA;
-    }
-
     protected float matchEmails(List<EmailData> lhs, List<EmailData> rhs) {
         if (lhs.isEmpty()) {
             return rhs.isEmpty() ? MATCH_SAME : MATCH_DATA;
@@ -156,7 +139,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         for (EmailData d1 : lhs) {
             s1 = d1.getAddress();
             for (EmailData d2 : rhs) {
-                if (compare(s1, d2.getAddress()) == SAME) {
+                if (compareIgnoreCase(s1, d2.getAddress()) == SAME) {
                     return MATCH_SAME;
                 }
             }
@@ -196,7 +179,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         for (ImData d1 : lhs) {
             s1 = d1.getData();
             for (ImData d2 : rhs) {
-                if (compare(s1, d2.getData()) == SAME) {
+                if (compareIgnoreCase(s1, d2.getData()) == SAME) {
                     return MATCH_SAME;
                 }
             }
@@ -206,10 +189,10 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
 
     protected float matchNames(List<StructuredNameData> lhs, List<StructuredNameData> rhs) {
         if (lhs.isEmpty()) {
-            return rhs.isEmpty() ? MATCH_SAME : MATCH_DATA;
+            return rhs.isEmpty() ? MATCH_SAME : MATCH_NAME;
         }
         if (rhs.isEmpty()) {
-            return MATCH_DATA;
+            return MATCH_NAME;
         }
         String s1, g1, m1, f1;
         String g2, m2, f2;
@@ -227,7 +210,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
             f1 = d1.getFamilyName();
             f1Empty = TextUtils.isEmpty(f1);
             for (StructuredNameData d2 : rhs) {
-                if (compare(s1, d2.getDisplayName()) == SAME) {
+                if (compareIgnoreCase(s1, d2.getDisplayName()) == SAME) {
                     return MATCH_SAME;
                 }
                 g2 = d2.getGivenName();
@@ -240,21 +223,21 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
                 f2 = d2.getFamilyName();
                 f2Empty = TextUtils.isEmpty(f2);
                 // if (g1 = g2 and f1 = f2) or (g1 = g2 and either f1 is empty or f2 is empty) or (f1 = f2 and either g1 is empty or g2 is empty)
-                if (compare(g1, g2) == SAME) {
-                    if (compare(f1, f2) == SAME) {
+                if (compareIgnoreCase(g1, g2) == SAME) {
+                    if (compareIgnoreCase(f1, f2) == SAME) {
                         return MATCH_SAME;
                     }
                     if (f1Empty || f2Empty) {
                         return MATCH_SAME;
                     }
-                } else if (compare(f1, f2) == SAME) {
+                } else if (compareIgnoreCase(f1, f2) == SAME) {
                     if (g1Empty || g2Empty) {
                         return MATCH_SAME;
                     }
                 }
             }
         }
-        return MATCH_DATA;
+        return MATCH_NAME;
     }
 
     protected float matchPhones(List<PhoneData> lhs, List<PhoneData> rhs) {
