@@ -201,4 +201,8 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         }
         return PhoneNumberUtils.compare(lhs, rhs) ? SAME : c;
     }
+
+    public static int compareTime(long lhs, long rhs, long delta) {
+        return (Math.abs(lhs - rhs) <= delta) ? SAME : compare(lhs, rhs);
+    }
 }

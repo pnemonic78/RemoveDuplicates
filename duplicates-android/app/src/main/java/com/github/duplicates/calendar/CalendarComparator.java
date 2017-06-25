@@ -17,6 +17,8 @@
  */
 package com.github.duplicates.calendar;
 
+import android.text.format.DateUtils;
+
 import com.github.duplicates.DuplicateComparator;
 
 /**
@@ -67,8 +69,8 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
 
         result[ATTENDEES] = compare(lhs.isHasAttendeeData(), rhs.isHasAttendeeData()) != SAME;
         result[DESCRIPTION] = compare(lhs.getDescription(), rhs.getDescription()) != SAME;
-        result[DTSTART] = compare(lhs.getStart(), rhs.getStart()) != SAME;
-        result[DTEND] = compare(lhs.getEndEffective(), rhs.getEndEffective()) != SAME;
+        result[DTSTART] = compareTime(lhs.getStart(), rhs.getStart(), DateUtils.MINUTE_IN_MILLIS) != SAME;
+        result[DTEND] = compareTime(lhs.getEndEffective(), rhs.getEndEffective(), DateUtils.MINUTE_IN_MILLIS) != SAME;
         result[LOCATION] = compare(lhs.getLocation(), rhs.getLocation()) != SAME;
         result[TITLE] = compare(lhs.getTitle(), rhs.getTitle()) != SAME;
 

@@ -82,8 +82,8 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
     public boolean[] difference(CallLogItem lhs, CallLogItem rhs) {
         boolean[] result = new boolean[8];
 
-        result[DATE] = Math.abs(lhs.getDate() - rhs.getDate()) > DateUtils.SECOND_IN_MILLIS;
-        result[DURATION] = Math.abs(lhs.getDuration() - rhs.getDuration()) > 1;
+        result[DATE] = compareTime(lhs.getDate(), rhs.getDate(), DateUtils.SECOND_IN_MILLIS) != SAME;
+        result[DURATION] = compareTime(lhs.getDuration(), rhs.getDuration(), 1) != SAME;
         result[NAME] = compareIgnoreCase(lhs.getName(), rhs.getName()) != SAME;
         result[NEW] = compare(lhs.isNew(), rhs.isNew()) != SAME;
         result[NUMBER] = comparePhoneNumber(lhs.getNumber(), rhs.getNumber()) != SAME;

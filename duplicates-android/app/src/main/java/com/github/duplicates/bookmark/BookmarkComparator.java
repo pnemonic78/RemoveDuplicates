@@ -17,6 +17,8 @@
  */
 package com.github.duplicates.bookmark;
 
+import android.text.format.DateUtils;
+
 import com.github.duplicates.DuplicateComparator;
 
 /**
@@ -69,8 +71,8 @@ public class BookmarkComparator extends DuplicateComparator<BookmarkItem> {
     public boolean[] difference(BookmarkItem lhs, BookmarkItem rhs) {
         boolean[] result = new boolean[6];
 
-        result[CREATED] = compare(lhs.getCreated(), rhs.getCreated()) != SAME;
-        result[DATE] = compare(lhs.getDate(), rhs.getDate()) != SAME;
+        result[CREATED] = compareTime(lhs.getCreated(), rhs.getCreated(), DateUtils.MINUTE_IN_MILLIS) != SAME;
+        result[DATE] = compareTime(lhs.getDate(), rhs.getDate(), DateUtils.MINUTE_IN_MILLIS) != SAME;
         result[FAVICON] = compare(lhs.getFavIcon(), rhs.getFavIcon()) != SAME;
         result[TITLE] = compareIgnoreCase(lhs.getTitle(), rhs.getTitle()) != SAME;
         result[URL] = compare(lhs.getUrl(), rhs.getUrl()) != SAME;

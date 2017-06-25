@@ -17,6 +17,8 @@
  */
 package com.github.duplicates.alarm;
 
+import android.text.format.DateUtils;
+
 import com.github.duplicates.DuplicateComparator;
 
 /**
@@ -124,7 +126,7 @@ public class AlarmComparator extends DuplicateComparator<AlarmItem> {
         boolean[] result = new boolean[4];
 
         result[ALARM_TIME] = compare(lhs.getAlarmTime(), rhs.getAlarmTime()) != SAME;
-        result[ALERT_TIME] = compare(lhs.getAlertTime(), rhs.getAlertTime()) != SAME;
+        result[ALERT_TIME] = compareTime(lhs.getAlertTime(), rhs.getAlertTime(), DateUtils.MINUTE_IN_MILLIS) != SAME;
         result[NAME] = compareIgnoreCase(lhs.getName(), rhs.getName()) != SAME;
         result[REPEAT] = compare(lhs.getRepeat(), rhs.getRepeat()) != SAME;
 

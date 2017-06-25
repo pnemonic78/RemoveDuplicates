@@ -113,8 +113,8 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
 
         result[ADDRESS] = compareIgnoreCase(lhs.getAddress(), rhs.getAddress()) != SAME;
         result[BODY] = compare(lhs.getBody(), rhs.getBody()) != SAME;
-        result[DATE] = Math.abs(compare(lhs.getDateReceived(), rhs.getDateReceived())) <= DateUtils.SECOND_IN_MILLIS;
-        result[DATE_SENT] = compare(lhs.getDateSent(), rhs.getDateSent()) != SAME;
+        result[DATE] = compareTime(lhs.getDateReceived(), rhs.getDateReceived(), DateUtils.SECOND_IN_MILLIS) != SAME;
+        result[DATE_SENT] = compareTime(lhs.getDateSent(), rhs.getDateSent(), DateUtils.SECOND_IN_MILLIS) != SAME;
         result[ERROR_CODE] = compare(lhs.getErrorCode(), rhs.getErrorCode()) != SAME;
         result[LOCKED] = compare(lhs.isLocked(), rhs.isLocked()) != SAME;
         result[PERSON] = compare(lhs.getPerson(), rhs.getPerson()) != SAME;
