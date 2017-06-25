@@ -19,6 +19,7 @@ package com.github.duplicates;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.telephony.PhoneNumberUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -186,10 +187,18 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return SAME;
     }
 
-    public static <T extends String> int compareIgnoreCase(T lhs, T rhs) {
+    public static int compareIgnoreCase(String lhs, String rhs) {
         if (lhs == rhs) {
             return SAME;
         }
         return (lhs == null) ? RHS : ((rhs == null) ? LHS : lhs.compareToIgnoreCase(rhs));
+    }
+
+    public static int comparePhoneNumber(String lhs, String rhs) {
+        int c = compareIgnoreCase(lhs, rhs);
+        if (c == SAME) {
+            return c;
+        }
+        return PhoneNumberUtils.compare(lhs, rhs) ? SAME : c;
     }
 }

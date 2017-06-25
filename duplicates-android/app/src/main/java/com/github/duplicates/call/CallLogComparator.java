@@ -62,7 +62,7 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
         if (c != SAME) {
             return c;
         }
-        c = compare(lhs.getName(), rhs.getName());
+        c = compareIgnoreCase(lhs.getName(), rhs.getName());
         if (c != SAME) {
             return c;
         }
@@ -82,11 +82,11 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
     public boolean[] difference(CallLogItem lhs, CallLogItem rhs) {
         boolean[] result = new boolean[8];
 
-        result[DATE] = Math.abs(compare(lhs.getDate(), rhs.getDate())) <= DateUtils.SECOND_IN_MILLIS;
-        result[DURATION] = Math.abs(compare(lhs.getDuration(), rhs.getDuration())) <= DateUtils.SECOND_IN_MILLIS;
+        result[DATE] = Math.abs(lhs.getDate() - rhs.getDate()) > DateUtils.SECOND_IN_MILLIS;
+        result[DURATION] = Math.abs(lhs.getDuration() - rhs.getDuration()) > 1;
         result[NAME] = compareIgnoreCase(lhs.getName(), rhs.getName()) != SAME;
         result[NEW] = compare(lhs.isNew(), rhs.isNew()) != SAME;
-        result[NUMBER] = !PhoneNumberUtils.compare(lhs.getNumber(), rhs.getNumber());
+        result[NUMBER] = comparePhoneNumber(lhs.getNumber(), rhs.getNumber()) != SAME;
         result[NUMBER_TYPE] = compare(lhs.getNumberType(), rhs.getNumberType()) != SAME;
         result[READ] = compare(lhs.isRead(), rhs.isRead()) != SAME;
         result[TYPE] = compare(lhs.getType(), rhs.getType()) != SAME;
