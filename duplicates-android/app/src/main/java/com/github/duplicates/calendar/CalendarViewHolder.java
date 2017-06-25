@@ -145,11 +145,11 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     protected void bindDifference(Context context, DuplicateItemPair<CalendarItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, description1, description2, difference[DESCRIPTION]);
-        bindDifference(context, start1, start2, difference[DTSTART]);
-        bindDifference(context, end1, end2, difference[DTEND]);
-        bindDifference(context, location1, location2, difference[LOCATION]);
-        bindDifference(context, title1, title2, difference[TITLE]);
+        bindDifference(description1, description2, difference[DESCRIPTION]);
+        bindDifference(start1, start2, difference[DTSTART]);
+        bindDifference(end1, end2, difference[DTEND]);
+        bindDifference(location1, location2, difference[LOCATION]);
+        bindDifference(title1, title2, difference[TITLE]);
     }
 
     @OnClick(R.id.checkbox1)

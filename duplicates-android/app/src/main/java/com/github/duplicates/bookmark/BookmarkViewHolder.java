@@ -112,11 +112,11 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     protected void bindDifference(Context context, DuplicateItemPair<BookmarkItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, created1, created2, difference[CREATED]);
-        bindDifference(context, date1, date2, difference[DATE]);
-        bindDifference(context, icon1, icon2, difference[FAVICON]);
-        bindDifference(context, title1, title2, difference[TITLE]);
-        bindDifference(context, url1, url2, difference[URL]);
+        bindDifference(created1, created2, difference[CREATED]);
+        bindDifference(date1, date2, difference[DATE]);
+        bindDifference(icon1, icon2, difference[FAVICON]);
+        bindDifference(title1, title2, difference[TITLE]);
+        bindDifference(url1, url2, difference[URL]);
     }
 
     @OnClick(R.id.checkbox1)
