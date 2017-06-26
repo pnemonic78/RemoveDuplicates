@@ -69,6 +69,7 @@ import static android.provider.ContactsContract.Data.MIMETYPE;
 import static android.provider.ContactsContract.Data.PHOTO_THUMBNAIL_URI;
 import static android.provider.ContactsContract.Data.RAW_CONTACT_ID;
 import static android.provider.ContactsContract.RawContacts.ACCOUNT_NAME;
+import static android.provider.ContactsContract.RawContacts.ACCOUNT_TYPE;
 
 /**
  * Provide duplicate contacts.
@@ -104,7 +105,8 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
             DATA15,
             DATA_VERSION,
             MIMETYPE,
-            ACCOUNT_NAME
+            ACCOUNT_NAME,
+            ACCOUNT_TYPE
     };
 
     private static final int INDEX_ID = 0;
@@ -131,6 +133,7 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
     private static final int INDEX_DATA_VERSION = 21;
     private static final int INDEX_MIME_TYPE = 22;
     private static final int INDEX_ACCOUNT_NAME = 23;
+    private static final int INDEX_ACCOUNT_TYPE = 24;
 
     private final Map<Long, ContactItem> contacts = new HashMap<>();
 
@@ -170,6 +173,7 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
     public void populateItem(Cursor cursor, ContactItem item) {
         item.setId(cursor.getLong(INDEX_CONTACT_ID));
         item.setAccountName(cursor.getString(INDEX_ACCOUNT_NAME));
+        item.setAccountType(cursor.getString(INDEX_ACCOUNT_TYPE));
         item.setLookup(cursor.getString(INDEX_LOOKUP_KEY));
         item.setDisplayName(cursor.getString(INDEX_DISPLAY_NAME));
         item.setPhotoThumbnailUri(cursor.getString(INDEX_PHOTO_THUMBNAIL_URI));

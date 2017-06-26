@@ -107,7 +107,7 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
         } else {
             icon1.setImageURI(item.getPhotoThumbnailUri());
         }
-        account1.setText(item.getAccountName());
+        account1.setText(context.getString(R.string.contacts_account, item.getAccountName(), item.getAccountType()));
         name1.setText(item.getDisplayName());
         email1.setText(formatData(item.getEmails()));
         event1.setText(formatData(item.getEvents()));
@@ -123,7 +123,7 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
         } else {
             icon2.setImageURI(item.getPhotoThumbnailUri());
         }
-        account2.setText(item.getAccountName());
+        account2.setText(context.getString(R.string.contacts_account, item.getAccountName(), item.getAccountType()));
         name2.setText(item.getDisplayName());
         email2.setText(formatData(item.getEmails()));
         event2.setText(formatData(item.getEvents()));
