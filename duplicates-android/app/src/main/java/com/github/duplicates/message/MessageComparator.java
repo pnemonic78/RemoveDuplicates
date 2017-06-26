@@ -112,7 +112,7 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
         boolean[] result = new boolean[14];
 
         result[ADDRESS] = compareIgnoreCase(lhs.getAddress(), rhs.getAddress()) != SAME;
-        result[BODY] = compareIgnoreSpace(lhs.getBody(), rhs.getBody()) != SAME;
+        result[BODY] = compare(lhs.getBody(), rhs.getBody()) != SAME;
         result[DATE] = compareTime(lhs.getDateReceived(), rhs.getDateReceived(), DateUtils.SECOND_IN_MILLIS) != SAME;
         result[DATE_SENT] = compareTime(lhs.getDateSent(), rhs.getDateSent(), DateUtils.SECOND_IN_MILLIS) != SAME;
         result[ERROR_CODE] = compare(lhs.getErrorCode(), rhs.getErrorCode()) != SAME;
