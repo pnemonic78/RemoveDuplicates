@@ -85,6 +85,9 @@ public class MessageItem extends DuplicateItem {
     }
 
     public void setBody(String body) {
+        if (body != null) {
+            body = body.replaceAll("\\s+", " ");
+        }
         this.body = body;
     }
 

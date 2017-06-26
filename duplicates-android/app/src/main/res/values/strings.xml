@@ -41,6 +41,7 @@
     <!-- Contacts -->
     <string name="contacts">Contacts</string>
     <string name="item_contacts" translatable="false">@string/contacts</string>
+    <string name="contacts_account" translatable="false">%1$s (%2$s)</string>
 
     <!-- Messages -->
     <string name="messages">Messages</string>

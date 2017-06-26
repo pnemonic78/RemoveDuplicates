@@ -108,10 +108,10 @@ public class AlarmViewHolder extends DuplicateViewHolder<AlarmItem> {
     protected void bindDifference(Context context, DuplicateItemPair<AlarmItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, alarm1, alarm2, difference[ALARM_TIME]);
-        bindDifference(context, alert1, alert2, difference[ALERT_TIME]);
-        bindDifference(context, name1, name2, difference[NAME]);
-        bindDifference(context, repeat1, repeat2, difference[REPEAT]);
+        bindDifference(alarm1, alarm2, difference[ALARM_TIME]);
+        bindDifference(alert1, alert2, difference[ALERT_TIME]);
+        bindDifference(name1, name2, difference[NAME]);
+        bindDifference(repeat1, repeat2, difference[REPEAT]);
     }
 
     @OnClick(R.id.checkbox1)

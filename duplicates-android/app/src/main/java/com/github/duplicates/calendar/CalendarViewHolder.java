@@ -26,6 +26,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
@@ -111,9 +112,10 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     @Override
     protected void bindItem1(Context context, CalendarItem item) {
         checkbox1.setChecked(item.isChecked());
+        checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         start1.setText(formatDateTime(context, item.getStart()));
         end1.setText(formatDateTime(context, item.getEndEffective()));
-        recur1.setVisibility(item.hasRecurrence() ? View.INVISIBLE : View.VISIBLE);
+        recur1.setVisibility(item.hasRecurrence() ? View.VISIBLE : View.INVISIBLE);
         account1.setText(item.getCalendar().getDisplayName());
         title1.setText(item.getTitle());
         description1.setText(item.getDescription());
@@ -124,9 +126,10 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     @Override
     protected void bindItem2(Context context, CalendarItem item) {
         checkbox2.setChecked(item.isChecked());
+        checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         start2.setText(formatDateTime(context, item.getStart()));
         end2.setText(formatDateTime(context, item.getEndEffective()));
-        recur2.setVisibility(item.hasRecurrence() ? View.INVISIBLE : View.VISIBLE);
+        recur2.setVisibility(item.hasRecurrence() ? View.VISIBLE : View.INVISIBLE);
         account2.setText(item.getCalendar().getDisplayName());
         title2.setText(item.getTitle());
         description2.setText(item.getDescription());
@@ -145,11 +148,11 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
     protected void bindDifference(Context context, DuplicateItemPair<CalendarItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, description1, description2, difference[DESCRIPTION]);
-        bindDifference(context, start1, start2, difference[DTSTART]);
-        bindDifference(context, end1, end2, difference[DTEND]);
-        bindDifference(context, location1, location2, difference[LOCATION]);
-        bindDifference(context, title1, title2, difference[TITLE]);
+        bindDifference(description1, description2, difference[DESCRIPTION]);
+        bindDifference(start1, start2, difference[DTSTART]);
+        bindDifference(end1, end2, difference[DTEND]);
+        bindDifference(location1, location2, difference[LOCATION]);
+        bindDifference(title1, title2, difference[TITLE]);
     }
 
     @OnClick(R.id.checkbox1)

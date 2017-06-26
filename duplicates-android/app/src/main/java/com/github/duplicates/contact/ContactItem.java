@@ -34,6 +34,7 @@ public class ContactItem extends MessageItem {
 
     private String lookup;
     private String accountName;
+    private String accountType;
     private String displayName;
     private Uri photoThumbnailUri;
     private List<EmailData> emails;
@@ -57,6 +58,14 @@ public class ContactItem extends MessageItem {
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
     public String getDisplayName() {

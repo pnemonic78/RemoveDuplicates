@@ -118,11 +118,11 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     protected void bindDifference(Context context, DuplicateItemPair<CallLogItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, date1, date2, difference[DATE]);
-        bindDifference(context, duration1, duration2, difference[DURATION]);
-        bindDifference(context, type1, type2, difference[TYPE]);
-        bindDifference(context, number1, number2, difference[NUMBER]);
-        bindDifference(context, name1, name2, difference[NAME]);
+        bindDifference(date1, date2, difference[DATE]);
+        bindDifference(duration1, duration2, difference[DURATION]);
+        bindDifference(type1, type2, difference[TYPE]);
+        bindDifference(number1, number2, difference[NUMBER]);
+        bindDifference(name1, name2, difference[NAME]);
     }
 
     private CharSequence getTypeName(Context context, int type) {

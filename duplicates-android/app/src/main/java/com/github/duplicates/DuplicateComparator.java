@@ -194,6 +194,13 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return (lhs == null) ? RHS : ((rhs == null) ? LHS : lhs.compareToIgnoreCase(rhs));
     }
 
+    public static int compareIgnoreSpace(String lhs, String rhs) {
+        if (lhs == rhs) {
+            return SAME;
+        }
+        return (lhs == null) ? RHS : ((rhs == null) ? LHS : lhs.replaceAll("\\s+", " ").compareTo(rhs.replaceAll("\\s+", " ")));
+    }
+
     public static int comparePhoneNumber(String lhs, String rhs) {
         int c = compareIgnoreCase(lhs, rhs);
         if (c == SAME) {

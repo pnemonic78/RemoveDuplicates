@@ -107,7 +107,7 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
         } else {
             icon1.setImageURI(item.getPhotoThumbnailUri());
         }
-        account1.setText(item.getAccountName());
+        account1.setText(context.getString(R.string.contacts_account, item.getAccountName(), item.getAccountType()));
         name1.setText(item.getDisplayName());
         email1.setText(formatData(item.getEmails()));
         event1.setText(formatData(item.getEvents()));
@@ -123,7 +123,7 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
         } else {
             icon2.setImageURI(item.getPhotoThumbnailUri());
         }
-        account2.setText(item.getAccountName());
+        account2.setText(context.getString(R.string.contacts_account, item.getAccountName(), item.getAccountType()));
         name2.setText(item.getDisplayName());
         email2.setText(formatData(item.getEmails()));
         event2.setText(formatData(item.getEvents()));
@@ -135,11 +135,11 @@ public class ContactViewHolder extends DuplicateViewHolder<ContactItem> {
     protected void bindDifference(Context context, DuplicateItemPair<ContactItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, email1, email2, difference[EMAIL]);
-        bindDifference(context, event1, event2, difference[EVENT]);
-        bindDifference(context, im1, im2, difference[IM]);
-        bindDifference(context, name1, name2, difference[NAME]);
-        bindDifference(context, phone1, phone2, difference[PHONE]);
+        bindDifference(email1, email2, difference[EMAIL]);
+        bindDifference(event1, event2, difference[EVENT]);
+        bindDifference(im1, im2, difference[IM]);
+        bindDifference(name1, name2, difference[NAME]);
+        bindDifference(phone1, phone2, difference[PHONE]);
     }
 
     @OnClick(R.id.checkbox1)
