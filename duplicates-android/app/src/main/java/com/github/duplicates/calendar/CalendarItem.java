@@ -203,6 +203,7 @@ public class CalendarItem extends DuplicateItem {
 
     public void setRecurrenceDate(String recurrenceDate) {
         this.recurrenceDate = recurrenceDate;
+        this.recurrenceSet = null;
     }
 
     public String getRecurrenceRule() {
@@ -211,6 +212,7 @@ public class CalendarItem extends DuplicateItem {
 
     public void setRecurrenceRule(String recurrenceRule) {
         this.recurrenceRule = recurrenceRule;
+        this.recurrenceSet = null;
     }
 
     public String getExceptionRule() {
@@ -219,6 +221,7 @@ public class CalendarItem extends DuplicateItem {
 
     public void setExceptionRule(String exceptionRule) {
         this.exceptionRule = exceptionRule;
+        this.recurrenceSet = null;
     }
 
     public String getExceptionDate() {
@@ -227,6 +230,7 @@ public class CalendarItem extends DuplicateItem {
 
     public void setExceptionDate(String exceptionDate) {
         this.exceptionDate = exceptionDate;
+        this.recurrenceSet = null;
     }
 
     public long getOriginalEventId() {
