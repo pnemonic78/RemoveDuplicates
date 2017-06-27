@@ -24,6 +24,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
@@ -91,6 +92,7 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     @Override
     protected void bindItem1(Context context, BookmarkItem item) {
         checkbox1.setChecked(item.isChecked());
+        checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         created1.setText(DateUtils.formatDateTime(context, item.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         date1.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         icon1.setImageBitmap(item.getIcon());
@@ -101,6 +103,7 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     @Override
     protected void bindItem2(Context context, BookmarkItem item) {
         checkbox2.setChecked(item.isChecked());
+        checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         created2.setText(DateUtils.formatDateTime(context, item.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         date2.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         icon2.setImageBitmap(item.getIcon());

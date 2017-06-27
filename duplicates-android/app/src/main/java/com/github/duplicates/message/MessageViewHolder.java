@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
@@ -92,6 +93,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     @Override
     protected void bindItem1(Context context, MessageItem item) {
         checkbox1.setChecked(item.isChecked());
+        checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date1.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address1.setText(item.getAddress());
         type1.setText(getTypeName(context, item.getType()));
@@ -101,6 +103,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     @Override
     protected void bindItem2(Context context, MessageItem item) {
         checkbox2.setChecked(item.isChecked());
+        checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date2.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address2.setText(item.getAddress());
         type2.setText(getTypeName(context, item.getType()));

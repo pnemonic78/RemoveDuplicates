@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
@@ -97,6 +98,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     @Override
     protected void bindItem1(Context context, CallLogItem item) {
         checkbox1.setChecked(item.isChecked());
+        checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date1.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         duration1.setText(DateUtils.formatElapsedTime(item.getDuration()));
         type1.setText(getTypeName(context, item.getType()));
@@ -107,6 +109,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     @Override
     protected void bindItem2(Context context, CallLogItem item) {
         checkbox2.setChecked(item.isChecked());
+        checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date2.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         duration2.setText(DateUtils.formatElapsedTime(item.getDuration()));
         type2.setText(getTypeName(context, item.getType()));

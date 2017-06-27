@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
@@ -89,6 +90,7 @@ public class AlarmViewHolder extends DuplicateViewHolder<AlarmItem> {
     @Override
     protected void bindItem1(Context context, AlarmItem item) {
         checkbox1.setChecked(item.isChecked());
+        checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         alarm1.setText(formatHourMinutes(context, item.getAlarmTime()));
         alert1.setText(DateUtils.formatDateTime(context, item.getAlertTime(), DateUtils.FORMAT_SHOW_TIME));
         name1.setText(item.getName());
@@ -98,6 +100,7 @@ public class AlarmViewHolder extends DuplicateViewHolder<AlarmItem> {
     @Override
     protected void bindItem2(Context context, AlarmItem item) {
         checkbox2.setChecked(item.isChecked());
+        checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         alarm2.setText(formatHourMinutes(context, item.getAlarmTime()));
         alert2.setText(DateUtils.formatDateTime(context, item.getAlertTime(), DateUtils.FORMAT_SHOW_TIME));
         name2.setText(item.getName());
