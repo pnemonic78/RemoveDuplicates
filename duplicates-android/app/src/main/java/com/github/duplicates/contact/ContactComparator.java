@@ -78,7 +78,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         result[EMAIL] = compareData(lhs.getEmails(), rhs.getEmails()) != SAME;
         result[EVENT] = compareData(lhs.getEvents(), rhs.getEvents()) != SAME;
         result[IM] = compareData(lhs.getIms(), rhs.getIms()) != SAME;
-        result[NAME] = compareData(lhs.getNames(), rhs.getNames()) != SAME;
+        result[NAME] = compare(lhs.getDisplayName(), rhs.getDisplayName()) != SAME;
         result[PHONE] = compareData(lhs.getPhones(), rhs.getPhones()) != SAME;
 
         return result;
