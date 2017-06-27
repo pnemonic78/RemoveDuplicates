@@ -140,6 +140,11 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
     }
 
     @Override
+    protected String getCursorOrder() {
+        return DTSTART + " ASC";
+    }
+
+    @Override
     public CalendarItem createItem(Cursor cursor) {
         return new CalendarItem();
     }
