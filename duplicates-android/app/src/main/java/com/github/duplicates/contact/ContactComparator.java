@@ -188,10 +188,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
     }
 
     protected float matchNames(List<StructuredNameData> lhs, List<StructuredNameData> rhs) {
-        if (lhs.isEmpty()) {
-            return rhs.isEmpty() ? MATCH_SAME : MATCH_NAME;
-        }
-        if (rhs.isEmpty()) {
+        if (lhs.isEmpty() || rhs.isEmpty()) {
             return MATCH_NAME;
         }
         String s1, g1, m1, f1;
