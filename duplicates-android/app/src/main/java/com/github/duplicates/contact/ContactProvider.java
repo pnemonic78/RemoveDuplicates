@@ -30,6 +30,7 @@ import com.github.duplicates.DuplicateProvider;
 import com.github.duplicates.DuplicateProviderListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -263,6 +264,7 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
         }
 
         // Now that we have all the items, we can match them.
+        Collections.sort(items, new ContactNameComparator());
         final int size = items.size();
         for (int i = 0; i < size; i++) {
             listener.onItemFetched(this, i, items.get(i));
