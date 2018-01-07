@@ -73,8 +73,8 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
     }
 
     @Override
-    public void fetchItems() throws CancellationException {
-        delegate.fetchItems();
+    public void fetchItems(DuplicateProviderListener<T, DuplicateProvider<T>> listener) throws CancellationException {
+        delegate.fetchItems(listener);
     }
 
     @Override

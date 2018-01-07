@@ -226,10 +226,9 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
     }
 
     @Override
-    public void fetchItems() throws CancellationException {
-        DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>> listener = getListener();
+    public void fetchItems(DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>> listener) throws CancellationException {
         final List<ContactItem> items = new ArrayList<>();
-        setListener(new DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>>() {
+        DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>> listener2 = new DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>>() {
             @Override
             public void onItemFetched(DuplicateProvider<ContactItem> provider, int count, ContactItem item) {
                 final int size = items.size();
@@ -253,9 +252,8 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
             @Override
             public void onPairDeleted(DuplicateProvider<ContactItem> provider, int count, DuplicateItemPair<ContactItem> pair) {
             }
-        });
-        super.fetchItems();
-        setListener(listener);
+        };
+        super.fetchItems(listener2);
 
         if (isCancelled()) {
             return;

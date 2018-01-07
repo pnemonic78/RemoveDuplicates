@@ -110,13 +110,24 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @return the list of items.
      * @throws CancellationException if the provider has been cancelled.
      */
+    @Deprecated
     public void fetchItems() throws CancellationException {
-        if (isCancelled()) {
-            throw new CancellationException();
-        }
-        DuplicateProviderListener<T, DuplicateProvider<T>> listener = getListener();
+        fetchItems(getListener());
+    }
+
+    /**
+     * Fetch the items from the system provider into the listener.
+     *
+     * @param listener the listener.
+     * @return the list of items.
+     * @throws CancellationException if the provider has been cancelled.
+     */
+    public void fetchItems(DuplicateProviderListener<T, DuplicateProvider<T>> listener) throws CancellationException {
         if (listener == null) {
             return;
+        }
+        if (isCancelled()) {
+            throw new CancellationException();
         }
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
