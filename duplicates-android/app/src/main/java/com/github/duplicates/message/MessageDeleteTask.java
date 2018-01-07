@@ -15,12 +15,10 @@
  */
 package com.github.duplicates.message;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
 
@@ -49,23 +47,17 @@ public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
 
     @Override
     protected void checkPermissions(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (checkDefaultSmsPackage(activity)) {
-                super.checkPermissions(activity);
-            } else {
-                setDefaultSmsPackage(activity);
-            }
-        } else {
+        if (checkDefaultSmsPackage(activity)) {
             super.checkPermissions(activity);
+        } else {
+            setDefaultSmsPackage(activity);
         }
     }
 
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            restoreDefaultSmsPackage();
-        }
+        restoreDefaultSmsPackage();
     }
 
     /**
@@ -73,7 +65,6 @@ public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
      *
      * @param context The context.
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     protected boolean checkDefaultSmsPackage(Context context) {
         String defaultSmsApp = Telephony.Sms.getDefaultSmsPackage(context);
         String packageName = context.getPackageName();
@@ -85,7 +76,6 @@ public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
      *
      * @param activity the activity.
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     protected void setDefaultSmsPackage(Activity activity) {
         Context context = activity;
         String defaultSmsApp = Telephony.Sms.getDefaultSmsPackage(context);
@@ -102,7 +92,6 @@ public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
     /**
      * Restore the default SMS app.
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     protected void restoreDefaultSmsPackage() {
         Context context = getContext();
         String defaultSmsApp = Telephony.Sms.getDefaultSmsPackage(context);
@@ -134,8 +123,6 @@ public class MessageDeleteTask extends DuplicateDeleteTask<MessageItem> {
     @Override
     protected void onCancelled() {
         super.onCancelled();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            restoreDefaultSmsPackage();
-        }
+        restoreDefaultSmsPackage();
     }
 }
