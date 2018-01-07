@@ -271,6 +271,9 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
             case R.id.menu_select_all:
                 selectAllItems();
                 return true;
+            case R.id.menu_select_none:
+                selectNoItems();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -294,6 +297,12 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     private void selectAllItems() {
         if ((adapter != null) && (adapter.getItemCount() > 0)) {
             adapter.selectAll();
+        }
+    }
+
+    private void selectNoItems() {
+        if ((adapter != null) && (adapter.getItemCount() > 0)) {
+            adapter.selectNone();
         }
     }
 

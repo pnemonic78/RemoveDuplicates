@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="false">
-        <bitmap android:alpha="0.25" android:src="@android:drawable/checkbox_on_background"/>
+        <bitmap android:alpha="0.25" android:src="@android:drawable/checkbox_off_background"/>
     </item>
-    <item android:drawable="@android:drawable/checkbox_on_background"/>
+    <item android:drawable="@android:drawable/checkbox_off_background"/>
 </selector>

@@ -4,12 +4,20 @@
     <item
         android:id="@+id/menu_delete"
         android:icon="@drawable/ic_menu_delete"
+        android:orderInCategory="1"
         android:showAsAction="always"
         android:title="@string/menu_delete"/>
     <item
         android:id="@+id/menu_select_all"
         android:icon="@drawable/ic_menu_select_all"
+        android:orderInCategory="10"
         android:showAsAction="ifRoom"
         android:title="@string/menu_select_all"/>
+    <item
+        android:id="@+id/menu_select_none"
+        android:icon="@drawable/ic_menu_select_none"
+        android:orderInCategory="11"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_select_none"/>
 
 </menu>
