@@ -20,23 +20,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.Telephony;
+import android.provider.*;
 
 import static android.provider.BaseColumns._ID;
-import static android.provider.Telephony.TextBasedSmsColumns.ADDRESS;
-import static android.provider.Telephony.TextBasedSmsColumns.BODY;
-import static android.provider.Telephony.TextBasedSmsColumns.DATE;
-import static android.provider.Telephony.TextBasedSmsColumns.DATE_SENT;
-import static android.provider.Telephony.TextBasedSmsColumns.ERROR_CODE;
-import static android.provider.Telephony.TextBasedSmsColumns.LOCKED;
-import static android.provider.Telephony.TextBasedSmsColumns.PERSON;
-import static android.provider.Telephony.TextBasedSmsColumns.PROTOCOL;
-import static android.provider.Telephony.TextBasedSmsColumns.READ;
-import static android.provider.Telephony.TextBasedSmsColumns.SEEN;
-import static android.provider.Telephony.TextBasedSmsColumns.STATUS;
-import static android.provider.Telephony.TextBasedSmsColumns.SUBJECT;
-import static android.provider.Telephony.TextBasedSmsColumns.THREAD_ID;
-import static android.provider.Telephony.TextBasedSmsColumns.TYPE;
 
 /**
  * Provide duplicate messages for KitKat versions and newer.
@@ -48,20 +34,20 @@ public class KitkatMessageProvider extends JellybeanMessageProvider {
 
     private static final String[] PROJECTION = {
             _ID,
-            ADDRESS,
-            BODY,
-            DATE,
-            DATE_SENT,
-            ERROR_CODE,
-            LOCKED,
-            PERSON,
-            PROTOCOL,
-            READ,
-            SEEN,
-            STATUS,
-            SUBJECT,
-            THREAD_ID,
-            TYPE
+            Telephony.TextBasedSmsColumns.ADDRESS,
+            Telephony.TextBasedSmsColumns.BODY,
+            Telephony.TextBasedSmsColumns.DATE,
+            Telephony.TextBasedSmsColumns.DATE_SENT,
+            Telephony.TextBasedSmsColumns.ERROR_CODE,
+            Telephony.TextBasedSmsColumns.LOCKED,
+            Telephony.TextBasedSmsColumns.PERSON,
+            Telephony.TextBasedSmsColumns.PROTOCOL,
+            Telephony.TextBasedSmsColumns.READ,
+            Telephony.TextBasedSmsColumns.SEEN,
+            Telephony.TextBasedSmsColumns.STATUS,
+            Telephony.TextBasedSmsColumns.SUBJECT,
+            Telephony.TextBasedSmsColumns.THREAD_ID,
+            Telephony.TextBasedSmsColumns.TYPE
     };
 
     private static final int INDEX_ID = 0;
