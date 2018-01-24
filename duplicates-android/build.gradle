@@ -1,13 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.butterknifeVersion = '8.8.1'
     repositories {
         jcenter()
         google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath group: 'com.jakewharton', name: 'butterknife-gradle-plugin', version: '8.5.1'
+        classpath group: 'com.jakewharton', name: 'butterknife-gradle-plugin', version: "$butterknifeVersion"
     }
 }
 
@@ -27,4 +28,5 @@ ext {
     androidBuildSdkVersion = 27
     androidBuildMinSdkVersion = 19
     androidBuildTargetSdkVersion = 27
+    supportVersion = '27.0.2'
 }
