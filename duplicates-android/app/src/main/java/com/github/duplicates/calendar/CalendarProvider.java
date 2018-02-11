@@ -22,11 +22,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
+import android.util.LongSparseArray;
 
 import com.github.duplicates.DuplicateProvider;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static android.provider.BaseColumns._ID;
 import static android.provider.CalendarContract.Events.ALL_DAY;
@@ -117,7 +115,7 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
     private static final int INDEX_OWNER_ACCOUNT = 21;
     private static final int INDEX_VISIBLE = 22;
 
-    private final Map<Long, CalendarEntity> calendars = new HashMap<>();
+    private final LongSparseArray<CalendarEntity> calendars = new LongSparseArray<>();
 
     public CalendarProvider(Context context) {
         super(context);

@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.util.Base64;
+import android.util.LongSparseArray;
 
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateProvider;
@@ -30,9 +31,7 @@ import com.github.duplicates.DuplicateProviderListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CancellationException;
 
 import static android.database.Cursor.FIELD_TYPE_BLOB;
@@ -135,7 +134,7 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
     private static final int INDEX_ACCOUNT_NAME = 23;
     private static final int INDEX_ACCOUNT_TYPE = 24;
 
-    private final Map<Long, ContactItem> contacts = new HashMap<>();
+    private final LongSparseArray<ContactItem> contacts = new LongSparseArray<>();
 
     public ContactProvider(Context context) {
         super(context);
