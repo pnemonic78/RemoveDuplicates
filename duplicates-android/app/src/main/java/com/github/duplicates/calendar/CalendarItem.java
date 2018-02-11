@@ -297,29 +297,26 @@ public class CalendarItem extends DuplicateItem {
             long start = getStart();
             long end = getEnd();
             if (end < start) {
-                if (isAllDay()) {
+                if (getLastDate() != null) {
+                    end = getLastDate();
+                }
+
+                RecurrenceSet recurrenceSet = getRecurrenceSet();
+                if ((recurrenceSet.rrules != null) && (recurrenceSet.rrules.length > 0)) {
+                    EventRecurrence recurrence = recurrenceSet.rrules[0];
+                    if (!TextUtils.isEmpty(recurrence.until)) {
+                        Time until = new Time();
+                        until.parse(recurrence.until);
+                        end = until.normalize(true);
+                    }
+                } else if (isAllDay()) {
                     Calendar gcal = Calendar.getInstance(getEndTimeZone());
                     gcal.setTimeInMillis(start);
                     gcal.set(Calendar.HOUR_OF_DAY, 23);
-                    gcal.set(Calendar.MINUTE, 0);
-                    gcal.set(Calendar.SECOND, 0);
-                    gcal.set(Calendar.MILLISECOND, 0);
+                    gcal.set(Calendar.MINUTE, 59);
+                    gcal.set(Calendar.SECOND, 59);
+                    gcal.set(Calendar.MILLISECOND, 99);
                     end = gcal.getTimeInMillis();
-                } else {
-                    RecurrenceSet recurrenceSet = getRecurrenceSet();
-                    if ((recurrenceSet.rrules != null) && (recurrenceSet.rrules.length > 0)) {
-                        EventRecurrence recurrence = recurrenceSet.rrules[0];
-                        if (!TextUtils.isEmpty(recurrence.until)) {
-                            Time until = new Time();
-                            until.parse(recurrence.until);
-                            end = until.normalize(true);
-                        }
-                    }
-                    if (end == NEVER) {
-                        if (getLastDate() != null) {
-                            end = getLastDate();
-                        }
-                    }
                 }
             }
             endEffective = end;
