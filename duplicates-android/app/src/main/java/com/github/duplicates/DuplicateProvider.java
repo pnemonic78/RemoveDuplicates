@@ -55,7 +55,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         return context;
     }
 
-    @NonNull
+    @Nullable
     protected abstract Uri getContentUri();
 
     @Nullable
@@ -76,7 +76,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
     @Nullable
     public abstract T createItem(Cursor cursor);
 
-    public abstract void populateItem(Cursor cursor, T item);
+    public abstract void populateItem(Cursor cursor, @NonNull T item);
 
     /**
      * Get the items from the system provider.
@@ -93,7 +93,11 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
-        Cursor cursor = cr.query(getContentUri(), getCursorProjection(), null, null, null);
+        Uri contentUri = getContentUri();
+        if (contentUri == null) {
+            return items;
+        }
+        Cursor cursor = cr.query(contentUri, getCursorProjection(), null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 T item;
@@ -102,8 +106,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
                         break;
                     }
                     item = createItem(cursor);
-                    populateItem(cursor, item);
-                    items.add(item);
+                    if (item != null) {
+                        populateItem(cursor, item);
+                        items.add(item);
+                    }
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -144,7 +150,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         if (contentUri == null) {
             return;
         }
-        Cursor cursor = cr.query(getContentUri(), getCursorProjection(), getCursorSelection(), null, getCursorOrder());
+        Cursor cursor = cr.query(contentUri, getCursorProjection(), getCursorSelection(), null, getCursorOrder());
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 T item;
@@ -154,8 +160,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
                         break;
                     }
                     item = createItem(cursor);
-                    populateItem(cursor, item);
-                    listener.onItemFetched(this, ++count, item);
+                    if (item != null) {
+                        populateItem(cursor, item);
+                        listener.onItemFetched(this, ++count, item);
+                    }
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -212,7 +220,8 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @param item the item.
      */
     public boolean deleteItem(ContentResolver cr, T item) {
-        return cr.delete(ContentUris.withAppendedId(getContentUri(), item.getId()), null, null) > 0;
+        Uri contentUri = getContentUri();
+        return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.getId()), null, null) > 0;
     }
 
     /**

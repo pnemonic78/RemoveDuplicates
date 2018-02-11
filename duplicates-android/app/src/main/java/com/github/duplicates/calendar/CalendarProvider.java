@@ -21,6 +21,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
+import android.support.annotation.NonNull;
 
 import com.github.duplicates.DuplicateProvider;
 
@@ -123,6 +124,7 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
     }
 
     @Override
+    @NonNull
     protected Uri getContentUri() {
         return CalendarContract.Events.CONTENT_URI;
     }

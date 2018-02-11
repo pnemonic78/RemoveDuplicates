@@ -19,6 +19,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import com.github.duplicates.DuplicateProvider;
 import com.github.provider.Browser;
@@ -65,6 +66,7 @@ public class BookmarkProvider extends DuplicateProvider<BookmarkItem> {
     }
 
     @Override
+    @NonNull
     protected Uri getContentUri() {
         return Browser.BOOKMARKS_URI;
     }

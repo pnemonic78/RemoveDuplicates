@@ -21,6 +21,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
+import android.support.annotation.NonNull;
 
 import com.github.duplicates.DuplicateProvider;
 
@@ -74,6 +75,7 @@ public class CallLogProvider extends DuplicateProvider<CallLogItem> {
     }
 
     @Override
+    @NonNull
     protected Uri getContentUri() {
         return CallLog.Calls.CONTENT_URI;
     }

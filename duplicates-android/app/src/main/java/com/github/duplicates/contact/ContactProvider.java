@@ -21,6 +21,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.util.Base64;
 
 import com.github.duplicates.DuplicateItemPair;
@@ -141,6 +142,7 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
     }
 
     @Override
+    @NonNull
     protected Uri getContentUri() {
         return ContactsContract.Data.CONTENT_URI;
     }
