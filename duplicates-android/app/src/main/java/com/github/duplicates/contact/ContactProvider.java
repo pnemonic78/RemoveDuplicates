@@ -77,8 +77,8 @@ import static android.provider.ContactsContract.RawContacts.ACCOUNT_TYPE;
  */
 public class ContactProvider extends DuplicateProvider<ContactItem> {
 
-    private static String[] PERMISSIONS_READ = {Manifest.permission.READ_CONTACTS};
-    private static String[] PERMISSIONS_WRITE = {Manifest.permission.WRITE_CONTACTS};
+    private static final String[] PERMISSIONS_READ = {Manifest.permission.READ_CONTACTS};
+    private static final String[] PERMISSIONS_WRITE = {Manifest.permission.WRITE_CONTACTS};
 
     private static final String[] PROJECTION = {
             _ID,

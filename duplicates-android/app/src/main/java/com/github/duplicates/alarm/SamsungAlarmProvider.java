@@ -33,8 +33,8 @@ public class SamsungAlarmProvider extends DuplicateProvider<AlarmItem> {
 
     public static final String PACKAGE = "com.sec.android.app.clockpackage";
 
-    private static String[] PERMISSIONS_READ = {"com.sec.android.app.clockpackage.permission.READ_ALARM"};
-    private static String[] PERMISSIONS_WRITE = {"com.sec.android.app.clockpackage.permission.WRITE_ALARM"};
+    private static final String[] PERMISSIONS_READ = {"com.sec.android.app.clockpackage.permission.READ_ALARM"};
+    private static final String[] PERMISSIONS_WRITE = {"com.sec.android.app.clockpackage.permission.WRITE_ALARM"};
 
     private static final String[] PROJECTION = {
             _ID,

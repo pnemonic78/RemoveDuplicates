@@ -46,8 +46,8 @@ import static android.provider.Telephony.TextBasedSmsColumns.TYPE;
  */
 public class MessageProvider extends DuplicateProvider<MessageItem> {
 
-    private static String[] PERMISSIONS_READ = {Manifest.permission.READ_SMS};
-    private static String[] PERMISSIONS_WRITE = {"android.permission.WRITE_SMS"};
+    private static final String[] PERMISSIONS_READ = {Manifest.permission.READ_SMS};
+    private static final String[] PERMISSIONS_WRITE = {"android.permission.WRITE_SMS"};
 
     private static final String[] PROJECTION = {
             _ID,

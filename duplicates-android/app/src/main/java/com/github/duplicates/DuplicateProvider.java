@@ -20,6 +20,8 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,20 +55,25 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         return context;
     }
 
+    @NonNull
     protected abstract Uri getContentUri();
 
+    @Nullable
     protected String[] getCursorProjection() {
         return null;
     }
 
+    @Nullable
     protected String getCursorSelection() {
         return null;
     }
 
+    @Nullable
     protected String getCursorOrder() {
         return null;
     }
 
+    @Nullable
     public abstract T createItem(Cursor cursor);
 
     public abstract void populateItem(Cursor cursor, T item);
@@ -77,6 +84,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @return the list of items.
      * @throws CancellationException if the provider has been cancelled.
      */
+    @NonNull
     public List<T> getItems() throws CancellationException {
         if (isCancelled()) {
             throw new CancellationException();
@@ -160,7 +168,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @param items the list of items.
      * @throws CancellationException if the provider has been cancelled.
      */
-    public void deleteItems(Collection<T> items) throws CancellationException {
+    public void deleteItems(@Nullable Collection<T> items) throws CancellationException {
+        if ((items == null) || items.isEmpty()) {
+            return;
+        }
         if (isCancelled()) {
             throw new CancellationException();
         }
@@ -255,6 +266,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      *
      * @return the array of permissions.
      */
+    @Nullable
     public abstract String[] getReadPermissions();
 
     /**
@@ -262,6 +274,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      *
      * @return the array of permissions.
      */
+    @Nullable
     public abstract String[] getDeletePermissions();
 
     /**
@@ -287,6 +300,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @param index  the column index with string value.
      * @return the string - empty otherwise.
      */
+    @NonNull
     protected String empty(Cursor cursor, int index) {
         return cursor.isNull(index) ? "" : cursor.getString(index);
     }

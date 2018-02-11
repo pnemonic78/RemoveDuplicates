@@ -39,8 +39,8 @@ import static com.github.provider.Browser.BookmarkColumns.VISITS;
  */
 public class BookmarkProvider extends DuplicateProvider<BookmarkItem> {
 
-    private static String[] PERMISSIONS_READ = {"com.android.browser.permission.READ_HISTORY_BOOKMARKS"};
-    private static String[] PERMISSIONS_WRITE = {"com.android.browser.permission.WRITE_HISTORY_BOOKMARKS"};
+    private static final String[] PERMISSIONS_READ = {"com.android.browser.permission.READ_HISTORY_BOOKMARKS"};
+    private static final String[] PERMISSIONS_WRITE = {"com.android.browser.permission.WRITE_HISTORY_BOOKMARKS"};
 
     private static final String[] PROJECTION = {
             _ID,

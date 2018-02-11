@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.github.android.removeduplicates.R;
@@ -139,8 +140,8 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    protected boolean checkSelfPermissions(Context context, String[] permissions) {
-        if (permissions != null) {
+    protected boolean checkSelfPermissions(Context context, @Nullable String[] permissions) {
+        if ((permissions != null) && (permissions.length > 0)) {
             for (String permission : permissions) {
                 if (context.checkSelfPermission(permission) != PERMISSION_GRANTED) {
                     return false;

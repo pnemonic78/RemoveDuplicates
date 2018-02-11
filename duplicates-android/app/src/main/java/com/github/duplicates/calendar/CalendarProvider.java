@@ -60,8 +60,8 @@ import static com.github.duplicates.calendar.CalendarItem.NEVER;
  */
 public class CalendarProvider extends DuplicateProvider<CalendarItem> {
 
-    private static String[] PERMISSIONS_READ = {Manifest.permission.READ_CALENDAR};
-    private static String[] PERMISSIONS_WRITE = {Manifest.permission.WRITE_CALENDAR};
+    private static final String[] PERMISSIONS_READ = {Manifest.permission.READ_CALENDAR};
+    private static final String[] PERMISSIONS_WRITE = {Manifest.permission.WRITE_CALENDAR};
 
     private static final String[] PROJECTION = {
             // Event.
