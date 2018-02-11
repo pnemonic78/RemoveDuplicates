@@ -15,6 +15,7 @@
  */
 package com.github.duplicates;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -22,6 +23,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      */
     public static final int ACTIVITY_PERMISSIONS = 2;
 
+    @SuppressLint("StaticFieldLeak")
     private final Context context;
     private final DuplicateTaskListener listener;
     private DuplicateProvider<T> provider;
@@ -67,6 +70,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      *
      * @return the provider.
      */
+    @NonNull
     protected DuplicateProvider getProvider() {
         if (provider == null) {
             provider = createProvider(getContext());

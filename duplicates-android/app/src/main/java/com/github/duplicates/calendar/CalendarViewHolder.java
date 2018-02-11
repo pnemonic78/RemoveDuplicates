@@ -175,9 +175,6 @@ public class CalendarViewHolder extends DuplicateViewHolder<CalendarItem> {
      * @param color the raw color.
      */
     public static int getDisplayColorFromColor(int color) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-            return color;
-        }
         Color.colorToHSV(color, hsv);
         hsv[1] = Math.min(hsv[1] * SATURATION_ADJUST, 1.0f);
         hsv[2] = hsv[2] * INTENSITY_ADJUST;
