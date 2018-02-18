@@ -26,13 +26,13 @@ import android.database.DatabaseUtils;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
+import android.webkit.WebIconDatabase;
 
 import com.github.provider.BrowserContract.Bookmarks;
 import com.github.provider.BrowserContract.Combined;
 import com.github.provider.BrowserContract.History;
 import com.github.provider.BrowserContract.Searches;
-import android.util.Log;
-import android.webkit.WebIconDatabase;
 
 public class Browser {
     private static final String LOGTAG = "browser";

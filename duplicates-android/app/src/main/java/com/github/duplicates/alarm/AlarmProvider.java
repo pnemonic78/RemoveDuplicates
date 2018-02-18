@@ -19,8 +19,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.github.duplicates.WrapperProvider;
 import com.github.duplicates.DuplicateProvider;
+import com.github.duplicates.WrapperProvider;
 
 /**
  * Provide duplicate alarms.

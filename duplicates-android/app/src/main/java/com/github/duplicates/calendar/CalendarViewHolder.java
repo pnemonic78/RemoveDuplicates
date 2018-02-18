@@ -17,7 +17,6 @@ package com.github.duplicates.calendar;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;

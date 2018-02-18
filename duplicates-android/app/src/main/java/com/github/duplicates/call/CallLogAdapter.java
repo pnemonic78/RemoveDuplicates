@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateAdapter;
-import com.github.duplicates.message.MessageItem;
 
 /**
  * List adapter for duplicate calls.
