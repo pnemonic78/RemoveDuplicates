@@ -165,15 +165,13 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      * @param grantResults The grant results for the corresponding permissions which is either {@link PackageManager#PERMISSION_GRANTED} or {@link PackageManager#PERMISSION_DENIED}. Never null.
      */
     @TargetApi(Build.VERSION_CODES.M)
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == ACTIVITY_PERMISSIONS) {
-            if (permissions.length > 0) {
-                if (grantResults.length > 0) {
-                    if (grantResults[0] == PERMISSION_GRANTED) {//FIXME: check entire array.
-                        onPermissionGranted();
-                    } else {
-                        onPermissionDenied();
-                    }
+            if ((permissions.length > 0) && (grantResults.length > 0)) {
+                if (grantResults[0] == PERMISSION_GRANTED) {//FIXME: check entire array.
+                    onPermissionGranted();
+                } else {
+                    onPermissionDenied();
                 }
             } else {
                 onPermissionDenied();
