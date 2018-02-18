@@ -50,6 +50,7 @@ import com.github.duplicates.message.MessageFindTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 
 /**
  * Main activity.
@@ -78,6 +79,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
     private DuplicateTask task;
     private DuplicateAdapter adapter;
+    private MainSpinnerItem spinnerItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +104,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         if ((task != null) && !task.isCancelled()) {
             task.cancel();
         } else {
-            MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
-            DuplicateFindTask task = createFindTask(item);
+            spinnerItem = (MainSpinnerItem) spinner.getSelectedItem();
+            DuplicateFindTask task = createFindTask(spinnerItem);
             this.task = task;
             if (task != null) {
                 this.adapter = task.createAdapter();
@@ -283,9 +285,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     private void deleteItems() {
         if ((task != null) && !task.isCancelled()) {
             task.cancel();
-        } else if ((adapter != null) && (adapter.getItemCount() > 0)) {
-            MainSpinnerItem item = (MainSpinnerItem) spinner.getSelectedItem();
-            DuplicateDeleteTask task = createDeleteTask(item);
+        } else if ((adapter != null) && (adapter.getItemCount() > 0) && (spinnerItem != null)) {
+            DuplicateDeleteTask task = createDeleteTask(spinnerItem);
             this.task = task;
             if (task != null) {
                 task.start(this, adapter.getCheckedPairs());
