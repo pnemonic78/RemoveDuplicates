@@ -18,7 +18,7 @@ package com.github.duplicates.contact;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import com.github.duplicates.message.MessageItem;
+import com.github.duplicates.DuplicateItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author moshe.w
  */
-public class ContactItem extends MessageItem {
+public class ContactItem extends DuplicateItem {
 
     private String lookup;
     private String accountName;
