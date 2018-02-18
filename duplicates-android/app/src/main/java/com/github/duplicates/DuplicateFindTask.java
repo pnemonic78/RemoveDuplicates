@@ -55,7 +55,7 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
     protected List<T> doInBackground(Object... params) {
         try {
             getProvider().fetchItems(this);
-        } catch (CancellationException e) {
+        } catch (CancellationException ignore) {
         }
         return items;
     }

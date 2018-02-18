@@ -50,7 +50,7 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends Dupli
         publishProgress(pairs.size());
         try {
             getProvider().deletePairs(pairs);
-        } catch (CancellationException e) {
+        } catch (CancellationException ignore) {
         }
         return null;
     }

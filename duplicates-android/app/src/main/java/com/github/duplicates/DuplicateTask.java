@@ -46,7 +46,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
 
     @SuppressLint("StaticFieldLeak")
     private final Context context;
-    private final DuplicateTaskListener listener;
+    private final DuplicateTaskListener<DuplicateTask, T> listener;
     private DuplicateProvider<T> provider;
     private Params[] params;
 
@@ -59,7 +59,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
         return context;
     }
 
-    protected DuplicateTaskListener getListener() {
+    protected DuplicateTaskListener<DuplicateTask, T> getListener() {
         return listener;
     }
 
@@ -71,7 +71,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      * @return the provider.
      */
     @NonNull
-    protected DuplicateProvider getProvider() {
+    protected DuplicateProvider<T> getProvider() {
         if (provider == null) {
             provider = createProvider(getContext());
         }
