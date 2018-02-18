@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import com.github.duplicates.DefaultProvider;
 import com.github.duplicates.DuplicateProvider;
 import com.github.duplicates.WrapperProvider;
 
@@ -51,6 +52,6 @@ public class AlarmProvider extends WrapperProvider<AlarmItem> {
         if (hasSamsungProvider) {
             return new SamsungAlarmProvider(context);
         }
-        return null;
+        return new DefaultProvider<>(context);
     }
 }

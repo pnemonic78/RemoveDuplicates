@@ -19,6 +19,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import java.util.Collection;
 import java.util.List;
@@ -35,16 +36,16 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
 
     public WrapperProvider(Context context) {
         super(context);
-        DuplicateProvider<T> candidate = createDelegate(context);
-        delegate = (candidate != null) ? candidate : new DefaultProvider<T>(context);
+        this.delegate = createDelegate(context);
     }
 
     /**
      * Create the delegate provider.
      *
      * @param context the context.
-     * @return the provider - {@code null} to use teh default provider.
+     * @return the provider.
      */
+    @NonNull
     protected abstract DuplicateProvider<T> createDelegate(Context context);
 
     @Override
@@ -59,7 +60,22 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
 
     @Override
     protected Uri getContentUri() {
-        return null;
+        return delegate.getContentUri();
+    }
+
+    @Override
+    protected String[] getCursorProjection() {
+        return delegate.getCursorProjection();
+    }
+
+    @Override
+    protected String getCursorSelection() {
+        return delegate.getCursorSelection();
+    }
+
+    @Override
+    protected String getCursorOrder() {
+        return delegate.getCursorOrder();
     }
 
     @Override
@@ -98,6 +114,11 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
     }
 
     @Override
+    public void deletePairs(Collection<DuplicateItemPair<T>> duplicateItemPairs) throws CancellationException {
+        delegate.deletePairs(duplicateItemPairs);
+    }
+
+    @Override
     public void onPreExecute() {
         delegate.onPreExecute();
     }
@@ -121,5 +142,10 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
     public void cancel() {
         super.cancel();
         delegate.cancel();
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return delegate.isCancelled();
     }
 }

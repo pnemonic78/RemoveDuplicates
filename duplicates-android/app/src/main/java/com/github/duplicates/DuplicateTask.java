@@ -55,6 +55,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
         this.listener = listener;
     }
 
+    @NonNull
     protected Context getContext() {
         return context;
     }
@@ -63,6 +64,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
         return listener;
     }
 
+    @NonNull
     protected abstract DuplicateProvider<T> createProvider(Context context);
 
     /**
@@ -179,6 +181,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
         }
     }
 
+    @Nullable
     protected abstract String[] getPermissions();
 
     /**
