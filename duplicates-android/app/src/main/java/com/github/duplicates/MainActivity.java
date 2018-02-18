@@ -50,7 +50,6 @@ import com.github.duplicates.message.MessageFindTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 
 /**
  * Main activity.
