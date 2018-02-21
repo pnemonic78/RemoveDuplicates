@@ -39,4 +39,6 @@
     <color name="grey_80">#80808080</color>
     <color name="white_80">#80ffffff</color>
 
+    <color name="black_x40">#40000000</color>
+
 </resources>

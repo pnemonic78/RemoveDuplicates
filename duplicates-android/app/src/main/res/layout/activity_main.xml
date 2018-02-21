@@ -50,6 +50,11 @@
             android:text="@string/counter"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/shadow"/>
+
     <ViewSwitcher
         android:id="@+id/list_switcher"
         android:layout_width="match_parent"
