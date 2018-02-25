@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +35,8 @@ import java.util.concurrent.CancellationException;
  * @author moshe.w
  */
 public abstract class DuplicateProvider<T extends DuplicateItem> {
+
+    private static final String TAG = "DuplicateProvider";
 
     private final Context context;
     private DuplicateProviderListener<T, DuplicateProvider<T>> listener;
@@ -221,7 +224,12 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      */
     public boolean deleteItem(ContentResolver cr, T item) {
         Uri contentUri = getContentUri();
-        return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.getId()), null, null) > 0;
+        try {
+            return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.getId()), null, null) > 0;
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Error deleting item: " + item + ": " + e.getLocalizedMessage(), e);
+        }
+        return false;
     }
 
     /**
