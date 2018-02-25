@@ -224,8 +224,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
     public boolean deleteItem(ContentResolver cr, T item) {
         Uri contentUri = getContentUri();
         try {
+            item.setError(false);
             return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.getId()), null, null) > 0;
         } catch (IllegalArgumentException e) {
+            item.setError(true);
             DuplicateLog.e(TAG, "deleteItem: " + item + ": " + e.getLocalizedMessage(), e);
         }
         return false;

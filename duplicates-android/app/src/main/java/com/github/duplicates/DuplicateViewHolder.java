@@ -32,6 +32,7 @@ import java.text.NumberFormat;
 public abstract class DuplicateViewHolder<T extends DuplicateItem> extends RecyclerView.ViewHolder {
 
     protected final int colorDifferent;
+    protected final int colorError;
     protected final NumberFormat percentFormatter = NumberFormat.getPercentInstance();
 
     protected T item1;
@@ -47,6 +48,7 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
         Context context = itemView.getContext();
         this.onCheckedChangeListener = onCheckedChangeListener;
         this.colorDifferent = context.getResources().getColor(R.color.different);
+        this.colorError = context.getResources().getColor(R.color.error);
     }
 
     /**
@@ -59,9 +61,15 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
         this.item2 = pair.getItem2();
         Context context = itemView.getContext();
         bindHeader(context, pair);
-        bindItem1(context, pair.getItem1());
-        bindItem2(context, pair.getItem2());
+        bindItem1(context, item1);
+        bindItem2(context, item2);
         bindDifference(context, pair);
+
+        if (item1.isError() || item2.isError()) {
+            itemView.setBackgroundColor(colorError);
+        } else {
+            itemView.setBackground(null);
+        }
     }
 
     protected abstract void bindHeader(Context context, DuplicateItemPair<T> pair);

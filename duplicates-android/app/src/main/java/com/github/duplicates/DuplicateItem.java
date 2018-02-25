@@ -26,6 +26,7 @@ public abstract class DuplicateItem implements Comparable<DuplicateItem> {
 
     private long id;
     private boolean checked;
+    private boolean error;
 
     public long getId() {
         return id;
@@ -51,5 +52,13 @@ public abstract class DuplicateItem implements Comparable<DuplicateItem> {
     @Override
     public int hashCode() {
         return (int) getId();
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
+
+    public boolean isError() {
+        return error;
     }
 }
