@@ -78,7 +78,11 @@ public class CalendarItem extends DuplicateItem {
         this.id = id;
     }
 
+    @NonNull
     public String getTitle() {
+        if (title == null) {
+            title = "";
+        }
         return title;
     }
 
