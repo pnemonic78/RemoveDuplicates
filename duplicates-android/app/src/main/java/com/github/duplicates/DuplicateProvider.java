@@ -22,7 +22,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -227,7 +226,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         try {
             return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.getId()), null, null) > 0;
         } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Error deleting item: " + item + ": " + e.getLocalizedMessage(), e);
+            DuplicateLog.e(TAG, "deleteItem: " + item + ": " + e.getLocalizedMessage(), e);
         }
         return false;
     }

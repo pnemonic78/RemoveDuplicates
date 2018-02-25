@@ -84,7 +84,7 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
         result[DTSTART] = compare(lhs.getStart(), rhs.getStart()) != SAME;
         result[DTEND] = compare(lhs.getEndEffective(), rhs.getEndEffective()) != SAME;
         result[LOCATION] = compare(lhs.getLocation(), rhs.getLocation()) != SAME;
-        result[TITLE] = compare(lhs.getTitle(), rhs.getTitle()) != SAME;
+        result[TITLE] = compare(lhs.getTitle().toLowerCase(), rhs.getTitle().toLowerCase()) != SAME;
 
         return result;
     }
@@ -155,6 +155,7 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
                     break;
                 case YEARLY:
                     lhsField = Calendar.YEAR;
+                    //FIXME compare same month and day
                     break;
             }
 
@@ -179,6 +180,7 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
                     break;
                 case YEARLY:
                     rhsField = Calendar.YEAR;
+                    //FIXME compare same month and day
                     break;
             }
 
