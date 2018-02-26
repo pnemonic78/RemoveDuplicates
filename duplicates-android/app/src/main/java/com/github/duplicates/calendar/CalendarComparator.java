@@ -29,6 +29,7 @@ import static com.android.calendarcommon2.EventRecurrence.MONTHLY;
 import static com.android.calendarcommon2.EventRecurrence.SECONDLY;
 import static com.android.calendarcommon2.EventRecurrence.WEEKLY;
 import static com.android.calendarcommon2.EventRecurrence.YEARLY;
+import static com.github.duplicates.calendar.CalendarItem.NEVER;
 
 /**
  * Compare duplicate calendar events.
@@ -97,29 +98,29 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
         float match = MATCH_SAME;
 
         if (difference[TITLE]) {
-            match *= 0.8f;
+            match *= 0.85f;
         }
         if (difference[DTSTART]) {
-            match *= matchDate(lhs.getStart(), lhs.getStartTimeZone(), lhs.getRecurrenceSet(), rhs.getStart(), rhs.getStartTimeZone(), rhs.getRecurrenceSet());
+            match *= matchDate(lhs.getStart(), lhs.getStartTimeZone(), lhs.getRecurrenceSet(), lhs.isAllDay(), rhs.getStart(), rhs.getStartTimeZone(), rhs.getRecurrenceSet(), rhs.isAllDay());
         }
         if (difference[DTEND]) {
-            match *= matchDate(lhs.getEndEffective(), lhs.getEndTimeZone(), lhs.getRecurrenceSet(), rhs.getEndEffective(), rhs.getEndTimeZone(), rhs.getRecurrenceSet());
+            match *= matchDate(lhs.getEndEffective(), lhs.getEndTimeZone(), lhs.getRecurrenceSet(), lhs.isAllDay(), rhs.getEndEffective(), rhs.getEndTimeZone(), rhs.getRecurrenceSet(), rhs.isAllDay());
         }
 
         if (difference[DESCRIPTION]) {
             match *= 0.95f;
         }
         if (difference[LOCATION]) {
-            match *= 0.95f;
+            match *= 0.96f;
         }
         if (difference[ATTENDEES]) {
-            match *= 0.95f;
+            match *= 0.96f;
         }
 
         return match;
     }
 
-    protected float matchDate(long lhs, TimeZone lhsTimeZone, RecurrenceSet lhsRecurrence, long rhs, TimeZone rhsTimeZone, RecurrenceSet rhsRecurrence) {
+    protected float matchDate(long lhs, TimeZone lhsTimeZone, RecurrenceSet lhsRecurrence, boolean lhsAllDay, long rhs, TimeZone rhsTimeZone, RecurrenceSet rhsRecurrence, boolean rhsAllDay) {
         long dt = Math.abs(lhs - rhs);
         if (dt < MINUTE_IN_MILLIS) {
             return MATCH_SAME;
@@ -131,72 +132,60 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
             cal2.setTimeZone(rhsTimeZone);
             cal2.setTimeInMillis(rhs);
 
-            int lhsField = Calendar.MILLISECOND;
-            int rhsField = Calendar.MILLISECOND;
-
-            switch (lhsRecurrence.rrules[0].freq) {
-                case SECONDLY:
-                    lhsField = Calendar.SECOND;
-                    break;
-                case MINUTELY:
-                    lhsField = Calendar.MINUTE;
-                    break;
-                case HOURLY:
-                    lhsField = Calendar.HOUR_OF_DAY;
-                    break;
-                case DAILY:
-                    lhsField = Calendar.DAY_OF_MONTH;
-                    break;
-                case WEEKLY:
-                    lhsField = Calendar.WEEK_OF_YEAR;
-                    break;
-                case MONTHLY:
-                    lhsField = Calendar.MONTH;
-                    break;
-                case YEARLY:
-                    lhsField = Calendar.YEAR;
-                    //FIXME compare same month and day
-                    break;
-            }
-
-            switch (rhsRecurrence.rrules[0].freq) {
-                case SECONDLY:
-                    rhsField = Calendar.SECOND;
-                    break;
-                case MINUTELY:
-                    rhsField = Calendar.MINUTE;
-                    break;
-                case HOURLY:
-                    rhsField = Calendar.HOUR_OF_DAY;
-                    break;
-                case DAILY:
-                    rhsField = Calendar.DAY_OF_MONTH;
-                    break;
-                case WEEKLY:
-                    rhsField = Calendar.WEEK_OF_YEAR;
-                    break;
-                case MONTHLY:
-                    rhsField = Calendar.MONTH;
-                    break;
-                case YEARLY:
-                    rhsField = Calendar.YEAR;
-                    //FIXME compare same month and day
-                    break;
-            }
-
-            if (lhsField == rhsField) {
-                if (lhs < rhs) {
-                    cal1.add(lhsField, 1);
-                } else {
-                    cal2.add(rhsField, 1);
+            if (lhsRecurrence.rrules[0].freq == rhsRecurrence.rrules[0].freq) {
+                if ((lhs == NEVER) || (rhs == NEVER)) {
+                    return 0.95f;
                 }
-                dt = Math.abs(cal1.getTimeInMillis() - cal2.getTimeInMillis());
-                if (dt < MINUTE_IN_MILLIS) {
-                    return 0.925f;
+
+                boolean same = false;
+
+                switch (lhsRecurrence.rrules[0].freq) {
+                    case SECONDLY:
+                        same = isSame(cal1, cal2, Calendar.MILLISECOND);
+                        break;
+                    case MINUTELY:
+                        same = isSame(cal1, cal2, Calendar.SECOND);
+                        break;
+                    case HOURLY:
+                        same = isSame(cal1, cal2, Calendar.MINUTE);
+                        break;
+                    case DAILY:
+                        same = isSame(cal1, cal2, Calendar.HOUR_OF_DAY, Calendar.MINUTE);
+                        break;
+                    case WEEKLY:
+                        same = isSame(cal1, cal2, Calendar.DAY_OF_WEEK, Calendar.HOUR_OF_DAY);
+                        break;
+                    case MONTHLY:
+                        same = isSame(cal1, cal2, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY);
+                        break;
+                    case YEARLY:
+                        if (lhsAllDay && rhsAllDay) {
+                            same = isSame(cal1, cal2, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+                        } else {
+                            same = isSame(cal1, cal2, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY);
+                        }
+                        break;
+                }
+                if (same) {
+                    return MATCH_SAME;
                 }
             }
         }
 
         return 0.8f;
+    }
+
+    protected boolean isSame(Calendar lhs, Calendar rhs, int... fields) {
+        long dt = Math.abs(lhs.getTimeInMillis() - rhs.getTimeInMillis());
+        if (dt < MINUTE_IN_MILLIS) {
+            return true;
+        }
+
+        boolean same = true;
+        for (int field : fields) {
+            same &= lhs.get(field) == rhs.get(field);
+        }
+
+        return same;
     }
 }

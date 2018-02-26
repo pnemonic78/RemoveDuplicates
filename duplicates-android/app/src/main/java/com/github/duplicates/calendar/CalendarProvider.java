@@ -24,6 +24,7 @@ import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.util.LongSparseArray;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.duplicates.DuplicateProvider;
 
 import static android.provider.BaseColumns._ID;
@@ -139,6 +140,9 @@ public class CalendarProvider extends DuplicateProvider<CalendarItem> {
 
     @Override
     protected String getCursorOrder() {
+        if (BuildConfig.DEBUG) {
+            return _ID + " ASC";
+        }
         return DTSTART + " ASC";
     }
 
