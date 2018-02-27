@@ -147,7 +147,11 @@ public class CalendarItem extends DuplicateItem {
         this.endEffective = null;
     }
 
+    @NonNull
     public TimeZone getStartTimeZone() {
+        if (startTimeZone == null) {
+            return TimeZone.getDefault();
+        }
         return startTimeZone;
     }
 
@@ -159,6 +163,7 @@ public class CalendarItem extends DuplicateItem {
         setStartTimeZone(startTimeZone != null ? TimeZone.getTimeZone(startTimeZone) : null);
     }
 
+    @NonNull
     public TimeZone getEndTimeZone() {
         if (endTimeZone == null) {
             return getStartTimeZone();

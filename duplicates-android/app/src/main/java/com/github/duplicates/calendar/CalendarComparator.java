@@ -79,6 +79,9 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
     @Override
     public boolean[] difference(CalendarItem lhs, CalendarItem rhs) {
         boolean[] result = new boolean[6];
+        if (lhs.getId() == rhs.getId()) {
+            return result;
+        }
 
         result[ATTENDEES] = compare(lhs.isHasAttendeeData(), rhs.isHasAttendeeData()) != SAME;
         result[DESCRIPTION] = compare(lhs.getDescription(), rhs.getDescription()) != SAME;
@@ -96,9 +99,12 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
             difference = difference(lhs, rhs);
         }
         float match = MATCH_SAME;
+        if (lhs.getId() == rhs.getId()) {
+            return 0;
+        }
 
         if (difference[TITLE]) {
-            match *= 0.85f;
+            match *= 0.875f;
         }
         if (difference[DTSTART]) {
             match *= matchDate(lhs.getStart(), lhs.getStartTimeZone(), lhs.getRecurrenceSet(), lhs.isAllDay(), rhs.getStart(), rhs.getStartTimeZone(), rhs.getRecurrenceSet(), rhs.isAllDay());
@@ -121,17 +127,16 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
     }
 
     protected float matchDate(long lhs, TimeZone lhsTimeZone, RecurrenceSet lhsRecurrence, boolean lhsAllDay, long rhs, TimeZone rhsTimeZone, RecurrenceSet rhsRecurrence, boolean rhsAllDay) {
-        long dt = Math.abs(lhs - rhs);
+        cal1.setTimeZone(lhsTimeZone);
+        cal1.setTimeInMillis(lhs);
+        cal2.setTimeZone(rhsTimeZone);
+        cal2.setTimeInMillis(rhs);
+        long dt = Math.abs(cal1.getTimeInMillis() - cal2.getTimeInMillis());
         if (dt < MINUTE_IN_MILLIS) {
             return MATCH_SAME;
         }
 
         if ((lhsRecurrence.rrules != null) && (rhsRecurrence.rrules != null)) {
-            cal1.setTimeZone(lhsTimeZone);
-            cal1.setTimeInMillis(lhs);
-            cal2.setTimeZone(rhsTimeZone);
-            cal2.setTimeInMillis(rhs);
-
             if (lhsRecurrence.rrules[0].freq == rhsRecurrence.rrules[0].freq) {
                 if ((lhs == NEVER) || (rhs == NEVER)) {
                     return 0.95f;
@@ -176,16 +181,10 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
     }
 
     protected boolean isSame(Calendar lhs, Calendar rhs, int... fields) {
-        long dt = Math.abs(lhs.getTimeInMillis() - rhs.getTimeInMillis());
-        if (dt < MINUTE_IN_MILLIS) {
-            return true;
-        }
-
         boolean same = true;
         for (int field : fields) {
             same &= lhs.get(field) == rhs.get(field);
         }
-
         return same;
     }
 }
