@@ -54,4 +54,9 @@ public class ImData extends ContactData {
     public String toString() {
         return getData() + (TextUtils.isEmpty(getLabel()) ? "" : " " + getLabel());
     }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        return !TextUtils.isEmpty(getLabel()) && getLabel().contains(s);
+    }
 }

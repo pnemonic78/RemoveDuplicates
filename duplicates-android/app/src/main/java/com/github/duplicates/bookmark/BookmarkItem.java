@@ -18,6 +18,7 @@ package com.github.duplicates.bookmark;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.github.duplicates.DuplicateItem;
 
@@ -106,5 +107,10 @@ public class BookmarkItem extends DuplicateItem {
 
     public void setVisits(int visits) {
         this.visits = visits;
+    }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        return !TextUtils.isEmpty(title) && title.contains(s);
     }
 }

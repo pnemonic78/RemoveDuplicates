@@ -46,4 +46,10 @@ public class PhoneData extends ContactData {
     public String toString() {
         return getNumber() + (TextUtils.isEmpty(getLabel()) ? "" : " " + getLabel());
     }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        return (!TextUtils.isEmpty(getLabel()) && getLabel().contains(s))
+                || (!TextUtils.isEmpty(getNumber()) && getNumber().contains(s));
+    }
 }

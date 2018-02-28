@@ -15,6 +15,8 @@
  */
 package com.github.duplicates.contact;
 
+import android.text.TextUtils;
+
 import static android.provider.ContactsContract.CommonDataKinds.Email;
 
 /**
@@ -43,5 +45,11 @@ public class EmailData extends ContactData {
     @Override
     public String toString() {
         return getAddress();
+    }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        return (!TextUtils.isEmpty(getAddress()) && getAddress().contains(s))
+                || (!TextUtils.isEmpty(getLabel()) && getLabel().contains(s));
     }
 }

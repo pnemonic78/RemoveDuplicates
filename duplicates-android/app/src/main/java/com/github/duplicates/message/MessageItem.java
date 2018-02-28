@@ -15,6 +15,8 @@
  */
 package com.github.duplicates.message;
 
+import android.text.TextUtils;
+
 import com.github.duplicates.DuplicateItem;
 
 /**
@@ -183,5 +185,12 @@ public class MessageItem extends DuplicateItem {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        return (!TextUtils.isEmpty(address) && address.contains(s))
+                || (!TextUtils.isEmpty(body) && body.contains(s))
+                || (!TextUtils.isEmpty(subject) && subject.contains(s));
     }
 }

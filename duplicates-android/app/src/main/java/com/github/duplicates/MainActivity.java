@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
@@ -56,7 +57,7 @@ import butterknife.OnClick;
  *
  * @author moshe.w
  */
-public class MainActivity extends Activity implements DuplicateTaskListener {
+public class MainActivity extends Activity implements DuplicateTaskListener, SearchView.OnQueryTextListener {
 
     private static final int CHILD_LIST = 0;
     private static final int CHILD_EMPTY = 1;
@@ -75,6 +76,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
     ViewSwitcher listSwitcher;
     @BindView(android.R.id.list)
     RecyclerView list;
+    @BindView(R.id.filter)
+    SearchView searchView;
 
     private DuplicateTask task;
     private DuplicateAdapter adapter;
@@ -88,6 +91,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
 
         spinner.setAdapter(new MainSpinnerAdapter());
         searchStopped(false);
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(this);
     }
 
     @Override
@@ -276,6 +281,9 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
             case R.id.menu_select_none:
                 selectNoItems();
                 return true;
+            case R.id.menu_filter:
+                toggleFilter();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -307,6 +315,12 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         }
     }
 
+    private void toggleFilter() {
+        if ((adapter != null) && (adapter.getItemCount() > 0)) {
+            searchView.setVisibility(searchView.getVisibility() != View.VISIBLE ? View.VISIBLE : View.GONE);
+        }
+    }
+
     private void deleteStarted() {
         spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
         counter.setText(getString(R.string.counter, 0));
@@ -326,5 +340,23 @@ public class MainActivity extends Activity implements DuplicateTaskListener {
         if (task != null) {
             task.onActivityResult(this, requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        if (adapter != null) {
+            adapter.filter(query);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        if (adapter != null) {
+            adapter.filter(query);
+            return true;
+        }
+        return false;
     }
 }

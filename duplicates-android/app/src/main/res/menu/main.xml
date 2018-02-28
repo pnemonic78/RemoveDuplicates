@@ -19,5 +19,11 @@
         android:orderInCategory="11"
         android:showAsAction="ifRoom"
         android:title="@string/menu_select_none"/>
+    <item
+        android:id="@+id/menu_filter"
+        android:icon="@drawable/ic_menu_filter"
+        android:orderInCategory="20"
+        android:showAsAction="always"
+        android:title="@string/menu_filter"/>
 
 </menu>

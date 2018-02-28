@@ -15,6 +15,8 @@
  */
 package com.github.duplicates.call;
 
+import android.text.TextUtils;
+
 import com.github.duplicates.DuplicateItem;
 
 /**
@@ -112,5 +114,12 @@ public class CallLogItem extends DuplicateItem {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        return (!TextUtils.isEmpty(name) && name.contains(s))
+                || (!TextUtils.isEmpty(number) && number.contains(s))
+                || (!TextUtils.isEmpty(numberLabel) && numberLabel.contains(s));
     }
 }

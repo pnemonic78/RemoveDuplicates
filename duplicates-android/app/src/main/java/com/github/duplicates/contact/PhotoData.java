@@ -66,4 +66,9 @@ public class PhotoData extends ContactData {
     public boolean isEmpty() {
         return getData15() == null;
     }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        return false;
+    }
 }

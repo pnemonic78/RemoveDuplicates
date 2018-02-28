@@ -15,6 +15,8 @@
  */
 package com.github.duplicates.contact;
 
+import android.text.TextUtils;
+
 /**
  * Contact data.
  *
@@ -215,5 +217,23 @@ public class ContactData {
 
     public boolean isEmpty() {
         return getData1() == null;
+    }
+
+    public boolean contains(CharSequence s) {
+        return (!TextUtils.isEmpty(data1) && data1.contains(s))
+                || (!TextUtils.isEmpty(data2) && data2.contains(s))
+                || (!TextUtils.isEmpty(data3) && data3.contains(s))
+                || (!TextUtils.isEmpty(data4) && data4.contains(s))
+                || (!TextUtils.isEmpty(data5) && data5.contains(s))
+                || (!TextUtils.isEmpty(data6) && data6.contains(s))
+                || (!TextUtils.isEmpty(data7) && data7.contains(s))
+                || (!TextUtils.isEmpty(data8) && data8.contains(s))
+                || (!TextUtils.isEmpty(data9) && data9.contains(s))
+                || (!TextUtils.isEmpty(data10) && data10.contains(s))
+                || (!TextUtils.isEmpty(data11) && data11.contains(s))
+                || (!TextUtils.isEmpty(data12) && data12.contains(s))
+                || (!TextUtils.isEmpty(data13) && data13.contains(s))
+                || (!TextUtils.isEmpty(data14) && data14.contains(s))
+                || (!TextUtils.isEmpty(data15) && data15.contains(s));
     }
 }

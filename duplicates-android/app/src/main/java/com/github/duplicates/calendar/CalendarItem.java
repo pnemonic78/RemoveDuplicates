@@ -348,4 +348,11 @@ public class CalendarItem extends DuplicateItem {
         }
         return recurrenceSet;
     }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        return (!TextUtils.isEmpty(title) && title.contains(s))
+                || (!TextUtils.isEmpty(description) && description.contains(s))
+                || (!TextUtils.isEmpty(location) && location.contains(s));
+    }
 }

@@ -61,4 +61,6 @@ public abstract class DuplicateItem implements Comparable<DuplicateItem> {
     public boolean isError() {
         return error;
     }
+
+    public abstract boolean contains(CharSequence s);
 }

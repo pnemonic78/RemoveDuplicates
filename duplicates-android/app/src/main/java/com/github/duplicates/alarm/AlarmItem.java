@@ -16,6 +16,7 @@
 package com.github.duplicates.alarm;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.github.duplicates.DaysOfWeek;
 import com.github.duplicates.DuplicateItem;
@@ -210,5 +211,10 @@ public class AlarmItem extends DuplicateItem {
 
     public void setVolume(int volume) {
         this.volume = volume;
+    }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        return !TextUtils.isEmpty(name) && name.contains(s);
     }
 }

@@ -17,6 +17,7 @@ package com.github.duplicates.contact;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.github.duplicates.DuplicateItem;
 
@@ -161,5 +162,31 @@ public class ContactItem extends DuplicateItem {
     @Override
     public String toString() {
         return Long.toString(getId()) + ": " + getDisplayName();
+    }
+
+    @Override
+    public boolean contains(CharSequence s) {
+        boolean result = !TextUtils.isEmpty(displayName) && displayName.contains(s);
+        if (!result) {
+            for (StructuredNameData data : getNames()) {
+                result |= data.contains(s);
+            }
+        }
+        if (!result) {
+            for (EmailData data : getEmails()) {
+                result |= data.contains(s);
+            }
+        }
+        if (!result) {
+            for (EventData data : getEvents()) {
+                result |= data.contains(s);
+            }
+        }
+        if (!result) {
+            for (PhoneData data : getPhones()) {
+                result |= data.contains(s);
+            }
+        }
+        return result;
     }
 }

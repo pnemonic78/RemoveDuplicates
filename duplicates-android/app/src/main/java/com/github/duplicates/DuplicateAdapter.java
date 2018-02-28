@@ -16,6 +16,9 @@
 package com.github.duplicates;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,9 +31,13 @@ import java.util.TreeSet;
  *
  * @author moshe.w
  */
-public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends RecyclerView.Adapter<VH> implements DuplicateViewHolder.OnItemCheckedChangeListener<T> {
+public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends RecyclerView.Adapter<VH> implements
+        DuplicateViewHolder.OnItemCheckedChangeListener<T>,
+        Filterable {
 
-    private final List<DuplicateItemPair<T>> pairs = new ArrayList<>();
+    private final List<DuplicateItemPair<T>> pairsAll = new ArrayList<>();
+    private List<DuplicateItemPair<T>> pairs = pairsAll;
+    private Filter filter;
 
     public DuplicateAdapter() {
         setHasStableIds(true);
@@ -57,6 +64,7 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * Clear the pairs.
      */
     public void clear() {
+        pairsAll.clear();
         pairs.clear();
         notifyDataSetChanged();
     }
@@ -205,5 +213,47 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     public void onItemCheckedChangeListener(T item, boolean checked) {
         item.setChecked(checked);
         notifyDataSetChanged();//FIXME Update only the affected rows!
+    }
+
+    public void filter(String query) {
+        getFilter().filter(query);
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new DuplicateAdapterFilter();
+        }
+        return filter;
+    }
+
+    private class DuplicateAdapterFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<DuplicateItemPair<T>> filtered;
+
+            if (TextUtils.isEmpty(constraint)) {
+                filtered = pairsAll;
+            } else {
+                filtered = new ArrayList<>();
+                for (DuplicateItemPair<T> pair : pairsAll) {
+                    if (pair.getItem1().contains(constraint)
+                            || pair.getItem2().contains(constraint)) {
+                        filtered.add(pair);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filtered;
+            results.count = filtered.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            pairs = (List<DuplicateItemPair<T>>) results.values;
+            notifyDataSetChanged();
+        }
     }
 }
