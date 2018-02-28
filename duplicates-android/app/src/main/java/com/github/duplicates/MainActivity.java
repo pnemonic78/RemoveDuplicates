@@ -76,8 +76,6 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
     ViewSwitcher listSwitcher;
     @BindView(android.R.id.list)
     RecyclerView list;
-    @BindView(R.id.filter)
-    SearchView searchView;
 
     private DuplicateTask task;
     private DuplicateAdapter adapter;
@@ -91,7 +89,6 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
 
         spinner.setAdapter(new MainSpinnerAdapter());
         searchStopped(false);
-        searchView.setOnQueryTextListener(this);
     }
 
     @Override
@@ -263,6 +260,9 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
         menu.clear();
         if ((adapter != null) && (adapter.getItemCount() > 0)) {
             getMenuInflater().inflate(R.menu.main, menu);
+
+            SearchView searchView = (SearchView) menu.findItem(R.id.menu_filter).getActionView();
+            searchView.setOnQueryTextListener(this);
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -279,9 +279,6 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
                 return true;
             case R.id.menu_select_none:
                 selectNoItems();
-                return true;
-            case R.id.menu_filter:
-                toggleFilter();
                 return true;
         }
 
@@ -311,12 +308,6 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
     private void selectNoItems() {
         if ((adapter != null) && (adapter.getItemCount() > 0)) {
             adapter.selectNone();
-        }
-    }
-
-    private void toggleFilter() {
-        if ((adapter != null) && (adapter.getItemCount() > 0)) {
-            searchView.setVisibility(searchView.getVisibility() != View.VISIBLE ? View.VISIBLE : View.GONE);
         }
     }
 
