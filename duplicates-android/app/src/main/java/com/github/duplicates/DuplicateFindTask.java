@@ -31,7 +31,7 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
     /**
      * Percentage for two items to be considered a good match.
      */
-    public static final float MATCH_GOOD = 0.725f;
+    public static final float MATCH_GOOD = 0.71f;
 
     private DuplicateComparator<T> comparator;
     private final List<T> items = new ArrayList<>();

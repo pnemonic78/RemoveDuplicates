@@ -107,10 +107,12 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
             match *= 0.875f;
         }
         if (difference[DTSTART]) {
-            match *= matchDate(lhs.getStart(), lhs.getStartTimeZone(), lhs.getRecurrenceSet(), lhs.isAllDay(), rhs.getStart(), rhs.getStartTimeZone(), rhs.getRecurrenceSet(), rhs.isAllDay());
+            match *= matchDate(lhs.getStart(), lhs.getStartTimeZone(), lhs.getRecurrenceSet(), lhs.isAllDay(),
+                    rhs.getStart(), rhs.getStartTimeZone(), rhs.getRecurrenceSet(), rhs.isAllDay());
         }
         if (difference[DTEND]) {
-            match *= matchDate(lhs.getEndEffective(), lhs.getEndTimeZone(), lhs.getRecurrenceSet(), lhs.isAllDay(), rhs.getEndEffective(), rhs.getEndTimeZone(), rhs.getRecurrenceSet(), rhs.isAllDay());
+            match *= matchDate(lhs.getEndEffective(), lhs.getEndTimeZone(), lhs.getRecurrenceSet(), lhs.isAllDay(),
+                    rhs.getEndEffective(), rhs.getEndTimeZone(), rhs.getRecurrenceSet(), rhs.isAllDay());
         }
 
         if (difference[DESCRIPTION]) {
@@ -172,7 +174,7 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
                         break;
                 }
                 if (same) {
-                    return MATCH_SAME;
+                    return 0.99f;
                 }
             }
         }
