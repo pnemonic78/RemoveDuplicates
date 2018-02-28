@@ -91,7 +91,6 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
 
         spinner.setAdapter(new MainSpinnerAdapter());
         searchStopped(false);
-        searchView.setIconifiedByDefault(false);
         searchView.setOnQueryTextListener(this);
     }
 

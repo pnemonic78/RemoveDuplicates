@@ -33,6 +33,8 @@
         android:id="@+id/filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:inputType="text"
         android:visibility="gone"
         tools:visibility="visible"/>
 
