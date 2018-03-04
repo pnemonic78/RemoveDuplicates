@@ -91,7 +91,7 @@ public class BookmarkComparator extends DuplicateComparator<BookmarkItem> {
         }
 
         if (difference[TITLE]) {
-            match *= 0.9f;
+            match *= matchTitle(lhs.getTitle(), rhs.getTitle(), 0.9f);
         }
 
         if (difference[CREATED]) {

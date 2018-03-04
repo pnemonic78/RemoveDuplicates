@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+import static android.text.TextUtils.isEmpty;
+
 /**
  * Comparator to determine if it is a duplicate.
  *
@@ -209,5 +211,27 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
 
     public static int compareTime(long lhs, long rhs, long delta) {
         return (Math.abs(lhs - rhs) <= delta) ? SAME : compare(lhs, rhs);
+    }
+
+    protected float matchTitle(String lhs, String rhs, float different) {
+        String s1 = (lhs != null) ? lhs.trim() : "";
+        String s2 = (rhs != null) ? rhs.trim() : "";
+        if (compareIgnoreCase(s1, s2) == 0) {
+            return MATCH_SAME;
+        }
+        if (isEmpty(s1) || isEmpty(s2)) {
+            return different;
+        }
+        String[] tokens1 = s1.split(" ");
+        String[] tokens2 = s2.split(" ");
+        final int lengthMin = Math.min(tokens1.length, tokens2.length);
+        final int lengthMax = Math.max(tokens1.length, tokens2.length);
+        int matches = 0;
+        for (int i = 0; i < lengthMin; i++) {
+            if (compareIgnoreCase(tokens1[i], tokens2[i]) == 0) {
+                matches++;
+            }
+        }
+        return different + (((MATCH_SAME - different) * matches) / lengthMax);
     }
 }
