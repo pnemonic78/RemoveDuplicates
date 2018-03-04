@@ -22,7 +22,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -172,7 +171,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
                     } while (cursor.moveToNext());
                 }
             } catch (RuntimeException e) {
-                Log.e(TAG, "Error fetching items: " + e.getLocalizedMessage(), e);
+                DuplicateLog.e(TAG, "Error fetching items: " + e.getLocalizedMessage(), e);
             } finally {
                 cursor.close();
             }
