@@ -116,7 +116,7 @@ public class CallLogComparator extends DuplicateComparator<CallLogItem> {
             match *= 0.9f;
         }
         if (difference[NAME]) {
-            match *= 0.9f;
+            match *= matchTitle(lhs.getName(), rhs.getName(), 0.9f);
         }
 
         if (difference[READ]) {

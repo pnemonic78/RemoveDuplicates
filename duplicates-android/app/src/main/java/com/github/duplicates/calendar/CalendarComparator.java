@@ -104,7 +104,7 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
         }
 
         if (difference[TITLE]) {
-            match *= 0.875f;
+            match *= matchTitle(lhs.getTitle(), rhs.getTitle(), 0.85f);
         }
         if (difference[DTSTART]) {
             match *= matchDate(lhs.getStart(), lhs.getStartTimeZone(), lhs.getRecurrenceSet(), lhs.isAllDay(),

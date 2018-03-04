@@ -22,6 +22,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -154,21 +155,27 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         }
         Cursor cursor = cr.query(contentUri, getCursorProjection(), getCursorSelection(), null, getCursorOrder());
         if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                T item;
-                int count = 0;
-                do {
-                    if (isCancelled()) {
-                        break;
-                    }
-                    item = createItem(cursor);
-                    if (item != null) {
-                        populateItem(cursor, item);
-                        listener.onItemFetched(this, ++count, item);
-                    }
-                } while (cursor.moveToNext());
+            try {
+                if (cursor.moveToFirst()) {
+                    final DuplicateProvider<T> provider = this;
+                    T item;
+                    int count = 0;
+                    do {
+                        if (isCancelled()) {
+                            break;
+                        }
+                        item = createItem(cursor);
+                        if (item != null) {
+                            populateItem(cursor, item);
+                            listener.onItemFetched(provider, ++count, item);
+                        }
+                    } while (cursor.moveToNext());
+                }
+            } catch (RuntimeException e) {
+                Log.e(TAG, "Error fetching items: " + e.getLocalizedMessage(), e);
+            } finally {
+                cursor.close();
             }
-            cursor.close();
         }
     }
 
