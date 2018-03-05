@@ -145,17 +145,17 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
             match *= 0.8f;
         }
         if (difference[ADDRESS]) {
-            match *= 0.8f;
+            match *= matchTitle(lhs.getAddress(), rhs.getAddress(), 0.8f);
         }
         if (difference[PERSON]) {
             match *= 0.8f;
         }
         if (difference[BODY]) {
-            match *= 0.8f;
+            match *= 0.78f;
         }
 
         if (difference[SUBJECT]) {
-            match *= 0.9f;
+            match *= matchTitle(lhs.getSubject(), rhs.getSubject(), 0.9f);
         }
         if (difference[THREAD_ID]) {
             match *= 0.9f;
