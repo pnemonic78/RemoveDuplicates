@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 
+import static com.github.duplicates.DuplicateComparator.MATCH_SAME;
+
 /**
  * Task to find duplicates.
  *
@@ -102,7 +104,7 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
                 bestMatch = match;
                 bestDifference = difference;
                 bestItem = item1;
-                if (match == 1f) {
+                if (match == MATCH_SAME) {
                     break;
                 }
             }
