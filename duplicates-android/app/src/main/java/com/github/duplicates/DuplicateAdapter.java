@@ -15,6 +15,7 @@
  */
 package com.github.duplicates;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.Filter;
@@ -103,12 +104,15 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param item the item.
      */
     public void remove(T item) {
-        List<Integer> positions = findPairs(item);
-        if ((positions != null) && !positions.isEmpty()) {
-            for (int position : positions) {
-                pairs.remove(position);
-                notifyItemRemoved(position);
-            }
+        List<Integer> positions = findAllPairs(item);
+        for (int position : positions) {
+            pairsAll.remove(position);
+        }
+
+        positions = findPairs(item);
+        for (int position : positions) {
+            pairs.remove(position);
+            notifyItemRemoved(position);
         }
     }
 
@@ -118,6 +122,8 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param pair the item pair.
      */
     public void remove(DuplicateItemPair<T> pair) {
+        pairsAll.remove(pair);
+
         int position = pairs.indexOf(pair);
         if (position >= 0) {
             pairs.remove(position);
@@ -131,7 +137,31 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param item the item to find.
      * @return the list of indexes/positions - {@code null} otherwise.
      */
+    @NonNull
     protected List<Integer> findPairs(T item) {
+        return findPairs(item, pairs);
+    }
+
+    /**
+     * Find all the pairs containing the item.
+     *
+     * @param item the item to find.
+     * @return the list of indexes/positions - {@code null} otherwise.
+     */
+    @NonNull
+    protected List<Integer> findAllPairs(T item) {
+        return findPairs(item, pairsAll);
+    }
+
+    /**
+     * Find the pairs containing the item.
+     *
+     * @param item  the item to find.
+     * @param pairs the list of pairs with items.
+     * @return the list of indexes/positions - {@code null} otherwise.
+     */
+    @NonNull
+    protected List<Integer> findPairs(T item, List<DuplicateItemPair<T>> pairs) {
         List<Integer> positions = new ArrayList<>();
         int size = pairs.size();
         DuplicateItemPair<T> pair;

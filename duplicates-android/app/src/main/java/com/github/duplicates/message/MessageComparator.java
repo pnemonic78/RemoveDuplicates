@@ -151,11 +151,11 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
             match *= 0.8f;
         }
         if (difference[BODY]) {
-            match *= 0.78f;
+            match *= 0.75f;
         }
 
         if (difference[SUBJECT]) {
-            match *= matchTitle(lhs.getSubject(), rhs.getSubject(), 0.9f);
+            match *= matchTitle(lhs.getSubject(), rhs.getSubject(), 0.85f);
         }
         if (difference[THREAD_ID]) {
             match *= 0.9f;
