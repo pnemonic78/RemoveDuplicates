@@ -35,7 +35,7 @@ public class EventData extends ContactData {
     }
 
     public int getType() {
-        return Integer.parseInt(getData2());
+        return parseInt(getData2());
     }
 
     public String getLabel() {
@@ -44,11 +44,12 @@ public class EventData extends ContactData {
 
     @Override
     public String toString() {
-        return getStartDate() + (TextUtils.isEmpty(getLabel()) ? "" : " " + getLabel());
+        final String label = getLabel();
+        return getStartDate() + (TextUtils.isEmpty(label) ? "" : " " + label);
     }
 
     @Override
-    public boolean contains(CharSequence s) {
-        return !TextUtils.isEmpty(getLabel()) && getLabel().contains(s);
+    public boolean containsAny(CharSequence s) {
+        return contains(getLabel());
     }
 }

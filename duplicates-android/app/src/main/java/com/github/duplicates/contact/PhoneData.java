@@ -35,7 +35,7 @@ public class PhoneData extends ContactData {
     }
 
     public int getType() {
-        return Integer.parseInt(getData2());
+        return parseInt(getData2());
     }
 
     public String getLabel() {
@@ -48,8 +48,7 @@ public class PhoneData extends ContactData {
     }
 
     @Override
-    public boolean contains(CharSequence s) {
-        return (!TextUtils.isEmpty(getLabel()) && getLabel().contains(s))
-                || (!TextUtils.isEmpty(getNumber()) && getNumber().contains(s));
+    public boolean containsAny(CharSequence s) {
+        return contains(getLabel()) || contains(getNumber());
     }
 }

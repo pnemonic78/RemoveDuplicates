@@ -219,21 +219,29 @@ public class ContactData {
         return getData1() == null;
     }
 
-    public boolean contains(CharSequence s) {
-        return (!TextUtils.isEmpty(data1) && data1.contains(s))
-                || (!TextUtils.isEmpty(data2) && data2.contains(s))
-                || (!TextUtils.isEmpty(data3) && data3.contains(s))
-                || (!TextUtils.isEmpty(data4) && data4.contains(s))
-                || (!TextUtils.isEmpty(data5) && data5.contains(s))
-                || (!TextUtils.isEmpty(data6) && data6.contains(s))
-                || (!TextUtils.isEmpty(data7) && data7.contains(s))
-                || (!TextUtils.isEmpty(data8) && data8.contains(s))
-                || (!TextUtils.isEmpty(data9) && data9.contains(s))
-                || (!TextUtils.isEmpty(data10) && data10.contains(s))
-                || (!TextUtils.isEmpty(data11) && data11.contains(s))
-                || (!TextUtils.isEmpty(data12) && data12.contains(s))
-                || (!TextUtils.isEmpty(data13) && data13.contains(s))
-                || (!TextUtils.isEmpty(data14) && data14.contains(s))
-                || (!TextUtils.isEmpty(data15) && data15.contains(s));
+    public boolean containsAny(CharSequence s) {
+        return contains(data1)
+                || contains(data2)
+                || contains(data3)
+                || contains(data4)
+                || contains(data5)
+                || contains(data6)
+                || contains(data7)
+                || contains(data8)
+                || contains(data9)
+                || contains(data10)
+                || contains(data11)
+                || contains(data12)
+                || contains(data13)
+                || contains(data14)
+                || contains(data15);
+    }
+
+    protected int parseInt(String s) {
+        return TextUtils.isEmpty(s) ? 0 : Integer.parseInt(s);
+    }
+
+    protected boolean contains(String s) {
+        return !TextUtils.isEmpty(s) && s.contains(s);
     }
 }
