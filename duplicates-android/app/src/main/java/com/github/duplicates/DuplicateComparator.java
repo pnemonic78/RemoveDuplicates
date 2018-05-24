@@ -222,8 +222,8 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         if (isEmpty(s1) || isEmpty(s2)) {
             return different;
         }
-        String[] tokens1 = s1.split(" ");
-        String[] tokens2 = s2.split(" ");
+        String[] tokens1 = s1.split(" ,;");
+        String[] tokens2 = s2.split(" ,;");
         final int lengthMin = Math.min(tokens1.length, tokens2.length);
         final int lengthMax = Math.max(tokens1.length, tokens2.length);
         int matches = 0;

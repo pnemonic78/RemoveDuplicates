@@ -52,14 +52,14 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    api project(':lib')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':lib')
 
     // Views
-    api "com.android.support:recyclerview-v7:$supportVersion"
-    api "com.jakewharton:butterknife:$butterknifeVersion"
-    annotationProcessor group: 'com.jakewharton', name: 'butterknife-compiler', version: "$butterknifeVersion"
+    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation "com.jakewharton:butterknife:$butterknife_version"
+    annotationProcessor group: 'com.jakewharton', name: 'butterknife-compiler', version: "$butterknife_version"
 
     // Testing
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }

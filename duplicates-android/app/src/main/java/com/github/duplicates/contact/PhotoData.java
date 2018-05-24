@@ -17,6 +17,7 @@ package com.github.duplicates.contact;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Base64;
 
 import static android.provider.ContactsContract.CommonDataKinds.Photo;
@@ -46,8 +47,8 @@ public class PhotoData extends ContactData {
 
     public Bitmap getPhoto() {
         if (photo == null) {
-            String data15 = getData15();
-            if (data15 != null) {
+            final String data15 = getData15();
+            if (!TextUtils.isEmpty(data15)) {
                 byte[] blob = Base64.decode(data15, Base64.DEFAULT);
                 if (blob != null) {
                     this.photo = BitmapFactory.decodeByteArray(blob, 0, blob.length);
@@ -68,7 +69,7 @@ public class PhotoData extends ContactData {
     }
 
     @Override
-    public boolean contains(CharSequence s) {
+    public boolean containsAny(CharSequence s) {
         return false;
     }
 }

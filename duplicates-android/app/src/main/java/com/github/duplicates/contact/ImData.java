@@ -35,7 +35,7 @@ public class ImData extends ContactData {
     }
 
     public int getType() {
-        return Integer.parseInt(getData2());
+        return parseInt(getData2());
     }
 
     public String getLabel() {
@@ -43,7 +43,7 @@ public class ImData extends ContactData {
     }
 
     public int getProtocol() {
-        return Integer.parseInt(getData5());
+        return parseInt(getData5());
     }
 
     public String getCustomProtocol() {
@@ -56,7 +56,7 @@ public class ImData extends ContactData {
     }
 
     @Override
-    public boolean contains(CharSequence s) {
-        return !TextUtils.isEmpty(getLabel()) && getLabel().contains(s);
+    public boolean containsAny(CharSequence s) {
+        return contains(getLabel());
     }
 }

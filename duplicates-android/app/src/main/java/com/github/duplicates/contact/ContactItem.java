@@ -169,22 +169,22 @@ public class ContactItem extends DuplicateItem {
         boolean result = !TextUtils.isEmpty(displayName) && displayName.contains(s);
         if (!result) {
             for (StructuredNameData data : getNames()) {
-                result |= data.contains(s);
+                result |= data.containsAny(s);
             }
         }
         if (!result) {
             for (EmailData data : getEmails()) {
-                result |= data.contains(s);
+                result |= data.containsAny(s);
             }
         }
         if (!result) {
             for (EventData data : getEvents()) {
-                result |= data.contains(s);
+                result |= data.containsAny(s);
             }
         }
         if (!result) {
             for (PhoneData data : getPhones()) {
-                result |= data.contains(s);
+                result |= data.containsAny(s);
             }
         }
         return result;
