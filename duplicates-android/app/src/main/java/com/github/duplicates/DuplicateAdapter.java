@@ -165,7 +165,8 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
         List<Integer> positions = new ArrayList<>();
         int size = pairs.size();
         DuplicateItemPair<T> pair;
-        for (int i = 0; i < size; i++) {
+        // Sort by descending index to avoid "index out of bounds" when displaying the list.
+        for (int i = size - 1; i >= 0; i--) {
             pair = pairs.get(i);
             if ((pair.getItem1() == item) || (pair.getItem2() == item)) {
                 positions.add(i);
