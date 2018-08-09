@@ -18,6 +18,8 @@ package com.github.duplicates;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 
@@ -43,11 +45,12 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends Dupli
     @Override
     protected Void doInBackground(DuplicateItemPair<T>... params) {
         if (params != null) {
-            for (DuplicateItemPair<T> pair : params) {
-                pairs.add(pair);
-            }
+            pairs.addAll(Arrays.asList(params));
         }
         publishProgress(pairs.size());
+        // Sort by descending id to avoid "index out of bounds" when displaying the list.
+        Collections.sort(pairs);
+        Collections.reverse(pairs);
         try {
             getProvider().deletePairs(pairs);
         } catch (CancellationException ignore) {

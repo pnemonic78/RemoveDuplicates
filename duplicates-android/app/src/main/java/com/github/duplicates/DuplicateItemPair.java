@@ -15,12 +15,14 @@
  */
 package com.github.duplicates;
 
+import android.support.annotation.NonNull;
+
 /**
  * Item that is a possible duplicate of two items.
  *
  * @author moshe.w
  */
-public class DuplicateItemPair<T extends DuplicateItem> {
+public class DuplicateItemPair<T extends DuplicateItem> implements Comparable<DuplicateItemPair<T>> {
 
     /**
      * Percentage for two items to be considered a very good match.
@@ -70,5 +72,18 @@ public class DuplicateItemPair<T extends DuplicateItem> {
         long id1 = getItem1().getId();
         long id2 = getItem2().getId();
         return ((id1 & 0xFFFFFFFFL) << 32) | (id2 & 0xFFFFFFFFL);
+    }
+
+    @Override
+    public int compareTo(@NonNull DuplicateItemPair<T> that) {
+        long thisId1 = this.item1.getId();
+        long thatId1 = that.item1.getId();
+        int c = Long.compare(thisId1, thatId1);
+        if (c != 0) {
+            return c;
+        }
+        long thisId2 = this.item2.getId();
+        long thatId2 = that.item2.getId();
+        return Long.compare(thisId2, thatId2);
     }
 }
