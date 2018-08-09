@@ -176,7 +176,7 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     }
 
     /**
-     * Mark all the items as checked.
+     * Mark all the "duplicate" items as checked.
      */
     public void selectAll() {
         for (DuplicateItemPair<T> pair : pairs) {
