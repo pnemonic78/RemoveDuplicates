@@ -64,14 +64,15 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
 
     @Override
     protected void onProgressUpdate(Object... progress) {
+        DuplicateTaskListener<DuplicateTask, T> listener = getListener();
         if (progress.length == 1) {
-            getListener().onDuplicateTaskProgress(this, (Integer) progress[0]);
+            listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
         } else {
             T item1 = (T) progress[1];
             T item2 = (T) progress[2];
             float match = (float) progress[3];
             boolean[] difference = (boolean[]) progress[4];
-            getListener().onDuplicateTaskMatch(this, item1, item2, match, difference);
+            listener.onDuplicateTaskMatch(this, item1, item2, match, difference);
         }
     }
 

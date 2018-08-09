@@ -57,15 +57,16 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends Dupli
 
     @Override
     protected void onProgressUpdate(Object... progress) {
-        getListener().onDuplicateTaskProgress(this, (Integer) progress[0]);
+        DuplicateTaskListener<DuplicateTask, T> listener = getListener();
+        listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
         if (progress.length > 1) {
             Object arg1 = progress[1];
             if (arg1 instanceof DuplicateItem) {
                 T item = (T) arg1;
-                getListener().onDuplicateTaskItemDeleted(this, item);
+                listener.onDuplicateTaskItemDeleted(this, item);
             } else {
                 DuplicateItemPair<T> pair = (DuplicateItemPair<T>) arg1;
-                getListener().onDuplicateTaskPairDeleted(this, pair);
+                listener.onDuplicateTaskPairDeleted(this, pair);
             }
         }
     }
