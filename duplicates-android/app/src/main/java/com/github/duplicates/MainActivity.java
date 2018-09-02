@@ -135,14 +135,12 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
         spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
         statusBar.setVisibility(View.GONE);
         task = null;
-        if (!cancelled) {
-            invalidateOptionsMenu();
-        }
         if ((adapter != null) && (adapter.getItemCount() > 0)) {
             listSwitcher.setDisplayedChild(CHILD_LIST);
         } else {
             listSwitcher.setDisplayedChild(CHILD_EMPTY);
         }
+        invalidateOptionsMenu();
     }
 
     @Nullable
@@ -202,10 +200,8 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
     public void onDuplicateTaskFinished(DuplicateTask task) {
         if (task instanceof DuplicateFindTask) {
             searchStopped(false);
-            invalidateOptionsMenu();
         } else if (task instanceof DuplicateDeleteTask) {
             deleteStopped(false);
-            invalidateOptionsMenu();
         }
     }
 
