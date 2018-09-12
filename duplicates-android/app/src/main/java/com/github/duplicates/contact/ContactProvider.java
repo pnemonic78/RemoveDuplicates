@@ -264,6 +264,9 @@ public class ContactProvider extends DuplicateProvider<ContactItem> {
         Collections.sort(items, new ContactNameComparator());
         final int size = items.size();
         for (int i = 0; i < size; i++) {
+            if (isCancelled()) {
+                return;
+            }
             listener.onItemFetched(this, i, items.get(i));
         }
     }

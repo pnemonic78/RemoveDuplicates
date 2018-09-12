@@ -101,6 +101,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
 
     @OnClick(R.id.search)
     void searchClicked() {
+        spinnerAction.setEnabled(false);
         if ((task != null) && !task.isCancelled()) {
             task.cancel();
         } else {
@@ -121,6 +122,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
     private void searchStarted() {
         spinner.setEnabled(false);
         spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
+        spinnerAction.setEnabled(true);
         counter.setText(getString(R.string.counter, 0));
         statusBar.setVisibility(View.VISIBLE);
         if (adapter != null) {
@@ -133,6 +135,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
     private void searchStopped(boolean cancelled) {
         spinner.setEnabled(true);
         spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
+        spinnerAction.setEnabled(true);
         statusBar.setVisibility(View.GONE);
         task = null;
         if ((adapter != null) && (adapter.getItemCount() > 0)) {
@@ -309,6 +312,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
 
     private void deleteStarted() {
         spinnerAction.setImageResource(android.R.drawable.ic_media_pause);
+        spinnerAction.setEnabled(true);
         counter.setText(getString(R.string.counter, 0));
         statusBar.setVisibility(View.VISIBLE);
         listSwitcher.setDisplayedChild(CHILD_LIST);
@@ -316,6 +320,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
 
     private void deleteStopped(boolean cancelled) {
         spinnerAction.setImageResource(android.R.drawable.ic_menu_search);
+        spinnerAction.setEnabled(true);
         statusBar.setVisibility(View.GONE);
         task = null;
     }
