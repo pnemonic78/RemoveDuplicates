@@ -7,7 +7,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.0-rc02'
         classpath "com.jakewharton:butterknife-gradle-plugin:$butterknife_version"
     }
 }
@@ -24,9 +24,9 @@ task clean(type: Delete) {
 }
 
 ext {
-    androidBuildSdkVersion = 27
+    androidBuildSdkVersion = 28
     androidBuildMinSdkVersion = 19
     androidBuildTargetSdkVersion = 27
 
-    support_version = '27.1.1'
+    support_version = '28.0.0-rc02'
 }
