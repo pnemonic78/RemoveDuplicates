@@ -1,23 +1,25 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -30,9 +32,17 @@ import java.util.TreeSet;
  *
  * @author moshe.w
  */
-public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends RecyclerView.Adapter<VH> implements DuplicateViewHolder.OnItemCheckedChangeListener<T> {
+public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends RecyclerView.Adapter<VH> implements
+        DuplicateViewHolder.OnItemCheckedChangeListener<T>,
+        Filterable {
 
-    private final List<DuplicateItemPair<T>> pairs = new ArrayList<>();
+    private final List<DuplicateItemPair<T>> pairsAll = new ArrayList<>();
+    private List<DuplicateItemPair<T>> pairs = pairsAll;
+    private Filter filter;
+
+    public DuplicateAdapter() {
+        setHasStableIds(true);
+    }
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
@@ -45,10 +55,17 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
         return pairs.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        DuplicateItemPair<T> pair = pairs.get(position);
+        return pair.getId();
+    }
+
     /**
      * Clear the pairs.
      */
     public void clear() {
+        pairsAll.clear();
         pairs.clear();
         notifyDataSetChanged();
     }
@@ -72,12 +89,12 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param difference the array of differences.
      */
     public void add(T item1, T item2, float match, boolean[] difference) {
-        int position = pairs.size();
-        if (!item1.isChecked() || !item2.isChecked()) {
-            DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match, difference);
-            if (pairs.add(pair)) {
-                notifyItemInserted(position);
-            }
+        if (item1.isChecked() && item2.isChecked()) {
+            return;
+        }
+        DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match, difference);
+        if (pairs.add(pair)) {
+            notifyItemInserted(pairs.size());
         }
     }
 
@@ -87,12 +104,15 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param item the item.
      */
     public void remove(T item) {
-        List<Integer> positions = findPairs(item);
-        if ((positions != null) && !positions.isEmpty()) {
-            for (int position : positions) {
-                pairs.remove(position);
-                notifyItemRemoved(position);
-            }
+        List<Integer> positions = findAllPairs(item);
+        for (int position : positions) {
+            pairsAll.remove(position);
+        }
+
+        positions = findPairs(item);
+        for (int position : positions) {
+            pairs.remove(position);
+            notifyItemRemoved(position);
         }
     }
 
@@ -102,6 +122,8 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param pair the item pair.
      */
     public void remove(DuplicateItemPair<T> pair) {
+        pairsAll.remove(pair);
+
         int position = pairs.indexOf(pair);
         if (position >= 0) {
             pairs.remove(position);
@@ -115,11 +137,36 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param item the item to find.
      * @return the list of indexes/positions - {@code null} otherwise.
      */
+    @NonNull
     protected List<Integer> findPairs(T item) {
+        return findPairs(item, pairs);
+    }
+
+    /**
+     * Find all the pairs containing the item.
+     *
+     * @param item the item to find.
+     * @return the list of indexes/positions - {@code null} otherwise.
+     */
+    @NonNull
+    protected List<Integer> findAllPairs(T item) {
+        return findPairs(item, pairsAll);
+    }
+
+    /**
+     * Find the pairs containing the item.
+     *
+     * @param item  the item to find.
+     * @param pairs the list of pairs with items.
+     * @return the list of indexes/positions - {@code null} otherwise.
+     */
+    @NonNull
+    protected List<Integer> findPairs(T item, List<DuplicateItemPair<T>> pairs) {
         List<Integer> positions = new ArrayList<>();
         int size = pairs.size();
         DuplicateItemPair<T> pair;
-        for (int i = 0; i < size; i++) {
+        // Sort by descending index to avoid "index out of bounds" when displaying the list.
+        for (int i = size - 1; i >= 0; i--) {
             pair = pairs.get(i);
             if ((pair.getItem1() == item) || (pair.getItem2() == item)) {
                 positions.add(i);
@@ -129,12 +176,22 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     }
 
     /**
-     * Mark all the items as checked.
+     * Mark all the "duplicate" items as checked.
      */
     public void selectAll() {
         for (DuplicateItemPair<T> pair : pairs) {
-            pair.getItem1().setChecked(true);
             pair.getItem2().setChecked(true);
+        }
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Mark all the items as unchecked.
+     */
+    public void selectNone() {
+        for (DuplicateItemPair<T> pair : pairs) {
+            pair.getItem1().setChecked(false);
+            pair.getItem2().setChecked(false);
         }
         notifyDataSetChanged();
     }
@@ -186,6 +243,48 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     @Override
     public void onItemCheckedChangeListener(T item, boolean checked) {
         item.setChecked(checked);
-        notifyDataSetChanged();
+        notifyDataSetChanged();//FIXME Update only the affected rows!
+    }
+
+    public void filter(String query) {
+        getFilter().filter(query);
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new DuplicateAdapterFilter();
+        }
+        return filter;
+    }
+
+    private class DuplicateAdapterFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<DuplicateItemPair<T>> filtered;
+
+            if (TextUtils.isEmpty(constraint)) {
+                filtered = pairsAll;
+            } else {
+                filtered = new ArrayList<>();
+                for (DuplicateItemPair<T> pair : pairsAll) {
+                    if (pair.getItem1().contains(constraint)
+                            || pair.getItem2().contains(constraint)) {
+                        filtered.add(pair);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filtered;
+            results.count = filtered.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            pairs = (List<DuplicateItemPair<T>>) results.values;
+            notifyDataSetChanged();
+        }
     }
 }

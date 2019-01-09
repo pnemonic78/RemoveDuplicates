@@ -1,19 +1,17 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates;
 
@@ -22,6 +20,8 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +34,8 @@ import java.util.concurrent.CancellationException;
  * @author moshe.w
  */
 public abstract class DuplicateProvider<T extends DuplicateItem> {
+
+    private static final String TAG = "DuplicateProvider";
 
     private final Context context;
     private DuplicateProviderListener<T, DuplicateProvider<T>> listener;
@@ -55,19 +57,28 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         return context;
     }
 
+    @Nullable
     protected abstract Uri getContentUri();
 
+    @Nullable
     protected String[] getCursorProjection() {
         return null;
     }
 
+    @Nullable
     protected String getCursorSelection() {
         return null;
     }
 
-    public abstract T createItem();
+    @Nullable
+    protected String getCursorOrder() {
+        return null;
+    }
 
-    public abstract void populateItem(Cursor cursor, T item);
+    @Nullable
+    public abstract T createItem(Cursor cursor);
+
+    public abstract void populateItem(Cursor cursor, @NonNull T item);
 
     /**
      * Get the items from the system provider.
@@ -75,6 +86,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @return the list of items.
      * @throws CancellationException if the provider has been cancelled.
      */
+    @NonNull
     public List<T> getItems() throws CancellationException {
         if (isCancelled()) {
             throw new CancellationException();
@@ -83,7 +95,11 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
-        Cursor cursor = cr.query(getContentUri(), getCursorProjection(), null, null, null);
+        Uri contentUri = getContentUri();
+        if (contentUri == null) {
+            return items;
+        }
+        Cursor cursor = cr.query(contentUri, getCursorProjection(), null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 T item;
@@ -91,9 +107,11 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
                     if (isCancelled()) {
                         break;
                     }
-                    item = createItem();
-                    populateItem(cursor, item);
-                    items.add(item);
+                    item = createItem(cursor);
+                    if (item != null) {
+                        populateItem(cursor, item);
+                        items.add(item);
+                    }
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -108,13 +126,24 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @return the list of items.
      * @throws CancellationException if the provider has been cancelled.
      */
+    @Deprecated
     public void fetchItems() throws CancellationException {
-        if (isCancelled()) {
-            throw new CancellationException();
-        }
-        DuplicateProviderListener<T, DuplicateProvider<T>> listener = getListener();
+        fetchItems(getListener());
+    }
+
+    /**
+     * Fetch the items from the system provider into the listener.
+     *
+     * @param listener the listener.
+     * @return the list of items.
+     * @throws CancellationException if the provider has been cancelled.
+     */
+    public void fetchItems(DuplicateProviderListener<T, DuplicateProvider<T>> listener) throws CancellationException {
         if (listener == null) {
             return;
+        }
+        if (isCancelled()) {
+            throw new CancellationException();
         }
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();
@@ -123,21 +152,29 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         if (contentUri == null) {
             return;
         }
-        Cursor cursor = cr.query(getContentUri(), getCursorProjection(), getCursorSelection(), null, null);
+        Cursor cursor = cr.query(contentUri, getCursorProjection(), getCursorSelection(), null, getCursorOrder());
         if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                T item;
-                int count = 0;
-                do {
-                    if (isCancelled()) {
-                        break;
-                    }
-                    item = createItem();
-                    populateItem(cursor, item);
-                    listener.onItemFetched(this, ++count, item);
-                } while (cursor.moveToNext());
+            try {
+                if (cursor.moveToFirst()) {
+                    final DuplicateProvider<T> provider = this;
+                    T item;
+                    int count = 0;
+                    do {
+                        if (isCancelled()) {
+                            break;
+                        }
+                        item = createItem(cursor);
+                        if (item != null) {
+                            populateItem(cursor, item);
+                            listener.onItemFetched(provider, ++count, item);
+                        }
+                    } while (cursor.moveToNext());
+                }
+            } catch (RuntimeException e) {
+                DuplicateLog.e(TAG, "Error fetching items: " + e.getLocalizedMessage(), e);
+            } finally {
+                cursor.close();
             }
-            cursor.close();
         }
     }
 
@@ -147,7 +184,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @param items the list of items.
      * @throws CancellationException if the provider has been cancelled.
      */
-    public void deleteItems(Collection<T> items) throws CancellationException {
+    public void deleteItems(@Nullable Collection<T> items) throws CancellationException {
+        if ((items == null) || items.isEmpty()) {
+            return;
+        }
         if (isCancelled()) {
             throw new CancellationException();
         }
@@ -188,7 +228,15 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @param item the item.
      */
     public boolean deleteItem(ContentResolver cr, T item) {
-        return cr.delete(ContentUris.withAppendedId(getContentUri(), item.getId()), null, null) > 0;
+        Uri contentUri = getContentUri();
+        try {
+            item.setError(false);
+            return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.getId()), null, null) > 0;
+        } catch (IllegalArgumentException e) {
+            item.setError(true);
+            DuplicateLog.e(TAG, "deleteItem: " + item + ": " + e.getLocalizedMessage(), e);
+        }
+        return false;
     }
 
     /**
@@ -242,6 +290,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      *
      * @return the array of permissions.
      */
+    @Nullable
     public abstract String[] getReadPermissions();
 
     /**
@@ -249,6 +298,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      *
      * @return the array of permissions.
      */
+    @Nullable
     public abstract String[] getDeletePermissions();
 
     /**
@@ -265,5 +315,17 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      */
     public boolean isCancelled() {
         return cancelled;
+    }
+
+    /**
+     * Get the non-{@code null} string column.
+     *
+     * @param cursor the database cursor.
+     * @param index  the column index with string value.
+     * @return the string - empty otherwise.
+     */
+    @NonNull
+    protected String empty(Cursor cursor, int index) {
+        return cursor.isNull(index) ? "" : cursor.getString(index);
     }
 }

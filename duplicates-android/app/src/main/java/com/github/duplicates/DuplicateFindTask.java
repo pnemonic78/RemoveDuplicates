@@ -1,19 +1,17 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates;
 
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 
-import static com.github.duplicates.DuplicateTaskListener.MATCH_GOOD;
+import static com.github.duplicates.DuplicateComparator.MATCH_SAME;
 
 /**
  * Task to find duplicates.
@@ -31,6 +29,11 @@ import static com.github.duplicates.DuplicateTaskListener.MATCH_GOOD;
  * @author moshe.w
  */
 public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends DuplicateViewHolder<T>> extends DuplicateTask<T, Object, Object, List<T>> {
+
+    /**
+     * Percentage for two items to be considered a good match.
+     */
+    public static final float MATCH_GOOD = 0.71f;
 
     private DuplicateComparator<T> comparator;
     private final List<T> items = new ArrayList<>();
@@ -53,28 +56,38 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
     @Override
     protected List<T> doInBackground(Object... params) {
         try {
-            getProvider().fetchItems();
-        } catch (CancellationException e) {
+            getProvider().fetchItems(this);
+        } catch (CancellationException ignore) {
         }
         return items;
     }
 
     @Override
     protected void onProgressUpdate(Object... progress) {
+        DuplicateTaskListener<DuplicateTask, T> listener = getListener();
         if (progress.length == 1) {
-            getListener().onDuplicateTaskProgress(this, (Integer) progress[0]);
+            listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
         } else {
             T item1 = (T) progress[1];
             T item2 = (T) progress[2];
             float match = (float) progress[3];
             boolean[] difference = (boolean[]) progress[4];
-            getListener().onDuplicateTaskMatch(this, item1, item2, match, difference);
+            listener.onDuplicateTaskMatch(this, item1, item2, match, difference);
         }
     }
 
     @Override
     public void onItemFetched(DuplicateProvider<T> provider, int count, T item) {
-        int size = items.size();
+        final int size = items.size();
+
+        // Maybe the item already exists in the list?
+        T item1;
+        for (int i = size - 1; i >= 0; i--) {
+            item1 = items.get(i);
+            if (item == item1) {
+                return;
+            }
+        }
 
         // Is it a duplicate?
         float bestMatch = 0f;
@@ -82,17 +95,17 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
         boolean[] bestDifference = null;
         boolean[] difference;
         float match;
-        T item1;
-        // Most likely that a matching item is a neighbour,so count backwards.
+
+        // Most likely that a matching item is a neighbour, so count backwards.
         for (int i = size - 1; i >= 0; i--) {
             item1 = items.get(i);
             difference = comparator.difference(item1, item);
-            match = comparator.match(difference);
+            match = comparator.match(item1, item, difference);
             if ((match >= MATCH_GOOD) && (match > bestMatch)) {
                 bestMatch = match;
                 bestDifference = difference;
                 bestItem = item1;
-                if (match == 1f) {
+                if (match == MATCH_SAME) {
                     break;
                 }
             }

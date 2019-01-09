@@ -1,22 +1,21 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -24,6 +23,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.github.android.removeduplicates.R;
@@ -43,8 +44,9 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      */
     public static final int ACTIVITY_PERMISSIONS = 2;
 
+    @SuppressLint("StaticFieldLeak")
     private final Context context;
-    private final DuplicateTaskListener listener;
+    private final DuplicateTaskListener<DuplicateTask, T> listener;
     private DuplicateProvider<T> provider;
     private Params[] params;
 
@@ -53,14 +55,16 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
         this.listener = listener;
     }
 
+    @NonNull
     protected Context getContext() {
         return context;
     }
 
-    protected DuplicateTaskListener getListener() {
+    protected DuplicateTaskListener<DuplicateTask, T> getListener() {
         return listener;
     }
 
+    @NonNull
     protected abstract DuplicateProvider<T> createProvider(Context context);
 
     /**
@@ -68,7 +72,8 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      *
      * @return the provider.
      */
-    protected DuplicateProvider getProvider() {
+    @NonNull
+    protected DuplicateProvider<T> getProvider() {
         if (provider == null) {
             provider = createProvider(getContext());
         }
@@ -141,8 +146,8 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    protected boolean checkSelfPermissions(Context context, String[] permissions) {
-        if (permissions != null) {
+    protected boolean checkSelfPermissions(Context context, @Nullable String[] permissions) {
+        if ((permissions != null) && (permissions.length > 0)) {
             for (String permission : permissions) {
                 if (context.checkSelfPermission(permission) != PERMISSION_GRANTED) {
                     return false;
@@ -160,15 +165,13 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      * @param grantResults The grant results for the corresponding permissions which is either {@link PackageManager#PERMISSION_GRANTED} or {@link PackageManager#PERMISSION_DENIED}. Never null.
      */
     @TargetApi(Build.VERSION_CODES.M)
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == ACTIVITY_PERMISSIONS) {
-            if (permissions.length > 0) {
-                if (grantResults.length > 0) {
-                    if (grantResults[0] == PERMISSION_GRANTED) {//FIXME: check entire array.
-                        onPermissionGranted();
-                    } else {
-                        onPermissionDenied();
-                    }
+            if ((permissions.length > 0) && (grantResults.length > 0)) {
+                if (grantResults[0] == PERMISSION_GRANTED) {//FIXME: check entire array.
+                    onPermissionGranted();
+                } else {
+                    onPermissionDenied();
                 }
             } else {
                 onPermissionDenied();
@@ -176,6 +179,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
         }
     }
 
+    @Nullable
     protected abstract String[] getPermissions();
 
     /**

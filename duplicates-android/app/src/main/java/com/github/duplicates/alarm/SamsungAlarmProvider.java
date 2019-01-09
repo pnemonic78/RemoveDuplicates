@@ -1,19 +1,17 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates.alarm;
 
@@ -35,8 +33,8 @@ public class SamsungAlarmProvider extends DuplicateProvider<AlarmItem> {
 
     public static final String PACKAGE = "com.sec.android.app.clockpackage";
 
-    private static String[] PERMISSIONS_READ = {"com.sec.android.app.clockpackage.permission.READ_ALARM"};
-    private static String[] PERMISSIONS_WRITE = {"com.sec.android.app.clockpackage.permission.WRITE_ALARM"};
+    private static final String[] PERMISSIONS_READ = {"com.sec.android.app.clockpackage.permission.READ_ALARM"};
+    private static final String[] PERMISSIONS_WRITE = {"com.sec.android.app.clockpackage.permission.WRITE_ALARM"};
 
     private static final String[] PROJECTION = {
             _ID,
@@ -110,7 +108,7 @@ public class SamsungAlarmProvider extends DuplicateProvider<AlarmItem> {
     }
 
     @Override
-    public AlarmItem createItem() {
+    public AlarmItem createItem(Cursor cursor) {
         return new AlarmItem();
     }
 
@@ -125,7 +123,7 @@ public class SamsungAlarmProvider extends DuplicateProvider<AlarmItem> {
         item.setAlertTime(cursor.getLong(INDEX_ALERTTIME));
         item.setCreateTime(cursor.getLong(INDEX_CREATETIME));
         item.setDailyBriefing(cursor.getInt(INDEX_DAILYBRIEF) != 0);
-        item.setName(cursor.getString(INDEX_NAME));
+        item.setName(empty(cursor, INDEX_NAME));
         item.setNotificationType(cursor.getInt(INDEX_NOTITYPE));
         item.setRepeat(toDaysOfWeek(cursor.getInt(INDEX_REPEATTYPE)));
         item.setSubdueActivate(cursor.getInt(INDEX_SBDACTIVE) != 0);

@@ -1,19 +1,17 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates.call;
 
@@ -23,6 +21,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
@@ -97,6 +96,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     @Override
     protected void bindItem1(Context context, CallLogItem item) {
         checkbox1.setChecked(item.isChecked());
+        checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date1.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         duration1.setText(DateUtils.formatElapsedTime(item.getDuration()));
         type1.setText(getTypeName(context, item.getType()));
@@ -107,6 +107,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     @Override
     protected void bindItem2(Context context, CallLogItem item) {
         checkbox2.setChecked(item.isChecked());
+        checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date2.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         duration2.setText(DateUtils.formatElapsedTime(item.getDuration()));
         type2.setText(getTypeName(context, item.getType()));
@@ -118,11 +119,11 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     protected void bindDifference(Context context, DuplicateItemPair<CallLogItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, date1, date2, difference[DATE]);
-        bindDifference(context, duration1, duration2, difference[DURATION]);
-        bindDifference(context, type1, type2, difference[TYPE]);
-        bindDifference(context, number1, number2, difference[NUMBER]);
-        bindDifference(context, name1, name2, difference[NAME]);
+        bindDifference(date1, date2, difference[DATE]);
+        bindDifference(duration1, duration2, difference[DURATION]);
+        bindDifference(type1, type2, difference[TYPE]);
+        bindDifference(number1, number2, difference[NUMBER]);
+        bindDifference(name1, name2, difference[NAME]);
     }
 
     private CharSequence getTypeName(Context context, int type) {

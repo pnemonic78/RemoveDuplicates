@@ -1,19 +1,17 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates.alarm;
 
@@ -24,6 +22,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
@@ -89,6 +88,7 @@ public class AlarmViewHolder extends DuplicateViewHolder<AlarmItem> {
     @Override
     protected void bindItem1(Context context, AlarmItem item) {
         checkbox1.setChecked(item.isChecked());
+        checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         alarm1.setText(formatHourMinutes(context, item.getAlarmTime()));
         alert1.setText(DateUtils.formatDateTime(context, item.getAlertTime(), DateUtils.FORMAT_SHOW_TIME));
         name1.setText(item.getName());
@@ -98,6 +98,7 @@ public class AlarmViewHolder extends DuplicateViewHolder<AlarmItem> {
     @Override
     protected void bindItem2(Context context, AlarmItem item) {
         checkbox2.setChecked(item.isChecked());
+        checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         alarm2.setText(formatHourMinutes(context, item.getAlarmTime()));
         alert2.setText(DateUtils.formatDateTime(context, item.getAlertTime(), DateUtils.FORMAT_SHOW_TIME));
         name2.setText(item.getName());
@@ -108,10 +109,10 @@ public class AlarmViewHolder extends DuplicateViewHolder<AlarmItem> {
     protected void bindDifference(Context context, DuplicateItemPair<AlarmItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, alarm1, alarm2, difference[ALARM_TIME]);
-        bindDifference(context, alert1, alert2, difference[ALERT_TIME]);
-        bindDifference(context, name1, name2, difference[NAME]);
-        bindDifference(context, repeat1, repeat2, difference[REPEAT]);
+        bindDifference(alarm1, alarm2, difference[ALARM_TIME]);
+        bindDifference(alert1, alert2, difference[ALERT_TIME]);
+        bindDifference(name1, name2, difference[NAME]);
+        bindDifference(repeat1, repeat2, difference[REPEAT]);
     }
 
     @OnClick(R.id.checkbox1)

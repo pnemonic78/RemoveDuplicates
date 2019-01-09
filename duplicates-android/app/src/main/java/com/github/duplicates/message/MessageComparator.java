@@ -1,19 +1,17 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates.message;
 
@@ -111,10 +109,10 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
     public boolean[] difference(MessageItem lhs, MessageItem rhs) {
         boolean[] result = new boolean[14];
 
-        result[ADDRESS] = compare(lhs.getAddress(), rhs.getAddress()) != SAME;
+        result[ADDRESS] = compareIgnoreCase(lhs.getAddress(), rhs.getAddress()) != SAME;
         result[BODY] = compare(lhs.getBody(), rhs.getBody()) != SAME;
-        result[DATE] = Math.abs(compare(lhs.getDateReceived(), rhs.getDateReceived())) <= DateUtils.SECOND_IN_MILLIS;
-        result[DATE_SENT] = compare(lhs.getDateSent(), rhs.getDateSent()) != SAME;
+        result[DATE] = compareTime(lhs.getDateReceived(), rhs.getDateReceived(), DateUtils.SECOND_IN_MILLIS) != SAME;
+        result[DATE_SENT] = compareTime(lhs.getDateSent(), rhs.getDateSent(), DateUtils.SECOND_IN_MILLIS) != SAME;
         result[ERROR_CODE] = compare(lhs.getErrorCode(), rhs.getErrorCode()) != SAME;
         result[LOCKED] = compare(lhs.isLocked(), rhs.isLocked()) != SAME;
         result[PERSON] = compare(lhs.getPerson(), rhs.getPerson()) != SAME;
@@ -122,7 +120,7 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
         result[READ] = compare(lhs.isRead(), rhs.isRead()) != SAME;
         result[SEEN] = compare(lhs.isSeen(), rhs.isSeen()) != SAME;
         result[STATUS] = compare(lhs.getStatus(), rhs.getStatus()) != SAME;
-        result[SUBJECT] = compare(lhs.getSubject(), rhs.getSubject()) != SAME;
+        result[SUBJECT] = compareIgnoreCase(lhs.getSubject(), rhs.getSubject()) != SAME;
         result[THREAD_ID] = compare(lhs.getThreadId(), rhs.getThreadId()) != SAME;
         result[TYPE] = compare(lhs.getType(), rhs.getType()) != SAME;
 
@@ -130,8 +128,11 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
     }
 
     @Override
-    public float match(boolean[] difference) {
-        float match = 1f;
+    public float match(MessageItem lhs, MessageItem rhs, boolean[] difference) {
+        if (difference == null) {
+            difference = difference(lhs, rhs);
+        }
+        float match = MATCH_SAME;
 
         if (difference[DATE]) {
             match *= 0.7f;
@@ -144,17 +145,17 @@ public class MessageComparator extends DuplicateComparator<MessageItem> {
             match *= 0.8f;
         }
         if (difference[ADDRESS]) {
-            match *= 0.8f;
+            match *= matchTitle(lhs.getAddress(), rhs.getAddress(), 0.8f);
         }
         if (difference[PERSON]) {
             match *= 0.8f;
         }
         if (difference[BODY]) {
-            match *= 0.8f;
+            match *= 0.75f;
         }
 
         if (difference[SUBJECT]) {
-            match *= 0.9f;
+            match *= matchTitle(lhs.getSubject(), rhs.getSubject(), 0.85f);
         }
         if (difference[THREAD_ID]) {
             match *= 0.9f;

@@ -1,21 +1,21 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates.alarm;
+
+import android.text.format.DateUtils;
 
 import com.github.duplicates.DuplicateComparator;
 
@@ -124,16 +124,19 @@ public class AlarmComparator extends DuplicateComparator<AlarmItem> {
         boolean[] result = new boolean[4];
 
         result[ALARM_TIME] = compare(lhs.getAlarmTime(), rhs.getAlarmTime()) != SAME;
-        result[ALERT_TIME] = compare(lhs.getAlertTime(), rhs.getAlertTime()) != SAME;
-        result[NAME] = compare(lhs.getName(), rhs.getName()) != SAME;
+        result[ALERT_TIME] = compareTime(lhs.getAlertTime(), rhs.getAlertTime(), DateUtils.MINUTE_IN_MILLIS) != SAME;
+        result[NAME] = compareIgnoreCase(lhs.getName(), rhs.getName()) != SAME;
         result[REPEAT] = compare(lhs.getRepeat(), rhs.getRepeat()) != SAME;
 
         return result;
     }
 
     @Override
-    public float match(boolean[] difference) {
-        float match = 1f;
+    public float match(AlarmItem lhs, AlarmItem rhs, boolean[] difference) {
+        if (difference == null) {
+            difference = difference(lhs, rhs);
+        }
+        float match = MATCH_SAME;
 
         if (difference[ALARM_TIME]) {
             match *= 0.7f;
@@ -147,7 +150,7 @@ public class AlarmComparator extends DuplicateComparator<AlarmItem> {
             match *= 0.9f;
         }
         if (difference[NAME]) {
-            match *= 0.9f;
+            match *= matchTitle(lhs.getName(), rhs.getName(), 0.9f);
         }
 
         return match;

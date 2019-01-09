@@ -1,19 +1,17 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates.bookmark;
 
@@ -24,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.DuplicateItemPair;
 import com.github.duplicates.DuplicateViewHolder;
@@ -91,6 +90,7 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     @Override
     protected void bindItem1(Context context, BookmarkItem item) {
         checkbox1.setChecked(item.isChecked());
+        checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         created1.setText(DateUtils.formatDateTime(context, item.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         date1.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         icon1.setImageBitmap(item.getIcon());
@@ -101,6 +101,7 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     @Override
     protected void bindItem2(Context context, BookmarkItem item) {
         checkbox2.setChecked(item.isChecked());
+        checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         created2.setText(DateUtils.formatDateTime(context, item.getCreated(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         date2.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         icon2.setImageBitmap(item.getIcon());
@@ -112,11 +113,11 @@ public class BookmarkViewHolder extends DuplicateViewHolder<BookmarkItem> {
     protected void bindDifference(Context context, DuplicateItemPair<BookmarkItem> pair) {
         boolean[] difference = pair.getDifference();
 
-        bindDifference(context, created1, created2, difference[CREATED]);
-        bindDifference(context, date1, date2, difference[DATE]);
-        bindDifference(context, icon1, icon2, difference[FAVICON]);
-        bindDifference(context, title1, title2, difference[TITLE]);
-        bindDifference(context, url1, url2, difference[URL]);
+        bindDifference(created1, created2, difference[CREATED]);
+        bindDifference(date1, date2, difference[DATE]);
+        bindDifference(icon1, icon2, difference[FAVICON]);
+        bindDifference(title1, title2, difference[TITLE]);
+        bindDifference(url1, url2, difference[URL]);
     }
 
     @OnClick(R.id.checkbox1)

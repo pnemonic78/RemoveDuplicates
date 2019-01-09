@@ -1,30 +1,33 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates;
 
-import static com.github.duplicates.DuplicateTaskListener.MATCH_GREAT;
+import android.support.annotation.NonNull;
 
 /**
  * Item that is a possible duplicate of two items.
  *
  * @author moshe.w
  */
-public class DuplicateItemPair<T extends DuplicateItem> {
+public class DuplicateItemPair<T extends DuplicateItem> implements Comparable<DuplicateItemPair<T>> {
+
+    /**
+     * Percentage for two items to be considered a very good match.
+     */
+    public static final float MATCH_GREAT = 0.9f;
 
     private T item1;
     private T item2;
@@ -63,5 +66,24 @@ public class DuplicateItemPair<T extends DuplicateItem> {
 
     public boolean[] getDifference() {
         return difference;
+    }
+
+    public long getId() {
+        long id1 = getItem1().getId();
+        long id2 = getItem2().getId();
+        return ((id1 & 0xFFFFFFFFL) << 32) | (id2 & 0xFFFFFFFFL);
+    }
+
+    @Override
+    public int compareTo(@NonNull DuplicateItemPair<T> that) {
+        long thisId1 = this.item1.getId();
+        long thatId1 = that.item1.getId();
+        int c = Long.compare(thisId1, thatId1);
+        if (c != 0) {
+            return c;
+        }
+        long thisId2 = this.item2.getId();
+        long thatId2 = that.item2.getId();
+        return Long.compare(thisId2, thatId2);
     }
 }

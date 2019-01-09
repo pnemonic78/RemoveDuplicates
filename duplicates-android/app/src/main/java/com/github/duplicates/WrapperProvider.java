@@ -1,19 +1,17 @@
 /*
- * Source file of the Remove Duplicates project.
- * Copyright (c) 2016. All Rights Reserved.
+ * Copyright 2016, Moshe Waisberg
  *
- * The contents of this file are subject to the Mozilla Public License Version
- * 2.0 (the "License"); you may not use this file except in compliance with the
- * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/2.0
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Contributors can be contacted by electronic mail via the project Web pages:
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * https://github.com/pnemonic78/RemoveDuplicates
- *
- * Contributor(s):
- *   Moshe Waisberg
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.github.duplicates;
 
@@ -21,6 +19,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import java.util.Collection;
 import java.util.List;
@@ -37,16 +36,16 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
 
     public WrapperProvider(Context context) {
         super(context);
-        DuplicateProvider<T> candidate = createDelegate(context);
-        delegate = (candidate != null) ? candidate : new DefaultProvider<T>(context);
+        this.delegate = createDelegate(context);
     }
 
     /**
      * Create the delegate provider.
      *
      * @param context the context.
-     * @return the provider - {@code null} to use teh default provider.
+     * @return the provider.
      */
+    @NonNull
     protected abstract DuplicateProvider<T> createDelegate(Context context);
 
     @Override
@@ -61,12 +60,27 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
 
     @Override
     protected Uri getContentUri() {
-        return null;
+        return delegate.getContentUri();
     }
 
     @Override
-    public T createItem() {
-        return delegate.createItem();
+    protected String[] getCursorProjection() {
+        return delegate.getCursorProjection();
+    }
+
+    @Override
+    protected String getCursorSelection() {
+        return delegate.getCursorSelection();
+    }
+
+    @Override
+    protected String getCursorOrder() {
+        return delegate.getCursorOrder();
+    }
+
+    @Override
+    public T createItem(Cursor cursor) {
+        return delegate.createItem(cursor);
     }
 
     @Override
@@ -75,8 +89,8 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
     }
 
     @Override
-    public void fetchItems() throws CancellationException {
-        delegate.fetchItems();
+    public void fetchItems(DuplicateProviderListener<T, DuplicateProvider<T>> listener) throws CancellationException {
+        delegate.fetchItems(listener);
     }
 
     @Override
@@ -97,6 +111,11 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
     @Override
     public boolean deleteItem(ContentResolver cr, T item) {
         return delegate.deleteItem(cr, item);
+    }
+
+    @Override
+    public void deletePairs(Collection<DuplicateItemPair<T>> duplicateItemPairs) throws CancellationException {
+        delegate.deletePairs(duplicateItemPairs);
     }
 
     @Override
@@ -123,5 +142,10 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
     public void cancel() {
         super.cancel();
         delegate.cancel();
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return delegate.isCancelled();
     }
 }
