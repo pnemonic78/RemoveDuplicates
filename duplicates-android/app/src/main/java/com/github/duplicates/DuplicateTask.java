@@ -23,11 +23,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.github.android.removeduplicates.R;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 

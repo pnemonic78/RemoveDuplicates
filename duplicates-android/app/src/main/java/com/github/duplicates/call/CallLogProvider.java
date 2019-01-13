@@ -21,9 +21,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
-import android.support.annotation.NonNull;
 
 import com.github.duplicates.DuplicateProvider;
+
+import androidx.annotation.NonNull;
 
 import static android.provider.BaseColumns._ID;
 import static android.provider.CallLog.Calls.CACHED_NAME;

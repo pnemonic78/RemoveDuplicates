@@ -16,13 +16,14 @@
 package com.github.duplicates.contact;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.github.duplicates.DuplicateItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Duplicate contact item.

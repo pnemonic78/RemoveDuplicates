@@ -19,11 +19,12 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CancellationException;
+
+import androidx.annotation.NonNull;
 
 /**
  * Provider that wraps functionality to a delegate provider.

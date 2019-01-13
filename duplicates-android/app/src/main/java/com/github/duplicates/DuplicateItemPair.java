@@ -15,7 +15,7 @@
  */
 package com.github.duplicates;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Item that is a possible duplicate of two items.

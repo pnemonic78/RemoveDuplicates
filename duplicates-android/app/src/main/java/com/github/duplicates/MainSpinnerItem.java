@@ -15,10 +15,10 @@
  */
 package com.github.duplicates;
 
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
-
 import com.github.android.removeduplicates.R;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
 
 /**
  * Main spinner items.

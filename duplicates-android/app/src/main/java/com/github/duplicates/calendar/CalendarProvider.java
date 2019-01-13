@@ -21,11 +21,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 import android.util.LongSparseArray;
 
 import com.github.android.removeduplicates.BuildConfig;
 import com.github.duplicates.DuplicateProvider;
+
+import androidx.annotation.NonNull;
 
 import static android.provider.BaseColumns._ID;
 import static android.provider.CalendarContract.Events.ALL_DAY;

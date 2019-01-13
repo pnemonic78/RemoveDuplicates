@@ -19,10 +19,11 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 import com.github.duplicates.DuplicateProvider;
 import com.github.provider.Browser;
+
+import androidx.annotation.NonNull;
 
 import static android.provider.BaseColumns._ID;
 import static com.github.provider.Browser.BookmarkColumns.BOOKMARK;

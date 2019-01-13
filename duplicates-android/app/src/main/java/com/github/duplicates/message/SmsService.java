@@ -18,7 +18,8 @@ package com.github.duplicates.message;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 /**
  * Dummy SMS service just to let system think we can be a default SMS app.

@@ -15,11 +15,12 @@
  */
 package com.github.duplicates.alarm;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.github.duplicates.DaysOfWeek;
 import com.github.duplicates.DuplicateItem;
+
+import androidx.annotation.NonNull;
 
 /**
  * Duplicate alarm item.

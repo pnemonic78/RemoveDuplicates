@@ -15,8 +15,6 @@
  */
 package com.github.duplicates;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -26,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * List adapter for duplicate pairs.

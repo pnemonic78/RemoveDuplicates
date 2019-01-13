@@ -17,12 +17,13 @@ package com.github.duplicates;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.github.android.removeduplicates.R;
 
 import java.text.NumberFormat;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * View holder for a duplicate item.

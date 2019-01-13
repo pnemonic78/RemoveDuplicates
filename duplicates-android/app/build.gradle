@@ -14,7 +14,7 @@ android {
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
         resConfigs "en"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -40,6 +40,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     lintOptions {
         disable "AllowBackup"
         disable "GoogleAppIndexingWarning"
@@ -55,7 +60,7 @@ dependencies {
     implementation project(':lib')
 
     // Views
-    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
     implementation "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor group: 'com.jakewharton', name: 'butterknife-compiler', version: "$butterknife_version"
 

@@ -16,7 +16,6 @@
 package com.github.duplicates.calendar;
 
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.format.Time;
 
@@ -26,6 +25,8 @@ import com.github.duplicates.DuplicateItem;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+
+import androidx.annotation.NonNull;
 
 import static android.provider.CalendarContract.Attendees.ATTENDEE_STATUS_NONE;
 import static android.provider.CalendarContract.Events.ACCESS_DEFAULT;
