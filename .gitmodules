@@ -1,0 +1,4 @@
+[submodule "duplicates-android/android-lib"]
+	path = duplicates-android/android-lib
+	url = https://github.com/pnemonic78/android-lib.git
+	branch = master

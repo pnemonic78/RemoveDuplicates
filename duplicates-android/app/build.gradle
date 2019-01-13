@@ -57,10 +57,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':lib')
+    implementation project(':android-lib:lib')
 
     // Views
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
     implementation "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor group: 'com.jakewharton', name: 'butterknife-compiler', version: "$butterknife_version"
 
