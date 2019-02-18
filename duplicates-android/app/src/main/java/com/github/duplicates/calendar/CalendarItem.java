@@ -42,7 +42,6 @@ public class CalendarItem extends DuplicateItem {
 
     public static final long NEVER = Long.MIN_VALUE;
 
-    private long id;
     private String title;
     private String location;
     private String description;
@@ -70,14 +69,6 @@ public class CalendarItem extends DuplicateItem {
     private CalendarEntity calendar;
     private Long endEffective;
     private RecurrenceSet recurrenceSet;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     @NonNull
     public String getTitle() {
