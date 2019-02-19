@@ -18,17 +18,17 @@ package com.android.calendarcommon2;
 
 import android.text.TextUtils;
 import android.text.format.Time;
-import android.util.Log;
 import android.util.TimeFormatException;
 
 import java.util.Calendar;
 import java.util.HashMap;
 
+import timber.log.Timber;
+
 /**
  * Event recurrence utility functions.
  */
 public class EventRecurrence {
-    private static String TAG = "EventRecur";
 
     public static final int SECONDLY = 1;
     public static final int MINUTELY = 2;
@@ -621,7 +621,7 @@ public class EventRecurrence {
             PartParser parser = sParsePartMap.get(lhs);
             if (parser == null) {
                 if (lhs.startsWith("X-")) {
-                    //Log.d(TAG, "Ignoring custom part " + lhs);
+                    //Timber.d("Ignoring custom part %s", lhs);
                     continue;
                 }
                 throw new InvalidFormatException("Couldn't find parser for " + lhs);
@@ -649,7 +649,7 @@ public class EventRecurrence {
             if (ONLY_ONE_UNTIL_COUNT) {
                 throw new InvalidFormatException("Must not specify both UNTIL and COUNT: " + recur);
             } else {
-                Log.w(TAG, "Warning: rrule has both UNTIL and COUNT: " + recur);
+                Timber.w("Warning: rrule has both UNTIL and COUNT: %s", recur);
             }
         }
     }
@@ -753,7 +753,7 @@ public class EventRecurrence {
         @Override public int parsePart(String value, EventRecurrence er) {
             er.count = parseIntRange(value, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
             if (er.count < 0) {
-                Log.d(TAG, "Invalid Count. Forcing COUNT to 1 from " + value);
+                Timber.d("Invalid Count. Forcing COUNT to 1 from %s", value);
                 er.count = 1; // invalid count. assume one time recurrence.
             }
             return PARSED_COUNT;
@@ -764,7 +764,7 @@ public class EventRecurrence {
         @Override public int parsePart(String value, EventRecurrence er) {
             er.interval = parseIntRange(value, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
             if (er.interval < 1) {
-                Log.d(TAG, "Invalid Interval. Forcing INTERVAL to 1 from " + value);
+                Timber.d("Invalid Interval. Forcing INTERVAL to 1 from %s", value);
                 er.interval = 1;
             }
             return PARSED_INTERVAL;

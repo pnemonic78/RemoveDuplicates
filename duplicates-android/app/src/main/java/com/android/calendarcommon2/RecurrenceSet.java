@@ -21,20 +21,19 @@ import android.database.Cursor;
 import android.provider.CalendarContract;
 import android.text.TextUtils;
 import android.text.format.Time;
-import android.util.Log;
 import android.util.TimeFormatException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import timber.log.Timber;
+
 /**
  * Basic information about a recurrence, following RFC 2445 Section 4.8.5.
  * Contains the RRULEs, RDATE, EXRULEs, and EXDATE properties.
  */
 public class RecurrenceSet {
-
-    private final static String TAG = "RecurrenceSet";
 
     private final static String RULE_SEPARATOR = "\n";
     private final static String FOLDING_SEPARATOR = "\n ";
@@ -218,9 +217,9 @@ public class RecurrenceSet {
                     ((TextUtils.isEmpty(rrule))&&
                             (TextUtils.isEmpty(rdate)))) {
                     if (false) {
-                        Log.d(TAG, "Recurrence missing DTSTART, DTEND/DURATION, "
+                        Timber.d("Recurrence missing DTSTART, DTEND/DURATION, "
                                     + "or RRULE/RDATE: "
-                                    + component.toString());
+                                    + component);
                     }
                     return false;
             }
@@ -232,7 +231,7 @@ public class RecurrenceSet {
             values.put(CalendarContract.Events.DTSTART, millis);
             if (millis == -1) {
                 if (false) {
-                    Log.d(TAG, "DTSTART is out of range: " + component.toString());
+                    Timber.d("DTSTART is out of range: %s", component);
                 }
                 return false;
             }
@@ -247,7 +246,7 @@ public class RecurrenceSet {
             return true;
         } catch (TimeFormatException e) {
             // Something is wrong with the format of this event
-            Log.i(TAG,"Failed to parse event: " + component.toString());
+            Timber.i("Failed to parse event: %s", component);
             return false;
         }
     }

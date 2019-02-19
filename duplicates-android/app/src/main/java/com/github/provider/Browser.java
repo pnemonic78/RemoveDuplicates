@@ -28,14 +28,14 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.webkit.WebIconDatabase;
 
-import com.github.duplicates.DuplicateLog;
 import com.github.provider.BrowserContract.Bookmarks;
 import com.github.provider.BrowserContract.Combined;
 import com.github.provider.BrowserContract.History;
 import com.github.provider.BrowserContract.Searches;
 
+import timber.log.Timber;
+
 public class Browser {
-    private static final String LOGTAG = "browser";
 
     /**
      * A table containing both bookmarks and history items. The columns of the table are defined in
@@ -348,7 +348,7 @@ public class Browser {
                 cr.insert(History.CONTENT_URI, values);
             }
         } catch (IllegalStateException e) {
-            DuplicateLog.e(LOGTAG, "updateVisitedHistory", e);
+            Timber.e(e, "updateVisitedHistory");
         } finally {
             if (c != null) c.close();
         }
@@ -376,7 +376,7 @@ public class Browser {
                 i++;
             }
         } catch (IllegalStateException e) {
-            DuplicateLog.e(LOGTAG, "getVisitedHistory", e);
+            Timber.e(e, "getVisitedHistory");
             str = new String[0];
         } finally {
             if (c != null) c.close();
@@ -414,7 +414,7 @@ public class Browser {
                 }
             }
         } catch (IllegalStateException e) {
-            DuplicateLog.e(LOGTAG, "truncateHistory", e);
+            Timber.e(e, "truncateHistory");
         } finally {
             if (cursor != null) cursor.close();
         }
@@ -435,7 +435,7 @@ public class Browser {
                 null, null, null);
             ret = cursor.getCount() > 0;
         } catch (IllegalStateException e) {
-            DuplicateLog.e(LOGTAG, "canClearHistory", e);
+            Timber.e(e, "canClearHistory");
         } finally {
             if (cursor != null) cursor.close();
         }
@@ -472,7 +472,7 @@ public class Browser {
                 cr.delete(History.CONTENT_URI, whereClause, null);
             }
         } catch (IllegalStateException e) {
-            DuplicateLog.e(LOGTAG, "deleteHistoryWhere", e);
+            Timber.e(e, "deleteHistoryWhere");
             return;
         } finally {
             if (cursor != null) cursor.close();
@@ -544,7 +544,7 @@ public class Browser {
         try {
             cr.delete(Searches.CONTENT_URI, null, null);
         } catch (IllegalStateException e) {
-            DuplicateLog.e(LOGTAG, "clearSearches", e);
+            Timber.e(e, "clearSearches");
         }
     }
 

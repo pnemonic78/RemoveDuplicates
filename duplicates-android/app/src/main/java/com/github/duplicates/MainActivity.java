@@ -31,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.alarm.AlarmDeleteTask;
 import com.github.duplicates.alarm.AlarmFindTask;
@@ -44,6 +45,7 @@ import com.github.duplicates.contact.ContactDeleteTask;
 import com.github.duplicates.contact.ContactFindTask;
 import com.github.duplicates.message.MessageDeleteTask;
 import com.github.duplicates.message.MessageFindTask;
+import com.github.util.LogTree;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +53,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * Main activity.
@@ -84,6 +87,9 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Timber.plant(new LogTree(BuildConfig.DEBUG));
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 

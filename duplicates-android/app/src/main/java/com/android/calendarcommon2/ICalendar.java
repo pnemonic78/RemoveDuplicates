@@ -16,20 +16,18 @@
 
 package com.android.calendarcommon2;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import timber.log.Timber;
+
 /**
  * Parses RFC 2445 iCalendar objects.
  */
 public class ICalendar {
-
-    private static final String TAG = "Sync";
 
     // TODO: keep track of VEVENT, VTODO, VJOURNAL, VFREEBUSY, VTIMEZONE, VALARM
     // components, by type field or by subclass?  subclass would allow us to
@@ -447,7 +445,7 @@ public class ICalendar {
                 }
             } catch (FormatException fe) {
                 if (false) {
-                    Log.v(TAG, "Cannot parse " + line, fe);
+                    Timber.v(fe, "Cannot parse %s", line);
                 }
                 // for now, we ignore the parse error.  Google Calendar seems
                 // to be emitting some misformatted iCalendar objects.

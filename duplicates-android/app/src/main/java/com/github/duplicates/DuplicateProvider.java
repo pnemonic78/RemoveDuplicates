@@ -28,6 +28,7 @@ import java.util.concurrent.CancellationException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 /**
  * Provider of duplicate items.
@@ -35,8 +36,6 @@ import androidx.annotation.Nullable;
  * @author moshe.w
  */
 public abstract class DuplicateProvider<T extends DuplicateItem> {
-
-    private static final String TAG = "DuplicateProvider";
 
     private final Context context;
     private DuplicateProviderListener<T, DuplicateProvider<T>> listener;
@@ -172,7 +171,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
                     } while (cursor.moveToNext());
                 }
             } catch (RuntimeException e) {
-                DuplicateLog.e(TAG, "Error fetching items: " + e.getLocalizedMessage(), e);
+                Timber.e(e, "Error fetching items: %s", e.getMessage());
             } finally {
                 cursor.close();
             }
@@ -235,7 +234,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
             return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.getId()), null, null) > 0;
         } catch (IllegalArgumentException e) {
             item.setError(true);
-            DuplicateLog.e(TAG, "deleteItem: " + item + ": " + e.getLocalizedMessage(), e);
+            Timber.e(e, "deleteItem: %s: %s", item, e.getMessage());
         }
         return false;
     }
