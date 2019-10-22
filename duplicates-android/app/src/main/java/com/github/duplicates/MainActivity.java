@@ -31,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 import com.github.duplicates.alarm.AlarmDeleteTask;
@@ -53,6 +54,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 /**
@@ -89,6 +91,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
         super.onCreate(savedInstanceState);
 
         Timber.plant(new LogTree(BuildConfig.DEBUG));
+        Fabric.with(this, new Crashlytics());
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
