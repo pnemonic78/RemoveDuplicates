@@ -149,6 +149,6 @@ public final class DaysOfWeek implements Comparable<DaysOfWeek> {
 
     @Override
     public int compareTo(DaysOfWeek another) {
-        return this.mDays  - another.mDays;
+        return this.mDays - another.mDays;
     }
 }
