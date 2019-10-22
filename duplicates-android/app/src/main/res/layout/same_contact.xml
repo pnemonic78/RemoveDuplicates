@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,13 +15,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
-        android:text="@string/match"/>
+        android:text="@string/match" />
 
     <TextView
         android:id="@+id/account1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,20 +31,21 @@
         <CheckBox
             android:id="@+id/checkbox1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/icon1"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            tools:src="@drawable/ic_contact_picture"/>
+            android:contentDescription="@string/contact_icon"
+            tools:src="@drawable/ic_contact_picture" />
 
         <TextView
             android:id="@+id/name1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            tools:text="@string/dummy_text"/>
+            tools:text="@string/dummy_text" />
     </LinearLayout>
 
     <TextView
@@ -53,43 +53,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
     <TextView
         android:id="@+id/email1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
     <TextView
         android:id="@+id/im1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
     <TextView
         android:id="@+id/event1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginTop="8dp"
-        android:background="@android:drawable/divider_horizontal_bright"/>
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:drawable/divider_horizontal_bright" />
 
     <TextView
         android:id="@+id/account2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,20 +99,21 @@
         <CheckBox
             android:id="@+id/checkbox2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/icon2"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            tools:src="@drawable/ic_contact_picture"/>
+            android:contentDescription="@string/contact_icon"
+            tools:src="@drawable/ic_contact_picture" />
 
         <TextView
             android:id="@+id/name2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            tools:text="@string/dummy_text"/>
+            tools:text="@string/dummy_text" />
     </LinearLayout>
 
     <TextView
@@ -120,27 +121,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
     <TextView
         android:id="@+id/email2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
     <TextView
         android:id="@+id/im2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
     <TextView
         android:id="@+id/event2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text"/>
+        tools:text="@string/dummy_text" />
 
 </LinearLayout>

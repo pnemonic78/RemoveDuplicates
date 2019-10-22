@@ -6,6 +6,7 @@
     <string name="match" translatable="false">%s match</string>
     <string name="permissions_denied">Permission denied! Please grant application access.</string>
     <string name="empty">No duplicate items found</string>
+    <string name="icon">Icon</string>
 
     <!-- Debug -->
     <string name="dummy_match" translatable="false">80%</string>
@@ -21,10 +22,12 @@
     <!-- Bookmarks -->
     <string name="bookmarks">Bookmarks</string>
     <string name="item_bookmarks" translatable="false">@string/bookmarks</string>
+    <string name="bookmark_icon" translatable="false">@string/icon</string>
 
     <!-- Calendar -->
     <string name="calendar">Calendar</string>
     <string name="item_calendar" translatable="false">@string/calendar</string>
+    <string name="calendar_recur">Recurs</string>
 
     <!-- >Call log -->
     <string name="call_log">Call log</string>
@@ -42,6 +45,7 @@
     <string name="contacts">Contacts</string>
     <string name="item_contacts" translatable="false">@string/contacts</string>
     <string name="contacts_account" translatable="false">%1$s (%2$s)</string>
+    <string name="contact_icon" translatable="false">@string/icon</string>
 
     <!-- Messages -->
     <string name="messages">Messages</string>
