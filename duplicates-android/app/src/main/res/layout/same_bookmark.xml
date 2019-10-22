@@ -52,7 +52,7 @@
 
         <ImageView
             android:id="@+id/icon1"
-            android:layout_width="22dp"
+            android:layout_width="32dp"
             android:layout_height="32dp"
             android:contentDescription="@string/contact_icon"
             tools:src="@mipmap/ic_launcher" />
