@@ -88,7 +88,7 @@ public class CalendarComparator extends DuplicateComparator<CalendarItem> {
         result[DTSTART] = compare(lhs.getStart(), rhs.getStart()) != SAME;
         result[DTEND] = compare(lhs.getEndEffective(), rhs.getEndEffective()) != SAME;
         result[LOCATION] = compare(lhs.getLocation(), rhs.getLocation()) != SAME;
-        result[TITLE] = compare(lhs.getTitle().toLowerCase(), rhs.getTitle().toLowerCase()) != SAME;
+        result[TITLE] = compare(lhs.getTitle().toLowerCase(locale), rhs.getTitle().toLowerCase(locale)) != SAME;
 
         return result;
     }

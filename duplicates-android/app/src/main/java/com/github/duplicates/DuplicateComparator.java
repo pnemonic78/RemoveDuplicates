@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -39,6 +40,8 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
     protected static final int RHS = -1;
 
     public static final float MATCH_SAME = 1f;
+
+    protected final Locale locale = Locale.getDefault();
 
     @Override
     public int compare(T lhs, T rhs) {

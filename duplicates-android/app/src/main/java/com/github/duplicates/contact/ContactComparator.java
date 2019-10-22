@@ -108,7 +108,7 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         return match;
     }
 
-    public static int compareData(Collection<? extends ContactData> lhs, Collection<? extends ContactData> rhs) {
+    public int compareData(Collection<? extends ContactData> lhs, Collection<? extends ContactData> rhs) {
         if (lhs.isEmpty()) {
             return rhs.isEmpty() ? SAME : RHS;
         }
@@ -117,11 +117,11 @@ public class ContactComparator extends DuplicateComparator<ContactItem> {
         }
         Set<String> set1 = new HashSet<>(lhs.size());
         for (ContactData datum : lhs) {
-            set1.add(datum.toString().toLowerCase());
+            set1.add(datum.toString().toLowerCase(locale));
         }
         Set<String> set2 = new HashSet<>(rhs.size());
         for (ContactData datum : rhs) {
-            set2.add(datum.toString().toLowerCase());
+            set2.add(datum.toString().toLowerCase(locale));
         }
         return compare(set1, set2);
     }
