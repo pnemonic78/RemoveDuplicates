@@ -30,27 +30,23 @@ public enum MainSpinnerItem {
     ALARMS(R.string.item_alarms, R.drawable.ic_alarm_black),
     BOOKMARKS(R.string.item_bookmarks, R.drawable.ic_bookmark_black),
     CALENDAR(R.string.item_calendar, R.drawable.ic_event_black),
-    CALL_LOG(R.string.item_call_log, R.drawable.ic_call_black),
+    CALL_LOG(R.string.item_call_log, R.drawable.ic_call_black, false),
     CONTACTS(R.string.item_contacts, R.drawable.ic_contacts_black),
     MESSAGES(R.string.item_messages, R.drawable.ic_chat_black);
 
     @StringRes
-    final int label;
+    public final int label;
     @DrawableRes
-    final int icon;
+    public final int icon;
+    public final boolean enabled;
 
     MainSpinnerItem(@StringRes int label, @DrawableRes int icon) {
+        this(label, icon, true);
+    }
+
+    MainSpinnerItem(@StringRes int label, @DrawableRes int icon, boolean enabled) {
         this.label = label;
         this.icon = icon;
-    }
-
-    @DrawableRes
-    public int getIcon() {
-        return icon;
-    }
-
-    @StringRes
-    public int getLabel() {
-        return label;
+        this.enabled = enabled;
     }
 }

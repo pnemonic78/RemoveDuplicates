@@ -61,9 +61,9 @@ public class MainSpinnerAdapter extends BaseAdapter {
         }
 
         MainSpinnerItem item = getItem(position);
-        TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-        textView.setText(item.getLabel());
-        textView.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(item.getIcon()), null, null, null);
+        TextView textView = convertView.findViewById(android.R.id.text1);
+        textView.setText(item.label);
+        textView.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(item.icon), null, null, null);
         textView.setCompoundDrawablePadding(context.getResources().getDimensionPixelSize(R.dimen.drawable_padding));
 
         return convertView;
@@ -77,11 +77,17 @@ public class MainSpinnerAdapter extends BaseAdapter {
         }
 
         MainSpinnerItem item = getItem(position);
-        TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-        textView.setText(item.getLabel());
-        textView.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(item.getIcon()), null, null, null);
+        TextView textView = convertView.findViewById(android.R.id.text1);
+        textView.setText(item.label);
+        textView.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(item.icon), null, null, null);
         textView.setCompoundDrawablePadding(context.getResources().getDimensionPixelSize(R.dimen.drawable_padding));
+        textView.setEnabled(item.enabled);
 
         return convertView;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return items[position].enabled;
     }
 }
