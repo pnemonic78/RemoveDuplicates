@@ -65,6 +65,7 @@ public class MainSpinnerAdapter extends BaseAdapter {
         textView.setText(item.label);
         textView.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(item.icon), null, null, null);
         textView.setCompoundDrawablePadding(context.getResources().getDimensionPixelSize(R.dimen.drawable_padding));
+        convertView.setEnabled(item.enabled);
 
         return convertView;
     }
@@ -81,13 +82,13 @@ public class MainSpinnerAdapter extends BaseAdapter {
         textView.setText(item.label);
         textView.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(item.icon), null, null, null);
         textView.setCompoundDrawablePadding(context.getResources().getDimensionPixelSize(R.dimen.drawable_padding));
-        textView.setEnabled(item.enabled);
+        convertView.setEnabled(item.enabled);
 
         return convertView;
     }
 
     @Override
     public boolean isEnabled(int position) {
-        return items[position].enabled;
+        return getItem(position).enabled;
     }
 }
