@@ -49,6 +49,7 @@ import com.github.util.LogTree;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +71,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
     @BindView(R.id.search)
     ImageButton spinnerAction;
     @BindView(R.id.statusBar)
-    View statusBar;
+    Group statusBar;
     @BindView(R.id.counter)
     TextView counter;
     @BindView(R.id.progress)
