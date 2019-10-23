@@ -75,7 +75,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
     TextView counter;
     @BindView(R.id.progress)
     ProgressBar progressBar;
-    @BindView(R.id.list_switcher)
+    @BindView(R.id.listSwitcher)
     ViewSwitcher listSwitcher;
     @BindView(android.R.id.list)
     RecyclerView list;
