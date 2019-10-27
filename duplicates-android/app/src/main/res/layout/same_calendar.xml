@@ -19,88 +19,108 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <View
+        android:id="@+id/color1"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/panel1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/match"
+        tools:background="@color/dummy_color" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/panel1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/match">
+        android:layout_marginStart="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/color1"
+        app:layout_constraintTop_toTopOf="@+id/color1">
 
-        <View
-            android:id="@+id/color1"
-            android:layout_width="4dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
-            tools:background="@color/dummy_color" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/account1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/dummy_text" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/panel11"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/account1">
+
+            <CheckBox
+                android:id="@+id/checkbox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/account1"
-                android:layout_width="match_parent"
+                android:id="@+id/start1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:text="@string/dummy_text" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/checkbox1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/start1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    tools:text="@string/dummy_date_time" />
-
-                <TextView
-                    android:id="@+id/end1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    tools:text="@string/dummy_date_time" />
-
-                <ImageView
-                    android:id="@+id/recur1"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@string/calendar_recur"
-                    android:src="@drawable/ic_event_repeat" />
-            </LinearLayout>
+                app:layout_constraintEnd_toStartOf="@+id/end1"
+                app:layout_constraintStart_toEndOf="@+id/checkbox1"
+                app:layout_constraintTop_toTopOf="@+id/checkbox1"
+                tools:text="@string/dummy_date_time" />
 
             <TextView
-                android:id="@+id/title1"
-                android:layout_width="match_parent"
+                android:id="@+id/end1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxLines="3"
-                tools:text="@string/dummy_text_long" />
+                app:layout_constraintEnd_toStartOf="@+id/recur1"
+                app:layout_constraintStart_toEndOf="@+id/start1"
+                app:layout_constraintTop_toTopOf="@+id/start1"
+                tools:text="@string/dummy_date_time" />
 
-            <TextView
-                android:id="@+id/description1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:maxLines="2"
-                tools:text="@string/dummy_text_long" />
+            <ImageView
+                android:id="@+id/recur1"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:contentDescription="@string/calendar_recur"
+                android:src="@drawable/ic_event_repeat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/end1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/location1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:maxLines="2"
-                tools:text="@string/dummy_text_long" />
-        </LinearLayout>
-    </LinearLayout>
+        <TextView
+            android:id="@+id/title1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/panel11"
+            tools:text="@string/dummy_text_long" />
+
+        <TextView
+            android:id="@+id/description1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title1"
+            tools:text="@string/dummy_text_long" />
+
+        <TextView
+            android:id="@+id/location1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description1"
+            tools:text="@string/dummy_text_long" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/divider"
@@ -123,12 +143,12 @@
             android:id="@+id/color2"
             android:layout_width="4dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
             tools:background="@color/dummy_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:orientation="vertical">
 
             <TextView
