@@ -19,43 +19,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/created1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/icon1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/date1"
+        android:contentDescription="@string/contact_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/match"
-        tools:text="@string/dummy_date_time" />
-
-    <TextView
-        android:id="@+id/date1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/created1"
-        app:layout_constraintTop_toTopOf="@+id/created1"
-        tools:text="@string/dummy_date_time" />
+        tools:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/title1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:maxLines="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon1"
-        app:layout_constraintTop_toBottomOf="@+id/created1"
+        app:layout_constraintTop_toBottomOf="@+id/match"
         tools:text="@string/dummy_text_long3" />
-
-    <ImageView
-        android:id="@+id/icon1"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:contentDescription="@string/contact_icon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/created1"
-        tools:src="@mipmap/ic_launcher" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier10"
@@ -88,6 +71,24 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="checkbox1,url1" />
 
+    <TextView
+        android:id="@+id/created1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/date1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrier11"
+        tools:text="@string/dummy_date_time" />
+
+    <TextView
+        android:id="@+id/date1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/created1"
+        app:layout_constraintTop_toTopOf="@+id/created1"
+        tools:text="@string/dummy_date_time" />
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -97,44 +98,28 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
         android:background="@android:drawable/divider_horizontal_bright"
-        app:layout_constraintTop_toBottomOf="@+id/barrier11" />
-
-    <TextView
-        android:id="@+id/created2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/date2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        tools:text="@string/dummy_date_time" />
-
-    <TextView
-        android:id="@+id/date2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/created2"
-        app:layout_constraintTop_toTopOf="@+id/created2"
-        tools:text="@string/dummy_date_time" />
-
-    <TextView
-        android:id="@+id/title2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/icon2"
-        app:layout_constraintTop_toBottomOf="@+id/created2"
-        tools:text="@string/dummy_text_long3" />
+        app:layout_constraintTop_toBottomOf="@+id/created1" />
 
     <ImageView
         android:id="@+id/icon2"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/contact_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/created2"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:maxLines="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/icon2"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        tools:text="@string/dummy_text_long3" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier20"
@@ -166,5 +151,23 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="checkbox2,url2" />
+
+    <TextView
+        android:id="@+id/created2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/date2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrier22"
+        tools:text="@string/dummy_date_time" />
+
+    <TextView
+        android:id="@+id/date2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/created2"
+        app:layout_constraintTop_toTopOf="@+id/created2"
+        tools:text="@string/dummy_date_time" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
