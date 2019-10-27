@@ -20,66 +20,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/panel1"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/alarm1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/alert1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/match"
+        tools:text="@string/dummy_date_time" />
+
+    <TextView
+        android:id="@+id/alert1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/match">
-
-        <TextView
-            android:id="@+id/alarm1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/alert1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/dummy_date_time" />
-
-        <TextView
-            android:id="@+id/alert1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/alarm1"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/dummy_date_time" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toEndOf="@+id/alarm1"
+        app:layout_constraintTop_toBottomOf="@+id/match"
+        tools:text="@string/dummy_date_time" />
 
     <TextView
         android:id="@+id/repeat1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/panel1"
+        app:layout_constraintTop_toBottomOf="@+id/alarm1"
         tools:text="@string/dummy_text" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/panel2"
-        android:layout_width="match_parent"
+    <CheckBox
+        android:id="@+id/checkbox1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/repeat1">
+        app:layout_constraintBottom_toBottomOf="@+id/name1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repeat1" />
 
-        <CheckBox
-            android:id="@+id/checkbox1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/name1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/name1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:maxLines="3"
-            app:layout_constraintBottom_toBottomOf="@+id/checkbox1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/checkbox1"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/dummy_text" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/name1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        app:layout_constraintBottom_toBottomOf="@+id/checkbox1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkbox1"
+        app:layout_constraintTop_toBottomOf="@+id/repeat1"
+        tools:text="@string/dummy_text" />
 
     <View
         android:id="@+id/divider"
@@ -90,65 +74,51 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
         android:background="@android:drawable/divider_horizontal_bright"
-        app:layout_constraintTop_toBottomOf="@+id/panel2" />
+        app:layout_constraintTop_toBottomOf="@+id/checkbox1" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/panel3"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/alarm2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/divider">
+        app:layout_constraintEnd_toStartOf="@+id/alert2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        tools:text="@string/dummy_date_time" />
 
-        <TextView
-            android:id="@+id/alarm2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/alert2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/dummy_date_time" />
-
-        <TextView
-            android:id="@+id/alert2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/alarm2"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/dummy_date_time" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/alert2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alarm2"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        tools:text="@string/dummy_date_time" />
 
     <TextView
         android:id="@+id/repeat2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/panel3"
+        app:layout_constraintTop_toBottomOf="@+id/alarm2"
         tools:text="@string/dummy_text" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/panel4"
-        android:layout_width="match_parent"
+    <CheckBox
+        android:id="@+id/checkbox2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/repeat2">
+        app:layout_constraintBottom_toBottomOf="@+id/name2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repeat2" />
 
-        <CheckBox
-            android:id="@+id/checkbox2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/name2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/name2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:maxLines="3"
-            app:layout_constraintBottom_toBottomOf="@+id/checkbox2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/checkbox2"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/dummy_text" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/name2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        app:layout_constraintBottom_toBottomOf="@+id/checkbox2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkbox2"
+        app:layout_constraintTop_toBottomOf="@+id/repeat2"
+        tools:text="@string/dummy_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
