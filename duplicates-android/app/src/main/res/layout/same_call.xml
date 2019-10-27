@@ -53,14 +53,21 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="checkbox1,number1,name1" />
 
+    <ImageView
+        android:id="@+id/type1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrier10"
+        tools:src="@android:drawable/sym_call_incoming" />
+
     <TextView
         android:id="@+id/date1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/duration1"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier10"
+        app:layout_constraintStart_toEndOf="@+id/type1"
+        app:layout_constraintTop_toTopOf="@+id/type1"
         tools:text="@string/dummy_date_time" />
 
     <TextView
@@ -68,21 +75,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@+id/type1"
-        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/date1"
         app:layout_constraintTop_toTopOf="@+id/date1"
         tools:text="@string/dummy_date_time" />
-
-    <TextView
-        android:id="@+id/type1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@+id/duration1"
-        app:layout_constraintTop_toTopOf="@+id/duration1"
-        tools:text="@string/dummy_text" />
 
     <View
         android:id="@+id/divider"
@@ -92,7 +88,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:background="@android:drawable/divider_horizontal_bright"
-        app:layout_constraintTop_toBottomOf="@+id/date1" />
+        app:layout_constraintTop_toBottomOf="@+id/type1" />
 
     <CheckBox
         android:id="@+id/checkbox2"
@@ -128,14 +124,21 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="checkbox2,number2,name2" />
 
+    <ImageView
+        android:id="@+id/type2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrier20"
+        tools:src="@android:drawable/sym_call_incoming" />
+
     <TextView
         android:id="@+id/date2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/duration2"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier20"
+        app:layout_constraintStart_toEndOf="@+id/type2"
+        app:layout_constraintTop_toTopOf="@+id/type2"
         tools:text="@string/dummy_date_time" />
 
     <TextView
@@ -143,20 +146,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@+id/type2"
-        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/date2"
         app:layout_constraintTop_toTopOf="@+id/date2"
         tools:text="@string/dummy_date_time" />
-
-    <TextView
-        android:id="@+id/type2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@+id/duration2"
-        app:layout_constraintTop_toTopOf="@+id/duration2"
-        tools:text="@string/dummy_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
