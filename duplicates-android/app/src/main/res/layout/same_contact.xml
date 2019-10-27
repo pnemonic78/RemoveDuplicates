@@ -14,13 +14,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"
         android:text="@string/match" />
 
     <TextView
         android:id="@+id/account1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         tools:text="@string/dummy_text" />
 
     <LinearLayout
@@ -82,13 +82,13 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
         android:background="@android:drawable/divider_horizontal_bright" />
 
     <TextView
         android:id="@+id/account2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         tools:text="@string/dummy_text" />
 
     <LinearLayout
