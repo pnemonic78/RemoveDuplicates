@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon1"
         app:layout_constraintTop_toBottomOf="@+id/created1"
-        tools:text="@string/dummy_text_long" />
+        tools:text="@string/dummy_text_long3" />
 
     <ImageView
         android:id="@+id/icon1"
@@ -56,12 +56,19 @@
         app:layout_constraintTop_toBottomOf="@+id/created1"
         tools:src="@mipmap/ic_launcher" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="icon1,title1" />
+
     <CheckBox
         android:id="@+id/checkbox1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon1" />
+        app:layout_constraintTop_toBottomOf="@+id/barrier10" />
 
     <TextView
         android:id="@+id/url1"
@@ -70,8 +77,15 @@
         android:maxLines="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/checkbox1"
-        app:layout_constraintTop_toBottomOf="@+id/title1"
-        tools:text="@string/dummy_text_long" />
+        app:layout_constraintTop_toTopOf="@+id/checkbox1"
+        tools:text="@string/dummy_text_long3" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="checkbox1,url1" />
 
     <View
         android:id="@+id/divider"
@@ -82,13 +96,12 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
         android:background="@android:drawable/divider_horizontal_bright"
-        app:layout_constraintTop_toBottomOf="@+id/checkbox1" />
+        app:layout_constraintTop_toBottomOf="@+id/barrier11" />
 
     <TextView
         android:id="@+id/created2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@+id/date2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
@@ -111,7 +124,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon2"
         app:layout_constraintTop_toBottomOf="@+id/created2"
-        tools:text="@string/dummy_text_long" />
+        tools:text="@string/dummy_text_long3" />
 
     <ImageView
         android:id="@+id/icon2"
@@ -122,12 +135,19 @@
         app:layout_constraintTop_toBottomOf="@+id/created2"
         tools:src="@mipmap/ic_launcher" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="icon2,title2" />
+
     <CheckBox
         android:id="@+id/checkbox2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon2" />
+        app:layout_constraintTop_toBottomOf="@+id/barrier20" />
 
     <TextView
         android:id="@+id/url2"
@@ -136,7 +156,14 @@
         android:maxLines="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/checkbox2"
-        app:layout_constraintTop_toBottomOf="@+id/title2"
-        tools:text="@string/dummy_text_long" />
+        app:layout_constraintTop_toTopOf="@+id/checkbox2"
+        tools:text="@string/dummy_text_long3" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="checkbox2,url2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
