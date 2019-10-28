@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements DuplicateTaskList
             getMenuInflater().inflate(R.menu.main, menu);
 
             SearchView searchView = (SearchView) menu.findItem(R.id.menu_filter).getActionView();
-//            searchView.setOnQueryTextListener(this);
+            searchView.setOnQueryTextListener(this);
         }
 
         return super.onPrepareOptionsMenu(menu);

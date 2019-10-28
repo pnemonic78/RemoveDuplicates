@@ -22,10 +22,10 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_filter"
-        android:actionLayout="@layout/menu_filter"
-        android:icon="@drawable/ic_menu_filter"
+        android:icon="@drawable/ic_filter_list"
         android:orderInCategory="20"
         android:title="@string/menu_filter"
-        app:showAsAction="always" />
+        app:actionLayout="@layout/menu_filter"
+        app:showAsAction="always|collapseActionView" />
 
 </menu>
