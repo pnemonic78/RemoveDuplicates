@@ -16,7 +16,6 @@
 package com.github.duplicates;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -30,6 +29,12 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Group;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
@@ -47,10 +52,6 @@ import com.github.duplicates.message.MessageDeleteTask;
 import com.github.duplicates.message.MessageFindTask;
 import com.github.util.LogTree;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.Group;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,7 +62,7 @@ import timber.log.Timber;
  *
  * @author moshe.w
  */
-public class MainActivity extends Activity implements DuplicateTaskListener, SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements DuplicateTaskListener, SearchView.OnQueryTextListener {
 
     private static final int CHILD_LIST = 0;
     private static final int CHILD_EMPTY = 1;
@@ -268,7 +269,7 @@ public class MainActivity extends Activity implements DuplicateTaskListener, Sea
             getMenuInflater().inflate(R.menu.main, menu);
 
             SearchView searchView = (SearchView) menu.findItem(R.id.menu_filter).getActionView();
-            searchView.setOnQueryTextListener(this);
+//            searchView.setOnQueryTextListener(this);
         }
 
         return super.onPrepareOptionsMenu(menu);
