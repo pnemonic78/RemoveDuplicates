@@ -26,13 +26,13 @@ import com.github.duplicates.DuplicateItem;
  */
 public class CallLogItem extends DuplicateItem {
 
-    public static final int ANSWERED_EXTERNALLY_TYPE = 7;// android.provider.CallLog.Calls.ANSWERED_EXTERNALLY_TYPE;
-    public static final int BLOCKED_TYPE = 6;// android.provider.CallLog.Calls.BLOCKED_TYPE;
-    public static final int INCOMING_TYPE = 1;// android.provider.CallLog.Calls.INCOMING_TYPE;
-    public static final int MISSED_TYPE = 3;// android.provider.CallLog.Calls.MISSED_TYPE;
-    public static final int OUTGOING_TYPE = 2;// android.provider.CallLog.Calls.OUTGOING_TYPE;
-    public static final int REJECTED_TYPE = 5;// android.provider.CallLog.Calls.REJECTED_TYPE;
-    public static final int VOICEMAIL_TYPE = 4;// android.provider.CallLog.Calls.VOICEMAIL_TYPE;
+    public static final int ANSWERED_EXTERNALLY_TYPE = 7;// android.provider.CallLog.Calls.ANSWERED_EXTERNALLY_TYPE; (Added in API level 25)
+    public static final int BLOCKED_TYPE = 6;// android.provider.CallLog.Calls.BLOCKED_TYPE; (Added in API level 24)
+    public static final int INCOMING_TYPE = android.provider.CallLog.Calls.INCOMING_TYPE;
+    public static final int MISSED_TYPE = android.provider.CallLog.Calls.MISSED_TYPE;
+    public static final int OUTGOING_TYPE = android.provider.CallLog.Calls.OUTGOING_TYPE;
+    public static final int REJECTED_TYPE = 5;// android.provider.CallLog.Calls.REJECTED_TYPE; (Added in API level 24)
+    public static final int VOICEMAIL_TYPE = 4;// android.provider.CallLog.Calls.VOICEMAIL_TYPE; (Added in API level 21)
 
     private String name;
     private String numberLabel;

@@ -55,8 +55,8 @@
 
     <ImageView
         android:id="@+id/type1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier10"
         tools:src="@android:drawable/sym_call_incoming" />
@@ -126,8 +126,8 @@
 
     <ImageView
         android:id="@+id/type2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier20"
         tools:src="@android:drawable/sym_call_incoming" />
