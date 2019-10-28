@@ -15,7 +15,6 @@
  */
 package com.github.duplicates.bookmark;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,7 +30,7 @@ public class BookmarkAdapter extends DuplicateAdapter<BookmarkItem, BookmarkView
 
     @Override
     public BookmarkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_bookmark, parent, false);
+        View itemView = createViewHolder(R.layout.same_bookmark, parent, viewType);
         return new BookmarkViewHolder(itemView, this);
     }
 }

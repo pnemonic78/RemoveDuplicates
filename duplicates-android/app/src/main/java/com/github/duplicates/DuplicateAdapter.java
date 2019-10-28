@@ -15,18 +15,26 @@
  */
 package com.github.duplicates;
 
+import android.os.Build;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.Filter;
 import android.widget.Filterable;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.github.android.removeduplicates.R;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * List adapter for duplicate pairs.
@@ -257,6 +265,19 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
             filter = new DuplicateAdapterFilter();
         }
         return filter;
+    }
+
+    protected View createViewHolder(@LayoutRes int layoutId, ViewGroup parent, int viewType) {
+        View itemView;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_item_shadow, parent, false);
+        } else {
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_item, parent, false);
+        }
+        ViewStub stub = itemView.findViewById(R.id.stub);
+        stub.setLayoutResource(layoutId);
+        stub.inflate();
+        return itemView;
     }
 
     private class DuplicateAdapterFilter extends Filter {

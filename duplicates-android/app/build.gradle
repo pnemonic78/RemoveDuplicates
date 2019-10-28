@@ -65,6 +65,7 @@ dependencies {
     // Views
     implementation "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor group: 'com.jakewharton', name: 'butterknife-compiler', version: "$butterknife_version"
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     // Testing
     testImplementation 'junit:junit:4.12'

@@ -15,7 +15,6 @@
  */
 package com.github.duplicates.alarm;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,7 +30,7 @@ public class AlarmAdapter extends DuplicateAdapter<AlarmItem, AlarmViewHolder> {
 
     @Override
     public AlarmViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_alarm, parent, false);
+        View itemView = createViewHolder(R.layout.same_alarm, parent, viewType);
         return new AlarmViewHolder(itemView, this);
     }
 }
