@@ -66,7 +66,8 @@ public class MainSpinnerAdapter extends BaseAdapter {
         MainSpinnerItem item = getItem(position);
         TextView textView = convertView.findViewById(android.R.id.text1);
         textView.setText(item.label);
-        textView.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(item.icon), null, null, null);
+        Drawable icon = AppCompatResources.getDrawable(context, item.icon);
+        textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
         textView.setCompoundDrawablePadding(context.getResources().getDimensionPixelSize(R.dimen.drawable_padding));
         convertView.setEnabled(item.enabled);
 
