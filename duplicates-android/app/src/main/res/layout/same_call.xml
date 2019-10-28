@@ -53,9 +53,10 @@
         android:id="@+id/type1"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:contentDescription="@string/call_type_incoming"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier10"
-        tools:src="@android:drawable/sym_call_incoming" />
+        tools:src="@drawable/ic_call_received_black" />
 
     <TextView
         android:id="@+id/date1"
@@ -124,9 +125,10 @@
         android:id="@+id/type2"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:contentDescription="@string/call_type_incoming"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier20"
-        tools:src="@android:drawable/sym_call_incoming" />
+        tools:src="@drawable/ic_call_received_black" />
 
     <TextView
         android:id="@+id/date2"
