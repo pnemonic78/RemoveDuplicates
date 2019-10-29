@@ -19,7 +19,11 @@ import android.content.Context;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
 
 import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
@@ -62,7 +66,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     @BindView(R.id.number1)
     TextView number1;
     @BindView(R.id.type1)
-    TextView type1;
+    ImageView type1;
     @BindView(R.id.name1)
     TextView name1;
 
@@ -75,7 +79,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     @BindView(R.id.number2)
     TextView number2;
     @BindView(R.id.type2)
-    TextView type2;
+    ImageView type2;
     @BindView(R.id.name2)
     TextView name2;
 
@@ -99,7 +103,8 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
         checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date1.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         duration1.setText(DateUtils.formatElapsedTime(item.getDuration()));
-        type1.setText(getTypeName(context, item.getType()));
+        type1.setImageResource(getTypeIcon(item.getType()));
+        type1.setContentDescription(context.getText(getTypeName(item.getType())));
         number1.setText(item.getNumber());
         name1.setText(item.getName());
     }
@@ -110,7 +115,8 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
         checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date2.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         duration2.setText(DateUtils.formatElapsedTime(item.getDuration()));
-        type2.setText(getTypeName(context, item.getType()));
+        type2.setImageResource(getTypeIcon(item.getType()));
+        type2.setContentDescription(context.getText(getTypeName(item.getType())));
         number2.setText(item.getNumber());
         name2.setText(item.getName());
     }
@@ -126,24 +132,48 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
         bindDifference(name1, name2, difference[NAME]);
     }
 
-    private CharSequence getTypeName(Context context, int type) {
+    @DrawableRes
+    private int getTypeIcon(int type) {
         switch (type) {
             case INCOMING_TYPE:
-                return context.getText(R.string.call_type_incoming);
+                return R.drawable.ic_call_received;
             case OUTGOING_TYPE:
-                return context.getText(R.string.call_type_outgoing);
+                return R.drawable.ic_call_made;
             case MISSED_TYPE:
-                return context.getText(R.string.call_type_missed);
+                return R.drawable.ic_call_missed;
             case VOICEMAIL_TYPE:
-                return context.getText(R.string.call_type_voicemail);
+                return R.drawable.ic_voicemail;
             case REJECTED_TYPE:
-                return context.getText(R.string.call_type_rejected);
+                return R.drawable.ic_cancel;
             case BLOCKED_TYPE:
-                return context.getText(R.string.call_type_blocked);
+                return R.drawable.ic_block;
             case ANSWERED_EXTERNALLY_TYPE:
-                return context.getText(R.string.call_type_external);
+                return R.drawable.ic_devices_other;
+            default:
+                return R.drawable.ic_call;
         }
-        return context.getText(R.string.call_type_other);
+    }
+
+    @StringRes
+    private int getTypeName(int type) {
+        switch (type) {
+            case INCOMING_TYPE:
+                return R.string.call_type_incoming;
+            case OUTGOING_TYPE:
+                return R.string.call_type_outgoing;
+            case MISSED_TYPE:
+                return R.string.call_type_missed;
+            case VOICEMAIL_TYPE:
+                return R.string.call_type_voicemail;
+            case REJECTED_TYPE:
+                return R.string.call_type_rejected;
+            case BLOCKED_TYPE:
+                return R.string.call_type_blocked;
+            case ANSWERED_EXTERNALLY_TYPE:
+                return R.string.call_type_external;
+            default:
+                return R.string.call_type_other;
+        }
     }
 
     @OnClick(R.id.checkbox1)

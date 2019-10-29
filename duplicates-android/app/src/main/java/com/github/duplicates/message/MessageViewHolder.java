@@ -19,7 +19,11 @@ import android.content.Context;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
 
 import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
@@ -59,7 +63,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     @BindView(R.id.address1)
     TextView address1;
     @BindView(R.id.type1)
-    TextView type1;
+    ImageView type1;
     @BindView(R.id.body1)
     TextView body1;
 
@@ -70,7 +74,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     @BindView(R.id.address2)
     TextView address2;
     @BindView(R.id.type2)
-    TextView type2;
+    ImageView type2;
     @BindView(R.id.body2)
     TextView body2;
 
@@ -94,7 +98,8 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
         checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date1.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address1.setText(item.getAddress());
-        type1.setText(getTypeName(context, item.getType()));
+        type1.setImageResource(getTypeIcon(item.getType()));
+        type1.setContentDescription(context.getText(getTypeName(item.getType())));
         body1.setText(item.getBody());
     }
 
@@ -104,7 +109,8 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
         checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date2.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         address2.setText(item.getAddress());
-        type2.setText(getTypeName(context, item.getType()));
+        type2.setImageResource(getTypeIcon(item.getType()));
+        type2.setContentDescription(context.getText(getTypeName(item.getType())));
         body2.setText(item.getBody());
     }
 
@@ -118,24 +124,46 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
         bindDifference(body1, body2, difference[BODY]);
     }
 
-    private CharSequence getTypeName(Context context, int type) {
+    @DrawableRes
+    private int getTypeIcon(int type) {
         switch (type) {
-            case MESSAGE_TYPE_ALL:
-                return context.getText(R.string.message_type_all);
             case MESSAGE_TYPE_DRAFT:
-                return context.getText(R.string.message_type_drafts);
+                return R.drawable.ic_drafts;
             case MESSAGE_TYPE_FAILED:
-                return context.getText(R.string.message_type_failed);
+                return R.drawable.ic_cancel;
             case MESSAGE_TYPE_INBOX:
-                return context.getText(R.string.message_type_inbox);
+                return R.drawable.ic_inbox;
             case MESSAGE_TYPE_OUTBOX:
-                return context.getText(R.string.message_type_outbox);
+                return R.drawable.ic_outbox;
             case MESSAGE_TYPE_QUEUED:
-                return context.getText(R.string.message_type_queued);
+                return R.drawable.ic_queue;
             case MESSAGE_TYPE_SENT:
-                return context.getText(R.string.message_type_sent);
+                return R.drawable.ic_send;
+            case MESSAGE_TYPE_ALL:
+            default:
+                return R.drawable.ic_message;
         }
-        return null;
+    }
+
+    @StringRes
+    private int getTypeName(int type) {
+        switch (type) {
+            case MESSAGE_TYPE_DRAFT:
+                return R.string.message_type_drafts;
+            case MESSAGE_TYPE_FAILED:
+                return R.string.message_type_failed;
+            case MESSAGE_TYPE_INBOX:
+                return R.string.message_type_inbox;
+            case MESSAGE_TYPE_OUTBOX:
+                return R.string.message_type_outbox;
+            case MESSAGE_TYPE_QUEUED:
+                return R.string.message_type_queued;
+            case MESSAGE_TYPE_SENT:
+                return R.string.message_type_sent;
+            case MESSAGE_TYPE_ALL:
+            default:
+                return R.string.message_type_all;
+        }
     }
 
     @OnClick(R.id.checkbox1)

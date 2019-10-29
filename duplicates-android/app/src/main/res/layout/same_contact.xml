@@ -1,65 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:elevation="2dp"
-    android:orientation="vertical"
-    android:outlineProvider="bounds"
-    android:padding="8dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/match"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"
-        android:text="@string/match" />
+        android:text="@string/match"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkbox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/match" />
+
+    <ImageView
+        android:id="@+id/icon1"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/contact_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/checkbox1"
+        tools:src="@drawable/ic_contact_picture" />
 
     <TextView
-        android:id="@+id/account1"
-        android:layout_width="match_parent"
+        android:id="@+id/name1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/icon1"
+        app:layout_constraintStart_toEndOf="@+id/checkbox1"
+        app:layout_constraintTop_toTopOf="@+id/icon1"
         tools:text="@string/dummy_text" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/checkbox1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/icon1"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:contentDescription="@string/contact_icon"
-            tools:src="@drawable/ic_contact_picture" />
-
-        <TextView
-            android:id="@+id/name1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            tools:text="@string/dummy_text" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/phone1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text" />
+        app:layout_constraintEnd_toStartOf="@+id/icon1"
+        app:layout_constraintStart_toStartOf="@+id/name1"
+        app:layout_constraintTop_toBottomOf="@+id/name1"
+        tools:text="@string/dummy_text_long3" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="icon1,phone1" />
 
     <TextView
         android:id="@+id/email1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrier10"
         tools:text="@string/dummy_text" />
 
     <TextView
@@ -67,6 +74,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email1"
         tools:text="@string/dummy_text" />
 
     <TextView
@@ -74,60 +83,79 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im1"
+        tools:text="@string/dummy_text" />
+
+    <TextView
+        android:id="@+id/account1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event1"
         tools:text="@string/dummy_text" />
 
     <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
-        android:background="@android:drawable/divider_horizontal_bright" />
+        android:background="@android:drawable/divider_horizontal_bright"
+        app:layout_constraintTop_toBottomOf="@+id/account1" />
+
+    <CheckBox
+        android:id="@+id/checkbox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <ImageView
+        android:id="@+id/icon2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/contact_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/checkbox2"
+        tools:src="@drawable/ic_contact_picture" />
 
     <TextView
-        android:id="@+id/account2"
-        android:layout_width="match_parent"
+        android:id="@+id/name2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/icon2"
+        app:layout_constraintStart_toEndOf="@+id/checkbox2"
+        app:layout_constraintTop_toTopOf="@+id/icon2"
         tools:text="@string/dummy_text" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/checkbox2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/icon2"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:contentDescription="@string/contact_icon"
-            tools:src="@drawable/ic_contact_picture" />
-
-        <TextView
-            android:id="@+id/name2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            tools:text="@string/dummy_text" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/phone2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="3"
-        tools:text="@string/dummy_text" />
+        app:layout_constraintEnd_toStartOf="@+id/icon2"
+        app:layout_constraintStart_toStartOf="@+id/name2"
+        app:layout_constraintTop_toBottomOf="@+id/name2"
+        tools:text="@string/dummy_text_long3" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="icon2,phone2" />
 
     <TextView
         android:id="@+id/email2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrier20"
         tools:text="@string/dummy_text" />
 
     <TextView
@@ -135,6 +163,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email2"
         tools:text="@string/dummy_text" />
 
     <TextView
@@ -142,6 +172,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im2"
         tools:text="@string/dummy_text" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/account2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event2"
+        tools:text="@string/dummy_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
