@@ -33,7 +33,7 @@ public enum MainSpinnerItem {
     CALENDAR(R.string.item_calendar, R.drawable.ic_event),
     CALL_LOG(R.string.item_call_log, R.drawable.ic_call, BuildConfig.DEBUG),
     CONTACTS(R.string.item_contacts, R.drawable.ic_contacts),
-    MESSAGES(R.string.item_messages, R.drawable.ic_chat, BuildConfig.DEBUG);
+    MESSAGES(R.string.item_messages, R.drawable.ic_message, BuildConfig.DEBUG);
 
     @StringRes
     public final int label;

@@ -103,7 +103,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
         checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date1.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         duration1.setText(DateUtils.formatElapsedTime(item.getDuration()));
-        type1.setImageResource(getTypeRes(item.getType()));
+        type1.setImageResource(getTypeIcon(item.getType()));
         type1.setContentDescription(context.getText(getTypeName(item.getType())));
         number1.setText(item.getNumber());
         name1.setText(item.getName());
@@ -115,7 +115,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
         checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
         date2.setText(DateUtils.formatDateTime(context, item.getDate(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
         duration2.setText(DateUtils.formatElapsedTime(item.getDuration()));
-        type2.setImageResource(getTypeRes(item.getType()));
+        type2.setImageResource(getTypeIcon(item.getType()));
         type2.setContentDescription(context.getText(getTypeName(item.getType())));
         number2.setText(item.getNumber());
         name2.setText(item.getName());
@@ -133,7 +133,7 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     }
 
     @DrawableRes
-    private int getTypeRes(int type) {
+    private int getTypeIcon(int type) {
         switch (type) {
             case INCOMING_TYPE:
                 return R.drawable.ic_call_received_black;
@@ -149,8 +149,9 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
                 return R.drawable.ic_block_black;
             case ANSWERED_EXTERNALLY_TYPE:
                 return R.drawable.ic_devices_other_black;
+            default:
+                return R.drawable.ic_call_black;
         }
-        return R.drawable.ic_call_black;
     }
 
     @StringRes
@@ -170,8 +171,9 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
                 return R.string.call_type_blocked;
             case ANSWERED_EXTERNALLY_TYPE:
                 return R.string.call_type_external;
+            default:
+                return R.string.call_type_other;
         }
-        return R.string.call_type_other;
     }
 
     @OnClick(R.id.checkbox1)
