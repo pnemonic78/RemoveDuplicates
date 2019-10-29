@@ -16,11 +16,14 @@
 package com.github.duplicates;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.github.android.removeduplicates.R;
 
@@ -63,8 +66,10 @@ public class MainSpinnerAdapter extends BaseAdapter {
         MainSpinnerItem item = getItem(position);
         TextView textView = convertView.findViewById(android.R.id.text1);
         textView.setText(item.label);
-        textView.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(item.icon), null, null, null);
+        Drawable icon = AppCompatResources.getDrawable(context, item.icon);
+        textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
         textView.setCompoundDrawablePadding(context.getResources().getDimensionPixelSize(R.dimen.drawable_padding));
+        convertView.setEnabled(item.enabled);
 
         return convertView;
     }
@@ -79,15 +84,16 @@ public class MainSpinnerAdapter extends BaseAdapter {
         MainSpinnerItem item = getItem(position);
         TextView textView = convertView.findViewById(android.R.id.text1);
         textView.setText(item.label);
-        textView.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(item.icon), null, null, null);
+        Drawable icon = AppCompatResources.getDrawable(context, item.icon);
+        textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
         textView.setCompoundDrawablePadding(context.getResources().getDimensionPixelSize(R.dimen.drawable_padding));
-        textView.setEnabled(item.enabled);
+        convertView.setEnabled(item.enabled);
 
         return convertView;
     }
 
     @Override
     public boolean isEnabled(int position) {
-        return items[position].enabled;
+        return getItem(position).enabled;
     }
 }

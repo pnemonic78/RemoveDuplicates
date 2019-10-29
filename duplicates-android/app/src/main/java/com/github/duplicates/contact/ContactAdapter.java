@@ -15,7 +15,6 @@
  */
 package com.github.duplicates.contact;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,7 +30,7 @@ public class ContactAdapter extends DuplicateAdapter<ContactItem, ContactViewHol
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_contact, parent, false);
+        View itemView = createViewHolder(R.layout.same_contact, parent, viewType);
         return new ContactViewHolder(itemView, this);
     }
 }

@@ -15,7 +15,6 @@
  */
 package com.github.duplicates.calendar;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,7 +30,7 @@ public class CalendarAdapter extends DuplicateAdapter<CalendarItem, CalendarView
 
     @Override
     public CalendarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_calendar, parent, false);
+        View itemView = createViewHolder(R.layout.same_calendar, parent, viewType);
         return new CalendarViewHolder(itemView, this);
     }
 }

@@ -15,7 +15,6 @@
  */
 package com.github.duplicates.message;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,7 +30,7 @@ public class MessageAdapter extends DuplicateAdapter<MessageItem, MessageViewHol
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_message, parent, false);
+        View itemView = createViewHolder(R.layout.same_message, parent, viewType);
         return new MessageViewHolder(itemView, this);
     }
 }

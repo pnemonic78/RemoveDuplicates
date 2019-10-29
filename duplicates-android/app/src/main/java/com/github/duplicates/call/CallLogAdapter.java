@@ -15,7 +15,6 @@
  */
 package com.github.duplicates.call;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,7 +30,7 @@ public class CallLogAdapter extends DuplicateAdapter<CallLogItem, CallLogViewHol
 
     @Override
     public CallLogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.same_call, parent, false);
+        View itemView = createViewHolder(R.layout.same_call, parent, viewType);
         return new CallLogViewHolder(itemView, this);
     }
 }

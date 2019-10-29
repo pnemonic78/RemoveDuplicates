@@ -15,6 +15,7 @@
  */
 package com.github.duplicates;
 
+import com.github.android.removeduplicates.BuildConfig;
 import com.github.android.removeduplicates.R;
 
 import androidx.annotation.DrawableRes;
@@ -27,12 +28,12 @@ import androidx.annotation.StringRes;
  */
 public enum MainSpinnerItem {
 
-    ALARMS(R.string.item_alarms, R.drawable.ic_alarm_black),
-    BOOKMARKS(R.string.item_bookmarks, R.drawable.ic_bookmark_black),
-    CALENDAR(R.string.item_calendar, R.drawable.ic_event_black),
-    CALL_LOG(R.string.item_call_log, R.drawable.ic_call_black, false),
-    CONTACTS(R.string.item_contacts, R.drawable.ic_contacts_black),
-    MESSAGES(R.string.item_messages, R.drawable.ic_chat_black, false);
+    ALARMS(R.string.item_alarms, R.drawable.ic_alarm),
+    BOOKMARKS(R.string.item_bookmarks, R.drawable.ic_bookmark),
+    CALENDAR(R.string.item_calendar, R.drawable.ic_event),
+    CALL_LOG(R.string.item_call_log, R.drawable.ic_call, BuildConfig.DEBUG),
+    CONTACTS(R.string.item_contacts, R.drawable.ic_contacts),
+    MESSAGES(R.string.item_messages, R.drawable.ic_message, BuildConfig.DEBUG);
 
     @StringRes
     public final int label;

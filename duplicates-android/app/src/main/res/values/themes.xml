@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="Theme.Duplicates" parent="Theme.Base.Light">
+    <style name="Theme.Duplicates" parent="Theme.AppCompat.Light">
     </style>
 
 </resources>
