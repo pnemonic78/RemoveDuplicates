@@ -136,21 +136,21 @@ public class CallLogViewHolder extends DuplicateViewHolder<CallLogItem> {
     private int getTypeIcon(int type) {
         switch (type) {
             case INCOMING_TYPE:
-                return R.drawable.ic_call_received_black;
+                return R.drawable.ic_call_received;
             case OUTGOING_TYPE:
-                return R.drawable.ic_call_made_black;
+                return R.drawable.ic_call_made;
             case MISSED_TYPE:
-                return R.drawable.ic_call_missed_black;
+                return R.drawable.ic_call_missed;
             case VOICEMAIL_TYPE:
-                return R.drawable.ic_voicemail_black;
+                return R.drawable.ic_voicemail;
             case REJECTED_TYPE:
-                return R.drawable.ic_cancel_black;
+                return R.drawable.ic_cancel;
             case BLOCKED_TYPE:
-                return R.drawable.ic_block_black;
+                return R.drawable.ic_block;
             case ANSWERED_EXTERNALLY_TYPE:
-                return R.drawable.ic_devices_other_black;
+                return R.drawable.ic_devices_other;
             default:
-                return R.drawable.ic_call_black;
+                return R.drawable.ic_call;
         }
     }
 

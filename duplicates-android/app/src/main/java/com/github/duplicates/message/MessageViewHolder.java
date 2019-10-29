@@ -130,7 +130,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
             case MESSAGE_TYPE_DRAFT:
                 return R.drawable.ic_drafts;
             case MESSAGE_TYPE_FAILED:
-                return R.drawable.ic_cancel_black;
+                return R.drawable.ic_cancel;
             case MESSAGE_TYPE_INBOX:
                 return R.drawable.ic_inbox;
             case MESSAGE_TYPE_OUTBOX:

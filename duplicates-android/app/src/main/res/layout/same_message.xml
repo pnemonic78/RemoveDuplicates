@@ -48,7 +48,7 @@
         android:contentDescription="@string/call_type_incoming"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier10"
-        tools:src="@drawable/ic_call_received_black" />
+        tools:src="@drawable/ic_inbox" />
 
     <TextView
         android:id="@+id/date1"
@@ -109,7 +109,7 @@
         android:contentDescription="@string/call_type_incoming"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier20"
-        tools:src="@drawable/ic_call_received_black" />
+        tools:src="@drawable/ic_inbox" />
 
     <TextView
         android:id="@+id/date2"
