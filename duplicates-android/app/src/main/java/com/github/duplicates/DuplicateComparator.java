@@ -101,7 +101,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return lhs == rhs ? SAME : (lhs ? LHS : RHS);
     }
 
-    public static int compare(byte[] lhs, byte[] rhs) {
+    public static int compare(@Nullable byte[] lhs, @Nullable byte[] rhs) {
         if (lhs == rhs) {
             return SAME;
         }
@@ -120,7 +120,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return c;
     }
 
-    public static int compare(Bitmap lhs, Bitmap rhs) {
+    public static int compare(@Nullable Bitmap lhs, @Nullable Bitmap rhs) {
         if (lhs == rhs) {
             return SAME;
         }
@@ -145,7 +145,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return c;
     }
 
-    public static int compare(Uri lhs, Uri rhs) {
+    public static int compare(@Nullable Uri lhs, @Nullable Uri rhs) {
         if (lhs == rhs) {
             return SAME;
         }
@@ -166,7 +166,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return s1.compareTo(s2);
     }
 
-    public static <C extends Comparable<C>> int compare(Collection<? extends C> lhs, Collection<? extends C> rhs) {
+    public static <C extends Comparable<C>> int compare(@Nullable Collection<? extends C> lhs, @Nullable Collection<? extends C> rhs) {
         if (lhs == rhs) {
             return SAME;
         }
@@ -192,21 +192,21 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return SAME;
     }
 
-    public static int compareIgnoreCase(String lhs, String rhs) {
+    public static int compareIgnoreCase(@Nullable String lhs, @Nullable String rhs) {
         if (lhs == rhs) {
             return SAME;
         }
         return (lhs == null) ? RHS : ((rhs == null) ? LHS : lhs.compareToIgnoreCase(rhs));
     }
 
-    public static int compareIgnoreSpace(String lhs, String rhs) {
+    public static int compareIgnoreSpace(@Nullable String lhs, @Nullable String rhs) {
         if (lhs == rhs) {
             return SAME;
         }
         return (lhs == null) ? RHS : ((rhs == null) ? LHS : lhs.replaceAll("\\s+", " ").compareTo(rhs.replaceAll("\\s+", " ")));
     }
 
-    public static int comparePhoneNumber(String lhs, String rhs) {
+    public static int comparePhoneNumber(@Nullable String lhs, @Nullable String rhs) {
         int c = compareIgnoreCase(lhs, rhs);
         if (c == SAME) {
             return c;
@@ -218,7 +218,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return (Math.abs(lhs - rhs) <= delta) ? SAME : compare(lhs, rhs);
     }
 
-    protected float matchTitle(String lhs, String rhs, float different) {
+    protected float matchTitle(@Nullable String lhs, @Nullable String rhs, float different) {
         String s1 = (lhs != null) ? lhs.trim() : "";
         String s2 = (rhs != null) ? rhs.trim() : "";
         if (compareIgnoreCase(s1, s2) == 0) {

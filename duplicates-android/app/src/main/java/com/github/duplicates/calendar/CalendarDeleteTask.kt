@@ -13,26 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.calendar;
+package com.github.duplicates.calendar
 
-import android.content.Context;
+import android.content.Context
 
-import com.github.duplicates.DuplicateDeleteTask;
-import com.github.duplicates.DuplicateTaskListener;
+import com.github.duplicates.DuplicateDeleteTask
+import com.github.duplicates.DuplicateTaskListener
 
 /**
  * Task to find duplicate calendar events.
  *
  * @author moshe.w
  */
-public class CalendarDeleteTask extends DuplicateDeleteTask<CalendarItem> {
+class CalendarDeleteTask(context: Context, listener: DuplicateTaskListener<CalendarItem, *>) : DuplicateDeleteTask<CalendarItem>(context, listener) {
 
-    public CalendarDeleteTask(Context context, DuplicateTaskListener listener) {
-        super(context, listener);
-    }
-
-    @Override
-    protected CalendarProvider createProvider(Context context) {
-        return new CalendarProvider(context);
+    override fun createProvider(context: Context): CalendarProvider {
+        return CalendarProvider(context)
     }
 }

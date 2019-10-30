@@ -13,24 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.calendar;
+package com.github.duplicates.calendar
 
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.github.android.removeduplicates.R;
-import com.github.duplicates.DuplicateAdapter;
+import android.graphics.Color
+import android.provider.CalendarContract
+import android.text.TextUtils
+import java.util.*
 
 /**
- * List adapter for duplicate calendar events.
+ * Calendar entity.
  *
  * @author moshe.w
  */
-public class CalendarAdapter extends DuplicateAdapter<CalendarItem, CalendarViewHolder> {
+class CalendarEntity {
 
-    @Override
-    public CalendarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = createViewHolder(R.layout.same_calendar, parent, viewType);
-        return new CalendarViewHolder(itemView, this);
-    }
+    var id: Long = 0
+    var name: String? = null
+    var color = Color.TRANSPARENT
+    var timeZone: TimeZone? = null
+    var access = CalendarContract.CalendarEntity.CAL_ACCESS_NONE
+    var account: String? = null
+    var isVisible = true
+
+    val displayName: String?
+        get() = if (TextUtils.isEmpty(name)) account else name
 }
