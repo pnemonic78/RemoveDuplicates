@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
 def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
@@ -61,6 +63,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':android-lib:lib')
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:1.1.0"
 
     // Views
     implementation "com.jakewharton:butterknife:$butterknife_version"

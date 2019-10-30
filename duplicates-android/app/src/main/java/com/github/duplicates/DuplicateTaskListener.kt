@@ -13,35 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates;
+package com.github.duplicates
 
 /**
  * Listener for task progress events.
  *
  * @author moshe.w
  */
-public interface DuplicateTaskListener<T extends DuplicateTask, I extends DuplicateItem> {
+interface DuplicateTaskListener<I : DuplicateItem, T : DuplicateTask<I, *, *, *>> {
 
     /**
      * Notification that the task has started executing.
      *
      * @param task the task.
      */
-    void onDuplicateTaskStarted(T task);
+    fun onDuplicateTaskStarted(task: T)
 
     /**
      * Notification that the task has finished executing.
      *
      * @param task the task.
      */
-    void onDuplicateTaskFinished(T task);
+    fun onDuplicateTaskFinished(task: T)
 
     /**
      * Notification that the task has been cancelled.
      *
      * @param task the task.
      */
-    void onDuplicateTaskCancelled(T task);
+    fun onDuplicateTaskCancelled(task: T)
 
     /**
      * Notification that the task has progressed.
@@ -49,7 +49,7 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
      * @param task  the task.
      * @param count the number of items processed.
      */
-    void onDuplicateTaskProgress(T task, int count);
+    fun onDuplicateTaskProgress(task: T, count: Int)
 
     /**
      * Notification that the task has found a possible match where the similarity is above 75%.
@@ -60,7 +60,7 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
      * @param match      the match percentage.
      * @param difference the array of differences.
      */
-    void onDuplicateTaskMatch(T task, I item1, I item2, float match, boolean[] difference);
+    fun onDuplicateTaskMatch(task: T, item1: I, item2: I, match: Float, difference: BooleanArray)
 
     /**
      * Notification that the task has deleted a duplicate item.
@@ -68,7 +68,7 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
      * @param task the task.
      * @param item the item.
      */
-    void onDuplicateTaskItemDeleted(T task, I item);
+    fun onDuplicateTaskItemDeleted(task: T, item: I)
 
     /**
      * Notification that the task has deleted a duplicate item.
@@ -76,5 +76,5 @@ public interface DuplicateTaskListener<T extends DuplicateTask, I extends Duplic
      * @param task the task.
      * @param pair the pair of items.
      */
-    void onDuplicateTaskPairDeleted(T task, DuplicateItemPair<I> pair);
+    fun onDuplicateTaskPairDeleted(task: T, pair: DuplicateItemPair<I>)
 }

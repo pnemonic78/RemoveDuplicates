@@ -13,44 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates;
+package com.github.duplicates
 
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
+import android.content.Context
+import android.database.Cursor
+import android.net.Uri
 
 /**
  * Default provider that does nothing.
  *
  * @author moshe.w
  */
-public class DefaultProvider<T extends DuplicateItem> extends DuplicateProvider<T> {
+class DefaultProvider<T : DuplicateItem>(context: Context) : DuplicateProvider<T>(context) {
 
-    public DefaultProvider(Context context) {
-        super(context);
+    override fun getContentUri(): Uri? {
+        return null
     }
 
-    @Override
-    protected Uri getContentUri() {
-        return null;
+    override fun createItem(cursor: Cursor): T? {
+        return null
     }
 
-    @Override
-    public T createItem(Cursor cursor) {
-        return null;
+    override fun populateItem(cursor: Cursor, item: T) {}
+
+    override fun getReadPermissions(): Array<String>? {
+        return null
     }
 
-    @Override
-    public void populateItem(Cursor cursor, T item) {
-    }
-
-    @Override
-    public String[] getReadPermissions() {
-        return null;
-    }
-
-    @Override
-    public String[] getDeletePermissions() {
-        return null;
+    override fun getDeletePermissions(): Array<String>? {
+        return null
     }
 }
