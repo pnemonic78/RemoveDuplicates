@@ -44,7 +44,7 @@ import com.github.duplicates.alarm.AlarmComparator.Companion.REPEAT
  *
  * @author moshe.w
  */
-class AlarmViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<*>? = null) : DuplicateViewHolder<AlarmItem>(itemView, onCheckedChangeListener) {
+class AlarmViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<AlarmItem>? = null) : DuplicateViewHolder<AlarmItem>(itemView, onCheckedChangeListener) {
 
     @BindView(R.id.match)
     lateinit var match: TextView

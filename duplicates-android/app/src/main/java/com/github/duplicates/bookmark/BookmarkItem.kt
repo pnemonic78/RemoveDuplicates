@@ -18,6 +18,7 @@ package com.github.duplicates.bookmark
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import androidx.core.net.toUri
 import com.github.duplicates.DuplicateItem
 import java.io.ByteArrayOutputStream
 
@@ -67,7 +68,7 @@ class BookmarkItem : DuplicateItem() {
     var visits: Int = 0
 
     fun setUrl(url: String?) {
-        uri = if (url != null) Uri.parse(url) else null
+        uri = url?.toUri()
     }
 
     override fun contains(s: CharSequence): Boolean {

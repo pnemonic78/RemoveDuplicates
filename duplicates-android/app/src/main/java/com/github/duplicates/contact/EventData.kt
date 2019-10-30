@@ -13,25 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.contact;
+package com.github.duplicates.contact
 
-import com.github.duplicates.DuplicateComparator;
+import android.text.TextUtils
 
-import static com.github.duplicates.DuplicateComparator.SAME;
+import android.provider.ContactsContract.CommonDataKinds.Event
 
 /**
- * Compare contacts by name and ID.
+ * Contact event data.
  *
  * @author moshe.w
  */
-public class ContactNameComparator extends ContactIdComparator {
+class EventData : ContactData() {
 
-    @Override
-    public int compare(ContactItem lhs, ContactItem rhs) {
-        int c = DuplicateComparator.compareIgnoreCase(lhs.getDisplayName(), rhs.getDisplayName());
-        if (c != SAME) {
-            return c;
-        }
-        return super.compare(lhs, rhs);
+    val startDate: String?
+        get() = data1
+
+    val type: Int
+        get() = parseInt(data2)
+
+    val label: String?
+        get() = data3
+
+    init {
+        mimeType = Event.CONTENT_ITEM_TYPE
+    }
+
+    override fun toString(): String {
+        val label = label
+        return startDate!! + if (TextUtils.isEmpty(label)) "" else " " + label!!
+    }
+
+    override fun containsAny(s: CharSequence): Boolean {
+        return contains(label)
     }
 }

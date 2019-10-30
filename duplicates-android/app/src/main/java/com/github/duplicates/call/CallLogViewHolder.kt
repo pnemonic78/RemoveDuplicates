@@ -48,7 +48,7 @@ import com.github.duplicates.call.CallLogItem.Companion.VOICEMAIL_TYPE
  *
  * @author moshe.w
  */
-class CallLogViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<*>? = null) : DuplicateViewHolder<CallLogItem>(itemView, onCheckedChangeListener) {
+class CallLogViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<CallLogItem>? = null) : DuplicateViewHolder<CallLogItem>(itemView, onCheckedChangeListener) {
 
     @BindView(R.id.match)
     lateinit var match: TextView

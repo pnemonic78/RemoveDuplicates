@@ -13,26 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.contact;
+package com.github.duplicates.contact
 
-import android.content.Context;
-
-import com.github.duplicates.DuplicateDeleteTask;
-import com.github.duplicates.DuplicateTaskListener;
+import android.view.ViewGroup
+import com.github.android.removeduplicates.R
+import com.github.duplicates.DuplicateAdapter
 
 /**
- * Task to find duplicate contacts.
+ * List adapter for duplicate contacts.
  *
  * @author moshe.w
  */
-public class ContactDeleteTask extends DuplicateDeleteTask<ContactItem> {
+class ContactAdapter : DuplicateAdapter<ContactItem, ContactViewHolder>() {
 
-    public ContactDeleteTask(Context context, DuplicateTaskListener listener) {
-        super(context, listener);
-    }
-
-    @Override
-    protected ContactProvider createProvider(Context context) {
-        return new ContactProvider(context);
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
+        val itemView = createViewHolder(R.layout.same_contact, parent, viewType)
+        return ContactViewHolder(itemView, this)
     }
 }

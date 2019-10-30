@@ -42,7 +42,7 @@ import com.github.duplicates.bookmark.BookmarkComparator.Companion.URL
  *
  * @author moshe.w
  */
-class BookmarkViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<*>? = null) : DuplicateViewHolder<BookmarkItem>(itemView, onCheckedChangeListener) {
+class BookmarkViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<BookmarkItem>? = null) : DuplicateViewHolder<BookmarkItem>(itemView, onCheckedChangeListener) {
 
     @BindView(R.id.match)
     lateinit var match: TextView

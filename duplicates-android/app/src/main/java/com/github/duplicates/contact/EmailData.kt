@@ -13,42 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.contact;
+package com.github.duplicates.contact
 
-import android.text.TextUtils;
+import android.text.TextUtils
 
-import static android.provider.ContactsContract.CommonDataKinds.Email;
+import android.provider.ContactsContract.CommonDataKinds.Email
 
 /**
  * Contact email data.
  *
  * @author moshe.w
  */
-public class EmailData extends ContactData {
+class EmailData : ContactData() {
 
-    public EmailData() {
-        setMimeType(Email.CONTENT_ITEM_TYPE);
+    val address: String?
+        get() = data1
+
+    val type: Int
+        get() = parseInt(data2)
+
+    val label: String?
+        get() = data3
+
+    init {
+        mimeType = Email.CONTENT_ITEM_TYPE
     }
 
-    public String getAddress() {
-        return getData1();
+    override fun toString(): String {
+        return address ?: super.toString()
     }
 
-    public int getType() {
-        return parseInt(getData2());
-    }
-
-    public String getLabel() {
-        return getData3();
-    }
-
-    @Override
-    public String toString() {
-        return getAddress();
-    }
-
-    @Override
-    public boolean containsAny(CharSequence s) {
-        return contains(getAddress()) || contains(getLabel());
+    override fun containsAny(s: CharSequence): Boolean {
+        return contains(address) || contains(label)
     }
 }
