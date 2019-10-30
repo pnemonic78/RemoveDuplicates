@@ -15,8 +15,6 @@
  */
 package com.github.duplicates.alarm
 
-import android.text.TextUtils
-
 import com.github.duplicates.DaysOfWeek
 import com.github.duplicates.DuplicateItem
 

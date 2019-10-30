@@ -92,44 +92,44 @@ class SamsungAlarmProvider(context: Context) : DuplicateProvider<AlarmItem>(cont
 
     companion object {
 
-        val PACKAGE = "com.sec.android.app.clockpackage"
+        const val PACKAGE = "com.sec.android.app.clockpackage"
 
         private val PERMISSIONS_READ = arrayOf("com.sec.android.app.clockpackage.permission.READ_ALARM")
         private val PERMISSIONS_WRITE = arrayOf("com.sec.android.app.clockpackage.permission.WRITE_ALARM")
 
         private val PROJECTION = arrayOf(_ID, "active", "createtime", "alerttime", "alarmtime", "repeattype", "notitype", "snzactive", "snzduration", "snzrepeat", "snzcount", "dailybrief", "sbdactive", "sbdduration", "sbdtone", "alarmsound", "alarmtone", "volume", "sbduri", "alarmuri", "name")
 
-        private val INDEX_ID = 0
-        private val INDEX_ACTIVE = 1
-        private val INDEX_CREATETIME = 2
-        private val INDEX_ALERTTIME = 3
-        private val INDEX_ALARMTIME = 4
-        private val INDEX_REPEATTYPE = 5
-        private val INDEX_NOTITYPE = 6
-        private val INDEX_SNZACTIVE = 7
-        private val INDEX_SNZDURATION = 8
-        private val INDEX_SNZREPEAT = 9
-        private val INDEX_SNZCOUNT = 10
-        private val INDEX_DAILYBRIEF = 11
-        private val INDEX_SBDACTIVE = 12
-        private val INDEX_SBDDURATION = 13
-        private val INDEX_SBDTONE = 14
-        private val INDEX_ALARMSOUND = 15
-        private val INDEX_ALARMTONE = 16
-        private val INDEX_VOLUME = 17
-        private val INDEX_SBDURI = 18
-        private val INDEX_ALARMURI = 19
-        private val INDEX_NAME = 20
+        private const val INDEX_ID = 0
+        private const val INDEX_ACTIVE = 1
+        private const val INDEX_CREATETIME = 2
+        private const val INDEX_ALERTTIME = 3
+        private const val INDEX_ALARMTIME = 4
+        private const val INDEX_REPEATTYPE = 5
+        private const val INDEX_NOTITYPE = 6
+        private const val INDEX_SNZACTIVE = 7
+        private const val INDEX_SNZDURATION = 8
+        private const val INDEX_SNZREPEAT = 9
+        private const val INDEX_SNZCOUNT = 10
+        private const val INDEX_DAILYBRIEF = 11
+        private const val INDEX_SBDACTIVE = 12
+        private const val INDEX_SBDDURATION = 13
+        private const val INDEX_SBDTONE = 14
+        private const val INDEX_ALARMSOUND = 15
+        private const val INDEX_ALARMTONE = 16
+        private const val INDEX_VOLUME = 17
+        private const val INDEX_SBDURI = 18
+        private const val INDEX_ALARMURI = 19
+        private const val INDEX_NAME = 20
 
-        private val REPEAT_WEEKLY = 0x00000005
-        private val REPEAT_TOMORROW = 0x00000001
+        private const val REPEAT_WEEKLY = 0x00000005
+        private const val REPEAT_TOMORROW = 0x00000001
 
-        private val DAY_SUNDAY = 0x10000000
-        private val DAY_MONDAY = 0x01000000
-        private val DAY_TUESDAY = 0x00100000
-        private val DAY_WEDNESDAY = 0x00010000
-        private val DAY_THURSDAY = 0x00001000
-        private val DAY_FRIDAY = 0x00000100
-        private val DAY_SATURDAY = 0x10000010
+        private const val DAY_SUNDAY = 0x10000000
+        private const val DAY_MONDAY = 0x01000000
+        private const val DAY_TUESDAY = 0x00100000
+        private const val DAY_WEDNESDAY = 0x00010000
+        private const val DAY_THURSDAY = 0x00001000
+        private const val DAY_FRIDAY = 0x00000100
+        private const val DAY_SATURDAY = 0x10000010
     }
 }
