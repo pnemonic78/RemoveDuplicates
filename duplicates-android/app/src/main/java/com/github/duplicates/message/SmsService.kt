@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.message;
+package com.github.duplicates.message
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.app.Service
+import android.content.Intent
+import android.os.IBinder
 
 /**
- * Dummy SMS receiver just to let system think we can be a default SMS app.
+ * Dummy SMS service just to let system think we can be a default SMS app.
  *
  * @author moshe.w
  */
-public class SmsReceiver extends BroadcastReceiver {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        // Not an actual receiver.
+class SmsService : Service() {
+    override fun onBind(intent: Intent): IBinder? {
+        // Not an actual service.
+        return null
     }
 }

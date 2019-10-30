@@ -121,29 +121,29 @@ class CallLogViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
 
     @DrawableRes
     private fun getTypeIcon(type: Int): Int {
-        when (type) {
-            INCOMING_TYPE -> return R.drawable.ic_call_received
-            OUTGOING_TYPE -> return R.drawable.ic_call_made
-            MISSED_TYPE -> return R.drawable.ic_call_missed
-            VOICEMAIL_TYPE -> return R.drawable.ic_voicemail
-            REJECTED_TYPE -> return R.drawable.ic_cancel
-            BLOCKED_TYPE -> return R.drawable.ic_block
-            ANSWERED_EXTERNALLY_TYPE -> return R.drawable.ic_devices_other
-            else -> return R.drawable.ic_call
+        return when (type) {
+            INCOMING_TYPE -> R.drawable.ic_call_received
+            OUTGOING_TYPE -> R.drawable.ic_call_made
+            MISSED_TYPE -> R.drawable.ic_call_missed
+            VOICEMAIL_TYPE -> R.drawable.ic_voicemail
+            REJECTED_TYPE -> R.drawable.ic_cancel
+            BLOCKED_TYPE -> R.drawable.ic_block
+            ANSWERED_EXTERNALLY_TYPE -> R.drawable.ic_devices_other
+            else -> R.drawable.ic_call
         }
     }
 
     @StringRes
     private fun getTypeName(type: Int): Int {
-        when (type) {
-            INCOMING_TYPE -> return R.string.call_type_incoming
-            OUTGOING_TYPE -> return R.string.call_type_outgoing
-            MISSED_TYPE -> return R.string.call_type_missed
-            VOICEMAIL_TYPE -> return R.string.call_type_voicemail
-            REJECTED_TYPE -> return R.string.call_type_rejected
-            BLOCKED_TYPE -> return R.string.call_type_blocked
-            ANSWERED_EXTERNALLY_TYPE -> return R.string.call_type_external
-            else -> return R.string.call_type_other
+        return when (type) {
+            INCOMING_TYPE -> R.string.call_type_incoming
+            OUTGOING_TYPE -> R.string.call_type_outgoing
+            MISSED_TYPE -> R.string.call_type_missed
+            VOICEMAIL_TYPE -> R.string.call_type_voicemail
+            REJECTED_TYPE -> R.string.call_type_rejected
+            BLOCKED_TYPE -> R.string.call_type_blocked
+            ANSWERED_EXTERNALLY_TYPE -> R.string.call_type_external
+            else -> R.string.call_type_other
         }
     }
 

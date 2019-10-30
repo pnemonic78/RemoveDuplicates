@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.message;
+package com.github.duplicates.message
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-
-import androidx.annotation.Nullable;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 
 /**
- * Dummy SMS service just to let system think we can be a default SMS app.
+ * Dummy MMS receiver just to let system think we can be a default SMS app.
  *
  * @author moshe.w
  */
-public class SmsService extends Service {
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        // Not an actual service.
-        return null;
+class MmsReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        // Not an actual receiver.
     }
 }

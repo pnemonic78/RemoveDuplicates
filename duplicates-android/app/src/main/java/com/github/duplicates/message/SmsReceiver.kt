@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.message;
+package com.github.duplicates.message
 
-import android.app.Activity;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 
 /**
- * Dummy SMS/MMs activity just to let system think we can be a default SMS app.
+ * Dummy SMS receiver just to let system think we can be a default SMS app.
  *
  * @author moshe.w
  */
-public class SmsActivity extends Activity {
+class SmsReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        // Not an actual receiver.
+    }
 }

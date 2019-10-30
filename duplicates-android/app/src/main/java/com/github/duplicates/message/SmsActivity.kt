@@ -13,24 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.message;
+package com.github.duplicates.message
 
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.github.android.removeduplicates.R;
-import com.github.duplicates.DuplicateAdapter;
+import android.app.Activity
 
 /**
- * List adapter for duplicate messages.
+ * Dummy SMS/MMs activity just to let system think we can be a default SMS app.
  *
  * @author moshe.w
  */
-public class MessageAdapter extends DuplicateAdapter<MessageItem, MessageViewHolder> {
-
-    @Override
-    public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = createViewHolder(R.layout.same_message, parent, viewType);
-        return new MessageViewHolder(itemView, this);
-    }
-}
+class SmsActivity : Activity()

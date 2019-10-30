@@ -138,7 +138,7 @@ class ContactViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
         onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
     }
 
-    protected fun formatData(data: Collection<ContactData>): CharSequence? {
+    private fun formatData(data: Collection<ContactData>): CharSequence? {
         if (data.isEmpty()) {
             return null
         }

@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.message;
+package com.github.duplicates.message
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.view.ViewGroup
+import com.github.android.removeduplicates.R
+import com.github.duplicates.DuplicateAdapter
 
 /**
- * Dummy MMS receiver just to let system think we can be a default SMS app.
+ * List adapter for duplicate messages.
  *
  * @author moshe.w
  */
-public class MmsReceiver extends BroadcastReceiver {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        // Not an actual receiver.
+class MessageAdapter : DuplicateAdapter<MessageItem, MessageViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
+        val itemView = createViewHolder(R.layout.same_message, parent, viewType)
+        return MessageViewHolder(itemView, this)
     }
 }
