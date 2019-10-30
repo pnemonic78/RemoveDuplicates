@@ -42,7 +42,7 @@ import kotlin.math.min
  *
  * @author moshe.w
  */
-class CalendarViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: DuplicateViewHolder.OnItemCheckedChangeListener<*>? = null) : DuplicateViewHolder<CalendarItem>(itemView, onCheckedChangeListener) {
+class CalendarViewHolder(itemView: View, onCheckedChangeListener: DuplicateViewHolder.OnItemCheckedChangeListener<*>? = null) : DuplicateViewHolder<CalendarItem>(itemView, onCheckedChangeListener) {
 
     @BindView(R.id.match)
     lateinit var match: TextView

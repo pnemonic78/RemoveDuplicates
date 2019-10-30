@@ -21,16 +21,13 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-
+import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.OnClick
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
-
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.CREATED
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.DATE
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.FAVICON
@@ -42,7 +39,7 @@ import com.github.duplicates.bookmark.BookmarkComparator.Companion.URL
  *
  * @author moshe.w
  */
-class BookmarkViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<BookmarkItem>? = null) : DuplicateViewHolder<BookmarkItem>(itemView, onCheckedChangeListener) {
+class BookmarkViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<BookmarkItem>? = null) : DuplicateViewHolder<BookmarkItem>(itemView, onCheckedChangeListener) {
 
     @BindView(R.id.match)
     lateinit var match: TextView

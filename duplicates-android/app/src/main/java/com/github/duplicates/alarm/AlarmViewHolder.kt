@@ -21,30 +21,25 @@ import android.text.format.DateUtils
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
-
+import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.OnClick
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
-
-import java.util.Date
-import java.util.TimeZone
-
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
-
 import com.github.duplicates.alarm.AlarmComparator.Companion.ALARM_TIME
 import com.github.duplicates.alarm.AlarmComparator.Companion.ALERT_TIME
 import com.github.duplicates.alarm.AlarmComparator.Companion.NAME
 import com.github.duplicates.alarm.AlarmComparator.Companion.REPEAT
+import java.util.*
 
 /**
  * View holder of a duplicate alarms.
  *
  * @author moshe.w
  */
-class AlarmViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<AlarmItem>? = null) : DuplicateViewHolder<AlarmItem>(itemView, onCheckedChangeListener) {
+class AlarmViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<AlarmItem>? = null) : DuplicateViewHolder<AlarmItem>(itemView, onCheckedChangeListener) {
 
     @BindView(R.id.match)
     lateinit var match: TextView

@@ -39,7 +39,7 @@ import java.util.*
  *
  * @author moshe.w
  */
-class ContactViewHolder @JvmOverloads constructor(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<ContactItem>) : DuplicateViewHolder<ContactItem>(itemView, onCheckedChangeListener) {
+class ContactViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<ContactItem>) : DuplicateViewHolder<ContactItem>(itemView, onCheckedChangeListener) {
 
     @BindView(R.id.match)
     lateinit var match: TextView
