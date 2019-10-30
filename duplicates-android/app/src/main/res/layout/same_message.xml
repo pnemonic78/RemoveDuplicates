@@ -54,6 +54,7 @@
         android:id="@+id/date1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/address1"
         app:layout_constraintStart_toEndOf="@+id/type1"
         app:layout_constraintTop_toBottomOf="@+id/barrier10"
         tools:text="@string/dummy_date_time" />
@@ -115,6 +116,7 @@
         android:id="@+id/date2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/address2"
         app:layout_constraintStart_toEndOf="@+id/type2"
         app:layout_constraintTop_toBottomOf="@+id/barrier20"
         tools:text="@string/dummy_date_time" />
