@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.contact;
+package com.github.duplicates.contact
 
-import com.github.duplicates.DuplicateComparator;
+import com.github.duplicates.DuplicateComparator
 
-import java.util.Comparator;
+import java.util.Comparator
 
 /**
  * Compare contacts by ID.
  *
  * @author moshe.w
  */
-public class ContactIdComparator implements Comparator<ContactItem> {
+open class ContactIdComparator : Comparator<ContactItem> {
 
-    @Override
-    public int compare(ContactItem lhs, ContactItem rhs) {
-        return DuplicateComparator.compare(lhs.getId(), rhs.getId());
+    override fun compare(lhs: ContactItem, rhs: ContactItem): Int {
+        return DuplicateComparator.compare(lhs.id, rhs.id)
     }
 }
