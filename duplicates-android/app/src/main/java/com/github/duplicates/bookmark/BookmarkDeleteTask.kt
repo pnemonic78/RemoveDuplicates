@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.bookmark;
+package com.github.duplicates.bookmark
 
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
 
-import com.github.android.removeduplicates.R;
-import com.github.duplicates.DuplicateAdapter;
+import com.github.duplicates.DuplicateDeleteTask
+import com.github.duplicates.DuplicateTaskListener
 
 /**
- * List adapter for duplicate bookmarks.
+ * Task to find duplicate bookmarks.
  *
  * @author moshe.w
  */
-public class BookmarkAdapter extends DuplicateAdapter<BookmarkItem, BookmarkViewHolder> {
+class BookmarkDeleteTask(context: Context, listener: DuplicateTaskListener<BookmarkItem, *>) : DuplicateDeleteTask<BookmarkItem>(context, listener) {
 
-    @Override
-    public BookmarkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = createViewHolder(R.layout.same_bookmark, parent, viewType);
-        return new BookmarkViewHolder(itemView, this);
+    override fun createProvider(context: Context): BookmarkProvider {
+        return BookmarkProvider(context)
     }
 }

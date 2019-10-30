@@ -13,26 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.bookmark;
+package com.github.duplicates.bookmark
 
-import android.content.Context;
+import android.content.Context
 
-import com.github.duplicates.DuplicateDeleteTask;
-import com.github.duplicates.DuplicateTaskListener;
+import com.github.duplicates.DuplicateFindTask
+import com.github.duplicates.DuplicateTaskListener
 
 /**
  * Task to find duplicate bookmarks.
  *
  * @author moshe.w
  */
-public class BookmarkDeleteTask extends DuplicateDeleteTask<BookmarkItem> {
+class BookmarkFindTask(context: Context, listener: DuplicateTaskListener<BookmarkItem, *>) : DuplicateFindTask<BookmarkItem, BookmarkViewHolder>(context, listener) {
 
-    public BookmarkDeleteTask(Context context, DuplicateTaskListener listener) {
-        super(context, listener);
+    override fun createProvider(context: Context): BookmarkProvider {
+        return BookmarkProvider(context)
     }
 
-    @Override
-    protected BookmarkProvider createProvider(Context context) {
-        return new BookmarkProvider(context);
+    override fun createAdapter(): BookmarkAdapter {
+        return BookmarkAdapter()
+    }
+
+    override fun createComparator(): BookmarkComparator {
+        return BookmarkComparator()
     }
 }
