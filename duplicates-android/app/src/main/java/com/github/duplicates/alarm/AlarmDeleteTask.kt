@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.alarm;
+package com.github.duplicates.alarm
 
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
 
-import com.github.android.removeduplicates.R;
-import com.github.duplicates.DuplicateAdapter;
+import com.github.duplicates.DuplicateDeleteTask
+import com.github.duplicates.DuplicateTaskListener
 
 /**
- * List adapter for duplicate alarms.
+ * Task to find duplicate alarms.
  *
  * @author moshe.w
  */
-public class AlarmAdapter extends DuplicateAdapter<AlarmItem, AlarmViewHolder> {
+class AlarmDeleteTask(context: Context, listener: DuplicateTaskListener<*, *>) : DuplicateDeleteTask<AlarmItem>(context, listener) {
 
-    @Override
-    public AlarmViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = createViewHolder(R.layout.same_alarm, parent, viewType);
-        return new AlarmViewHolder(itemView, this);
+    override fun createProvider(context: Context): AlarmProvider {
+        return AlarmProvider(context)
     }
 }

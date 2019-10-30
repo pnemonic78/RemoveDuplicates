@@ -19,6 +19,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.telephony.PhoneNumberUtils;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -56,7 +58,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
      * @param difference the array of differences.
      * @return the match as a percentage between {@code 0.0} (dissimilar) and {@code 1.0} (identical) inclusive.
      */
-    public abstract float match(T lhs, T rhs, boolean[] difference);
+    public abstract float match(T lhs, T rhs, @Nullable boolean[] difference);
 
     /**
      * How different are the two items?
@@ -88,7 +90,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
         return (lhs > rhs) ? LHS : ((lhs < rhs) ? RHS : SAME);
     }
 
-    public static <T extends Comparable<T>> int compare(T lhs, T rhs) {
+    public static <T extends Comparable<T>> int compare(@Nullable T lhs, @Nullable T rhs) {
         if (lhs == rhs) {
             return SAME;
         }

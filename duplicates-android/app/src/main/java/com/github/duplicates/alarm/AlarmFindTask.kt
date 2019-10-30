@@ -13,36 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.alarm;
+package com.github.duplicates.alarm
 
-import android.content.Context;
+import android.content.Context
 
-import com.github.duplicates.DuplicateFindTask;
-import com.github.duplicates.DuplicateTaskListener;
+import com.github.duplicates.DuplicateFindTask
+import com.github.duplicates.DuplicateTaskListener
 
 /**
  * Task to find duplicate alarms.
  *
  * @author moshe.w
  */
-public class AlarmFindTask extends DuplicateFindTask<AlarmItem, AlarmViewHolder> {
+class AlarmFindTask(context: Context, listener: DuplicateTaskListener<AlarmItem, *>) : DuplicateFindTask<AlarmItem, AlarmViewHolder>(context, listener) {
 
-    public AlarmFindTask(Context context, DuplicateTaskListener listener) {
-        super(context, listener);
+    override fun createProvider(context: Context): AlarmProvider {
+        return AlarmProvider(context)
     }
 
-    @Override
-    protected AlarmProvider createProvider(Context context) {
-        return new AlarmProvider(context);
+    override fun createAdapter(): AlarmAdapter {
+        return AlarmAdapter()
     }
 
-    @Override
-    public AlarmAdapter createAdapter() {
-        return new AlarmAdapter();
-    }
-
-    @Override
-    public AlarmComparator createComparator() {
-        return new AlarmComparator();
+    override fun createComparator(): AlarmComparator {
+        return AlarmComparator()
     }
 }
