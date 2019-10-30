@@ -96,7 +96,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     protected void bindItem1(Context context, MessageItem item) {
         checkbox1.setChecked(item.isChecked());
         checkbox1.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
-        date1.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        date1.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_WEEKDAY));
         address1.setText(item.getAddress());
         type1.setImageResource(getTypeIcon(item.getType()));
         type1.setContentDescription(context.getText(getTypeName(item.getType())));
@@ -107,7 +107,7 @@ public class MessageViewHolder extends DuplicateViewHolder<MessageItem> {
     protected void bindItem2(Context context, MessageItem item) {
         checkbox2.setChecked(item.isChecked());
         checkbox2.setText(BuildConfig.DEBUG ? Long.toString(item.getId()) : "");
-        date2.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL));
+        date2.setText(DateUtils.formatDateTime(context, item.getDateReceived(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_WEEKDAY));
         address2.setText(item.getAddress());
         type2.setImageResource(getTypeIcon(item.getType()));
         type2.setContentDescription(context.getText(getTypeName(item.getType())));

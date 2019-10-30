@@ -123,7 +123,7 @@ class CalendarViewHolder @JvmOverloads constructor(itemView: View, onCheckedChan
         return if (date == NEVER) {
             null
         } else {
-            DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_MONTH)
+            DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
         }
     }
 

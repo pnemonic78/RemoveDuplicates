@@ -84,8 +84,8 @@ class BookmarkViewHolder @JvmOverloads constructor(itemView: View, onCheckedChan
     override fun bindItem1(context: Context, item: BookmarkItem) {
         checkbox1.isChecked = item.isChecked
         checkbox1.text = if (BuildConfig.DEBUG) item.id.toString() else ""
-        created1.text = DateUtils.formatDateTime(context, item.created, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_ALL)
-        date1.text = DateUtils.formatDateTime(context, item.date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_ALL)
+        created1.text = DateUtils.formatDateTime(context, item.created, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
+        date1.text = DateUtils.formatDateTime(context, item.date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
         icon1.setImageBitmap(item.icon)
         title1.text = item.title
         url1.text = item.uri?.toString()
@@ -94,8 +94,8 @@ class BookmarkViewHolder @JvmOverloads constructor(itemView: View, onCheckedChan
     override fun bindItem2(context: Context, item: BookmarkItem) {
         checkbox2.isChecked = item.isChecked
         checkbox2.text = if (BuildConfig.DEBUG) item.id.toString() else ""
-        created2.text = DateUtils.formatDateTime(context, item.created, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_ALL)
-        date2.text = DateUtils.formatDateTime(context, item.date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_ALL)
+        created2.text = DateUtils.formatDateTime(context, item.created, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
+        date2.text = DateUtils.formatDateTime(context, item.date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
         icon2.setImageBitmap(item.icon)
         title2.text = item.title
         url2.text = item.uri?.toString()

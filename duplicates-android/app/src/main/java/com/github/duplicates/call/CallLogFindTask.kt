@@ -13,26 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.call;
+package com.github.duplicates.call
 
-import android.content.Context;
+import android.content.Context
 
-import com.github.duplicates.DuplicateDeleteTask;
-import com.github.duplicates.DuplicateTaskListener;
+import com.github.duplicates.DuplicateFindTask
+import com.github.duplicates.DuplicateTaskListener
 
 /**
  * Task to find duplicate calls.
  *
  * @author moshe.w
  */
-public class CallLogDeleteTask extends DuplicateDeleteTask<CallLogItem> {
+class CallLogFindTask(context: Context, listener: DuplicateTaskListener<CallLogItem, *>) : DuplicateFindTask<CallLogItem, CallLogViewHolder>(context, listener) {
 
-    public CallLogDeleteTask(Context context, DuplicateTaskListener listener) {
-        super(context, listener);
+    override fun createProvider(context: Context): CallLogProvider {
+        return CallLogProvider(context)
     }
 
-    @Override
-    protected CallLogProvider createProvider(Context context) {
-        return new CallLogProvider(context);
+    override fun createAdapter(): CallLogAdapter {
+        return CallLogAdapter()
+    }
+
+    override fun createComparator(): CallLogComparator {
+        return CallLogComparator()
     }
 }

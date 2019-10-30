@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates.call;
+package com.github.duplicates.call
 
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context
 
-import com.github.android.removeduplicates.R;
-import com.github.duplicates.DuplicateAdapter;
+import com.github.duplicates.DuplicateDeleteTask
+import com.github.duplicates.DuplicateTaskListener
 
 /**
- * List adapter for duplicate calls.
+ * Task to find duplicate calls.
  *
  * @author moshe.w
  */
-public class CallLogAdapter extends DuplicateAdapter<CallLogItem, CallLogViewHolder> {
+class CallLogDeleteTask(context: Context, listener: DuplicateTaskListener<CallLogItem, *>) : DuplicateDeleteTask<CallLogItem>(context, listener) {
 
-    @Override
-    public CallLogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = createViewHolder(R.layout.same_call, parent, viewType);
-        return new CallLogViewHolder(itemView, this);
+    override fun createProvider(context: Context): CallLogProvider {
+        return CallLogProvider(context)
     }
 }
