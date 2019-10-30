@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates;
+package com.github.duplicates
 
 /**
  * Listener for provider events.
  *
  * @author moshe.w
  */
-public interface DuplicateProviderListener<I extends DuplicateItem, P extends DuplicateProvider<I>> {
+interface DuplicateProviderListener<I : DuplicateItem, P : DuplicateProvider<I>> {
 
     /**
      * Notification that the provider has fetched an item.
@@ -29,7 +29,7 @@ public interface DuplicateProviderListener<I extends DuplicateItem, P extends Du
      * @param count    the number of items fetched.
      * @param item     the item.
      */
-    void onItemFetched(P provider, int count, I item);
+    fun onItemFetched(provider: P, count: Int, item: I)
 
     /**
      * Notification that the provider has deleted an item.
@@ -38,7 +38,7 @@ public interface DuplicateProviderListener<I extends DuplicateItem, P extends Du
      * @param count    the number of items deleted.
      * @param item     the item.
      */
-    void onItemDeleted(P provider, int count, I item);
+    fun onItemDeleted(provider: P, count: Int, item: I)
 
     /**
      * Notification that the provider has deleted an item.
@@ -47,5 +47,5 @@ public interface DuplicateProviderListener<I extends DuplicateItem, P extends Du
      * @param count    the number of items deleted.
      * @param pair     the items pair.
      */
-    void onPairDeleted(P provider, int count, DuplicateItemPair<I> pair);
+    fun onPairDeleted(provider: P, count: Int, pair: DuplicateItemPair<I>)
 }
