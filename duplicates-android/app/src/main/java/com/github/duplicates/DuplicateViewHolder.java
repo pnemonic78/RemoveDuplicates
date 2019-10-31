@@ -16,9 +16,14 @@
 package com.github.duplicates;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.android.removeduplicates.R;
@@ -32,12 +37,19 @@ import java.text.NumberFormat;
  */
 public abstract class DuplicateViewHolder<T extends DuplicateItem> extends RecyclerView.ViewHolder {
 
+    @NonNull
+    private final Context context;
+    @ColorInt
     protected final int colorDifferent;
+    @ColorInt
     protected final int colorError;
     protected final NumberFormat percentFormatter = NumberFormat.getPercentInstance();
 
+    @NonNull
     protected T item1;
+    @NonNull
     protected T item2;
+    @Nullable
     protected final OnItemCheckedChangeListener<T> onCheckedChangeListener;
 
     public DuplicateViewHolder(View itemView) {
@@ -47,9 +59,11 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
     public DuplicateViewHolder(View itemView, OnItemCheckedChangeListener<T> onCheckedChangeListener) {
         super(itemView);
         Context context = itemView.getContext();
+        Resources res = context.getResources();
+        this.context = context;
         this.onCheckedChangeListener = onCheckedChangeListener;
-        this.colorDifferent = context.getResources().getColor(R.color.different);
-        this.colorError = context.getResources().getColor(R.color.error);
+        this.colorDifferent = ResourcesCompat.getColor(res, R.color.different, null);
+        this.colorError = ResourcesCompat.getColor(res, R.color.error, null);
     }
 
     /**
@@ -60,7 +74,6 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
     public void bind(DuplicateItemPair<T> pair) {
         this.item1 = pair.item1;
         this.item2 = pair.item2;
-        Context context = itemView.getContext();
         bindHeader(context, pair);
         bindItem1(context, item1);
         bindItem2(context, item2);
