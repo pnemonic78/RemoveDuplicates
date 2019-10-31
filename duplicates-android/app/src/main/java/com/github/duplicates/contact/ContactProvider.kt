@@ -154,7 +154,7 @@ class ContactProvider(context: Context) : DuplicateProvider<ContactItem>(context
         }
 
         // Now that we have all the items, we can match them.
-        Collections.sort(items, ContactNameComparator())
+        items.sortWith(ContactNameComparator())
         val size = items.size
         for (i in 0 until size) {
             if (isCancelled) {

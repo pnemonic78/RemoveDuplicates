@@ -174,8 +174,9 @@ public class MainActivity extends AppCompatActivity implements DuplicateTaskList
                 return new ContactFindTask(context, listener);
             case MESSAGES:
                 return new MessageFindTask(context, listener);
+            default:
+                return null;
         }
-        return null;
     }
 
     @Nullable
@@ -196,8 +197,9 @@ public class MainActivity extends AppCompatActivity implements DuplicateTaskList
                 return new ContactDeleteTask(context, listener);
             case MESSAGES:
                 return new MessageDeleteTask(context, listener);
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override

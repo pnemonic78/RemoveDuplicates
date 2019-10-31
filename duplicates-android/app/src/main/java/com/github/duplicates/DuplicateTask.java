@@ -135,7 +135,7 @@ public abstract class DuplicateTask<I extends DuplicateItem, Params, Progress, R
         String[] permissions = getPermissions();
         if (checkSelfPermissions(activity, permissions)) {
             onPermissionGranted();
-        } else {
+        } else if (permissions != null) {
             activity.requestPermissions(permissions, REQUEST_PERMISSIONS);
         }
     }
@@ -181,8 +181,12 @@ public abstract class DuplicateTask<I extends DuplicateItem, Params, Progress, R
      * Permission to execute has been granted.
      */
     protected void onPermissionGranted() {
-        execute(params);
-        this.params = null;
+        if (params == null) {
+            execute();
+        } else {
+            execute(params);
+            this.params = null;
+        }
     }
 
     /**
@@ -192,7 +196,7 @@ public abstract class DuplicateTask<I extends DuplicateItem, Params, Progress, R
         Toast.makeText(context, R.string.permissions_denied, Toast.LENGTH_LONG).show();
     }
 
-    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, @Nullable Intent data) {
     }
 
     /**
