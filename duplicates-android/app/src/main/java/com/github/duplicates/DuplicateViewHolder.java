@@ -38,13 +38,13 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
 
     protected T item1;
     protected T item2;
-    protected final OnItemCheckedChangeListener onCheckedChangeListener;
+    protected final OnItemCheckedChangeListener<T> onCheckedChangeListener;
 
     public DuplicateViewHolder(View itemView) {
         this(itemView, null);
     }
 
-    public DuplicateViewHolder(View itemView, OnItemCheckedChangeListener onCheckedChangeListener) {
+    public DuplicateViewHolder(View itemView, OnItemCheckedChangeListener<T> onCheckedChangeListener) {
         super(itemView);
         Context context = itemView.getContext();
         this.onCheckedChangeListener = onCheckedChangeListener;

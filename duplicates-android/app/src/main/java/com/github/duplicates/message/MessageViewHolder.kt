@@ -51,7 +51,7 @@ import com.github.duplicates.message.MessageItem.Companion.MESSAGE_TYPE_SENT
  *
  * @author moshe.w
  */
-class MessageViewHolder(itemView: View, onCheckedChangeListener: DuplicateViewHolder.OnItemCheckedChangeListener<MessageItem>) : DuplicateViewHolder<MessageItem>(itemView, onCheckedChangeListener) {
+class MessageViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<MessageItem>) : DuplicateViewHolder<MessageItem>(itemView, onCheckedChangeListener) {
 
     @BindView(R.id.match)
     lateinit var match: TextView
