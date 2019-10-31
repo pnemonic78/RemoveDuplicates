@@ -24,42 +24,18 @@ import static com.github.duplicates.DuplicateComparator.compare;
  */
 public abstract class DuplicateItem implements Comparable<DuplicateItem> {
 
-    private long id;
-    private boolean checked;
-    private boolean error;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
+    public long id;
+    public boolean isChecked;
+    public boolean isError;
 
     @Override
-    public int compareTo(DuplicateItem another) {
-        return compare(this.getId(), another.getId());
+    public int compareTo(DuplicateItem other) {
+        return compare(this.id, other.id);
     }
 
     @Override
     public int hashCode() {
-        return (int) getId();
-    }
-
-    public void setError(boolean error) {
-        this.error = error;
-    }
-
-    public boolean isError() {
-        return error;
+        return (int) id;
     }
 
     public abstract boolean contains(CharSequence s);

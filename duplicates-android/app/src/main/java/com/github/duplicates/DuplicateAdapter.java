@@ -98,7 +98,7 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      * @param difference the array of differences.
      */
     public void add(T item1, T item2, float match, boolean[] difference) {
-        if (item1.isChecked() && item2.isChecked()) {
+        if (item1.isChecked && item2.isChecked) {
             return;
         }
         DuplicateItemPair<T> pair = new DuplicateItemPair<>(item1, item2, match, difference);
@@ -189,7 +189,7 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      */
     public void selectAll() {
         for (DuplicateItemPair<T> pair : pairs) {
-            pair.getItem2().setChecked(true);
+            pair.getItem2().isChecked = true;
         }
         notifyDataSetChanged();
     }
@@ -199,8 +199,8 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      */
     public void selectNone() {
         for (DuplicateItemPair<T> pair : pairs) {
-            pair.getItem1().setChecked(false);
-            pair.getItem2().setChecked(false);
+            pair.getItem1().isChecked = false;
+            pair.getItem2().isChecked = false;
         }
         notifyDataSetChanged();
     }
@@ -215,11 +215,11 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
         T item = null;
         for (DuplicateItemPair<T> pair : pairs) {
             item = pair.getItem1();
-            if (item.isChecked()) {
+            if (item.isChecked) {
                 items.add(item);
             }
             item = pair.getItem2();
-            if (item.isChecked()) {
+            if (item.isChecked) {
                 items.add(item);
             }
         }
@@ -238,7 +238,7 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     public DuplicateItemPair<T>[] getCheckedPairs() {
         List<DuplicateItemPair<T>> checked = new ArrayList<>(pairs.size());
         for (DuplicateItemPair<T> pair : pairs) {
-            if (pair.getItem1().isChecked() || pair.getItem2().isChecked()) {
+            if (pair.getItem1().isChecked || pair.getItem2().isChecked) {
                 checked.add(pair);
             }
         }
@@ -251,7 +251,7 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
 
     @Override
     public void onItemCheckedChangeListener(T item, boolean checked) {
-        item.setChecked(checked);
+        item.isChecked = checked;
         notifyDataSetChanged();//FIXME Update only the affected rows!
     }
 

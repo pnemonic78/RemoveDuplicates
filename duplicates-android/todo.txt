@@ -1,5 +1,4 @@
 layout margins
 layout styles
-kotlin
 butterknife -> ktx
 dark theme (night)

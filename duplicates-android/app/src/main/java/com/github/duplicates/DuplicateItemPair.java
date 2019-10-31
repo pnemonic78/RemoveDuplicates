@@ -48,7 +48,7 @@ public class DuplicateItemPair<T extends DuplicateItem> implements Comparable<Du
         this.difference = difference;
 
         if (match >= MATCH_GREAT) {
-            item2.setChecked(true);
+            item2.isChecked = true;
         }
     }
 
@@ -69,21 +69,21 @@ public class DuplicateItemPair<T extends DuplicateItem> implements Comparable<Du
     }
 
     public long getId() {
-        long id1 = getItem1().getId();
-        long id2 = getItem2().getId();
+        long id1 = getItem1().id;
+        long id2 = getItem2().id;
         return ((id1 & 0xFFFFFFFFL) << 32) | (id2 & 0xFFFFFFFFL);
     }
 
     @Override
     public int compareTo(@NonNull DuplicateItemPair<T> that) {
-        long thisId1 = this.item1.getId();
-        long thatId1 = that.item1.getId();
+        long thisId1 = this.item1.id;
+        long thatId1 = that.item1.id;
         int c = Long.compare(thisId1, thatId1);
         if (c != 0) {
             return c;
         }
-        long thisId2 = this.item2.getId();
-        long thatId2 = that.item2.getId();
+        long thisId2 = this.item2.id;
+        long thatId2 = that.item2.id;
         return Long.compare(thisId2, thatId2);
     }
 }

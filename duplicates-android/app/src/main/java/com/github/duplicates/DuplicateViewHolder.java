@@ -66,7 +66,7 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
         bindItem2(context, item2);
         bindDifference(context, pair);
 
-        if (item1.isError() || item2.isError()) {
+        if (item1.isError || item2.isError) {
             itemView.setBackgroundColor(colorError);
         } else {
             itemView.setBackground(null);

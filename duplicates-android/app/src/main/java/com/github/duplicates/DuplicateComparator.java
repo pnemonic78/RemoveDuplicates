@@ -47,7 +47,7 @@ public abstract class DuplicateComparator<T extends DuplicateItem> implements Co
 
     @Override
     public int compare(T lhs, T rhs) {
-        return compare(lhs.getId(), rhs.getId());
+        return compare(lhs.id, rhs.id);
     }
 
     /**

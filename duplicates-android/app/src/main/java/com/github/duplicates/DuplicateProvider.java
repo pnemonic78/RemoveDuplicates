@@ -28,6 +28,7 @@ import java.util.concurrent.CancellationException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import timber.log.Timber;
 
 /**
@@ -230,10 +231,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
     public boolean deleteItem(ContentResolver cr, T item) {
         Uri contentUri = getContentUri();
         try {
-            item.setError(false);
-            return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.getId()), null, null) > 0;
+            item.isError = false;
+            return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.id), null, null) > 0;
         } catch (IllegalArgumentException e) {
-            item.setError(true);
+            item.isError = true;
             Timber.e(e, "deleteItem: %s: %s", item, e.getMessage());
         }
         return false;
@@ -265,8 +266,8 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
             }
             item1 = pair.getItem1();
             item2 = pair.getItem2();
-            deleted1 = item1.isChecked() && deleteItem(cr, item1);
-            deleted2 = item2.isChecked() && deleteItem(cr, item2);
+            deleted1 = item1.isChecked && deleteItem(cr, item1);
+            deleted2 = item2.isChecked && deleteItem(cr, item2);
             if (deleted1 || deleted2) {
                 listener.onPairDeleted(this, ++count, pair);
             }
