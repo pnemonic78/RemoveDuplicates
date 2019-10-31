@@ -61,7 +61,7 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result>(
     override fun onPreExecute() {
         listener.onDuplicateTaskStarted(this)
         val provider = this.provider
-        provider.setListener(this)
+        provider.listener = this
         provider.onPreExecute()
     }
 

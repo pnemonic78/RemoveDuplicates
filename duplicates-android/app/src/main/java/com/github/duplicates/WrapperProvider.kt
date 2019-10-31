@@ -46,10 +46,12 @@ abstract class WrapperProvider<T : DuplicateItem>(private val context: Context) 
      */
     protected abstract fun createDelegate(context: Context): DuplicateProvider<T>
 
-    override fun setListener(listener: DuplicateProviderListener<T, DuplicateProvider<T>>?) {
-        super.setListener(listener)
-        delegate.setListener(listener)
-    }
+    override var listener: DuplicateProviderListener<T, DuplicateProvider<T>>?
+        get() = delegate.listener
+        set(value) {
+            super.listener = value
+            delegate.listener = value
+        }
 
     override fun getContentUri(): Uri? {
         return delegate.getContentUri()
@@ -124,7 +126,7 @@ abstract class WrapperProvider<T : DuplicateItem>(private val context: Context) 
         delegate.cancel()
     }
 
-    override fun isCancelled(): Boolean {
-        return delegate.isCancelled()
-    }
+    override var isCancelled: Boolean
+        get() = delegate.isCancelled
+        set(value) {}
 }

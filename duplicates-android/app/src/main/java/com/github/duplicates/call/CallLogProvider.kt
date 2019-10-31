@@ -68,7 +68,7 @@ class CallLogProvider(context: Context) : DuplicateProvider<CallLogItem>(context
     }
 
     override fun deleteItem(cr: ContentResolver, item: CallLogItem): Boolean {
-        return cr.delete(contentUri, _ID + "=" + item.id, null) > 0
+        return cr.delete(getContentUri(), _ID + "=" + item.id, null) > 0
     }
 
     override fun getReadPermissions(): Array<String>? {

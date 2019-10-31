@@ -165,7 +165,7 @@ class ContactProvider(context: Context) : DuplicateProvider<ContactItem>(context
     }
 
     override fun deleteItem(cr: ContentResolver, item: ContactItem): Boolean {
-        return cr.delete(contentUri, RawContacts.CONTACT_ID + "=" + item.id, null) > 0
+        return cr.delete(getContentUri(), RawContacts.CONTACT_ID + "=" + item.id, null) > 0
     }
 
     override fun getReadPermissions(): Array<String>? {

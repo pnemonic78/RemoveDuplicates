@@ -66,7 +66,7 @@ class BookmarkProvider(context: Context) : DuplicateProvider<BookmarkItem>(conte
     }
 
     override fun deleteItem(cr: ContentResolver, item: BookmarkItem): Boolean {
-        return cr.delete(contentUri, _ID + "=" + item.id, null) > 0
+        return cr.delete(getContentUri(), _ID + "=" + item.id, null) > 0
     }
 
     override fun getReadPermissions(): Array<String>? {
