@@ -33,6 +33,7 @@ import com.github.duplicates.DuplicateViewHolder
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.github.duplicates.SHOW_DATE_TIME
 
 import com.github.duplicates.message.MessageComparator.Companion.ADDRESS
 import com.github.duplicates.message.MessageComparator.Companion.BODY
@@ -89,7 +90,7 @@ class MessageViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
     override fun bindItem1(context: Context, item: MessageItem) {
         checkbox1.isChecked = item.isChecked
         checkbox1.text = if (BuildConfig.DEBUG) item.id.toString() else ""
-        date1.text = DateUtils.formatDateTime(context, item.dateReceived, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
+        date1.text = DateUtils.formatDateTime(context, item.dateReceived, SHOW_DATE_TIME)
         address1.text = item.address
         type1.setImageResource(getTypeIcon(item.type))
         type1.contentDescription = context.getText(getTypeName(item.type))
@@ -99,7 +100,7 @@ class MessageViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
     override fun bindItem2(context: Context, item: MessageItem) {
         checkbox2.isChecked = item.isChecked
         checkbox2.text = if (BuildConfig.DEBUG) item.id.toString() else ""
-        date2.text = DateUtils.formatDateTime(context, item.dateReceived, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
+        date2.text = DateUtils.formatDateTime(context, item.dateReceived, SHOW_DATE_TIME)
         address2.text = item.address
         type2.setImageResource(getTypeIcon(item.type))
         type2.contentDescription = context.getText(getTypeName(item.type))

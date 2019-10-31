@@ -29,6 +29,7 @@ import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
+import com.github.duplicates.SHOW_DATE_TIME
 import com.github.duplicates.calendar.CalendarComparator.Companion.DESCRIPTION
 import com.github.duplicates.calendar.CalendarComparator.Companion.DTEND
 import com.github.duplicates.calendar.CalendarComparator.Companion.DTSTART
@@ -123,7 +124,7 @@ class CalendarViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedC
         return if (date == NEVER) {
             null
         } else {
-            DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
+            DateUtils.formatDateTime(context, date, SHOW_DATE_TIME)
         }
     }
 

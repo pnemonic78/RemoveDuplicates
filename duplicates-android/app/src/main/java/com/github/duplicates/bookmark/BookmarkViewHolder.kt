@@ -28,6 +28,7 @@ import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
+import com.github.duplicates.SHOW_DATE_TIME
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.CREATED
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.DATE
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.FAVICON
@@ -81,8 +82,8 @@ class BookmarkViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedC
     override fun bindItem1(context: Context, item: BookmarkItem) {
         checkbox1.isChecked = item.isChecked
         checkbox1.text = if (BuildConfig.DEBUG) item.id.toString() else ""
-        created1.text = DateUtils.formatDateTime(context, item.created, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
-        date1.text = DateUtils.formatDateTime(context, item.date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
+        created1.text = DateUtils.formatDateTime(context, item.created, SHOW_DATE_TIME)
+        date1.text = DateUtils.formatDateTime(context, item.date, SHOW_DATE_TIME)
         icon1.setImageBitmap(item.icon)
         title1.text = item.title
         url1.text = item.uri?.toString()
@@ -91,8 +92,8 @@ class BookmarkViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedC
     override fun bindItem2(context: Context, item: BookmarkItem) {
         checkbox2.isChecked = item.isChecked
         checkbox2.text = if (BuildConfig.DEBUG) item.id.toString() else ""
-        created2.text = DateUtils.formatDateTime(context, item.created, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
-        date2.text = DateUtils.formatDateTime(context, item.date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
+        created2.text = DateUtils.formatDateTime(context, item.created, SHOW_DATE_TIME)
+        date2.text = DateUtils.formatDateTime(context, item.date, SHOW_DATE_TIME)
         icon2.setImageBitmap(item.icon)
         title2.text = item.title
         url2.text = item.uri?.toString()

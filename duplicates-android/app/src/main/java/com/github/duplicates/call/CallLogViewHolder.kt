@@ -30,6 +30,7 @@ import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
+import com.github.duplicates.SHOW_DATE_TIME
 import com.github.duplicates.call.CallLogComparator.Companion.DATE
 import com.github.duplicates.call.CallLogComparator.Companion.DURATION
 import com.github.duplicates.call.CallLogComparator.Companion.NAME
@@ -90,7 +91,7 @@ class CallLogViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
     override fun bindItem1(context: Context, item: CallLogItem) {
         checkbox1.isChecked = item.isChecked
         checkbox1.text = if (BuildConfig.DEBUG) item.id.toString() else ""
-        date1.text = DateUtils.formatDateTime(context, item.date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
+        date1.text = DateUtils.formatDateTime(context, item.date, SHOW_DATE_TIME)
         duration1.text = DateUtils.formatElapsedTime(item.duration)
         type1.setImageResource(getTypeIcon(item.type))
         type1.contentDescription = context.getText(getTypeName(item.type))
@@ -101,7 +102,7 @@ class CallLogViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
     override fun bindItem2(context: Context, item: CallLogItem) {
         checkbox2.isChecked = item.isChecked
         checkbox2.text = if (BuildConfig.DEBUG) item.id.toString() else ""
-        date2.text = DateUtils.formatDateTime(context, item.date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_WEEKDAY)
+        date2.text = DateUtils.formatDateTime(context, item.date, SHOW_DATE_TIME)
         duration2.text = DateUtils.formatElapsedTime(item.duration)
         type2.setImageResource(getTypeIcon(item.type))
         type2.contentDescription = context.getText(getTypeName(item.type))
