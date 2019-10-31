@@ -13,41 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates;
+package com.github.duplicates
 
-import com.github.android.removeduplicates.BuildConfig;
-import com.github.android.removeduplicates.R;
+import com.github.android.removeduplicates.BuildConfig
+import com.github.android.removeduplicates.R
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.StringRes;
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 
 /**
  * Main spinner items.
  *
  * @author moshe.w
  */
-public enum MainSpinnerItem {
+enum class MainSpinnerItem(@param:StringRes @field:StringRes @JvmField val label: Int,
+                           @param:DrawableRes @field:DrawableRes @JvmField val icon: Int,
+                           @JvmField val enabled: Boolean = true) {
 
     ALARMS(R.string.item_alarms, R.drawable.ic_alarm),
     BOOKMARKS(R.string.item_bookmarks, R.drawable.ic_bookmark),
     CALENDAR(R.string.item_calendar, R.drawable.ic_event),
     CALL_LOG(R.string.item_call_log, R.drawable.ic_call, BuildConfig.DEBUG),
     CONTACTS(R.string.item_contacts, R.drawable.ic_contacts),
-    MESSAGES(R.string.item_messages, R.drawable.ic_message, BuildConfig.DEBUG);
-
-    @StringRes
-    public final int label;
-    @DrawableRes
-    public final int icon;
-    public final boolean enabled;
-
-    MainSpinnerItem(@StringRes int label, @DrawableRes int icon) {
-        this(label, icon, true);
-    }
-
-    MainSpinnerItem(@StringRes int label, @DrawableRes int icon, boolean enabled) {
-        this.label = label;
-        this.icon = icon;
-        this.enabled = enabled;
-    }
+    MESSAGES(R.string.item_messages, R.drawable.ic_message, BuildConfig.DEBUG)
 }
