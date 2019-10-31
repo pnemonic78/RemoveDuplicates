@@ -36,7 +36,6 @@ class AlarmProvider(context: Context) : WrapperProvider<AlarmItem>(context) {
                 hasSamsungProvider = (packageInfo.providers != null) && packageInfo.providers.isNotEmpty()
             } catch (e: PackageManager.NameNotFoundException) {
                 hasSamsungProvider = false
-                e.printStackTrace()
             }
         }
 
