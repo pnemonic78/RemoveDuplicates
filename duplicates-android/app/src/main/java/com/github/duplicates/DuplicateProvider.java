@@ -264,8 +264,8 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
             if (isCancelled()) {
                 break;
             }
-            item1 = pair.getItem1();
-            item2 = pair.getItem2();
+            item1 = pair.item1;
+            item2 = pair.item2;
             deleted1 = item1.isChecked && deleteItem(cr, item1);
             deleted2 = item2.isChecked && deleteItem(cr, item2);
             if (deleted1 || deleted2) {

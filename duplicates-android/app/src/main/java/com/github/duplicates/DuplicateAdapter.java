@@ -177,7 +177,7 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
         // Sort by descending index to avoid "index out of bounds" when displaying the list.
         for (int i = size - 1; i >= 0; i--) {
             pair = pairs.get(i);
-            if ((pair.getItem1() == item) || (pair.getItem2() == item)) {
+            if ((pair.item1 == item) || (pair.item2 == item)) {
                 positions.add(i);
             }
         }
@@ -189,7 +189,7 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      */
     public void selectAll() {
         for (DuplicateItemPair<T> pair : pairs) {
-            pair.getItem2().isChecked = true;
+            pair.item2.isChecked = true;
         }
         notifyDataSetChanged();
     }
@@ -199,8 +199,8 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
      */
     public void selectNone() {
         for (DuplicateItemPair<T> pair : pairs) {
-            pair.getItem1().isChecked = false;
-            pair.getItem2().isChecked = false;
+            pair.item1.isChecked = false;
+            pair.item2.isChecked = false;
         }
         notifyDataSetChanged();
     }
@@ -214,11 +214,11 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
         Set<T> items = new TreeSet<>();
         T item = null;
         for (DuplicateItemPair<T> pair : pairs) {
-            item = pair.getItem1();
+            item = pair.item1;
             if (item.isChecked) {
                 items.add(item);
             }
-            item = pair.getItem2();
+            item = pair.item2;
             if (item.isChecked) {
                 items.add(item);
             }
@@ -238,7 +238,7 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     public DuplicateItemPair<T>[] getCheckedPairs() {
         List<DuplicateItemPair<T>> checked = new ArrayList<>(pairs.size());
         for (DuplicateItemPair<T> pair : pairs) {
-            if (pair.getItem1().isChecked || pair.getItem2().isChecked) {
+            if (pair.item1.isChecked || pair.item2.isChecked) {
                 checked.add(pair);
             }
         }
@@ -290,8 +290,8 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
             } else {
                 filtered = new ArrayList<>();
                 for (DuplicateItemPair<T> pair : pairsAll) {
-                    if (pair.getItem1().contains(constraint)
-                            || pair.getItem2().contains(constraint)) {
+                    if (pair.item1.contains(constraint)
+                            || pair.item2.contains(constraint)) {
                         filtered.add(pair);
                     }
                 }

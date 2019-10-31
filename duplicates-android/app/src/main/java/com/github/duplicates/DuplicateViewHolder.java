@@ -58,8 +58,8 @@ public abstract class DuplicateViewHolder<T extends DuplicateItem> extends Recyc
      * @param pair the pair of items.
      */
     public void bind(DuplicateItemPair<T> pair) {
-        this.item1 = pair.getItem1();
-        this.item2 = pair.getItem2();
+        this.item1 = pair.item1;
+        this.item2 = pair.item2;
         Context context = itemView.getContext();
         bindHeader(context, pair);
         bindItem1(context, item1);

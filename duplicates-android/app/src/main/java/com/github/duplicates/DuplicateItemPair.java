@@ -29,13 +29,13 @@ public class DuplicateItemPair<T extends DuplicateItem> implements Comparable<Du
      */
     public static final float MATCH_GREAT = 0.95f;
 
-    private T item1;
-    private T item2;
-    private float match;
-    private boolean[] difference;
-
-    public DuplicateItemPair() {
-    }
+    @NonNull
+    public final T item1;
+    @NonNull
+    public final T item2;
+    public final float match;
+    @NonNull
+    public final boolean[] difference;
 
     public DuplicateItemPair(T item1, T item2) {
         this(item1, item2, 1f, null);
@@ -52,25 +52,9 @@ public class DuplicateItemPair<T extends DuplicateItem> implements Comparable<Du
         }
     }
 
-    public T getItem1() {
-        return item1;
-    }
-
-    public T getItem2() {
-        return item2;
-    }
-
-    public float getMatch() {
-        return match;
-    }
-
-    public boolean[] getDifference() {
-        return difference;
-    }
-
     public long getId() {
-        long id1 = getItem1().id;
-        long id2 = getItem2().id;
+        long id1 = item1.id;
+        long id2 = item2.id;
         return ((id1 & 0xFFFFFFFFL) << 32) | (id2 & 0xFFFFFFFFL);
     }
 
