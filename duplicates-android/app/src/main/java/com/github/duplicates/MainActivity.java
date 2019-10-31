@@ -52,6 +52,8 @@ import com.github.duplicates.message.MessageDeleteTask;
 import com.github.duplicates.message.MessageFindTask;
 import com.github.util.LogTree;
 
+import java.util.Collection;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -299,7 +301,9 @@ public class MainActivity extends AppCompatActivity implements DuplicateTaskList
             DuplicateDeleteTask task = createDeleteTask(spinnerItem);
             this.task = task;
             if (task != null) {
-                task.start(this, adapter.getCheckedPairs());
+                final Collection pairs = adapter.getCheckedPairs();
+                final Object[] params = pairs.toArray();
+                task.start(this, params);
             } else {
                 searchStopped(false);
             }

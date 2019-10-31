@@ -42,8 +42,9 @@ public abstract class DuplicateDeleteTask<T extends DuplicateItem> extends Dupli
         pairs.clear();
     }
 
+    @SafeVarargs
     @Override
-    protected Void doInBackground(DuplicateItemPair<T>... params) {
+    protected final Void doInBackground(DuplicateItemPair<T>... params) {
         if (params != null) {
             pairs.addAll(Arrays.asList(params));
         }

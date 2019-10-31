@@ -30,8 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.android.removeduplicates.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -208,9 +208,10 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
     /**
      * Get the list of items that are checked for deletion.
      *
-     * @return the array of items.
+     * @return the list of items.
      */
-    public T[] getCheckedItems() {
+    @NonNull
+    public Collection<T> getCheckedItems() {
         Set<T> items = new TreeSet<>();
         T item = null;
         for (DuplicateItemPair<T> pair : pairs) {
@@ -223,30 +224,23 @@ public abstract class DuplicateAdapter<T extends DuplicateItem, VH extends Dupli
                 items.add(item);
             }
         }
-        if (item == null) {
-            return null;
-        }
-        T[] array = (T[]) Array.newInstance(item.getClass(), items.size());
-        return items.toArray(array);
+        return items;
     }
 
     /**
      * Get the list of pairs that have checked items for deletion.
      *
-     * @return the array of items.
+     * @return the list of items.
      */
-    public DuplicateItemPair<T>[] getCheckedPairs() {
+    @NonNull
+    public Collection<DuplicateItemPair<T>> getCheckedPairs() {
         List<DuplicateItemPair<T>> checked = new ArrayList<>(pairs.size());
         for (DuplicateItemPair<T> pair : pairs) {
             if (pair.item1.isChecked || pair.item2.isChecked) {
                 checked.add(pair);
             }
         }
-        if (checked.isEmpty()) {
-            return null;
-        }
-        DuplicateItemPair[] array = new DuplicateItemPair[checked.size()];
-        return checked.toArray(array);
+        return checked;
     }
 
     @Override
