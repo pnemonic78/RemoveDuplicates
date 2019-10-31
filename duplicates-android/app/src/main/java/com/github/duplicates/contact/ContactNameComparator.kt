@@ -15,10 +15,8 @@
  */
 package com.github.duplicates.contact
 
-import com.github.duplicates.DuplicateComparator
-
-import com.github.duplicates.DuplicateComparator.SAME
-import com.github.duplicates.DuplicateComparator.compareIgnoreCase
+import com.github.duplicates.DuplicateComparator.Companion.SAME
+import com.github.duplicates.DuplicateComparator.Companion.compareIgnoreCase
 
 /**
  * Compare contacts by name and ID.

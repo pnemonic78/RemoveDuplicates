@@ -15,7 +15,7 @@
  */
 package com.github.duplicates
 
-import com.github.duplicates.DuplicateComparator.compare
+import com.github.duplicates.DuplicateComparator.Companion.compare
 
 /**
  * Item that is a duplicate of some other item.

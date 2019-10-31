@@ -15,7 +15,7 @@
  */
 package com.github.duplicates
 
-import com.github.duplicates.DuplicateComparator.SAME
+import com.github.duplicates.DuplicateComparator.Companion.SAME
 
 /**
  * Item that is a possible duplicate of two items.
