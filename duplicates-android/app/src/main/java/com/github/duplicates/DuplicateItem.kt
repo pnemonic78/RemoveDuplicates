@@ -13,30 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.duplicates;
+package com.github.duplicates
 
-import static com.github.duplicates.DuplicateComparator.compare;
+import com.github.duplicates.DuplicateComparator.compare
 
 /**
  * Item that is a duplicate of some other item.
  *
  * @author moshe.w
  */
-public abstract class DuplicateItem implements Comparable<DuplicateItem> {
+abstract class DuplicateItem : Comparable<DuplicateItem> {
 
-    public long id;
-    public boolean isChecked;
-    public boolean isError;
+    @JvmField
+    var id: Long = 0
+    @JvmField
+    var isChecked: Boolean = false
+    @JvmField
+    var isError: Boolean = false
 
-    @Override
-    public int compareTo(DuplicateItem other) {
-        return compare(this.id, other.id);
+    override fun compareTo(other: DuplicateItem): Int {
+        return compare(this.id, other.id)
     }
 
-    @Override
-    public int hashCode() {
-        return (int) id;
+    override fun hashCode(): Int {
+        return id.toInt()
     }
 
-    public abstract boolean contains(CharSequence s);
+    abstract operator fun contains(s: CharSequence): Boolean
 }
