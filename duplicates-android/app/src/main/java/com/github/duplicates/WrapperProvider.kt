@@ -46,7 +46,7 @@ abstract class WrapperProvider<T : DuplicateItem>(private val context: Context) 
      */
     protected abstract fun createDelegate(context: Context): DuplicateProvider<T>
 
-    override fun setListener(listener: DuplicateProviderListener<T, DuplicateProvider<T>>) {
+    override fun setListener(listener: DuplicateProviderListener<T, DuplicateProvider<T>>?) {
         super.setListener(listener)
         delegate.setListener(listener)
     }
@@ -86,7 +86,7 @@ abstract class WrapperProvider<T : DuplicateItem>(private val context: Context) 
     }
 
     @Throws(CancellationException::class)
-    override fun deleteItems(items: Collection<T>?) {
+    override fun deleteItems(items: Collection<T>) {
         delegate.deleteItems(items)
     }
 

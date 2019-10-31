@@ -50,7 +50,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         this.context = context;
     }
 
-    public void setListener(DuplicateProviderListener<T, DuplicateProvider<T>> listener) {
+    public void setListener(@Nullable DuplicateProviderListener<T, DuplicateProvider<T>> listener) {
         this.listener = listener;
     }
 
@@ -164,8 +164,8 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
      * @param items the list of items.
      * @throws CancellationException if the provider has been cancelled.
      */
-    public void deleteItems(@Nullable Collection<T> items) throws CancellationException {
-        if ((items == null) || items.isEmpty()) {
+    public void deleteItems(Collection<T> items) throws CancellationException {
+        if (items.isEmpty()) {
             return;
         }
         if (isCancelled()) {
