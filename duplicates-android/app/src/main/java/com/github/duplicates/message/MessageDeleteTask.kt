@@ -21,6 +21,8 @@ import android.content.Intent
 import android.preference.PreferenceManager
 import android.provider.Telephony
 import com.github.duplicates.DuplicateDeleteTask
+import com.github.duplicates.DuplicateItemPair
+import com.github.duplicates.DuplicateTask
 import com.github.duplicates.DuplicateTaskListener
 
 /**
@@ -28,7 +30,7 @@ import com.github.duplicates.DuplicateTaskListener
  *
  * @author moshe.w
  */
-class MessageDeleteTask(context: Context, listener: DuplicateTaskListener<MessageItem, *>) : DuplicateDeleteTask<MessageItem>(context, listener) {
+class MessageDeleteTask(context: Context, listener: DuplicateTaskListener<MessageItem, DuplicateTask<MessageItem, DuplicateItemPair<MessageItem>, Any, Unit>>) : DuplicateDeleteTask<MessageItem>(context, listener) {
 
     override fun createProvider(context: Context): MessageProvider {
         return MessageProvider(context)
@@ -42,7 +44,7 @@ class MessageDeleteTask(context: Context, listener: DuplicateTaskListener<Messag
         }
     }
 
-    override fun onPostExecute(result: Void) {
+    override fun onPostExecute(result: Unit) {
         super.onPostExecute(result)
         restoreDefaultSmsPackage()
     }
@@ -95,7 +97,7 @@ class MessageDeleteTask(context: Context, listener: DuplicateTaskListener<Messag
         }
     }
 
-    override fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(activity, requestCode, resultCode, data)
 
         if (requestCode == ACTIVITY_SMS_PACKAGE) {

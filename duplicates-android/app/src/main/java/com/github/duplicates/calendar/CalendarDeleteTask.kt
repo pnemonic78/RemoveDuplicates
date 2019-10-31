@@ -18,6 +18,8 @@ package com.github.duplicates.calendar
 import android.content.Context
 
 import com.github.duplicates.DuplicateDeleteTask
+import com.github.duplicates.DuplicateItemPair
+import com.github.duplicates.DuplicateTask
 import com.github.duplicates.DuplicateTaskListener
 
 /**
@@ -25,7 +27,7 @@ import com.github.duplicates.DuplicateTaskListener
  *
  * @author moshe.w
  */
-class CalendarDeleteTask(context: Context, listener: DuplicateTaskListener<CalendarItem, *>) : DuplicateDeleteTask<CalendarItem>(context, listener) {
+class CalendarDeleteTask(context: Context, listener: DuplicateTaskListener<CalendarItem, DuplicateTask<CalendarItem, DuplicateItemPair<CalendarItem>, Any, Unit>>) : DuplicateDeleteTask<CalendarItem>(context, listener) {
 
     override fun createProvider(context: Context): CalendarProvider {
         return CalendarProvider(context)

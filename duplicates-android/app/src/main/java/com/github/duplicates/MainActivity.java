@@ -301,8 +301,8 @@ public class MainActivity extends AppCompatActivity implements DuplicateTaskList
             DuplicateDeleteTask task = createDeleteTask(spinnerItem);
             this.task = task;
             if (task != null) {
-                final Collection pairs = adapter.getCheckedPairs();
-                final Object[] params = pairs.toArray();
+                final Collection<DuplicateItemPair> pairs = adapter.getCheckedPairs();
+                final DuplicateItemPair[] params = pairs.toArray(new DuplicateItemPair[0]);
                 task.start(this, params);
             } else {
                 searchStopped(false);

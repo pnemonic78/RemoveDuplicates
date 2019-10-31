@@ -18,6 +18,8 @@ package com.github.duplicates.alarm
 import android.content.Context
 
 import com.github.duplicates.DuplicateDeleteTask
+import com.github.duplicates.DuplicateItemPair
+import com.github.duplicates.DuplicateTask
 import com.github.duplicates.DuplicateTaskListener
 
 /**
@@ -25,7 +27,7 @@ import com.github.duplicates.DuplicateTaskListener
  *
  * @author moshe.w
  */
-class AlarmDeleteTask(context: Context, listener: DuplicateTaskListener<AlarmItem, *>) : DuplicateDeleteTask<AlarmItem>(context, listener) {
+class AlarmDeleteTask(context: Context, listener: DuplicateTaskListener<AlarmItem, DuplicateTask<AlarmItem, DuplicateItemPair<AlarmItem>, Any, Unit>>) : DuplicateDeleteTask<AlarmItem>(context, listener) {
 
     override fun createProvider(context: Context): AlarmProvider {
         return AlarmProvider(context)

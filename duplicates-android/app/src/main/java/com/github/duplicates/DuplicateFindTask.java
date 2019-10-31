@@ -17,6 +17,8 @@ package com.github.duplicates;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
@@ -38,7 +40,7 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
     private DuplicateComparator<T> comparator;
     private final List<T> items = new ArrayList<>();
 
-    public DuplicateFindTask(Context context, DuplicateTaskListener listener) {
+    public DuplicateFindTask(Context context, @NonNull DuplicateTaskListener<T, DuplicateTask<T, Object, Object, List<T>>> listener) {
         super(context, listener);
     }
 
@@ -64,7 +66,7 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
 
     @Override
     protected void onProgressUpdate(Object... progress) {
-        DuplicateTaskListener<T, DuplicateTask<T, ?, ?, ?>> listener = this.listener;
+        DuplicateTaskListener<T, DuplicateTask<T, Object, Object, List<T>>> listener = this.listener;
         if (progress.length == 1) {
             listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
         } else {
@@ -120,12 +122,12 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
     }
 
     @Override
-    public void onItemDeleted(DuplicateProvider<T> provider, int count, T item) {
+    public void onItemDeleted(@NonNull DuplicateProvider<T> provider, int count, @NonNull T item) {
         // Nothing to do.
     }
 
     @Override
-    public void onPairDeleted(DuplicateProvider<T> provider, int count, DuplicateItemPair<T> pair) {
+    public void onPairDeleted(@NonNull DuplicateProvider<T> provider, int count, @NonNull DuplicateItemPair<T> pair) {
         // Nothing to do.
     }
 

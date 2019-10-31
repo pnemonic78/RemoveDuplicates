@@ -18,6 +18,7 @@ package com.github.duplicates.calendar
 import android.content.Context
 
 import com.github.duplicates.DuplicateFindTask
+import com.github.duplicates.DuplicateTask
 import com.github.duplicates.DuplicateTaskListener
 
 /**
@@ -25,7 +26,7 @@ import com.github.duplicates.DuplicateTaskListener
  *
  * @author moshe.w
  */
-class CalendarFindTask(context: Context, listener: DuplicateTaskListener<CalendarItem, *>) : DuplicateFindTask<CalendarItem, CalendarViewHolder>(context, listener) {
+class CalendarFindTask(context: Context, listener: DuplicateTaskListener<CalendarItem, DuplicateTask<CalendarItem, Any, Any, List<CalendarItem>>>) : DuplicateFindTask<CalendarItem, CalendarViewHolder>(context, listener) {
 
     override fun createProvider(context: Context): CalendarProvider {
         return CalendarProvider(context)

@@ -25,10 +25,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.widget.Toast;
 
-import com.github.android.removeduplicates.R;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.github.android.removeduplicates.R;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
@@ -37,31 +37,30 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
  *
  * @author moshe.w
  */
-public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, Result> extends AsyncTask<Params, Progress, Result>
-        implements DuplicateProviderListener<T, DuplicateProvider<T>> {
+public abstract class DuplicateTask<I extends DuplicateItem, Params, Progress, Result> extends AsyncTask<Params, Progress, Result>
+        implements DuplicateProviderListener<I, DuplicateProvider<I>> {
 
     /**
      * Activity id for requesting location permissions.
      */
-    public static final int ACTIVITY_PERMISSIONS = 2;
+    public static final int REQUEST_PERMISSIONS = 0xA110;
 
     @SuppressLint("StaticFieldLeak")
     @NonNull
     protected final Context context;
     @NonNull
-    protected final DuplicateTaskListener<T, DuplicateTask<T, ?, ?, ?>> listener;
-    @NonNull
-    private DuplicateProvider<T> provider;
+    protected final DuplicateTaskListener<I, DuplicateTask<I, Params, Progress, Result>> listener;
+    private DuplicateProvider<I> provider;
     @Nullable
     private Params[] params;
 
-    public DuplicateTask(Context context, DuplicateTaskListener listener) {
+    public DuplicateTask(Context context, @NonNull DuplicateTaskListener<I, DuplicateTask<I, Params, Progress, Result>> listener) {
         this.context = context;
         this.listener = listener;
     }
 
     @NonNull
-    protected abstract DuplicateProvider<T> createProvider(Context context);
+    protected abstract DuplicateProvider<I> createProvider(Context context);
 
     /**
      * Get the system provider. Create the provider if necessary.
@@ -69,7 +68,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      * @return the provider.
      */
     @NonNull
-    protected DuplicateProvider<T> getProvider() {
+    protected DuplicateProvider<I> getProvider() {
         if (provider == null) {
             provider = createProvider(context);
         }
@@ -137,7 +136,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
         if (checkSelfPermissions(activity, permissions)) {
             onPermissionGranted();
         } else {
-            activity.requestPermissions(permissions, ACTIVITY_PERMISSIONS);
+            activity.requestPermissions(permissions, REQUEST_PERMISSIONS);
         }
     }
 
@@ -162,7 +161,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      */
     @TargetApi(Build.VERSION_CODES.M)
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == ACTIVITY_PERMISSIONS) {
+        if (requestCode == REQUEST_PERMISSIONS) {
             if ((permissions.length > 0) && (grantResults.length > 0)) {
                 if (grantResults[0] == PERMISSION_GRANTED) {//FIXME: check entire array.
                     onPermissionGranted();
