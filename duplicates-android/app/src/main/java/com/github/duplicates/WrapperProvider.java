@@ -26,6 +26,8 @@ import java.util.concurrent.CancellationException;
 
 import androidx.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Provider that wraps functionality to a delegate provider.
  *
@@ -38,6 +40,7 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
     public WrapperProvider(Context context) {
         super(context);
         this.delegate = createDelegate(context);
+        this.listener = delegate.listener;
     }
 
     /**
@@ -52,11 +55,6 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
     @Override
     public void setListener(DuplicateProviderListener<T, DuplicateProvider<T>> listener) {
         delegate.setListener(listener);
-    }
-
-    @Override
-    public DuplicateProviderListener<T, DuplicateProvider<T>> getListener() {
-        return delegate.getListener();
     }
 
     @Override
@@ -84,18 +82,19 @@ public abstract class WrapperProvider<T extends DuplicateItem> extends Duplicate
         return delegate.createItem(cursor);
     }
 
+    @NotNull
     @Override
     public List<T> getItems() throws CancellationException {
         return delegate.getItems();
     }
 
     @Override
-    public void fetchItems(DuplicateProviderListener<T, DuplicateProvider<T>> listener) throws CancellationException {
+    public void fetchItems(@NotNull DuplicateProviderListener<T, DuplicateProvider<T>> listener) throws CancellationException {
         delegate.fetchItems(listener);
     }
 
     @Override
-    public void populateItem(Cursor cursor, T item) {
+    public void populateItem(Cursor cursor, @NotNull T item) {
         delegate.populateItem(cursor, item);
     }
 

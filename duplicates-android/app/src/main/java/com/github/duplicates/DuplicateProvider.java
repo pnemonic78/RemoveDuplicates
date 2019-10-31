@@ -29,6 +29,8 @@ import java.util.concurrent.CancellationException;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.jetbrains.annotations.NotNull;
+
 import timber.log.Timber;
 
 /**
@@ -38,24 +40,18 @@ import timber.log.Timber;
  */
 public abstract class DuplicateProvider<T extends DuplicateItem> {
 
+    @NonNull
     private final Context context;
-    private DuplicateProviderListener<T, DuplicateProvider<T>> listener;
+    @Nullable
+    protected DuplicateProviderListener<T, DuplicateProvider<T>> listener;
     private boolean cancelled;
 
-    protected DuplicateProvider(Context context) {
+    protected DuplicateProvider(@NotNull Context context) {
         this.context = context;
-    }
-
-    public DuplicateProviderListener<T, DuplicateProvider<T>> getListener() {
-        return listener;
     }
 
     public void setListener(DuplicateProviderListener<T, DuplicateProvider<T>> listener) {
         this.listener = listener;
-    }
-
-    protected Context getContext() {
-        return context;
     }
 
     @Nullable
@@ -93,7 +89,6 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
             throw new CancellationException();
         }
         List<T> items = new ArrayList<>();
-        Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
         Uri contentUri = getContentUri();
@@ -124,29 +119,13 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
     /**
      * Fetch the items from the system provider into the listener.
      *
-     * @return the list of items.
-     * @throws CancellationException if the provider has been cancelled.
-     */
-    @Deprecated
-    public void fetchItems() throws CancellationException {
-        fetchItems(getListener());
-    }
-
-    /**
-     * Fetch the items from the system provider into the listener.
-     *
      * @param listener the listener.
-     * @return the list of items.
      * @throws CancellationException if the provider has been cancelled.
      */
-    public void fetchItems(DuplicateProviderListener<T, DuplicateProvider<T>> listener) throws CancellationException {
-        if (listener == null) {
-            return;
-        }
+    public void fetchItems(@NonNull DuplicateProviderListener<T, DuplicateProvider<T>> listener) throws CancellationException {
         if (isCancelled()) {
             throw new CancellationException();
         }
-        Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
         Uri contentUri = getContentUri();
@@ -192,11 +171,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         if (isCancelled()) {
             throw new CancellationException();
         }
-        DuplicateProviderListener<T, DuplicateProvider<T>> listener = getListener();
+        DuplicateProviderListener<T, DuplicateProvider<T>> listener = this.listener;
         if (listener == null) {
             return;
         }
-        Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
         int count = 0;
@@ -219,7 +197,7 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         if (isCancelled()) {
             return false;
         }
-        return deleteItem(getContext().getContentResolver(), item);
+        return deleteItem(context.getContentResolver(), item);
     }
 
     /**
@@ -250,11 +228,10 @@ public abstract class DuplicateProvider<T extends DuplicateItem> {
         if (isCancelled()) {
             throw new CancellationException();
         }
-        DuplicateProviderListener<T, DuplicateProvider<T>> listener = getListener();
+        DuplicateProviderListener<T, DuplicateProvider<T>> listener = this.listener;
         if (listener == null) {
             return;
         }
-        Context context = getContext();
         ContentResolver cr = context.getContentResolver();
 
         int count = 0;

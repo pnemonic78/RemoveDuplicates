@@ -64,7 +64,7 @@ public abstract class DuplicateFindTask<T extends DuplicateItem, VH extends Dupl
 
     @Override
     protected void onProgressUpdate(Object... progress) {
-        DuplicateTaskListener<T, DuplicateTask<T, ?, ?, ?>> listener = getListener();
+        DuplicateTaskListener<T, DuplicateTask<T, ?, ?, ?>> listener = this.listener;
         if (progress.length == 1) {
             listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
         } else {

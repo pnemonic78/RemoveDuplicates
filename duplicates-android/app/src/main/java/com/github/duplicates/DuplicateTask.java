@@ -46,23 +46,18 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
     public static final int ACTIVITY_PERMISSIONS = 2;
 
     @SuppressLint("StaticFieldLeak")
-    private final Context context;
-    private final DuplicateTaskListener<T, DuplicateTask<T, ?, ?, ?>> listener;
+    @NonNull
+    protected final Context context;
+    @NonNull
+    protected final DuplicateTaskListener<T, DuplicateTask<T, ?, ?, ?>> listener;
+    @NonNull
     private DuplicateProvider<T> provider;
+    @Nullable
     private Params[] params;
 
     public DuplicateTask(Context context, DuplicateTaskListener listener) {
         this.context = context;
         this.listener = listener;
-    }
-
-    @NonNull
-    protected Context getContext() {
-        return context;
-    }
-
-    protected DuplicateTaskListener<T, DuplicateTask<T, ?, ?, ?>> getListener() {
-        return listener;
     }
 
     @NonNull
@@ -76,14 +71,14 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
     @NonNull
     protected DuplicateProvider<T> getProvider() {
         if (provider == null) {
-            provider = createProvider(getContext());
+            provider = createProvider(context);
         }
         return provider;
     }
 
     @Override
     protected void onPreExecute() {
-        getListener().onDuplicateTaskStarted(this);
+        listener.onDuplicateTaskStarted(this);
         this.provider = getProvider();
         provider.setListener(this);
         provider.onPreExecute();
@@ -92,19 +87,19 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
     @Override
     protected void onProgressUpdate(Progress... progress) {
         if (progress.length == 1) {
-            getListener().onDuplicateTaskProgress(this, (Integer) progress[0]);
+            listener.onDuplicateTaskProgress(this, (Integer) progress[0]);
         }
     }
 
     @Override
     protected void onPostExecute(Result result) {
-        getListener().onDuplicateTaskFinished(this);
+        listener.onDuplicateTaskFinished(this);
         getProvider().onPostExecute();
     }
 
     @Override
     protected void onCancelled() {
-        getListener().onDuplicateTaskCancelled(this);
+        listener.onDuplicateTaskCancelled(this);
     }
 
     /**
@@ -195,7 +190,7 @@ public abstract class DuplicateTask<T extends DuplicateItem, Params, Progress, R
      * Permission to execute has been denied.
      */
     protected void onPermissionDenied() {
-        Toast.makeText(getContext(), R.string.permissions_denied, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, R.string.permissions_denied, Toast.LENGTH_LONG).show();
     }
 
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
