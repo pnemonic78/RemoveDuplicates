@@ -86,7 +86,6 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result>(
      * @param activity the activity for permissions.
      * @param params   the execution parameters.
      */
-    @JvmOverloads
     fun start(activity: Activity, params: Array<Params>? = null) {
         this.params = params
         checkPermissions(activity)

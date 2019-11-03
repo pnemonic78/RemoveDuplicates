@@ -24,11 +24,8 @@ import com.github.duplicates.DuplicateComparator.Companion.compare
  */
 abstract class DuplicateItem : Comparable<DuplicateItem> {
 
-    @JvmField
     var id: Long = 0
-    @JvmField
     var isChecked: Boolean = false
-    @JvmField
     var isError: Boolean = false
 
     override fun compareTo(other: DuplicateItem): Int {

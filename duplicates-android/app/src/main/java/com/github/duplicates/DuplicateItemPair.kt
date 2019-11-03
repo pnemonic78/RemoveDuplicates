@@ -22,7 +22,7 @@ import com.github.duplicates.DuplicateComparator.Companion.SAME
  *
  * @author moshe.w
  */
-class DuplicateItemPair<T : DuplicateItem>(@JvmField val item1: T, @JvmField val item2: T, @JvmField val match: Float = 1f, @JvmField val difference: BooleanArray) : Comparable<DuplicateItemPair<T>> {
+class DuplicateItemPair<T : DuplicateItem>(val item1: T, val item2: T, val match: Float = 1f, val difference: BooleanArray) : Comparable<DuplicateItemPair<T>> {
 
     val id: Long
         get() {

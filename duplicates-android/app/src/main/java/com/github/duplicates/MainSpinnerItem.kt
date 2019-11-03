@@ -26,9 +26,9 @@ import androidx.annotation.StringRes
  *
  * @author moshe.w
  */
-enum class MainSpinnerItem(@param:StringRes @field:StringRes @JvmField val label: Int,
-                           @param:DrawableRes @field:DrawableRes @JvmField val icon: Int,
-                           @JvmField val enabled: Boolean = true) {
+enum class MainSpinnerItem(@param:StringRes @field:StringRes val label: Int,
+                           @param:DrawableRes @field:DrawableRes val icon: Int,
+                           val enabled: Boolean = true) {
 
     ALARMS(R.string.item_alarms, R.drawable.ic_alarm),
     BOOKMARKS(R.string.item_bookmarks, R.drawable.ic_bookmark),
