@@ -33,7 +33,7 @@ enum class MainSpinnerItem(@param:StringRes @field:StringRes val label: Int,
     ALARMS(R.string.item_alarms, R.drawable.ic_alarm),
     BOOKMARKS(R.string.item_bookmarks, R.drawable.ic_bookmark),
     CALENDAR(R.string.item_calendar, R.drawable.ic_event),
-    CALL_LOG(R.string.item_call_log, R.drawable.ic_call, BuildConfig.DEBUG),
+    CALL_LOG(R.string.item_call_log, R.drawable.ic_call, BuildConfig.FEATURE_CALL_LOGS),
     CONTACTS(R.string.item_contacts, R.drawable.ic_contacts),
-    MESSAGES(R.string.item_messages, R.drawable.ic_message, BuildConfig.DEBUG)
+    MESSAGES(R.string.item_messages, R.drawable.ic_message, BuildConfig.FEATURE_SMS)
 }

@@ -18,6 +18,9 @@ android {
         resConfigs "en"
         vectorDrawables.useSupportLibrary true
 
+        buildConfigField "Boolean", "FEATURE_CALL_LOGS", "true"
+        buildConfigField "Boolean", "FEATURE_SMS", "true"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -51,6 +54,19 @@ android {
         disable "LocaleFolder"
         disable "UnusedAttribute"
         disable "UnusedResources"
+    }
+
+    flavorDimensions "privacy"
+
+    productFlavors {
+        google {
+            dimension "privacy"
+            buildConfigField "Boolean", "FEATURE_CALL_LOGS", "false"
+            buildConfigField "Boolean", "FEATURE_SMS", "false"
+        }
+        regular {
+            dimension "privacy"
+        }
     }
 }
 
