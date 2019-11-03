@@ -89,7 +89,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
      *
      * @param item the item.
      */
-    fun remove(item: T) {
+    fun removeItem(item: T) {
         var positions = findAllPairs(item)
         for (position in positions) {
             pairsAll.removeAt(position)
@@ -123,7 +123,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
      * @param item the item to find.
      * @return the list of indexes/positions - `null` otherwise.
      */
-    protected fun findAllPairs(item: T): List<Int> {
+    private fun findAllPairs(item: T): List<Int> {
         return findPairs(item, pairsAll)
     }
 
@@ -134,7 +134,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
      * @param pairs the list of pairs with items.
      * @return the list of indexes/positions - `null` otherwise.
      */
-    protected fun findPairs(item: T, pairs: List<DuplicateItemPair<T>> = this.pairs): List<Int> {
+    private fun findPairs(item: T, pairs: List<DuplicateItemPair<T>> = this.pairs): List<Int> {
         val positions = ArrayList<Int>()
         val size = pairs.size
         var pair: DuplicateItemPair<T>
@@ -222,11 +222,10 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
     }
 
     protected fun createViewHolder(@LayoutRes layoutId: Int, parent: ViewGroup, viewType: Int): View {
-        val itemView: View
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.same_item_shadow, parent, false)
+        val itemView = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            LayoutInflater.from(parent.context).inflate(R.layout.same_item_shadow, parent, false)
         } else {
-            itemView = LayoutInflater.from(parent.context).inflate(R.layout.same_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.same_item, parent, false)
         }
         val stub = itemView.findViewById<ViewStub>(R.id.stub)
         stub.layoutResource = layoutId
