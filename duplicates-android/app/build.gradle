@@ -52,8 +52,6 @@ android {
         disable "UnusedAttribute"
         disable "UnusedResources"
     }
-
-
 }
 
 dependencies {
@@ -65,8 +63,6 @@ dependencies {
     implementation "androidx.core:core-ktx:1.1.0"
 
     // Views
-    implementation "com.jakewharton:butterknife:$butterknife_version"
-    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // Testing

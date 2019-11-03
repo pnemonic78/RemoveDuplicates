@@ -19,12 +19,6 @@ import android.content.Context
 import android.graphics.Color
 import android.text.format.DateUtils
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
@@ -36,6 +30,7 @@ import com.github.duplicates.calendar.CalendarComparator.Companion.DTSTART
 import com.github.duplicates.calendar.CalendarComparator.Companion.LOCATION
 import com.github.duplicates.calendar.CalendarComparator.Companion.TITLE
 import com.github.duplicates.calendar.CalendarItem.Companion.NEVER
+import kotlinx.android.synthetic.main.same_calendar.view.*
 import kotlin.math.min
 
 /**
@@ -45,49 +40,35 @@ import kotlin.math.min
  */
 class CalendarViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<CalendarItem>? = null) : DuplicateViewHolder<CalendarItem>(itemView, onCheckedChangeListener) {
 
-    @BindView(R.id.match)
-    lateinit var match: TextView
+    private val match = itemView.match
 
-    @BindView(R.id.checkbox1)
-    lateinit var checkbox1: CheckBox
-    @BindView(R.id.color1)
-    lateinit var color1: View
-    @BindView(R.id.start1)
-    lateinit var start1: TextView
-    @BindView(R.id.end1)
-    lateinit var end1: TextView
-    @BindView(R.id.recur1)
-    lateinit var recur1: ImageView
-    @BindView(R.id.account1)
-    lateinit var account1: TextView
-    @BindView(R.id.title1)
-    lateinit var title1: TextView
-    @BindView(R.id.description1)
-    lateinit var description1: TextView
-    @BindView(R.id.location1)
-    lateinit var location1: TextView
+    private val checkbox1 = itemView.checkbox1
+    private val color1 = itemView.color1
+    private val start1 = itemView.start1
+    private val end1 = itemView.end1
+    private val recur1 = itemView.recur1
+    private val account1 = itemView.account1
+    private val title1 = itemView.title1
+    private val description1 = itemView.description1
+    private val location1 = itemView.location1
 
-    @BindView(R.id.checkbox2)
-    lateinit var checkbox2: CheckBox
-    @BindView(R.id.color2)
-    lateinit var color2: View
-    @BindView(R.id.start2)
-    lateinit var start2: TextView
-    @BindView(R.id.end2)
-    lateinit var end2: TextView
-    @BindView(R.id.recur2)
-    lateinit var recur2: ImageView
-    @BindView(R.id.account2)
-    lateinit var account2: TextView
-    @BindView(R.id.title2)
-    lateinit var title2: TextView
-    @BindView(R.id.description2)
-    lateinit var description2: TextView
-    @BindView(R.id.location2)
-    lateinit var location2: TextView
+    private val checkbox2 = itemView.checkbox2
+    private val color2 = itemView.color2
+    private val start2 = itemView.start2
+    private val end2 = itemView.end2
+    private val recur2 = itemView.recur2
+    private val account2 = itemView.account2
+    private val title2 = itemView.title2
+    private val description2 = itemView.description2
+    private val location2 = itemView.location2
 
     init {
-        ButterKnife.bind(this, itemView)
+        checkbox1.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
+        }
+        checkbox2.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
+        }
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<CalendarItem>) {
@@ -136,16 +117,6 @@ class CalendarViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedC
         bindDifference(end1, end2, difference[DTEND])
         bindDifference(location1, location2, difference[LOCATION])
         bindDifference(title1, title2, difference[TITLE])
-    }
-
-    @OnClick(R.id.checkbox1)
-    internal fun checkbox1Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
-    }
-
-    @OnClick(R.id.checkbox2)
-    internal fun checkbox2Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
     }
 
     companion object {

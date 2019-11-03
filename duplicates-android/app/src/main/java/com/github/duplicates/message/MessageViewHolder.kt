@@ -18,23 +18,13 @@ package com.github.duplicates.message
 import android.content.Context
 import android.text.format.DateUtils
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
-
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.duplicates.SHOW_DATE_TIME
-
 import com.github.duplicates.message.MessageComparator.Companion.ADDRESS
 import com.github.duplicates.message.MessageComparator.Companion.BODY
 import com.github.duplicates.message.MessageComparator.Companion.DATE
@@ -46,41 +36,36 @@ import com.github.duplicates.message.MessageItem.Companion.MESSAGE_TYPE_INBOX
 import com.github.duplicates.message.MessageItem.Companion.MESSAGE_TYPE_OUTBOX
 import com.github.duplicates.message.MessageItem.Companion.MESSAGE_TYPE_QUEUED
 import com.github.duplicates.message.MessageItem.Companion.MESSAGE_TYPE_SENT
+import kotlinx.android.synthetic.main.same_message.view.*
 
 /**
  * View holder of a duplicate message.
  *
  * @author moshe.w
  */
-class MessageViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<MessageItem>) : DuplicateViewHolder<MessageItem>(itemView, onCheckedChangeListener) {
+class MessageViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<MessageItem>? = null) : DuplicateViewHolder<MessageItem>(itemView, onCheckedChangeListener) {
 
-    @BindView(R.id.match)
-    lateinit var match: TextView
+    private val match = itemView.match
 
-    @BindView(R.id.checkbox1)
-    lateinit var checkbox1: CheckBox
-    @BindView(R.id.date1)
-    lateinit var date1: TextView
-    @BindView(R.id.address1)
-    lateinit var address1: TextView
-    @BindView(R.id.type1)
-    lateinit var type1: ImageView
-    @BindView(R.id.body1)
-    lateinit var body1: TextView
+    private val checkbox1 = itemView.checkbox1
+    private val date1 = itemView.date1
+    private val address1 = itemView.address1
+    private val type1 = itemView.type1
+    private val body1 = itemView.body1
 
-    @BindView(R.id.checkbox2)
-    lateinit var checkbox2: CheckBox
-    @BindView(R.id.date2)
-    lateinit var date2: TextView
-    @BindView(R.id.address2)
-    lateinit var address2: TextView
-    @BindView(R.id.type2)
-    lateinit var type2: ImageView
-    @BindView(R.id.body2)
-    lateinit var body2: TextView
+    private val checkbox2 = itemView.checkbox2
+    private val date2 = itemView.date2
+    private val address2 = itemView.address2
+    private val type2 = itemView.type2
+    private val body2 = itemView.body1
 
     init {
-        ButterKnife.bind(this, itemView)
+        checkbox1.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
+        }
+        checkbox2.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
+        }
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<MessageItem>) {
@@ -142,15 +127,5 @@ class MessageViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
             MESSAGE_TYPE_ALL -> R.string.message_type_all
             else -> R.string.message_type_all
         }
-    }
-
-    @OnClick(R.id.checkbox1)
-    internal fun checkbox1Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
-    }
-
-    @OnClick(R.id.checkbox2)
-    internal fun checkbox2Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
     }
 }

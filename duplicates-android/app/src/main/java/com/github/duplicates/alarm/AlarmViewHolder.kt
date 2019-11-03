@@ -19,11 +19,6 @@ import android.content.Context
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.view.View
-import android.widget.CheckBox
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
@@ -32,6 +27,7 @@ import com.github.duplicates.alarm.AlarmComparator.Companion.ALARM_TIME
 import com.github.duplicates.alarm.AlarmComparator.Companion.ALERT_TIME
 import com.github.duplicates.alarm.AlarmComparator.Companion.NAME
 import com.github.duplicates.alarm.AlarmComparator.Companion.REPEAT
+import kotlinx.android.synthetic.main.same_alarm.view.*
 import java.util.*
 
 /**
@@ -41,37 +37,31 @@ import java.util.*
  */
 class AlarmViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<AlarmItem>? = null) : DuplicateViewHolder<AlarmItem>(itemView, onCheckedChangeListener) {
 
-    @BindView(R.id.match)
-    lateinit var match: TextView
+    private val match = itemView.match
 
-    @BindView(R.id.checkbox1)
-    lateinit var checkbox1: CheckBox
-    @BindView(R.id.alarm1)
-    lateinit var alarm1: TextView
-    @BindView(R.id.alert1)
-    lateinit var alert1: TextView
-    @BindView(R.id.repeat1)
-    lateinit var repeat1: TextView
-    @BindView(R.id.name1)
-    lateinit var name1: TextView
+    private val checkbox1 = itemView.checkbox1
+    private val alarm1 = itemView.alarm1
+    private val alert1 = itemView.alert1
+    private val repeat1 = itemView.repeat1
+    private val name1 = itemView.name1
 
-    @BindView(R.id.checkbox2)
-    lateinit var checkbox2: CheckBox
-    @BindView(R.id.alarm2)
-    lateinit var alarm2: TextView
-    @BindView(R.id.alert2)
-    lateinit var alert2: TextView
-    @BindView(R.id.repeat2)
-    lateinit var repeat2: TextView
-    @BindView(R.id.name2)
-    lateinit var name2: TextView
+    private val checkbox2 = itemView.checkbox2
+    private val alarm2 = itemView.alarm2
+    private val alert2 = itemView.alert2
+    private val repeat2 = itemView.repeat2
+    private val name2 = itemView.name2
 
     init {
-        ButterKnife.bind(this, itemView)
+        checkbox1.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
+        }
+        checkbox2.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
+        }
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<AlarmItem>) {
-        match.text = context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
+        itemView.match.text = context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
     }
 
     override fun bindItem1(context: Context, item: AlarmItem) {
@@ -99,16 +89,6 @@ class AlarmViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChan
         bindDifference(alert1, alert2, difference[ALERT_TIME])
         bindDifference(name1, name2, difference[NAME])
         bindDifference(repeat1, repeat2, difference[REPEAT])
-    }
-
-    @OnClick(R.id.checkbox1)
-    internal fun checkbox1Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
-    }
-
-    @OnClick(R.id.checkbox2)
-    internal fun checkbox2Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
     }
 
     private fun formatHourMinutes(context: Context, alarmTime: Int): CharSequence {

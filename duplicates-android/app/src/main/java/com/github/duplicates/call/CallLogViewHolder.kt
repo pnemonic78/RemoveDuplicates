@@ -18,14 +18,8 @@ package com.github.duplicates.call
 import android.content.Context
 import android.text.format.DateUtils
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
@@ -43,6 +37,7 @@ import com.github.duplicates.call.CallLogItem.Companion.MISSED_TYPE
 import com.github.duplicates.call.CallLogItem.Companion.OUTGOING_TYPE
 import com.github.duplicates.call.CallLogItem.Companion.REJECTED_TYPE
 import com.github.duplicates.call.CallLogItem.Companion.VOICEMAIL_TYPE
+import kotlinx.android.synthetic.main.same_call.view.*
 
 /**
  * View holder of a duplicate call.
@@ -51,37 +46,29 @@ import com.github.duplicates.call.CallLogItem.Companion.VOICEMAIL_TYPE
  */
 class CallLogViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<CallLogItem>? = null) : DuplicateViewHolder<CallLogItem>(itemView, onCheckedChangeListener) {
 
-    @BindView(R.id.match)
-    lateinit var match: TextView
+    private val match = itemView.match
 
-    @BindView(R.id.checkbox1)
-    lateinit var checkbox1: CheckBox
-    @BindView(R.id.date1)
-    lateinit var date1: TextView
-    @BindView(R.id.duration1)
-    lateinit var duration1: TextView
-    @BindView(R.id.number1)
-    lateinit var number1: TextView
-    @BindView(R.id.type1)
-    lateinit var type1: ImageView
-    @BindView(R.id.name1)
-    lateinit var name1: TextView
+    private val checkbox1 = itemView.checkbox1
+    private val date1 = itemView.date1
+    private val duration1 = itemView.duration1
+    private val number1 = itemView.number1
+    private val type1 = itemView.type1
+    private val name1 = itemView.name1
 
-    @BindView(R.id.checkbox2)
-    lateinit var checkbox2: CheckBox
-    @BindView(R.id.date2)
-    lateinit var date2: TextView
-    @BindView(R.id.duration2)
-    lateinit var duration2: TextView
-    @BindView(R.id.number2)
-    lateinit var number2: TextView
-    @BindView(R.id.type2)
-    lateinit var type2: ImageView
-    @BindView(R.id.name2)
-    lateinit var name2: TextView
+    private val checkbox2 = itemView.checkbox2
+    private val date2 = itemView.date2
+    private val duration2 = itemView.duration2
+    private val number2 = itemView.number2
+    private val type2 = itemView.type2
+    private val name2 = itemView.name1
 
     init {
-        ButterKnife.bind(this, itemView)
+        checkbox1.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
+        }
+        checkbox2.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
+        }
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<CallLogItem>) {
@@ -146,15 +133,5 @@ class CallLogViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
             ANSWERED_EXTERNALLY_TYPE -> R.string.call_type_external
             else -> R.string.call_type_other
         }
-    }
-
-    @OnClick(R.id.checkbox1)
-    internal fun checkbox1Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
-    }
-
-    @OnClick(R.id.checkbox2)
-    internal fun checkbox2Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
     }
 }

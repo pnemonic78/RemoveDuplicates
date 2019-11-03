@@ -18,12 +18,6 @@ package com.github.duplicates.bookmark
 import android.content.Context
 import android.text.format.DateUtils
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
@@ -34,6 +28,7 @@ import com.github.duplicates.bookmark.BookmarkComparator.Companion.DATE
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.FAVICON
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.TITLE
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.URL
+import kotlinx.android.synthetic.main.same_bookmark.view.*
 
 /**
  * View holder of a duplicate bookmark.
@@ -42,37 +37,29 @@ import com.github.duplicates.bookmark.BookmarkComparator.Companion.URL
  */
 class BookmarkViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<BookmarkItem>? = null) : DuplicateViewHolder<BookmarkItem>(itemView, onCheckedChangeListener) {
 
-    @BindView(R.id.match)
-    lateinit var match: TextView
+    private val match = itemView.match
 
-    @BindView(R.id.checkbox1)
-    lateinit var checkbox1: CheckBox
-    @BindView(R.id.created1)
-    lateinit var created1: TextView
-    @BindView(R.id.date1)
-    lateinit var date1: TextView
-    @BindView(R.id.icon1)
-    lateinit var icon1: ImageView
-    @BindView(R.id.title1)
-    lateinit var title1: TextView
-    @BindView(R.id.url1)
-    lateinit var url1: TextView
+    private val checkbox1 = itemView.checkbox1
+    private val created1 = itemView.created1
+    private val date1 = itemView.date1
+    private val icon1 = itemView.icon1
+    private val title1 = itemView.title1
+    private val url1 = itemView.url1
 
-    @BindView(R.id.checkbox2)
-    lateinit var checkbox2: CheckBox
-    @BindView(R.id.created2)
-    lateinit var created2: TextView
-    @BindView(R.id.date2)
-    lateinit var date2: TextView
-    @BindView(R.id.icon2)
-    lateinit var icon2: ImageView
-    @BindView(R.id.title2)
-    lateinit var title2: TextView
-    @BindView(R.id.url2)
-    lateinit var url2: TextView
+    private val checkbox2 = itemView.checkbox2
+    private val created2 = itemView.created2
+    private val date2 = itemView.date2
+    private val icon2 = itemView.icon2
+    private val title2 = itemView.title2
+    private val url2 = itemView.url2
 
     init {
-        ButterKnife.bind(this, itemView)
+        checkbox1.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
+        }
+        checkbox2.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
+        }
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<BookmarkItem>) {
@@ -107,15 +94,5 @@ class BookmarkViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedC
         bindDifference(icon1, icon2, difference[FAVICON])
         bindDifference(title1, title2, difference[TITLE])
         bindDifference(url1, url2, difference[URL])
-    }
-
-    @OnClick(R.id.checkbox1)
-    internal fun checkbox1Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
-    }
-
-    @OnClick(R.id.checkbox2)
-    internal fun checkbox2Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
     }
 }

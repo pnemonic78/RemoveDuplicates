@@ -17,12 +17,6 @@ package com.github.duplicates.contact
 
 import android.content.Context
 import android.view.View
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.DuplicateItemPair
@@ -32,6 +26,7 @@ import com.github.duplicates.contact.ContactComparator.Companion.EVENT
 import com.github.duplicates.contact.ContactComparator.Companion.IM
 import com.github.duplicates.contact.ContactComparator.Companion.NAME
 import com.github.duplicates.contact.ContactComparator.Companion.PHONE
+import kotlinx.android.synthetic.main.same_contact.view.*
 import java.util.*
 
 /**
@@ -39,47 +34,35 @@ import java.util.*
  *
  * @author moshe.w
  */
-class ContactViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<ContactItem>) : DuplicateViewHolder<ContactItem>(itemView, onCheckedChangeListener) {
+class ContactViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<ContactItem>? = null) : DuplicateViewHolder<ContactItem>(itemView, onCheckedChangeListener) {
 
-    @BindView(R.id.match)
-    lateinit var match: TextView
+    private val match = itemView.match
 
-    @BindView(R.id.checkbox1)
-    lateinit var checkbox1: CheckBox
-    @BindView(R.id.icon1)
-    lateinit var icon1: ImageView
-    @BindView(R.id.account1)
-    lateinit var account1: TextView
-    @BindView(R.id.name1)
-    lateinit var name1: TextView
-    @BindView(R.id.email1)
-    lateinit var email1: TextView
-    @BindView(R.id.event1)
-    lateinit var event1: TextView
-    @BindView(R.id.im1)
-    lateinit var im1: TextView
-    @BindView(R.id.phone1)
-    lateinit var phone1: TextView
+    private val checkbox1 = itemView.checkbox1
+    private val icon1 = itemView.icon1
+    private val account1 = itemView.account1
+    private val name1 = itemView.name1
+    private val email1 = itemView.email1
+    private val event1 = itemView.event1
+    private val im1 = itemView.im1
+    private val phone1 = itemView.phone1
 
-    @BindView(R.id.checkbox2)
-    lateinit var checkbox2: CheckBox
-    @BindView(R.id.icon2)
-    lateinit var icon2: ImageView
-    @BindView(R.id.account2)
-    lateinit var account2: TextView
-    @BindView(R.id.name2)
-    lateinit var name2: TextView
-    @BindView(R.id.email2)
-    lateinit var email2: TextView
-    @BindView(R.id.event2)
-    lateinit var event2: TextView
-    @BindView(R.id.im2)
-    lateinit var im2: TextView
-    @BindView(R.id.phone2)
-    lateinit var phone2: TextView
+    private val checkbox2 = itemView.checkbox2
+    private val icon2 = itemView.icon2
+    private val account2 = itemView.account2
+    private val name2 = itemView.name2
+    private val email2 = itemView.email2
+    private val event2 = itemView.event2
+    private val im2 = itemView.im2
+    private val phone2 = itemView.phone1
 
     init {
-        ButterKnife.bind(this, itemView)
+        checkbox1.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
+        }
+        checkbox2.setOnClickListener {
+            onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
+        }
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<ContactItem>) {
@@ -126,16 +109,6 @@ class ContactViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
         bindDifference(im1, im2, difference[IM])
         bindDifference(name1, name2, difference[NAME])
         bindDifference(phone1, phone2, difference[PHONE])
-    }
-
-    @OnClick(R.id.checkbox1)
-    internal fun checkbox1Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item1, checkbox1.isChecked)
-    }
-
-    @OnClick(R.id.checkbox2)
-    internal fun checkbox2Clicked() {
-        onCheckedChangeListener?.onItemCheckedChangeListener(item2, checkbox2.isChecked)
     }
 
     private fun formatData(data: Collection<ContactData>): CharSequence? {

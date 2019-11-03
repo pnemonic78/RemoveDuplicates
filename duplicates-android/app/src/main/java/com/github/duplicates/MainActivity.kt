@@ -23,13 +23,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.Group
-import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.duplicates.alarm.AlarmDeleteTask
@@ -57,6 +52,7 @@ import com.github.duplicates.message.MessageFindTask
 import com.github.duplicates.message.MessageItem
 import com.github.duplicates.message.MessageViewHolder
 import com.github.util.LogTree
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 /**
@@ -69,21 +65,6 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
     DuplicateDeleteTaskListener<I>,
     SearchView.OnQueryTextListener {
 
-    @BindView(R.id.spinner)
-    lateinit var spinner: Spinner
-    @BindView(R.id.search)
-    lateinit var spinnerAction: ImageButton
-    @BindView(R.id.statusBar)
-    lateinit var statusBar: Group
-    @BindView(R.id.counter)
-    lateinit var counter: TextView
-    @BindView(R.id.progress)
-    lateinit var progressBar: ProgressBar
-    @BindView(R.id.listSwitcher)
-    lateinit var listSwitcher: ViewSwitcher
-    @BindView(android.R.id.list)
-    lateinit var list: RecyclerView
-
     private var task: DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>? = null
     private var adapter: DuplicateAdapter<I, DuplicateViewHolder<I>>? = null
     private var spinnerItem: MainSpinnerItem? = null
@@ -94,9 +75,9 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         Timber.plant(LogTree(BuildConfig.DEBUG))
 
         setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
 
         spinner.adapter = MainSpinnerAdapter()
+        spinnerAction.setOnClickListener { searchClicked() }
         searchStopped(false)
     }
 
@@ -107,8 +88,7 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         }
     }
 
-    @OnClick(R.id.search)
-    internal fun searchClicked() {
+    private fun searchClicked() {
         spinnerAction.isEnabled = false
         val taskActive = this.task
         if (taskActive != null && !taskActive.isCancelled) {
