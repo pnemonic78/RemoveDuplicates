@@ -21,16 +21,14 @@ import android.content.Intent
 import android.preference.PreferenceManager
 import android.provider.Telephony
 import com.github.duplicates.DuplicateDeleteTask
-import com.github.duplicates.DuplicateItemPair
-import com.github.duplicates.DuplicateTask
-import com.github.duplicates.DuplicateTaskListener
+import com.github.duplicates.DuplicateDeleteTaskListener
 
 /**
  * Task to find duplicate messages.
  *
  * @author moshe.w
  */
-class MessageDeleteTask(context: Context, listener: DuplicateTaskListener<MessageItem, DuplicateTask<MessageItem, DuplicateItemPair<MessageItem>, Any, Unit>>) : DuplicateDeleteTask<MessageItem>(context, listener) {
+class MessageDeleteTask<L : DuplicateDeleteTaskListener<MessageItem>>(context: Context, listener: L) : DuplicateDeleteTask<MessageItem, L>(context, listener) {
 
     override fun createProvider(context: Context): MessageProvider {
         return MessageProvider(context)

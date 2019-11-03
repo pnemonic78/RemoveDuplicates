@@ -25,14 +25,14 @@ import java.util.concurrent.CancellationException
  *
  * @author moshe.w
  */
-abstract class DuplicateFindTask<T : DuplicateItem, VH : DuplicateViewHolder<T>>(context: Context, listener: DuplicateTaskListener<T, DuplicateTask<T, Any, Any, List<T>>>) : DuplicateTask<T, Any, Any, List<T>>(context, listener) {
+abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>, L : DuplicateFindTaskListener<I, VH>>(context: Context, listener: L) : DuplicateTask<I, Any, Any, List<I>, L>(context, listener) {
 
-    private var comparator: DuplicateComparator<T>? = null
-    private val items = ArrayList<T>()
+    private var comparator: DuplicateComparator<I>? = null
+    private val items = ArrayList<I>()
 
-    abstract fun createAdapter(): DuplicateAdapter<T, VH>
+    abstract fun createAdapter(): DuplicateAdapter<I, VH>
 
-    abstract fun createComparator(): DuplicateComparator<T>
+    abstract fun createComparator(): DuplicateComparator<I>
 
     override fun onPreExecute() {
         super.onPreExecute()
@@ -40,7 +40,7 @@ abstract class DuplicateFindTask<T : DuplicateItem, VH : DuplicateViewHolder<T>>
         this.comparator = createComparator()
     }
 
-    override fun doInBackground(vararg params: Any): List<T> {
+    override fun doInBackground(vararg params: Any): List<I> {
         try {
             provider.fetchItems(this)
         } catch (ignore: CancellationException) {
@@ -53,19 +53,19 @@ abstract class DuplicateFindTask<T : DuplicateItem, VH : DuplicateViewHolder<T>>
         if (progress.size == 1) {
             listener.onDuplicateTaskProgress(this, progress[0] as Int)
         } else {
-            val item1 = progress[1] as T
-            val item2 = progress[2] as T
+            val item1 = progress[1] as I
+            val item2 = progress[2] as I
             val match = progress[3] as Float
             val difference = progress[4] as BooleanArray
             listener.onDuplicateTaskMatch(this, item1, item2, match, difference)
         }
     }
 
-    override fun onItemFetched(provider: DuplicateProvider<T>, count: Int, item: T) {
+    override fun onItemFetched(provider: DuplicateProvider<I>, count: Int, item: I) {
         val size = items.size
 
         // Maybe the item already exists in the list?
-        var item1: T
+        var item1: I
         for (i in size - 1 downTo 0) {
             item1 = items[i]
             if (item === item1) {
@@ -75,7 +75,7 @@ abstract class DuplicateFindTask<T : DuplicateItem, VH : DuplicateViewHolder<T>>
 
         // Is it a duplicate?
         var bestMatch = 0f
-        var bestItem: T? = null
+        var bestItem: I? = null
         var bestDifference: BooleanArray? = null
         var difference: BooleanArray
         var match: Float
@@ -104,11 +104,11 @@ abstract class DuplicateFindTask<T : DuplicateItem, VH : DuplicateViewHolder<T>>
         }
     }
 
-    override fun onItemDeleted(provider: DuplicateProvider<T>, count: Int, item: T) {
+    override fun onItemDeleted(provider: DuplicateProvider<I>, count: Int, item: I) {
         // Nothing to do.
     }
 
-    override fun onPairDeleted(provider: DuplicateProvider<T>, count: Int, pair: DuplicateItemPair<T>) {
+    override fun onPairDeleted(provider: DuplicateProvider<I>, count: Int, pair: DuplicateItemPair<I>) {
         // Nothing to do.
     }
 

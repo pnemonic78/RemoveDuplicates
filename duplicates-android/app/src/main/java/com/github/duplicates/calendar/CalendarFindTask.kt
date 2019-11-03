@@ -16,17 +16,15 @@
 package com.github.duplicates.calendar
 
 import android.content.Context
-
 import com.github.duplicates.DuplicateFindTask
-import com.github.duplicates.DuplicateTask
-import com.github.duplicates.DuplicateTaskListener
+import com.github.duplicates.DuplicateFindTaskListener
 
 /**
  * Task to find duplicate calendar events.
  *
  * @author moshe.w
  */
-class CalendarFindTask(context: Context, listener: DuplicateTaskListener<CalendarItem, DuplicateTask<CalendarItem, Any, Any, List<CalendarItem>>>) : DuplicateFindTask<CalendarItem, CalendarViewHolder>(context, listener) {
+class CalendarFindTask<L : DuplicateFindTaskListener<CalendarItem, CalendarViewHolder>>(context: Context, listener: L) : DuplicateFindTask<CalendarItem, CalendarViewHolder, L>(context, listener) {
 
     override fun createProvider(context: Context): CalendarProvider {
         return CalendarProvider(context)

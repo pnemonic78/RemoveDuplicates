@@ -16,17 +16,15 @@
 package com.github.duplicates.call
 
 import android.content.Context
-
 import com.github.duplicates.DuplicateFindTask
-import com.github.duplicates.DuplicateTask
-import com.github.duplicates.DuplicateTaskListener
+import com.github.duplicates.DuplicateFindTaskListener
 
 /**
  * Task to find duplicate calls.
  *
  * @author moshe.w
  */
-class CallLogFindTask(context: Context, listener: DuplicateTaskListener<CallLogItem, DuplicateTask<CallLogItem, Any, Any, List<CallLogItem>>>) : DuplicateFindTask<CallLogItem, CallLogViewHolder>(context, listener) {
+class CallLogFindTask<L : DuplicateFindTaskListener<CallLogItem, CallLogViewHolder>>(context: Context, listener: L) : DuplicateFindTask<CallLogItem, CallLogViewHolder, L>(context, listener) {
 
     override fun createProvider(context: Context): CallLogProvider {
         return CallLogProvider(context)

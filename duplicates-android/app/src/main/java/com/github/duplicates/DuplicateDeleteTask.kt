@@ -24,16 +24,16 @@ import java.util.concurrent.CancellationException
  *
  * @author moshe.w
  */
-abstract class DuplicateDeleteTask<T : DuplicateItem>(context: Context, listener: DuplicateTaskListener<T, DuplicateTask<T, DuplicateItemPair<T>, Any, Unit>>) : DuplicateTask<T, DuplicateItemPair<T>, Any, Unit>(context, listener) {
+abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskListener<I>>(context: Context, listener: L) : DuplicateTask<I, DuplicateItemPair<I>, Any, Unit, L>(context, listener) {
 
-    private val pairs = ArrayList<DuplicateItemPair<T>>()
+    private val pairs = ArrayList<DuplicateItemPair<I>>()
 
     override fun onPreExecute() {
         super.onPreExecute()
         pairs.clear()
     }
 
-    override fun doInBackground(vararg params: DuplicateItemPair<T>) {
+    override fun doInBackground(vararg params: DuplicateItemPair<I>) {
         pairs.addAll(listOf(*params))
         publishProgress(pairs.size)
         // Sort by descending id to avoid "index out of bounds" when displaying the list.
@@ -51,24 +51,24 @@ abstract class DuplicateDeleteTask<T : DuplicateItem>(context: Context, listener
         if (progress.size > 1) {
             val arg1 = progress[1]
             if (arg1 is DuplicateItem) {
-                val item = arg1 as T
+                val item = arg1 as I
                 listener.onDuplicateTaskItemDeleted(this, item)
             } else {
-                val pair = arg1 as DuplicateItemPair<T>
+                val pair = arg1 as DuplicateItemPair<I>
                 listener.onDuplicateTaskPairDeleted(this, pair)
             }
         }
     }
 
-    override fun onItemFetched(provider: DuplicateProvider<T>, count: Int, item: T) {
+    override fun onItemFetched(provider: DuplicateProvider<I>, count: Int, item: I) {
         // Nothing to do.
     }
 
-    override fun onItemDeleted(provider: DuplicateProvider<T>, count: Int, item: T) {
+    override fun onItemDeleted(provider: DuplicateProvider<I>, count: Int, item: I) {
         publishProgress(count, item)
     }
 
-    override fun onPairDeleted(provider: DuplicateProvider<T>, count: Int, pair: DuplicateItemPair<T>) {
+    override fun onPairDeleted(provider: DuplicateProvider<I>, count: Int, pair: DuplicateItemPair<I>) {
         publishProgress(count, pair)
     }
 

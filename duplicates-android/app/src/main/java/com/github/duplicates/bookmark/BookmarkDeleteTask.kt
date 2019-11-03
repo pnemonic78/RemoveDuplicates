@@ -16,18 +16,15 @@
 package com.github.duplicates.bookmark
 
 import android.content.Context
-
 import com.github.duplicates.DuplicateDeleteTask
-import com.github.duplicates.DuplicateItemPair
-import com.github.duplicates.DuplicateTask
-import com.github.duplicates.DuplicateTaskListener
+import com.github.duplicates.DuplicateDeleteTaskListener
 
 /**
  * Task to find duplicate bookmarks.
  *
  * @author moshe.w
  */
-class BookmarkDeleteTask(context: Context, listener: DuplicateTaskListener<BookmarkItem, DuplicateTask<BookmarkItem, DuplicateItemPair<BookmarkItem>, Any, Unit>>) : DuplicateDeleteTask<BookmarkItem>(context, listener) {
+class BookmarkDeleteTask<L : DuplicateDeleteTaskListener<BookmarkItem>>(context: Context, listener: L) : DuplicateDeleteTask<BookmarkItem, L>(context, listener) {
 
     override fun createProvider(context: Context): BookmarkProvider {
         return BookmarkProvider(context)

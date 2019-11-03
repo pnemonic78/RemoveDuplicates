@@ -20,28 +20,28 @@ package com.github.duplicates
  *
  * @author moshe.w
  */
-interface DuplicateTaskListener<I : DuplicateItem, T : DuplicateTask<I, *, *, *>> {
+interface DuplicateTaskListener<I : DuplicateItem> {
 
     /**
      * Notification that the task has started executing.
      *
      * @param task the task.
      */
-    fun onDuplicateTaskStarted(task: T)
+    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskStarted(task: T)
 
     /**
      * Notification that the task has finished executing.
      *
      * @param task the task.
      */
-    fun onDuplicateTaskFinished(task: T)
+    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskFinished(task: T)
 
     /**
      * Notification that the task has been cancelled.
      *
      * @param task the task.
      */
-    fun onDuplicateTaskCancelled(task: T)
+    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskCancelled(task: T)
 
     /**
      * Notification that the task has progressed.
@@ -49,32 +49,5 @@ interface DuplicateTaskListener<I : DuplicateItem, T : DuplicateTask<I, *, *, *>
      * @param task  the task.
      * @param count the number of items processed.
      */
-    fun onDuplicateTaskProgress(task: T, count: Int)
-
-    /**
-     * Notification that the task has found a possible match where the similarity is above 75%.
-     *
-     * @param task       the task.
-     * @param item1      the first item.
-     * @param item2      the second item.
-     * @param match      the match percentage.
-     * @param difference the array of differences.
-     */
-    fun onDuplicateTaskMatch(task: T, item1: I, item2: I, match: Float, difference: BooleanArray)
-
-    /**
-     * Notification that the task has deleted a duplicate item.
-     *
-     * @param task the task.
-     * @param item the item.
-     */
-    fun onDuplicateTaskItemDeleted(task: T, item: I)
-
-    /**
-     * Notification that the task has deleted a duplicate item.
-     *
-     * @param task the task.
-     * @param pair the pair of items.
-     */
-    fun onDuplicateTaskPairDeleted(task: T, pair: DuplicateItemPair<I>)
+    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskProgress(task: T, count: Int)
 }

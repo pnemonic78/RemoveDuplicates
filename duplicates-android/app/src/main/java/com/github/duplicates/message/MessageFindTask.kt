@@ -16,17 +16,15 @@
 package com.github.duplicates.message
 
 import android.content.Context
-
 import com.github.duplicates.DuplicateFindTask
-import com.github.duplicates.DuplicateTask
-import com.github.duplicates.DuplicateTaskListener
+import com.github.duplicates.DuplicateFindTaskListener
 
 /**
  * Task to find duplicate messages.
  *
  * @author moshe.w
  */
-class MessageFindTask(context: Context, listener: DuplicateTaskListener<MessageItem, DuplicateTask<MessageItem, Any, Any, List<MessageItem>>>) : DuplicateFindTask<MessageItem, MessageViewHolder>(context, listener) {
+class MessageFindTask<L : DuplicateFindTaskListener<MessageItem, MessageViewHolder>>(context: Context, listener: L) : DuplicateFindTask<MessageItem, MessageViewHolder, L>(context, listener) {
 
     override fun createProvider(context: Context): MessageProvider {
         return MessageProvider(context)

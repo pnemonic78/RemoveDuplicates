@@ -34,9 +34,9 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
  *
  * @author moshe.w
  */
-abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result>(
+abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : DuplicateTaskListener<I>>(
     @field:SuppressLint("StaticFieldLeak") protected val context: Context,
-    protected val listener: DuplicateTaskListener<I, DuplicateTask<I, Params, Progress, Result>>
+    protected val listener: L
 ) : AsyncTask<Params, Progress, Result>(),
     DuplicateProviderListener<I, DuplicateProvider<I>> {
 

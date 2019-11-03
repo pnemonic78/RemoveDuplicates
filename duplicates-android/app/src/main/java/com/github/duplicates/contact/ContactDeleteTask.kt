@@ -16,18 +16,15 @@
 package com.github.duplicates.contact
 
 import android.content.Context
-
 import com.github.duplicates.DuplicateDeleteTask
-import com.github.duplicates.DuplicateItemPair
-import com.github.duplicates.DuplicateTask
-import com.github.duplicates.DuplicateTaskListener
+import com.github.duplicates.DuplicateDeleteTaskListener
 
 /**
  * Task to find duplicate contacts.
  *
  * @author moshe.w
  */
-class ContactDeleteTask(context: Context, listener: DuplicateTaskListener<ContactItem, DuplicateTask<ContactItem, DuplicateItemPair<ContactItem>, Any, Unit>>) : DuplicateDeleteTask<ContactItem>(context, listener) {
+class ContactDeleteTask<L : DuplicateDeleteTaskListener<ContactItem>>(context: Context, listener: L) : DuplicateDeleteTask<ContactItem, L>(context, listener) {
 
     override fun createProvider(context: Context): ContactProvider {
         return ContactProvider(context)

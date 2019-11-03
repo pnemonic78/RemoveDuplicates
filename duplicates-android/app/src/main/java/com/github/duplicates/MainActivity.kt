@@ -35,21 +35,27 @@ import com.github.android.removeduplicates.R
 import com.github.duplicates.alarm.AlarmDeleteTask
 import com.github.duplicates.alarm.AlarmFindTask
 import com.github.duplicates.alarm.AlarmItem
+import com.github.duplicates.alarm.AlarmViewHolder
 import com.github.duplicates.bookmark.BookmarkDeleteTask
 import com.github.duplicates.bookmark.BookmarkFindTask
 import com.github.duplicates.bookmark.BookmarkItem
+import com.github.duplicates.bookmark.BookmarkViewHolder
 import com.github.duplicates.calendar.CalendarDeleteTask
 import com.github.duplicates.calendar.CalendarFindTask
 import com.github.duplicates.calendar.CalendarItem
+import com.github.duplicates.calendar.CalendarViewHolder
 import com.github.duplicates.call.CallLogDeleteTask
 import com.github.duplicates.call.CallLogFindTask
 import com.github.duplicates.call.CallLogItem
+import com.github.duplicates.call.CallLogViewHolder
 import com.github.duplicates.contact.ContactDeleteTask
 import com.github.duplicates.contact.ContactFindTask
 import com.github.duplicates.contact.ContactItem
+import com.github.duplicates.contact.ContactViewHolder
 import com.github.duplicates.message.MessageDeleteTask
 import com.github.duplicates.message.MessageFindTask
 import com.github.duplicates.message.MessageItem
+import com.github.duplicates.message.MessageViewHolder
 import com.github.util.LogTree
 import timber.log.Timber
 
@@ -58,8 +64,9 @@ import timber.log.Timber
  *
  * @author moshe.w
  */
-class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *>> : AppCompatActivity(),
-    DuplicateTaskListener<I, T>,
+class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>> : AppCompatActivity(),
+    DuplicateFindTaskListener<I, DuplicateViewHolder<I>>,
+    DuplicateDeleteTaskListener<I>,
     SearchView.OnQueryTextListener {
 
     @BindView(R.id.spinner)
@@ -77,8 +84,8 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *>> : AppCompat
     @BindView(android.R.id.list)
     lateinit var list: RecyclerView
 
-    private var task: DuplicateTask<I, *, *, *>? = null
-    private var adapter: DuplicateAdapter<I, *>? = null
+    private var task: DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>? = null
+    private var adapter: DuplicateAdapter<I, DuplicateViewHolder<I>>? = null
     private var spinnerItem: MainSpinnerItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,13 +116,14 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *>> : AppCompat
         } else {
             spinnerItem = spinner.selectedItem as MainSpinnerItem
             val task = createFindTask(spinnerItem!!)
-            this.task = task
             if (task != null) {
+                this.task = task as DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>
                 this.adapter = task.createAdapter()
                 adapter!!.setHasStableIds(true)
                 list.adapter = adapter
                 task.start(this)
             } else {
+                this.task = null
                 searchStopped(false)
             }
         }
@@ -147,78 +155,78 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *>> : AppCompat
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun createFindTask(item: MainSpinnerItem): DuplicateFindTask<I, DuplicateViewHolder<I>>? {
+    private fun createFindTask(item: MainSpinnerItem): DuplicateFindTask<I, DuplicateViewHolder<I>, DuplicateFindTaskListener<I, DuplicateViewHolder<I>>>? {
         val context: Context = this
-        val listener: DuplicateTaskListener<I, T> = this
+        val listener: DuplicateFindTaskListener<I, DuplicateViewHolder<I>> = this
 
         return when (item) {
-            MainSpinnerItem.ALARMS -> AlarmFindTask(context, listener as DuplicateTaskListener<AlarmItem, DuplicateTask<AlarmItem, Any, Any, List<AlarmItem>>>)
-            MainSpinnerItem.BOOKMARKS -> BookmarkFindTask(context, listener as DuplicateTaskListener<BookmarkItem, DuplicateTask<BookmarkItem, Any, Any, List<BookmarkItem>>>)
-            MainSpinnerItem.CALENDAR -> CalendarFindTask(context, listener as DuplicateTaskListener<CalendarItem, DuplicateTask<CalendarItem, Any, Any, List<CalendarItem>>>)
-            MainSpinnerItem.CALL_LOG -> CallLogFindTask(context, listener as DuplicateTaskListener<CallLogItem, DuplicateTask<CallLogItem, Any, Any, List<CallLogItem>>>)
-            MainSpinnerItem.CONTACTS -> ContactFindTask(context, listener as DuplicateTaskListener<ContactItem, DuplicateTask<ContactItem, Any, Any, List<ContactItem>>>)
-            MainSpinnerItem.MESSAGES -> MessageFindTask(context, listener as DuplicateTaskListener<MessageItem, DuplicateTask<MessageItem, Any, Any, List<MessageItem>>>)
-        } as DuplicateFindTask<I, DuplicateViewHolder<I>>
+            MainSpinnerItem.ALARMS -> AlarmFindTask(context, listener as DuplicateFindTaskListener<AlarmItem, AlarmViewHolder>)
+            MainSpinnerItem.BOOKMARKS -> BookmarkFindTask(context, listener as DuplicateFindTaskListener<BookmarkItem, BookmarkViewHolder>)
+            MainSpinnerItem.CALENDAR -> CalendarFindTask(context, listener as DuplicateFindTaskListener<CalendarItem, CalendarViewHolder>)
+            MainSpinnerItem.CALL_LOG -> CallLogFindTask(context, listener as DuplicateFindTaskListener<CallLogItem, CallLogViewHolder>)
+            MainSpinnerItem.CONTACTS -> ContactFindTask(context, listener as DuplicateFindTaskListener<ContactItem, ContactViewHolder>)
+            MainSpinnerItem.MESSAGES -> MessageFindTask(context, listener as DuplicateFindTaskListener<MessageItem, MessageViewHolder>)
+        } as DuplicateFindTask<I, DuplicateViewHolder<I>, DuplicateFindTaskListener<I, DuplicateViewHolder<I>>>
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun createDeleteTask(item: MainSpinnerItem): DuplicateDeleteTask<I>? {
+    private fun createDeleteTask(item: MainSpinnerItem): DuplicateDeleteTask<I, DuplicateDeleteTaskListener<I>>? {
         val context: Context = this
-        val listener: DuplicateTaskListener<I, T> = this
+        val listener: DuplicateDeleteTaskListener<I> = this
 
         return when (item) {
-            MainSpinnerItem.ALARMS -> AlarmDeleteTask(context, listener as DuplicateTaskListener<AlarmItem, DuplicateTask<AlarmItem, DuplicateItemPair<AlarmItem>, Any, Unit>>)
-            MainSpinnerItem.BOOKMARKS -> BookmarkDeleteTask(context, listener as DuplicateTaskListener<BookmarkItem, DuplicateTask<BookmarkItem, DuplicateItemPair<BookmarkItem>, Any, Unit>>)
-            MainSpinnerItem.CALENDAR -> CalendarDeleteTask(context, listener as DuplicateTaskListener<CalendarItem, DuplicateTask<CalendarItem, DuplicateItemPair<CalendarItem>, Any, Unit>>)
-            MainSpinnerItem.CALL_LOG -> CallLogDeleteTask(context, listener as DuplicateTaskListener<CallLogItem, DuplicateTask<CallLogItem, DuplicateItemPair<CallLogItem>, Any, Unit>>)
-            MainSpinnerItem.CONTACTS -> ContactDeleteTask(context, listener as DuplicateTaskListener<ContactItem, DuplicateTask<ContactItem, DuplicateItemPair<ContactItem>, Any, Unit>>)
-            MainSpinnerItem.MESSAGES -> MessageDeleteTask(context, listener as DuplicateTaskListener<MessageItem, DuplicateTask<MessageItem, DuplicateItemPair<MessageItem>, Any, Unit>>)
-        } as DuplicateDeleteTask<I>
+            MainSpinnerItem.ALARMS -> AlarmDeleteTask(context, listener as DuplicateDeleteTaskListener<AlarmItem>)
+            MainSpinnerItem.BOOKMARKS -> BookmarkDeleteTask(context, listener as DuplicateDeleteTaskListener<BookmarkItem>)
+            MainSpinnerItem.CALENDAR -> CalendarDeleteTask(context, listener as DuplicateDeleteTaskListener<CalendarItem>)
+            MainSpinnerItem.CALL_LOG -> CallLogDeleteTask(context, listener as DuplicateDeleteTaskListener<CallLogItem>)
+            MainSpinnerItem.CONTACTS -> ContactDeleteTask(context, listener as DuplicateDeleteTaskListener<ContactItem>)
+            MainSpinnerItem.MESSAGES -> MessageDeleteTask(context, listener as DuplicateDeleteTaskListener<MessageItem>)
+        } as DuplicateDeleteTask<I, DuplicateDeleteTaskListener<I>>
     }
 
-    override fun onDuplicateTaskStarted(task: T) {
-        if (task is DuplicateFindTask<*, *>) {
+    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskStarted(task: T) {
+        if (task is DuplicateFindTask<*, *, *>) {
             searchStarted()
-        } else if (task is DuplicateDeleteTask<*>) {
+        } else if (task is DuplicateDeleteTask<*, *>) {
             deleteStarted()
         }
     }
 
-    override fun onDuplicateTaskFinished(task: T) {
-        if (task is DuplicateFindTask<*, *>) {
+    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskFinished(task: T) {
+        if (task is DuplicateFindTask<*, *, *>) {
             searchStopped(false)
-        } else if (task is DuplicateDeleteTask<*>) {
+        } else if (task is DuplicateDeleteTask<*, *>) {
             deleteStopped(false)
         }
     }
 
-    override fun onDuplicateTaskCancelled(task: T) {
-        if (task is DuplicateFindTask<*, *>) {
+    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskCancelled(task: T) {
+        if (task is DuplicateFindTask<*, *, *>) {
             searchStopped(true)
-        } else if (task is DuplicateDeleteTask<*>) {
+        } else if (task is DuplicateDeleteTask<*, *>) {
             deleteStopped(true)
         }
     }
 
-    override fun onDuplicateTaskProgress(task: T, count: Int) {
+    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskProgress(task: T, count: Int) {
         if (task === this.task) {
             counter.text = getString(R.string.counter, count)
         }
     }
 
-    override fun onDuplicateTaskMatch(task: T, item1: I, item2: I, match: Float, difference: BooleanArray) {
+    override fun <L : DuplicateFindTaskListener<I, DuplicateViewHolder<I>>, T : DuplicateFindTask<I, DuplicateViewHolder<I>, L>> onDuplicateTaskMatch(task: T, item1: I, item2: I, match: Float, difference: BooleanArray) {
         if (task === this.task) {
             adapter?.add(item1, item2, match, difference)
         }
     }
 
-    override fun onDuplicateTaskItemDeleted(task: T, item: I) {
+    override fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskItemDeleted(task: T, item: I) {
         if (task === this.task) {
             adapter?.removeItem(item)
         }
     }
 
-    override fun onDuplicateTaskPairDeleted(task: T, pair: DuplicateItemPair<I>) {
+    override fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskPairDeleted(task: T, pair: DuplicateItemPair<I>) {
         if (task === this.task) {
             adapter?.remove(pair)
         }
@@ -228,14 +236,12 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *>> : AppCompat
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val task = this.task
-        if (task != null) {
-            task.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
+        task?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         menu.clear()
-        if (adapter != null && adapter!!.getItemCount() > 0) {
+        if (adapter != null && adapter!!.itemCount > 0) {
             menuInflater.inflate(R.menu.main, menu)
 
             val searchView = menu.findItem(R.id.menu_filter).actionView as SearchView
@@ -267,27 +273,28 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *>> : AppCompat
     private fun deleteItems() {
         if (task != null && !task!!.isCancelled) {
             task!!.cancel()
-        } else if (adapter != null && adapter!!.getItemCount() > 0 && spinnerItem != null) {
+        } else if (adapter != null && adapter!!.itemCount > 0 && spinnerItem != null) {
             val task = createDeleteTask(spinnerItem!!)
-            this.task = task
             if (task != null) {
+                this.task = task as DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>
                 val pairs = adapter!!.getCheckedPairs()
                 val params = pairs.toTypedArray()
                 task.start(this, params)
             } else {
+                this.task = null
                 searchStopped(false)
             }
         }
     }
 
     private fun selectAllItems() {
-        if (adapter != null && adapter!!.getItemCount() > 0) {
+        if (adapter != null && adapter!!.itemCount > 0) {
             adapter!!.selectAll()
         }
     }
 
     private fun selectNoItems() {
-        if (adapter != null && adapter!!.getItemCount() > 0) {
+        if (adapter != null && adapter!!.itemCount > 0) {
             adapter!!.selectNone()
         }
     }
