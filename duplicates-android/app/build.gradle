@@ -13,6 +13,9 @@ repositories {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
@@ -29,6 +32,9 @@ android {
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
         resConfigs "en"
         vectorDrawables.useSupportLibrary true
+
+        buildConfigField "Boolean", "FEATURE_CALL_LOGS", "true"
+        buildConfigField "Boolean", "FEATURE_SMS", "true"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,11 +62,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     lintOptions {
         disable "AllowBackup"
         disable "GoogleAppIndexingWarning"
@@ -70,16 +71,29 @@ android {
         disable "UnusedResources"
     }
 
+    flavorDimensions "privacy"
 
+    productFlavors {
+        google {
+            dimension "privacy"
+            buildConfigField "Boolean", "FEATURE_CALL_LOGS", "false"
+            buildConfigField "Boolean", "FEATURE_SMS", "false"
+        }
+        regular {
+            dimension "privacy"
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':android-lib:lib')
 
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:1.1.0"
+
     // Views
-    implementation "com.jakewharton:butterknife:$butterknife_version"
-    annotationProcessor group: 'com.jakewharton', name: 'butterknife-compiler', version: "$butterknife_version"
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // Testing
