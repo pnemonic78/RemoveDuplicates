@@ -1,3 +1,2 @@
 layout margins
 layout styles
-dark theme (night)

@@ -5,6 +5,8 @@
     <color name="dummy_color">#80ff80</color>
 
     <color name="different">#80FFA500</color>
-    <color name="error">#CCFF0000</color>
+    <color name="error">@color/red_xC0</color>
+    <color name="icon">@color/black</color>
+    <color name="icon_disabled">@color/black_x40</color>
 
 </resources>
