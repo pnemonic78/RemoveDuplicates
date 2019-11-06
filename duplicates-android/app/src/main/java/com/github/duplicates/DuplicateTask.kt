@@ -131,7 +131,7 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
     @TargetApi(Build.VERSION_CODES.M)
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == REQUEST_PERMISSIONS) {
-            if (permissions.size > 0 && grantResults.isNotEmpty()) {
+            if (permissions.isNotEmpty() && grantResults.isNotEmpty()) {
                 if (grantResults[0] == PERMISSION_GRANTED) {//FIXME: check entire array.
                     onPermissionGranted()
                 } else {
@@ -163,6 +163,7 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
      */
     protected fun onPermissionDenied() {
         Toast.makeText(context, R.string.permissions_denied, Toast.LENGTH_LONG).show()
+        onCancelled()
     }
 
     open fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {}

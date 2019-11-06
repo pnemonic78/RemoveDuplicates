@@ -126,7 +126,7 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         spinnerAction.isEnabled = true
         statusBar.visibility = View.GONE
         task = null
-        if (adapter != null && adapter!!.getItemCount() > 0) {
+        if (adapter != null && adapter!!.itemCount > 0) {
             listSwitcher.displayedChild = CHILD_LIST
         } else {
             listSwitcher.displayedChild = CHILD_EMPTY
