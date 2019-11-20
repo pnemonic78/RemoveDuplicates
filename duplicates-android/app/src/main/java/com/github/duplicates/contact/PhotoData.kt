@@ -64,7 +64,7 @@ class PhotoData : ContactData() {
         return data15 ?: super.toString()
     }
 
-    override fun containsAny(s: CharSequence): Boolean {
+    override fun containsAny(s: CharSequence, ignoreCase: Boolean): Boolean {
         return false
     }
 }

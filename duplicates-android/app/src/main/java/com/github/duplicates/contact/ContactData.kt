@@ -15,8 +15,6 @@
  */
 package com.github.duplicates.contact
 
-import android.text.TextUtils
-
 /**
  * Contact data.
  *
@@ -56,29 +54,29 @@ open class ContactData {
         return data1 ?: ""
     }
 
-    open fun containsAny(s: CharSequence): Boolean {
-        return (contains(data1)
-            || contains(data2)
-            || contains(data3)
-            || contains(data4)
-            || contains(data5)
-            || contains(data6)
-            || contains(data7)
-            || contains(data8)
-            || contains(data9)
-            || contains(data10)
-            || contains(data11)
-            || contains(data12)
-            || contains(data13)
-            || contains(data14)
-            || contains(data15))
+    open fun containsAny(s: CharSequence, ignoreCase: Boolean = false): Boolean {
+        return (data1?.contains(s, ignoreCase) ?: false)
+            || (data2?.contains(s, ignoreCase) ?: false)
+            || (data3?.contains(s, ignoreCase) ?: false)
+            || (data4?.contains(s, ignoreCase) ?: false)
+            || (data5?.contains(s, ignoreCase) ?: false)
+            || (data6?.contains(s, ignoreCase) ?: false)
+            || (data7?.contains(s, ignoreCase) ?: false)
+            || (data8?.contains(s, ignoreCase) ?: false)
+            || (data9?.contains(s, ignoreCase) ?: false)
+            || (data10?.contains(s, ignoreCase) ?: false)
+            || (data11?.contains(s, ignoreCase) ?: false)
+            || (data12?.contains(s, ignoreCase) ?: false)
+            || (data13?.contains(s, ignoreCase) ?: false)
+            || (data14?.contains(s, ignoreCase) ?: false)
+            || (data15?.contains(s, ignoreCase) ?: false)
     }
 
     protected fun parseInt(s: String?): Int {
         return s?.toInt() ?: 0
     }
 
-    protected operator fun contains(s: String?): Boolean {
-        return s?.contains(s) ?: false
+    protected operator fun contains(s: String): Boolean {
+        return containsAny(s, true)
     }
 }

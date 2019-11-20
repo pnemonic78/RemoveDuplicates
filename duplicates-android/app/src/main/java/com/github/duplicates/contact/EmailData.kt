@@ -43,7 +43,8 @@ class EmailData : ContactData() {
         return address ?: super.toString()
     }
 
-    override fun containsAny(s: CharSequence): Boolean {
-        return contains(address) || contains(label)
+    override fun containsAny(s: CharSequence, ignoreCase: Boolean): Boolean {
+        return (address?.contains(s, ignoreCase) ?: false)
+            || (label?.contains(s, ignoreCase) ?: false)
     }
 }

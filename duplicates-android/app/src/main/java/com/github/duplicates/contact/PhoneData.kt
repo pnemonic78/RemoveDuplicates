@@ -44,7 +44,8 @@ class PhoneData : ContactData() {
         return number!! + if (TextUtils.isEmpty(label)) "" else " " + label!!
     }
 
-    override fun containsAny(s: CharSequence): Boolean {
-        return contains(label) || contains(number)
+    override fun containsAny(s: CharSequence, ignoreCase: Boolean): Boolean {
+        return (label?.contains(s, ignoreCase) ?: false)
+            || (number?.contains(s, ignoreCase) ?: false)
     }
 }
