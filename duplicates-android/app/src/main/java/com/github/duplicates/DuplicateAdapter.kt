@@ -38,9 +38,20 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
     private val pairsAll = ArrayList<DuplicateItemPair<T>>()
     private var pairs: MutableList<DuplicateItemPair<T>> = pairsAll
     private var filter: Filter? = null
+    private var recyclerView: RecyclerView? = null
 
     init {
         setHasStableIds(true)
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        this.recyclerView = null
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
@@ -63,7 +74,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
     fun clear() {
         pairsAll.clear()
         pairs.clear()
-        notifyDataSetChanged()
+        notifyDataSetChangedWithClear()
     }
 
     /**
@@ -207,7 +218,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
 
     override fun onItemCheckedChangeListener(item: T, checked: Boolean) {
         item.isChecked = checked
-        notifyDataSetChanged()//FIXME Update only the affected rows!
+        notifyDataSetChanged()
     }
 
     fun filter(query: String) {
@@ -233,6 +244,11 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
         return itemView
     }
 
+    protected fun notifyDataSetChangedWithClear() {
+        recyclerView?.recycledViewPool?.clear()
+        notifyDataSetChanged()
+    }
+
     private inner class DuplicateAdapterFilter : Filter() {
         override fun performFiltering(constraint: CharSequence): FilterResults {
             val filtered: MutableList<DuplicateItemPair<T>>
@@ -256,7 +272,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
 
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
             pairs = results.values as MutableList<DuplicateItemPair<T>>
-            notifyDataSetChanged()
+            notifyDataSetChangedWithClear()
         }
     }
 }
