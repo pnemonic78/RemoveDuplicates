@@ -150,9 +150,9 @@ class CalendarItem : DuplicateItem() {
     }
 
     override fun contains(s: CharSequence): Boolean {
-        return title.contains(s)
-            || (description?.contains(s) ?: false)
-            || (location?.contains(s) ?: false)
+        return title.contains(s, true)
+            || (description?.contains(s, true) ?: false)
+            || (location?.contains(s, true) ?: false)
     }
 
     companion object {

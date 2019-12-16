@@ -72,6 +72,6 @@ class BookmarkItem : DuplicateItem() {
     }
 
     override fun contains(s: CharSequence): Boolean {
-        return title?.contains(s) ?: false
+        return title?.contains(s, true) ?: false
     }
 }

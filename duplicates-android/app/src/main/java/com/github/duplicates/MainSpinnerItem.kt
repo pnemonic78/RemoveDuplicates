@@ -26,8 +26,8 @@ import androidx.annotation.StringRes
  *
  * @author moshe.w
  */
-enum class MainSpinnerItem(@param:StringRes @field:StringRes val label: Int,
-                           @param:DrawableRes @field:DrawableRes val icon: Int,
+enum class MainSpinnerItem(@StringRes val label: Int,
+                           @DrawableRes val icon: Int,
                            val enabled: Boolean = true) {
 
     ALARMS(R.string.item_alarms, R.drawable.ic_alarm),

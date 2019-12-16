@@ -37,9 +37,9 @@ class CallLogItem : DuplicateItem() {
     var type: Int = 0
 
     override fun contains(s: CharSequence): Boolean {
-        return (!TextUtils.isEmpty(name) && name!!.contains(s)
-            || !TextUtils.isEmpty(number) && number!!.contains(s)
-            || !TextUtils.isEmpty(numberLabel) && numberLabel!!.contains(s))
+        return (name?.contains(s, true) ?: false)
+            || (number?.contains(s, true) ?: false)
+            || (numberLabel?.contains(s, true) ?: false)
     }
 
     companion object {

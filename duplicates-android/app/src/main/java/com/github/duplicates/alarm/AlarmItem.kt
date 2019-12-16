@@ -47,6 +47,6 @@ class AlarmItem : DuplicateItem() {
     var volume: Int = 0
 
     override fun contains(s: CharSequence): Boolean {
-        return name?.contains(s) ?: false
+        return name?.contains(s, true) ?: false
     }
 }

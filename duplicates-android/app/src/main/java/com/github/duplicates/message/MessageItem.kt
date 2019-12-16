@@ -50,9 +50,9 @@ class MessageItem : DuplicateItem() {
     var type = MESSAGE_TYPE_ALL
 
     override fun contains(s: CharSequence): Boolean {
-        return (!TextUtils.isEmpty(address) && address!!.contains(s)
-            || !TextUtils.isEmpty(this.body) && this.body!!.contains(s)
-            || !TextUtils.isEmpty(subject) && subject!!.contains(s))
+        return (address?.contains(s, true) ?: false)
+            || (body?.contains(s, true) ?: false)
+            || (subject?.contains(s, true) ?: false)
     }
 
     companion object {

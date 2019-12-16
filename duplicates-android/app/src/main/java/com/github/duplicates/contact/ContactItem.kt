@@ -48,25 +48,25 @@ class ContactItem : DuplicateItem() {
     }
 
     override fun contains(s: CharSequence): Boolean {
-        var result = displayName?.contains(s) ?: false
+        var result = displayName?.contains(s, true) ?: false
         if (!result) {
             for (data in names) {
-                result = result or data.containsAny(s)
+                result = result or data.containsAny(s, true)
             }
         }
         if (!result) {
             for (data in emails) {
-                result = result or data.containsAny(s)
+                result = result or data.containsAny(s, true)
             }
         }
         if (!result) {
             for (data in events) {
-                result = result or data.containsAny(s)
+                result = result or data.containsAny(s, true)
             }
         }
         if (!result) {
             for (data in phones) {
-                result = result or data.containsAny(s)
+                result = result or data.containsAny(s, true)
             }
         }
         return result
