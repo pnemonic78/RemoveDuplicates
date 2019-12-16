@@ -75,7 +75,9 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         super.onCreate(savedInstanceState)
 
         Timber.plant(LogTree(BuildConfig.DEBUG))
-        Fabric.with(this, Crashlytics())
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, Crashlytics())
+        }
 
         setContentView(R.layout.activity_main)
 
