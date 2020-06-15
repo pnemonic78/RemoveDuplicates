@@ -1,3 +1,0 @@
-disclosure alert dialog
-layout margins
-layout styles
