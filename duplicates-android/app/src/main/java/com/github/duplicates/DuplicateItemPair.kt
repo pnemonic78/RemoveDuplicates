@@ -54,6 +54,6 @@ class DuplicateItemPair<T : DuplicateItem>(val item1: T, val item2: T, val match
         /**
          * Percentage for two items to be considered a very good match.
          */
-        const val MATCH_GREAT = 0.95f
+        const val MATCH_GREAT = 0.99f
     }
 }
