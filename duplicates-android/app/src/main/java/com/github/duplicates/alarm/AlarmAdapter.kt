@@ -28,9 +28,14 @@ import com.github.duplicates.DuplicateAdapter
  */
 class AlarmAdapter : DuplicateAdapter<AlarmItem, AlarmViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
-        val context: Context = parent.context
-        val binding = SameAlarmBinding.inflate(LayoutInflater.from(context), parent, false)
-        return AlarmViewHolder(binding, this)
+    override fun createCardViewHolder(
+        context: Context,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        cardView: ViewGroup,
+        viewType: Int
+    ): AlarmViewHolder {
+        val binding = SameAlarmBinding.inflate(inflater, cardView, true)
+        return AlarmViewHolder(parent, binding, this)
     }
 }

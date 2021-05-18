@@ -28,9 +28,14 @@ import com.github.duplicates.DuplicateAdapter
  */
 class BookmarkAdapter : DuplicateAdapter<BookmarkItem, BookmarkViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkViewHolder {
-        val context: Context = parent.context
-        val binding = SameBookmarkBinding.inflate(LayoutInflater.from(context), parent, false)
-        return BookmarkViewHolder(binding, this)
+    override fun createCardViewHolder(
+        context: Context,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        cardView: ViewGroup,
+        viewType: Int
+    ): BookmarkViewHolder {
+        val binding = SameBookmarkBinding.inflate(inflater, cardView, true)
+        return BookmarkViewHolder(parent, binding, this)
     }
 }

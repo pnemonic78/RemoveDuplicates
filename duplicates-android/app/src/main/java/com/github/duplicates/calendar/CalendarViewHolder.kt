@@ -19,6 +19,7 @@ import android.content.Context
 import android.graphics.Color
 import android.text.format.DateUtils
 import android.view.View
+import android.view.ViewGroup
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.android.removeduplicates.databinding.SameCalendarBinding
@@ -39,9 +40,10 @@ import kotlin.math.min
  * @author moshe.w
  */
 class CalendarViewHolder(
+    itemView: ViewGroup,
     binding: SameCalendarBinding,
     onCheckedChangeListener: OnItemCheckedChangeListener<CalendarItem>? = null
-) : DuplicateViewHolder<CalendarItem>(binding.root, onCheckedChangeListener) {
+) : DuplicateViewHolder<CalendarItem>(itemView, onCheckedChangeListener) {
 
     private val match = binding.match
 

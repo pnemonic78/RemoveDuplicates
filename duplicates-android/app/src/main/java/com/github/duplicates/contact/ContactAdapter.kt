@@ -28,9 +28,14 @@ import com.github.duplicates.DuplicateAdapter
  */
 class ContactAdapter : DuplicateAdapter<ContactItem, ContactViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
-        val context: Context = parent.context
-        val binding = SameContactBinding.inflate(LayoutInflater.from(context), parent, false)
-        return ContactViewHolder(binding, this)
+    override fun createCardViewHolder(
+        context: Context,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        cardView: ViewGroup,
+        viewType: Int
+    ): ContactViewHolder {
+        val binding = SameContactBinding.inflate(inflater, cardView, true)
+        return ContactViewHolder(parent, binding, this)
     }
 }

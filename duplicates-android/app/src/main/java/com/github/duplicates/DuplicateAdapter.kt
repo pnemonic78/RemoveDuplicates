@@ -15,17 +15,16 @@
  */
 package com.github.duplicates
 
+import android.content.Context
 import android.os.Build
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.view.ViewStub
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameItemBinding
+import com.github.android.removeduplicates.databinding.SameItemShadowBinding
 import java.util.*
 
 /**
@@ -33,7 +32,8 @@ import java.util.*
  *
  * @author moshe.w
  */
-abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> : RecyclerView.Adapter<VH>(), DuplicateViewHolder.OnItemCheckedChangeListener<T>, Filterable {
+abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> :
+    RecyclerView.Adapter<VH>(), DuplicateViewHolder.OnItemCheckedChangeListener<T>, Filterable {
 
     private val pairsAll = ArrayList<DuplicateItemPair<T>>()
     private var pairs: MutableList<DuplicateItemPair<T>> = pairsAll
@@ -232,17 +232,30 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
         return filter!!
     }
 
-    protected fun createViewHolder(@LayoutRes layoutId: Int, parent: ViewGroup, viewType: Int): View {
-        val itemView = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            LayoutInflater.from(parent.context).inflate(R.layout.same_item_shadow, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        val context: Context = parent.context
+        val inflater = LayoutInflater.from(context)
+        val itemView: ViewGroup
+        val cardView: ViewGroup
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            val binding = SameItemShadowBinding.inflate(inflater, parent, false)
+            itemView = binding.root
+            cardView = binding.item.root
         } else {
-            LayoutInflater.from(parent.context).inflate(R.layout.same_item, parent, false)
+            val binding = SameItemBinding.inflate(inflater, parent, false)
+            itemView = binding.root
+            cardView = binding.root
         }
-        val stub = itemView.findViewById<ViewStub>(R.id.stub)
-        stub.layoutResource = layoutId
-        stub.inflate()
-        return itemView
+        return createCardViewHolder(context, inflater, itemView, cardView, viewType)
     }
+
+    protected abstract fun createCardViewHolder(
+        context: Context,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        cardView: ViewGroup,
+        viewType: Int
+    ): VH
 
     protected fun notifyDataSetChangedWithClear() {
         recyclerView?.recycledViewPool?.clear()

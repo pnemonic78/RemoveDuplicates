@@ -6,13 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:outlineProvider="bounds"
-    app:cardElevation="2dp"
-    app:contentPadding="8dp">
-
-    <ViewStub
-        android:id="@+id/stub"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/same_alarm" />
-
-</androidx.cardview.widget.CardView>
+    app:cardElevation="3dp"
+    app:contentPadding="8dp"
+    tools:layout_height="200dp" />

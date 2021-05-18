@@ -28,9 +28,14 @@ import com.github.duplicates.DuplicateAdapter
  */
 class MessageAdapter : DuplicateAdapter<MessageItem, MessageViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
-        val context: Context = parent.context
-        val binding = SameMessageBinding.inflate(LayoutInflater.from(context), parent, false)
-        return MessageViewHolder(binding, this)
+    override fun createCardViewHolder(
+        context: Context,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        cardView: ViewGroup,
+        viewType: Int
+    ): MessageViewHolder {
+        val binding = SameMessageBinding.inflate(inflater, cardView, true)
+        return MessageViewHolder(parent, binding, this)
     }
 }

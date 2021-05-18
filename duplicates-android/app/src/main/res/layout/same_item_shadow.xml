@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <include layout="@layout/same_item" />
+    <include
+        android:id="@+id/item"
+        layout="@layout/same_item" />
 
 </FrameLayout>

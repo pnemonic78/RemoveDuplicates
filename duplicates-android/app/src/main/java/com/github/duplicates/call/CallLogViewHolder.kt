@@ -17,6 +17,7 @@ package com.github.duplicates.call
 
 import android.content.Context
 import android.text.format.DateUtils
+import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.github.android.removeduplicates.BuildConfig
@@ -44,9 +45,10 @@ import com.github.duplicates.call.CallLogItem.Companion.VOICEMAIL_TYPE
  * @author moshe.w
  */
 class CallLogViewHolder(
+    itemView: ViewGroup,
     binding: SameCallBinding,
     onCheckedChangeListener: OnItemCheckedChangeListener<CallLogItem>? = null
-) : DuplicateViewHolder<CallLogItem>(binding.root, onCheckedChangeListener) {
+) : DuplicateViewHolder<CallLogItem>(itemView, onCheckedChangeListener) {
 
     private val match = binding.match
 

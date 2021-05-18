@@ -17,6 +17,7 @@ package com.github.duplicates.message
 
 import android.content.Context
 import android.text.format.DateUtils
+import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.github.android.removeduplicates.BuildConfig
@@ -43,9 +44,10 @@ import com.github.duplicates.message.MessageItem.Companion.MESSAGE_TYPE_SENT
  * @author moshe.w
  */
 class MessageViewHolder(
+    itemView: ViewGroup,
     binding: SameMessageBinding,
     onCheckedChangeListener: OnItemCheckedChangeListener<MessageItem>? = null
-) : DuplicateViewHolder<MessageItem>(binding.root, onCheckedChangeListener) {
+) : DuplicateViewHolder<MessageItem>(itemView, onCheckedChangeListener) {
 
     private val match = binding.match
 

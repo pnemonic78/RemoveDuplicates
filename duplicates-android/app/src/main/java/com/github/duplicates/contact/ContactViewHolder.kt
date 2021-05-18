@@ -16,6 +16,7 @@
 package com.github.duplicates.contact
 
 import android.content.Context
+import android.view.ViewGroup
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.android.removeduplicates.databinding.SameContactBinding
@@ -34,9 +35,10 @@ import java.util.*
  * @author moshe.w
  */
 class ContactViewHolder(
+    itemView: ViewGroup,
     binding: SameContactBinding,
     onCheckedChangeListener: OnItemCheckedChangeListener<ContactItem>? = null
-) : DuplicateViewHolder<ContactItem>(binding.root, onCheckedChangeListener) {
+) : DuplicateViewHolder<ContactItem>(itemView, onCheckedChangeListener) {
 
     private val match = binding.match
 

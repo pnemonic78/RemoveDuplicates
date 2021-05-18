@@ -17,6 +17,7 @@ package com.github.duplicates.bookmark
 
 import android.content.Context
 import android.text.format.DateUtils
+import android.view.ViewGroup
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.android.removeduplicates.databinding.SameBookmarkBinding
@@ -35,9 +36,10 @@ import com.github.duplicates.bookmark.BookmarkComparator.Companion.URL
  * @author moshe.w
  */
 class BookmarkViewHolder(
+    itemView: ViewGroup,
     binding: SameBookmarkBinding,
     onCheckedChangeListener: OnItemCheckedChangeListener<BookmarkItem>? = null
-) : DuplicateViewHolder<BookmarkItem>(binding.root, onCheckedChangeListener) {
+) : DuplicateViewHolder<BookmarkItem>(itemView, onCheckedChangeListener) {
 
     private val match = binding.match
 

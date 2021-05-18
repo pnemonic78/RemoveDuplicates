@@ -28,9 +28,14 @@ import com.github.duplicates.DuplicateAdapter
  */
 class CallLogAdapter : DuplicateAdapter<CallLogItem, CallLogViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CallLogViewHolder {
-        val context: Context = parent.context
-        val binding = SameCallBinding.inflate(LayoutInflater.from(context), parent, false)
-        return CallLogViewHolder(binding, this)
+    override fun createCardViewHolder(
+        context: Context,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        cardView: ViewGroup,
+        viewType: Int
+    ): CallLogViewHolder {
+        val binding = SameCallBinding.inflate(inflater, cardView, true)
+        return CallLogViewHolder(parent, binding, this)
     }
 }

@@ -18,6 +18,7 @@ package com.github.duplicates.alarm
 import android.content.Context
 import android.text.format.DateFormat
 import android.text.format.DateUtils
+import android.view.ViewGroup
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.android.removeduplicates.databinding.SameAlarmBinding
@@ -35,9 +36,10 @@ import java.util.*
  * @author moshe.w
  */
 class AlarmViewHolder(
+    itemView: ViewGroup,
     binding: SameAlarmBinding,
     onCheckedChangeListener: OnItemCheckedChangeListener<AlarmItem>? = null
-) : DuplicateViewHolder<AlarmItem>(binding.root, onCheckedChangeListener) {
+) : DuplicateViewHolder<AlarmItem>(itemView, onCheckedChangeListener) {
 
     private val match = binding.match
 
