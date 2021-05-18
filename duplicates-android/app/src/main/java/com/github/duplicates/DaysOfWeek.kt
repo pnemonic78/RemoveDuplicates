@@ -140,8 +140,8 @@ class DaysOfWeek(days: Int) : Comparable<DaysOfWeek> {
         return dayCount
     }
 
-    override fun compareTo(another: DaysOfWeek): Int {
-        return this.days - another.days
+    override fun compareTo(other: DaysOfWeek): Int {
+        return this.days - other.days
     }
 
     companion object {

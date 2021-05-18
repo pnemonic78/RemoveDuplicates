@@ -1,7 +1,7 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 
 def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
 def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
@@ -47,6 +47,15 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     lintOptions {
         disable "AllowBackup"
         disable "GoogleAppIndexingWarning"
@@ -71,16 +80,15 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':android-lib:lib')
+    implementation project(":android-lib:lib")
 
     // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "androidx.core:core-ktx:1.3.2"
 
     // Views
-    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "androidx.cardview:cardview:1.0.0"
 
     // Testing
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:4.13.2"
 }
