@@ -31,7 +31,7 @@
         android:contentDescription="@string/contact_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/checkbox1"
-        tools:src="@drawable/ic_contact_picture" />
+        tools:src="@drawable/ic_person_outline" />
 
     <TextView
         android:id="@+id/name1"
@@ -120,7 +120,7 @@
         android:contentDescription="@string/contact_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/checkbox2"
-        tools:src="@drawable/ic_contact_picture" />
+        tools:src="@drawable/ic_person_outline" />
 
     <TextView
         android:id="@+id/name2"

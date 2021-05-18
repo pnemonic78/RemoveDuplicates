@@ -76,7 +76,7 @@ class ContactViewHolder(
         checkbox1.isChecked = item.isChecked
         checkbox1.text = if (BuildConfig.DEBUG) item.id.toString() else ""
         if (item.photoThumbnailUri == null) {
-            icon1.setImageResource(R.drawable.ic_contact_picture)
+            icon1.setImageResource(R.drawable.ic_person_outline)
         } else {
             icon1.setImageURI(item.photoThumbnailUri)
         }
@@ -93,7 +93,7 @@ class ContactViewHolder(
         checkbox2.isChecked = item.isChecked
         checkbox2.text = if (BuildConfig.DEBUG) item.id.toString() else ""
         if (item.photoThumbnailUri == null) {
-            icon2.setImageResource(R.drawable.ic_contact_picture)
+            icon2.setImageResource(R.drawable.ic_person_outline)
         } else {
             icon2.setImageURI(item.photoThumbnailUri)
         }
