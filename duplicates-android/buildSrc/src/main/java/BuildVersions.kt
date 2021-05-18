@@ -6,7 +6,8 @@ object BuildVersions {
     const val targetSdkVersion = 29
 
     // App dependencies
-    const val junitVersion = "4.13"
+    const val androidTestVersion = "1.3.0"
+    const val junitVersion = "4.13.2"
     const val roomVersion = "2.3.0"
     const val rxAndroidVersion = "3.0.0"
     const val rxKotlinVersion = "3.0.1"

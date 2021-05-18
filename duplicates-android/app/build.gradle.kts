@@ -84,10 +84,6 @@ android {
 dependencies {
     implementation(project(":android-lib:lib"))
 
-    // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${BuildVersions.kotlin_version}")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-common:${BuildVersions.kotlin_version}")
-
     // Views
     implementation("androidx.cardview:cardview:1.0.0")
 
