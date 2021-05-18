@@ -43,6 +43,8 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/caches
+.idea/shelf
+.idea/vcs.xml
 
 # Keystore files
 *.jks
