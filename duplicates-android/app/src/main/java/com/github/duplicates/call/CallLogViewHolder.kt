@@ -52,19 +52,19 @@ class CallLogViewHolder(
 
     private val match = binding.match
 
-    private val checkbox1 = binding.checkbox1
-    private val date1 = binding.date1
-    private val duration1 = binding.duration1
-    private val number1 = binding.number1
-    private val type1 = binding.type1
-    private val name1 = binding.name1
+    private val checkbox1 = binding.item1.checkbox
+    private val date1 = binding.item1.date
+    private val duration1 = binding.item1.duration
+    private val number1 = binding.item1.number
+    private val type1 = binding.item1.type
+    private val name1 = binding.item1.name
 
-    private val checkbox2 = binding.checkbox2
-    private val date2 = binding.date2
-    private val duration2 = binding.duration2
-    private val number2 = binding.number2
-    private val type2 = binding.type2
-    private val name2 = binding.name1
+    private val checkbox2 = binding.item2.checkbox
+    private val date2 = binding.item2.date
+    private val duration2 = binding.item2.duration
+    private val number2 = binding.item2.number
+    private val type2 = binding.item2.type
+    private val name2 = binding.item2.name
 
     init {
         checkbox1.setOnClickListener {

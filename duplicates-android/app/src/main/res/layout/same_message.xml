@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -16,57 +15,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
-        android:id="@+id/checkbox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/match" />
-
-    <TextView
-        android:id="@+id/body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkbox1"
-        app:layout_constraintTop_toTopOf="@+id/checkbox1"
-        tools:text="@string/dummy_text_long3" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="checkbox1,body1" />
-
-    <ImageView
-        android:id="@+id/type1"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/call_type_incoming"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier10"
-        tools:src="@drawable/ic_inbox" />
-
-    <TextView
-        android:id="@+id/date1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/address1"
-        app:layout_constraintStart_toEndOf="@+id/type1"
-        app:layout_constraintTop_toBottomOf="@+id/barrier10"
-        tools:text="@string/dummy_date_time" />
-
-    <TextView
-        android:id="@+id/address1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/date1"
-        app:layout_constraintTop_toTopOf="@+id/date1"
-        tools:text="@string/dummy_text" />
+    <include
+        android:id="@+id/item1"
+        layout="@layout/item_message" />
 
     <View
         android:id="@+id/divider"
@@ -75,59 +26,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:background="@android:drawable/divider_horizontal_bright"
-        app:layout_constraintTop_toBottomOf="@+id/type1" />
+        android:background="@android:drawable/divider_horizontal_bright" />
 
-    <CheckBox
-        android:id="@+id/checkbox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+    <include
+        android:id="@+id/item2"
+        layout="@layout/item_message" />
 
-    <TextView
-        android:id="@+id/body2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkbox2"
-        app:layout_constraintTop_toTopOf="@+id/checkbox2"
-        tools:text="@string/dummy_text_long3" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="checkbox2,body2" />
-
-    <ImageView
-        android:id="@+id/type2"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/call_type_incoming"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier20"
-        tools:src="@drawable/ic_inbox" />
-
-    <TextView
-        android:id="@+id/date2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/address2"
-        app:layout_constraintStart_toEndOf="@+id/type2"
-        app:layout_constraintTop_toBottomOf="@+id/barrier20"
-        tools:text="@string/dummy_date_time" />
-
-    <TextView
-        android:id="@+id/address2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/date2"
-        app:layout_constraintTop_toTopOf="@+id/date2"
-        tools:text="@string/dummy_text" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

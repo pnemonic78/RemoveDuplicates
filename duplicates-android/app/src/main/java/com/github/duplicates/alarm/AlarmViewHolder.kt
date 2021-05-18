@@ -43,17 +43,17 @@ class AlarmViewHolder(
 
     private val match = binding.match
 
-    private val checkbox1 = binding.checkbox1
-    private val alarm1 = binding.alarm1
-    private val alert1 = binding.alert1
-    private val repeat1 = binding.repeat1
-    private val name1 = binding.name1
+    private val checkbox1 = binding.item1.checkbox
+    private val alarm1 = binding.item1.alarm
+    private val alert1 = binding.item1.alert
+    private val repeat1 = binding.item1.repeat
+    private val name1 = binding.item1.name
 
-    private val checkbox2 = binding.checkbox2
-    private val alarm2 = binding.alarm2
-    private val alert2 = binding.alert2
-    private val repeat2 = binding.repeat2
-    private val name2 = binding.name2
+    private val checkbox2 = binding.item2.checkbox
+    private val alarm2 = binding.item2.alarm
+    private val alert2 = binding.item2.alert
+    private val repeat2 = binding.item2.repeat
+    private val name2 = binding.item2.name
 
     init {
         checkbox1.setOnClickListener {

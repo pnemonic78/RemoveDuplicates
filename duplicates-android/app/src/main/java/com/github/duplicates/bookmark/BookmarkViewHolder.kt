@@ -43,19 +43,19 @@ class BookmarkViewHolder(
 
     private val match = binding.match
 
-    private val checkbox1 = binding.checkbox1
-    private val created1 = binding.created1
-    private val date1 = binding.date1
-    private val icon1 = binding.icon1
-    private val title1 = binding.title1
-    private val url1 = binding.url1
+    private val checkbox1 = binding.item1.checkbox
+    private val created1 = binding.item1.created
+    private val date1 = binding.item1.date
+    private val icon1 = binding.item1.icon
+    private val title1 = binding.item1.title
+    private val url1 = binding.item1.url
 
-    private val checkbox2 = binding.checkbox2
-    private val created2 = binding.created2
-    private val date2 = binding.date2
-    private val icon2 = binding.icon2
-    private val title2 = binding.title2
-    private val url2 = binding.url2
+    private val checkbox2 = binding.item2.checkbox
+    private val created2 = binding.item2.created
+    private val date2 = binding.item2.date
+    private val icon2 = binding.item2.icon
+    private val title2 = binding.item2.title
+    private val url2 = binding.item2.url
 
     init {
         checkbox1.setOnClickListener {

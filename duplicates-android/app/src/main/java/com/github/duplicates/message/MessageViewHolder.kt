@@ -51,17 +51,17 @@ class MessageViewHolder(
 
     private val match = binding.match
 
-    private val checkbox1 = binding.checkbox1
-    private val date1 = binding.date1
-    private val address1 = binding.address1
-    private val type1 = binding.type1
-    private val body1 = binding.body1
+    private val checkbox1 = binding.item1.checkbox
+    private val date1 = binding.item1.date
+    private val address1 = binding.item1.address
+    private val type1 = binding.item1.type
+    private val body1 = binding.item1.body
 
-    private val checkbox2 = binding.checkbox2
-    private val date2 = binding.date2
-    private val address2 = binding.address2
-    private val type2 = binding.type2
-    private val body2 = binding.body1
+    private val checkbox2 = binding.item2.checkbox
+    private val date2 = binding.item2.date
+    private val address2 = binding.item2.address
+    private val type2 = binding.item2.type
+    private val body2 = binding.item2.body
 
     init {
         checkbox1.setOnClickListener {

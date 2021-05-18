@@ -47,25 +47,25 @@ class CalendarViewHolder(
 
     private val match = binding.match
 
-    private val checkbox1 = binding.checkbox1
-    private val color1 = binding.color1
-    private val start1 = binding.start1
-    private val end1 = binding.end1
-    private val recur1 = binding.recur1
-    private val account1 = binding.account1
-    private val title1 = binding.title1
-    private val description1 = binding.description1
-    private val location1 = binding.location1
+    private val checkbox1 = binding.item1.checkbox
+    private val color1 = binding.item1.color
+    private val start1 = binding.item1.start
+    private val end1 = binding.item1.end
+    private val recur1 = binding.item1.recur
+    private val account1 = binding.item1.account
+    private val title1 = binding.item1.title
+    private val description1 = binding.item1.description
+    private val location1 = binding.item1.location
 
-    private val checkbox2 = binding.checkbox2
-    private val color2 = binding.color2
-    private val start2 = binding.start2
-    private val end2 = binding.end2
-    private val recur2 = binding.recur2
-    private val account2 = binding.account2
-    private val title2 = binding.title2
-    private val description2 = binding.description2
-    private val location2 = binding.location2
+    private val checkbox2 = binding.item2.checkbox
+    private val color2 = binding.item2.color
+    private val start2 = binding.item2.start
+    private val end2 = binding.item2.end
+    private val recur2 = binding.item2.recur
+    private val account2 = binding.item2.account
+    private val title2 = binding.item2.title
+    private val description2 = binding.item2.description
+    private val location2 = binding.item2.location
 
     init {
         checkbox1.setOnClickListener {

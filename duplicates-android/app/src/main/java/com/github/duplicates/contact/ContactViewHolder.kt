@@ -42,23 +42,23 @@ class ContactViewHolder(
 
     private val match = binding.match
 
-    private val checkbox1 = binding.checkbox1
-    private val icon1 = binding.icon1
-    private val account1 = binding.account1
-    private val name1 = binding.name1
-    private val email1 = binding.email1
-    private val event1 = binding.event1
-    private val im1 = binding.im1
-    private val phone1 = binding.phone1
+    private val checkbox1 = binding.item1.checkbox
+    private val icon1 = binding.item1.icon
+    private val account1 = binding.item1.account
+    private val name1 = binding.item1.name
+    private val email1 = binding.item1.email
+    private val event1 = binding.item1.event
+    private val im1 = binding.item1.im
+    private val phone1 = binding.item1.phone
 
-    private val checkbox2 = binding.checkbox2
-    private val icon2 = binding.icon2
-    private val account2 = binding.account2
-    private val name2 = binding.name2
-    private val email2 = binding.email2
-    private val event2 = binding.event2
-    private val im2 = binding.im2
-    private val phone2 = binding.phone1
+    private val checkbox2 = binding.item2.checkbox
+    private val icon2 = binding.item2.icon
+    private val account2 = binding.item2.account
+    private val name2 = binding.item2.name
+    private val email2 = binding.item2.email
+    private val event2 = binding.item2.event
+    private val im2 = binding.item2.im
+    private val phone2 = binding.item2.phone
 
     init {
         checkbox1.setOnClickListener {

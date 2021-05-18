@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/match"
@@ -15,67 +15,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
-        android:id="@+id/checkbox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/match" />
-
-    <TextView
-        android:id="@+id/number1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/name1"
-        app:layout_constraintStart_toEndOf="@+id/checkbox1"
-        app:layout_constraintTop_toTopOf="@+id/checkbox1"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/name1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/number1"
-        app:layout_constraintTop_toTopOf="@+id/number1"
-        tools:text="@string/dummy_text_long" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="checkbox1,number1,name1" />
-
-    <ImageView
-        android:id="@+id/type1"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/call_type_incoming"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier10"
-        tools:src="@drawable/ic_call_received" />
-
-    <TextView
-        android:id="@+id/date1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/duration1"
-        app:layout_constraintStart_toEndOf="@+id/type1"
-        app:layout_constraintTop_toTopOf="@+id/type1"
-        tools:text="@string/dummy_date_time" />
-
-    <TextView
-        android:id="@+id/duration1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/date1"
-        app:layout_constraintTop_toTopOf="@+id/date1"
-        tools:text="@string/dummy_date_time" />
+    <include
+        android:id="@+id/item1"
+        layout="@layout/item_call" />
 
     <View
         android:id="@+id/divider"
@@ -84,69 +26,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:background="@android:drawable/divider_horizontal_bright"
-        app:layout_constraintTop_toBottomOf="@+id/type1" />
+        android:background="@android:drawable/divider_horizontal_bright" />
 
-    <CheckBox
-        android:id="@+id/checkbox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+    <include
+        android:id="@+id/item2"
+        layout="@layout/item_call" />
 
-    <TextView
-        android:id="@+id/number2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/name2"
-        app:layout_constraintStart_toEndOf="@+id/checkbox2"
-        app:layout_constraintTop_toTopOf="@+id/checkbox2"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/name2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/number2"
-        app:layout_constraintTop_toTopOf="@+id/number2"
-        tools:text="@string/dummy_text_long" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="checkbox2,number2,name2" />
-
-    <ImageView
-        android:id="@+id/type2"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/call_type_incoming"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier20"
-        tools:src="@drawable/ic_call_received" />
-
-    <TextView
-        android:id="@+id/date2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/duration2"
-        app:layout_constraintStart_toEndOf="@+id/type2"
-        app:layout_constraintTop_toTopOf="@+id/type2"
-        tools:text="@string/dummy_date_time" />
-
-    <TextView
-        android:id="@+id/duration2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/date2"
-        app:layout_constraintTop_toTopOf="@+id/date2"
-        tools:text="@string/dummy_date_time" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
