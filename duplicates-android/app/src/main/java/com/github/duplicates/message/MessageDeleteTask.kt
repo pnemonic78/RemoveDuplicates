@@ -18,8 +18,8 @@ package com.github.duplicates.message
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.preference.PreferenceManager
 import android.provider.Telephony
+import androidx.preference.PreferenceManager
 import com.github.duplicates.DuplicateDeleteTask
 import com.github.duplicates.DuplicateDeleteTaskListener
 
