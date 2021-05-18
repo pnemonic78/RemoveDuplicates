@@ -27,6 +27,7 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.ActivityMainBinding
 import com.github.duplicates.alarm.AlarmDeleteTask
 import com.github.duplicates.alarm.AlarmFindTask
 import com.github.duplicates.alarm.AlarmItem
@@ -52,7 +53,6 @@ import com.github.duplicates.message.MessageFindTask
 import com.github.duplicates.message.MessageItem
 import com.github.duplicates.message.MessageViewHolder
 import com.github.util.LogTree
-import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 /**
@@ -60,11 +60,13 @@ import timber.log.Timber
  *
  * @author moshe.w
  */
-class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>> : AppCompatActivity(),
+class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>> :
+    AppCompatActivity(),
     DuplicateFindTaskListener<I, DuplicateViewHolder<I>>,
     DuplicateDeleteTaskListener<I>,
     SearchView.OnQueryTextListener {
 
+    private lateinit var binding: ActivityMainBinding
     private var task: DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>? = null
     private var adapter: DuplicateAdapter<I, DuplicateViewHolder<I>>? = null
     private var spinnerItem: MainSpinnerItem? = null
@@ -74,10 +76,11 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
 
         Timber.plant(LogTree(BuildConfig.DEBUG))
 
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        spinner.adapter = MainSpinnerAdapter()
-        spinnerAction.setOnClickListener { searchClicked() }
+        binding.spinner.adapter = MainSpinnerAdapter()
+        binding.spinnerAction.setOnClickListener { searchClicked() }
         searchStopped(false)
     }
 
@@ -89,18 +92,18 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
     }
 
     private fun searchClicked() {
-        spinnerAction.isEnabled = false
+        binding.spinnerAction.isEnabled = false
         val taskActive = this.task
         if (taskActive != null && !taskActive.isCancelled) {
             taskActive.cancel()
         } else {
-            spinnerItem = spinner.selectedItem as MainSpinnerItem
+            spinnerItem = binding.spinner.selectedItem as MainSpinnerItem
             val task = createFindTask(spinnerItem!!)
             if (task != null) {
                 this.task = task as DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>
                 this.adapter = task.createAdapter()
                 adapter!!.setHasStableIds(true)
-                list.adapter = adapter
+                binding.list.adapter = adapter
                 task.start(this)
             } else {
                 this.task = null
@@ -110,26 +113,30 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
     }
 
     private fun searchStarted() {
-        spinner.isEnabled = false
-        spinnerAction.setImageResource(android.R.drawable.ic_media_pause)
-        spinnerAction.isEnabled = true
-        counter.text = getString(R.string.counter, 0)
-        statusBar.visibility = View.VISIBLE
-        adapter?.clear()
-        listSwitcher.displayedChild = CHILD_LIST
+        binding.apply {
+            spinner.isEnabled = false
+            spinnerAction.setImageResource(android.R.drawable.ic_media_pause)
+            spinnerAction.isEnabled = true
+            counter.text = getString(R.string.counter, 0)
+            statusBar.visibility = View.VISIBLE
+            adapter?.clear()
+            listSwitcher.displayedChild = CHILD_LIST
+        }
         invalidateOptionsMenu()
     }
 
     private fun searchStopped(cancelled: Boolean) {
-        spinner.isEnabled = true
-        spinnerAction.setImageResource(android.R.drawable.ic_menu_search)
-        spinnerAction.isEnabled = true
-        statusBar.visibility = View.GONE
         task = null
-        if (adapter != null && adapter!!.itemCount > 0) {
-            listSwitcher.displayedChild = CHILD_LIST
-        } else {
-            listSwitcher.displayedChild = CHILD_EMPTY
+        binding.apply {
+            spinner.isEnabled = true
+            spinnerAction.setImageResource(android.R.drawable.ic_menu_search)
+            spinnerAction.isEnabled = true
+            statusBar.visibility = View.GONE
+            if (adapter != null && adapter!!.itemCount > 0) {
+                listSwitcher.displayedChild = CHILD_LIST
+            } else {
+                listSwitcher.displayedChild = CHILD_EMPTY
+            }
         }
         invalidateOptionsMenu()
     }
@@ -140,12 +147,30 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         val listener: DuplicateFindTaskListener<I, DuplicateViewHolder<I>> = this
 
         return when (item) {
-            MainSpinnerItem.ALARMS -> AlarmFindTask(context, listener as DuplicateFindTaskListener<AlarmItem, AlarmViewHolder>)
-            MainSpinnerItem.BOOKMARKS -> BookmarkFindTask(context, listener as DuplicateFindTaskListener<BookmarkItem, BookmarkViewHolder>)
-            MainSpinnerItem.CALENDAR -> CalendarFindTask(context, listener as DuplicateFindTaskListener<CalendarItem, CalendarViewHolder>)
-            MainSpinnerItem.CALL_LOG -> CallLogFindTask(context, listener as DuplicateFindTaskListener<CallLogItem, CallLogViewHolder>)
-            MainSpinnerItem.CONTACTS -> ContactFindTask(context, listener as DuplicateFindTaskListener<ContactItem, ContactViewHolder>)
-            MainSpinnerItem.MESSAGES -> MessageFindTask(context, listener as DuplicateFindTaskListener<MessageItem, MessageViewHolder>)
+            MainSpinnerItem.ALARMS -> AlarmFindTask(
+                context,
+                listener as DuplicateFindTaskListener<AlarmItem, AlarmViewHolder>
+            )
+            MainSpinnerItem.BOOKMARKS -> BookmarkFindTask(
+                context,
+                listener as DuplicateFindTaskListener<BookmarkItem, BookmarkViewHolder>
+            )
+            MainSpinnerItem.CALENDAR -> CalendarFindTask(
+                context,
+                listener as DuplicateFindTaskListener<CalendarItem, CalendarViewHolder>
+            )
+            MainSpinnerItem.CALL_LOG -> CallLogFindTask(
+                context,
+                listener as DuplicateFindTaskListener<CallLogItem, CallLogViewHolder>
+            )
+            MainSpinnerItem.CONTACTS -> ContactFindTask(
+                context,
+                listener as DuplicateFindTaskListener<ContactItem, ContactViewHolder>
+            )
+            MainSpinnerItem.MESSAGES -> MessageFindTask(
+                context,
+                listener as DuplicateFindTaskListener<MessageItem, MessageViewHolder>
+            )
         } as DuplicateFindTask<I, DuplicateViewHolder<I>, DuplicateFindTaskListener<I, DuplicateViewHolder<I>>>
     }
 
@@ -155,16 +180,36 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         val listener: DuplicateDeleteTaskListener<I> = this
 
         return when (item) {
-            MainSpinnerItem.ALARMS -> AlarmDeleteTask(context, listener as DuplicateDeleteTaskListener<AlarmItem>)
-            MainSpinnerItem.BOOKMARKS -> BookmarkDeleteTask(context, listener as DuplicateDeleteTaskListener<BookmarkItem>)
-            MainSpinnerItem.CALENDAR -> CalendarDeleteTask(context, listener as DuplicateDeleteTaskListener<CalendarItem>)
-            MainSpinnerItem.CALL_LOG -> CallLogDeleteTask(context, listener as DuplicateDeleteTaskListener<CallLogItem>)
-            MainSpinnerItem.CONTACTS -> ContactDeleteTask(context, listener as DuplicateDeleteTaskListener<ContactItem>)
-            MainSpinnerItem.MESSAGES -> MessageDeleteTask(context, listener as DuplicateDeleteTaskListener<MessageItem>)
+            MainSpinnerItem.ALARMS -> AlarmDeleteTask(
+                context,
+                listener as DuplicateDeleteTaskListener<AlarmItem>
+            )
+            MainSpinnerItem.BOOKMARKS -> BookmarkDeleteTask(
+                context,
+                listener as DuplicateDeleteTaskListener<BookmarkItem>
+            )
+            MainSpinnerItem.CALENDAR -> CalendarDeleteTask(
+                context,
+                listener as DuplicateDeleteTaskListener<CalendarItem>
+            )
+            MainSpinnerItem.CALL_LOG -> CallLogDeleteTask(
+                context,
+                listener as DuplicateDeleteTaskListener<CallLogItem>
+            )
+            MainSpinnerItem.CONTACTS -> ContactDeleteTask(
+                context,
+                listener as DuplicateDeleteTaskListener<ContactItem>
+            )
+            MainSpinnerItem.MESSAGES -> MessageDeleteTask(
+                context,
+                listener as DuplicateDeleteTaskListener<MessageItem>
+            )
         } as DuplicateDeleteTask<I, DuplicateDeleteTaskListener<I>>
     }
 
-    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskStarted(task: T) {
+    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskStarted(
+        task: T
+    ) {
         if (task is DuplicateFindTask<*, *, *>) {
             searchStarted()
         } else if (task is DuplicateDeleteTask<*, *>) {
@@ -172,7 +217,9 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         }
     }
 
-    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskFinished(task: T) {
+    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskFinished(
+        task: T
+    ) {
         if (task is DuplicateFindTask<*, *, *>) {
             searchStopped(false)
         } else if (task is DuplicateDeleteTask<*, *>) {
@@ -180,7 +227,9 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         }
     }
 
-    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskCancelled(task: T) {
+    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskCancelled(
+        task: T
+    ) {
         if (task is DuplicateFindTask<*, *, *>) {
             searchStopped(true)
         } else if (task is DuplicateDeleteTask<*, *>) {
@@ -188,32 +237,51 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         }
     }
 
-    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskProgress(task: T, count: Int) {
+    override fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskProgress(
+        task: T,
+        count: Int
+    ) {
         if (task === this.task) {
-            counter.text = getString(R.string.counter, count)
+            binding.counter.text = getString(R.string.counter, count)
         }
     }
 
-    override fun <L : DuplicateFindTaskListener<I, DuplicateViewHolder<I>>, T : DuplicateFindTask<I, DuplicateViewHolder<I>, L>> onDuplicateTaskMatch(task: T, item1: I, item2: I, match: Float, difference: BooleanArray) {
+    override fun <L : DuplicateFindTaskListener<I, DuplicateViewHolder<I>>, T : DuplicateFindTask<I, DuplicateViewHolder<I>, L>> onDuplicateTaskMatch(
+        task: T,
+        item1: I,
+        item2: I,
+        match: Float,
+        difference: BooleanArray
+    ) {
         if (task === this.task) {
             adapter?.add(item1, item2, match, difference)
         }
     }
 
-    override fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskItemDeleted(task: T, item: I) {
+    override fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskItemDeleted(
+        task: T,
+        item: I
+    ) {
         if (task === this.task) {
             adapter?.removeItem(item)
         }
     }
 
-    override fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskPairDeleted(task: T, pair: DuplicateItemPair<I>) {
+    override fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskPairDeleted(
+        task: T,
+        pair: DuplicateItemPair<I>
+    ) {
         if (task === this.task) {
             adapter?.remove(pair)
         }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val task = this.task
         task?.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -280,18 +348,22 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
     }
 
     private fun deleteStarted() {
-        spinnerAction.setImageResource(android.R.drawable.ic_media_pause)
-        spinnerAction.isEnabled = true
-        counter.text = getString(R.string.counter, 0)
-        statusBar.visibility = View.VISIBLE
-        listSwitcher.displayedChild = CHILD_LIST
+        binding.apply {
+            spinnerAction.setImageResource(android.R.drawable.ic_media_pause)
+            spinnerAction.isEnabled = true
+            counter.text = getString(R.string.counter, 0)
+            statusBar.visibility = View.VISIBLE
+            listSwitcher.displayedChild = CHILD_LIST
+        }
     }
 
     private fun deleteStopped(cancelled: Boolean) {
-        spinnerAction.setImageResource(android.R.drawable.ic_menu_search)
-        spinnerAction.isEnabled = true
-        statusBar.visibility = View.GONE
         task = null
+        binding.apply {
+            spinnerAction.setImageResource(android.R.drawable.ic_menu_search)
+            spinnerAction.isEnabled = true
+            statusBar.visibility = View.GONE
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

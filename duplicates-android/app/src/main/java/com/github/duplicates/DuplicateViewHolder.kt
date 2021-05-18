@@ -29,11 +29,16 @@ import java.text.NumberFormat
  *
  * @author moshe.w
  */
-abstract class DuplicateViewHolder<T : DuplicateItem>(itemView: View, protected val onCheckedChangeListener: OnItemCheckedChangeListener<T>? = null) : RecyclerView.ViewHolder(itemView) {
+abstract class DuplicateViewHolder<T : DuplicateItem>(
+    itemView: View,
+    protected val onCheckedChangeListener: OnItemCheckedChangeListener<T>? = null
+) : RecyclerView.ViewHolder(itemView) {
 
     private val context: Context
+
     @ColorInt
     protected val colorDifferent: Int
+
     @ColorInt
     protected val colorError: Int
     protected val percentFormatter = NumberFormat.getPercentInstance()

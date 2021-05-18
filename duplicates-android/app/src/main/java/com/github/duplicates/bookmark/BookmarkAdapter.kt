@@ -15,8 +15,10 @@
  */
 package com.github.duplicates.bookmark
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameBookmarkBinding
 import com.github.duplicates.DuplicateAdapter
 
 /**
@@ -27,7 +29,8 @@ import com.github.duplicates.DuplicateAdapter
 class BookmarkAdapter : DuplicateAdapter<BookmarkItem, BookmarkViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkViewHolder {
-        val itemView = createViewHolder(R.layout.same_bookmark, parent, viewType)
-        return BookmarkViewHolder(itemView, this)
+        val context: Context = parent.context
+        val binding = SameBookmarkBinding.inflate(LayoutInflater.from(context), parent, false)
+        return BookmarkViewHolder(binding, this)
     }
 }

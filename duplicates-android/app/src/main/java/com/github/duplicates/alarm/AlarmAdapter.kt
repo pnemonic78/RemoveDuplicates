@@ -15,8 +15,10 @@
  */
 package com.github.duplicates.alarm
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameAlarmBinding
 import com.github.duplicates.DuplicateAdapter
 
 /**
@@ -27,7 +29,8 @@ import com.github.duplicates.DuplicateAdapter
 class AlarmAdapter : DuplicateAdapter<AlarmItem, AlarmViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
-        val itemView = createViewHolder(R.layout.same_alarm, parent, viewType)
-        return AlarmViewHolder(itemView, this)
+        val context: Context = parent.context
+        val binding = SameAlarmBinding.inflate(LayoutInflater.from(context), parent, false)
+        return AlarmViewHolder(binding, this)
     }
 }

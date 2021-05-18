@@ -17,11 +17,11 @@ package com.github.duplicates.call
 
 import android.content.Context
 import android.text.format.DateUtils
-import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameCallBinding
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
 import com.github.duplicates.SHOW_DATE_TIME
@@ -37,30 +37,32 @@ import com.github.duplicates.call.CallLogItem.Companion.MISSED_TYPE
 import com.github.duplicates.call.CallLogItem.Companion.OUTGOING_TYPE
 import com.github.duplicates.call.CallLogItem.Companion.REJECTED_TYPE
 import com.github.duplicates.call.CallLogItem.Companion.VOICEMAIL_TYPE
-import kotlinx.android.synthetic.main.same_call.view.*
 
 /**
  * View holder of a duplicate call.
  *
  * @author moshe.w
  */
-class CallLogViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<CallLogItem>? = null) : DuplicateViewHolder<CallLogItem>(itemView, onCheckedChangeListener) {
+class CallLogViewHolder(
+    binding: SameCallBinding,
+    onCheckedChangeListener: OnItemCheckedChangeListener<CallLogItem>? = null
+) : DuplicateViewHolder<CallLogItem>(binding.root, onCheckedChangeListener) {
 
-    private val match = itemView.match
+    private val match = binding.match
 
-    private val checkbox1 = itemView.checkbox1
-    private val date1 = itemView.date1
-    private val duration1 = itemView.duration1
-    private val number1 = itemView.number1
-    private val type1 = itemView.type1
-    private val name1 = itemView.name1
+    private val checkbox1 = binding.checkbox1
+    private val date1 = binding.date1
+    private val duration1 = binding.duration1
+    private val number1 = binding.number1
+    private val type1 = binding.type1
+    private val name1 = binding.name1
 
-    private val checkbox2 = itemView.checkbox2
-    private val date2 = itemView.date2
-    private val duration2 = itemView.duration2
-    private val number2 = itemView.number2
-    private val type2 = itemView.type2
-    private val name2 = itemView.name1
+    private val checkbox2 = binding.checkbox2
+    private val date2 = binding.date2
+    private val duration2 = binding.duration2
+    private val number2 = binding.number2
+    private val type2 = binding.type2
+    private val name2 = binding.name1
 
     init {
         checkbox1.setOnClickListener {
@@ -72,7 +74,8 @@ class CallLogViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<CallLogItem>) {
-        match.text = context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
+        match.text =
+            context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
     }
 
     override fun bindItem1(context: Context, item: CallLogItem) {
