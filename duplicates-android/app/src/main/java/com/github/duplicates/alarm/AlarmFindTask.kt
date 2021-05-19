@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateFindTaskListener
  *
  * @author moshe.w
  */
-class AlarmFindTask<L : DuplicateFindTaskListener<AlarmItem, AlarmViewHolder>>(context: Context, listener: L) : DuplicateFindTask<AlarmItem, AlarmViewHolder, L>(context, listener) {
+class AlarmFindTask<L : DuplicateFindTaskListener<AlarmItem, AlarmViewHolder>>(
+    context: Context,
+    listener: L
+) : DuplicateFindTask<AlarmItem, AlarmViewHolder, L>(context, listener) {
 
     override fun createProvider(context: Context): AlarmProvider {
         return AlarmProvider(context)

@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateDeleteTaskListener
  *
  * @author moshe.w
  */
-class BookmarkDeleteTask<L : DuplicateDeleteTaskListener<BookmarkItem>>(context: Context, listener: L) : DuplicateDeleteTask<BookmarkItem, L>(context, listener) {
+class BookmarkDeleteTask<L : DuplicateDeleteTaskListener<BookmarkItem>>(
+    context: Context,
+    listener: L
+) : DuplicateDeleteTask<BookmarkItem, L>(context, listener) {
 
     override fun createProvider(context: Context): BookmarkProvider {
         return BookmarkProvider(context)

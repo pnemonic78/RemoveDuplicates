@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateDeleteTaskListener
  *
  * @author moshe.w
  */
-class CalendarDeleteTask<L : DuplicateDeleteTaskListener<CalendarItem>>(context: Context, listener: L) : DuplicateDeleteTask<CalendarItem, L>(context, listener) {
+class CalendarDeleteTask<L : DuplicateDeleteTaskListener<CalendarItem>>(
+    context: Context,
+    listener: L
+) : DuplicateDeleteTask<CalendarItem, L>(context, listener) {
 
     override fun createProvider(context: Context): CalendarProvider {
         return CalendarProvider(context)

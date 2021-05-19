@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateFindTaskListener
  *
  * @author moshe.w
  */
-class BookmarkFindTask<L : DuplicateFindTaskListener<BookmarkItem, BookmarkViewHolder>>(context: Context, listener: L) : DuplicateFindTask<BookmarkItem, BookmarkViewHolder, L>(context, listener) {
+class BookmarkFindTask<L : DuplicateFindTaskListener<BookmarkItem, BookmarkViewHolder>>(
+    context: Context,
+    listener: L
+) : DuplicateFindTask<BookmarkItem, BookmarkViewHolder, L>(context, listener) {
 
     override fun createProvider(context: Context): BookmarkProvider {
         return BookmarkProvider(context)

@@ -25,7 +25,10 @@ import java.util.concurrent.CancellationException
  *
  * @author moshe.w
  */
-abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>, L : DuplicateFindTaskListener<I, VH>>(context: Context, listener: L) : DuplicateTask<I, Any, Any, List<I>, L>(context, listener) {
+abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>, L : DuplicateFindTaskListener<I, VH>>(
+    context: Context,
+    listener: L
+) : DuplicateTask<I, Any, Any, List<I>, L>(context, listener) {
 
     private var comparator: DuplicateComparator<I>? = null
     private val items = ArrayList<I>()
@@ -108,7 +111,11 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         // Nothing to do.
     }
 
-    override fun onPairDeleted(provider: DuplicateProvider<I>, count: Int, pair: DuplicateItemPair<I>) {
+    override fun onPairDeleted(
+        provider: DuplicateProvider<I>,
+        count: Int,
+        pair: DuplicateItemPair<I>
+    ) {
         // Nothing to do.
     }
 

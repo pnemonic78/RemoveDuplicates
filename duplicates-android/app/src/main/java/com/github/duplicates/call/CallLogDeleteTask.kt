@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateDeleteTaskListener
  *
  * @author moshe.w
  */
-class CallLogDeleteTask<L : DuplicateDeleteTaskListener<CallLogItem>>(context: Context, listener: L) : DuplicateDeleteTask<CallLogItem, L>(context, listener) {
+class CallLogDeleteTask<L : DuplicateDeleteTaskListener<CallLogItem>>(
+    context: Context,
+    listener: L
+) : DuplicateDeleteTask<CallLogItem, L>(context, listener) {
 
     override fun createProvider(context: Context): CallLogProvider {
         return CallLogProvider(context)

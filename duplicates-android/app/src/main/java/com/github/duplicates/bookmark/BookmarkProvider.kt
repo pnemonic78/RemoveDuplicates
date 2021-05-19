@@ -19,11 +19,9 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-
+import android.provider.BaseColumns._ID
 import com.github.duplicates.DuplicateProvider
 import com.github.provider.Browser
-
-import android.provider.BaseColumns._ID
 import com.github.provider.Browser.BookmarkColumns.BOOKMARK
 import com.github.provider.Browser.BookmarkColumns.CREATED
 import com.github.provider.Browser.BookmarkColumns.DATE
@@ -79,8 +77,10 @@ class BookmarkProvider(context: Context) : DuplicateProvider<BookmarkItem>(conte
 
     companion object {
 
-        private val PERMISSIONS_READ = arrayOf("com.android.browser.permission.READ_HISTORY_BOOKMARKS")
-        private val PERMISSIONS_WRITE = arrayOf("com.android.browser.permission.WRITE_HISTORY_BOOKMARKS")
+        private val PERMISSIONS_READ =
+            arrayOf("com.android.browser.permission.READ_HISTORY_BOOKMARKS")
+        private val PERMISSIONS_WRITE =
+            arrayOf("com.android.browser.permission.WRITE_HISTORY_BOOKMARKS")
 
         private val PROJECTION = arrayOf(_ID, CREATED, DATE, FAVICON, TITLE, URL, VISITS)
 

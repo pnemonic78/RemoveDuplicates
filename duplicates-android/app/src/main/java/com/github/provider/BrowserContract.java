@@ -104,31 +104,6 @@ public class BrowserContract {
     }
 
     /**
-     * Convenience definitions for use in implementing chrome bookmarks sync in the Bookmarks table.
-     *
-     * @hide
-     */
-    public static final class ChromeSyncColumns {
-        private ChromeSyncColumns() {
-        }
-
-        /**
-         * The server unique ID for an item
-         */
-        public static final String SERVER_UNIQUE = BaseSyncColumns.SYNC3;
-
-        public static final String FOLDER_NAME_ROOT = "google_chrome";
-        public static final String FOLDER_NAME_BOOKMARKS = "google_chrome_bookmarks";
-        public static final String FOLDER_NAME_BOOKMARKS_BAR = "bookmark_bar";
-        public static final String FOLDER_NAME_OTHER_BOOKMARKS = "other_bookmarks";
-
-        /**
-         * The client unique ID for an item
-         */
-        public static final String CLIENT_UNIQUE = BaseSyncColumns.SYNC4;
-    }
-
-    /**
      * Columns that appear when each row of a table belongs to a specific
      * account, including sync information that an account may need.
      *
@@ -266,45 +241,56 @@ public class BrowserContract {
     }
 
     /**
+     * Convenience definitions for use in implementing chrome bookmarks sync in the Bookmarks table.
+     *
+     * @hide
+     */
+    public static final class ChromeSyncColumns {
+        /**
+         * The server unique ID for an item
+         */
+        public static final String SERVER_UNIQUE = BaseSyncColumns.SYNC3;
+        public static final String FOLDER_NAME_ROOT = "google_chrome";
+        public static final String FOLDER_NAME_BOOKMARKS = "google_chrome_bookmarks";
+        public static final String FOLDER_NAME_BOOKMARKS_BAR = "bookmark_bar";
+        public static final String FOLDER_NAME_OTHER_BOOKMARKS = "other_bookmarks";
+        /**
+         * The client unique ID for an item
+         */
+        public static final String CLIENT_UNIQUE = BaseSyncColumns.SYNC4;
+
+        private ChromeSyncColumns() {
+        }
+    }
+
+    /**
      * The bookmarks table, which holds the user's browser bookmarks.
      */
     public static final class Bookmarks implements CommonColumns, ImageColumns, SyncColumns {
         /**
-         * This utility class cannot be instantiated.
-         */
-        private Bookmarks() {
-        }
-
-        /**
          * The content:// style URI for this table
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "bookmarks");
-
         /**
          * Used in {@link Bookmarks#TYPE} column and indicats the row is a bookmark.
          */
         public static final int BOOKMARK_TYPE_BOOKMARK = 1;
-
         /**
          * Used in {@link Bookmarks#TYPE} column and indicats the row is a folder.
          */
         public static final int BOOKMARK_TYPE_FOLDER = 2;
-
         /**
          * Used in {@link Bookmarks#TYPE} column and indicats the row is the bookmark bar folder.
          */
         public static final int BOOKMARK_TYPE_BOOKMARK_BAR_FOLDER = 3;
-
         /**
          * Used in {@link Bookmarks#TYPE} column and indicats the row is other folder and
          */
         public static final int BOOKMARK_TYPE_OTHER_FOLDER = 4;
-
         /**
          * Used in {@link Bookmarks#TYPE} column and indicats the row is other folder, .
          */
         public static final int BOOKMARK_TYPE_MOBILE_FOLDER = 5;
-
         /**
          * The type of the item.
          * <P>Type: INTEGER</P>
@@ -322,49 +308,33 @@ public class BrowserContract {
          * can not be updated or deleted.</p>
          */
         public static final String TYPE = "type";
-
         /**
          * The content:// style URI for the default folder
          *
          * @hide
          */
         public static final Uri CONTENT_URI_DEFAULT_FOLDER =
-                Uri.withAppendedPath(CONTENT_URI, "folder");
-
+            Uri.withAppendedPath(CONTENT_URI, "folder");
         /**
          * Query parameter used to specify an account name
          *
          * @hide
          */
         public static final String PARAM_ACCOUNT_NAME = "acct_name";
-
         /**
          * Query parameter used to specify an account type
          *
          * @hide
          */
         public static final String PARAM_ACCOUNT_TYPE = "acct_type";
-
-        /**
-         * Builds a URI that points to a specific folder.
-         *
-         * @param folderId the ID of the folder to point to
-         * @hide
-         */
-        public static final Uri buildFolderUri(long folderId) {
-            return ContentUris.withAppendedId(CONTENT_URI_DEFAULT_FOLDER, folderId);
-        }
-
         /**
          * The MIME type of {@link #CONTENT_URI} providing a directory of bookmarks.
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/bookmark";
-
         /**
          * The MIME type of a {@link #CONTENT_URI} of a single bookmark.
          */
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/bookmark";
-
         /**
          * Query parameter to use if you want to see deleted bookmarks that are still
          * around on the device and haven't been synced yet.
@@ -373,7 +343,6 @@ public class BrowserContract {
          * @see #IS_DELETED
          */
         public static final String QUERY_PARAMETER_SHOW_DELETED = "show_deleted";
-
         /**
          * Flag indicating if an item is a folder or bookmark. Non-zero values indicate
          * a folder and zero indicates a bookmark.
@@ -382,13 +351,11 @@ public class BrowserContract {
          * @hide
          */
         public static final String IS_FOLDER = "folder";
-
         /**
          * The ID of the parent folder. ID 0 is the root folder.
          * <P>Type: INTEGER (reference to item in the same table)</P>
          */
         public static final String PARENT = "parent";
-
         /**
          * The source ID for an item's parent. Read-only.
          *
@@ -396,7 +363,6 @@ public class BrowserContract {
          * @see #PARENT
          */
         public static final String PARENT_SOURCE_ID = "parent_source";
-
         /**
          * The position of the bookmark in relation to it's siblings that share the same
          * {@link #PARENT}. May be negative.
@@ -405,7 +371,6 @@ public class BrowserContract {
          * @hide
          */
         public static final String POSITION = "position";
-
         /**
          * The item that the bookmark should be inserted after.
          * May be negative.
@@ -414,7 +379,6 @@ public class BrowserContract {
          * @hide
          */
         public static final String INSERT_AFTER = "insert_after";
-
         /**
          * The source ID for the item that the bookmark should be inserted after. Read-only.
          * May be negative.
@@ -424,7 +388,6 @@ public class BrowserContract {
          * @see #INSERT_AFTER
          */
         public static final String INSERT_AFTER_SOURCE_ID = "insert_after_source";
-
         /**
          * A flag to indicate if an item has been deleted. Queries will not return deleted
          * entries unless you add the {@link #QUERY_PARAMETER_SHOW_DELETED} query paramter
@@ -435,6 +398,22 @@ public class BrowserContract {
          * @see #QUERY_PARAMETER_SHOW_DELETED
          */
         public static final String IS_DELETED = "deleted";
+
+        /**
+         * This utility class cannot be instantiated.
+         */
+        private Bookmarks() {
+        }
+
+        /**
+         * Builds a URI that points to a specific folder.
+         *
+         * @param folderId the ID of the folder to point to
+         * @hide
+         */
+        public static final Uri buildFolderUri(long folderId) {
+            return ContentUris.withAppendedId(CONTENT_URI_DEFAULT_FOLDER, folderId);
+        }
     }
 
     /**
@@ -475,25 +454,23 @@ public class BrowserContract {
      */
     public static final class History implements CommonColumns, HistoryColumns, ImageColumns {
         /**
-         * This utility class cannot be instantiated.
-         */
-        private History() {
-        }
-
-        /**
          * The content:// style URI for this table
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "history");
-
         /**
          * The MIME type of {@link #CONTENT_URI} providing a directory of browser history items.
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/browser-history";
-
         /**
          * The MIME type of a {@link #CONTENT_URI} of a single browser history item.
          */
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/browser-history";
+
+        /**
+         * This utility class cannot be instantiated.
+         */
+        private History() {
+        }
     }
 
     /**
@@ -502,40 +479,35 @@ public class BrowserContract {
      * @hide
      */
     public static final class Searches {
-        private Searches() {
-        }
-
         /**
          * The content:// style URI for this table
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "searches");
-
         /**
          * The MIME type of {@link #CONTENT_URI} providing a directory of browser search items.
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/searches";
-
         /**
          * The MIME type of a {@link #CONTENT_URI} of a single browser search item.
          */
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/searches";
-
         /**
          * The unique ID for a row.
          * <P>Type: INTEGER (long)</P>
          */
         public static final String _ID = "_id";
-
         /**
          * The user entered search term.
          */
         public static final String SEARCH = "search";
-
         /**
          * The date the search was performed, in milliseconds since the epoch.
          * <p>Type: NUMBER (date in milliseconds since January 1, 1970)</p>
          */
         public static final String DATE = "date";
+
+        private Searches() {
+        }
     }
 
     /**
@@ -545,24 +517,23 @@ public class BrowserContract {
      * @see SyncStateContract
      */
     public static final class SyncState implements SyncStateContract.Columns {
-        /**
-         * This utility class cannot be instantiated
-         */
-        private SyncState() {
-        }
-
         public static final String CONTENT_DIRECTORY = SyncStateContract.Constants.CONTENT_DIRECTORY;
-
         /**
          * The content:// style URI for this table
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, CONTENT_DIRECTORY);
 
         /**
+         * This utility class cannot be instantiated
+         */
+        private SyncState() {
+        }
+
+        /**
          * @see SyncStateContract.Helpers#get
          */
         public static byte[] get(ContentProviderClient provider, Account account)
-                throws RemoteException {
+            throws RemoteException {
             return SyncStateContract.Helpers.get(provider, CONTENT_URI, account);
         }
 
@@ -570,7 +541,7 @@ public class BrowserContract {
          * @see SyncStateContract.Helpers#get
          */
         public static Pair<Uri, byte[]> getWithUri(ContentProviderClient provider, Account account)
-                throws RemoteException {
+            throws RemoteException {
             return SyncStateContract.Helpers.getWithUri(provider, CONTENT_URI, account);
         }
 
@@ -578,7 +549,7 @@ public class BrowserContract {
          * @see SyncStateContract.Helpers#set
          */
         public static void set(ContentProviderClient provider, Account account, byte[] data)
-                throws RemoteException {
+            throws RemoteException {
             SyncStateContract.Helpers.set(provider, CONTENT_URI, account, data);
         }
 
@@ -606,41 +577,29 @@ public class BrowserContract {
      */
     public static final class Images implements ImageColumns {
         /**
-         * This utility class cannot be instantiated
-         */
-        private Images() {
-        }
-
-        /**
          * The content:// style URI for this table
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "images");
-
         /**
          * The MIME type of {@link #CONTENT_URI} providing a directory of images.
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/images";
-
         /**
          * The MIME type of a {@link #CONTENT_URI} of a single image.
          */
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/images";
-
         /**
          * Used in {@link Images#TYPE} column and indicats the row is a favicon.
          */
         public static final int IMAGE_TYPE_FAVICON = 1;
-
         /**
          * Used in {@link Images#TYPE} column and indicats the row is a precomposed touch icon.
          */
         public static final int IMAGE_TYPE_PRECOMPOSED_TOUCH_ICON = 2;
-
         /**
          * Used in {@link Images#TYPE} column and indicats the row is a touch icon.
          */
         public static final int IMAGE_TYPE_TOUCH_ICON = 4;
-
         /**
          * The type of item in the table.
          * <P>Type: INTEGER</P>
@@ -654,13 +613,11 @@ public class BrowserContract {
          * </p>
          */
         public static final String TYPE = "type";
-
         /**
          * The image data.
          * <p>Type: BLOB (image)</p>
          */
         public static final String DATA = "data";
-
         /**
          * The URL the images came from.
          * <P>Type: TEXT (URL)</P>
@@ -668,6 +625,12 @@ public class BrowserContract {
          * @hide
          */
         public static final String URL = "url_key";
+
+        /**
+         * This utility class cannot be instantiated
+         */
+        private Images() {
+        }
     }
 
     /**
@@ -681,25 +644,23 @@ public class BrowserContract {
      */
     public static final class ImageMappings implements ImageMappingColumns {
         /**
-         * This utility class cannot be instantiated
-         */
-        private ImageMappings() {
-        }
-
-        /**
          * The content:// style URI for this table
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "image_mappings");
-
         /**
          * The MIME type of {@link #CONTENT_URI} providing a directory of image mappings.
          */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/image_mappings";
-
         /**
          * The MIME type of a {@link #CONTENT_URI} of a single image mapping.
          */
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/image_mappings";
+
+        /**
+         * This utility class cannot be instantiated
+         */
+        private ImageMappings() {
+        }
     }
 
     /**
@@ -710,22 +671,21 @@ public class BrowserContract {
      */
     public static final class Combined implements CommonColumns, HistoryColumns, ImageColumns {
         /**
-         * This utility class cannot be instantiated
-         */
-        private Combined() {
-        }
-
-        /**
          * The content:// style URI for this table
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "combined");
-
         /**
          * Flag indicating that an item is a bookmark. A value of 1 indicates a bookmark, a value
          * of 0 indicates a history item.
          * <p>Type: INTEGER (boolean)</p>
          */
         public static final String IS_BOOKMARK = "bookmark";
+
+        /**
+         * This utility class cannot be instantiated
+         */
+        private Combined() {
+        }
     }
 
     /**
@@ -735,30 +695,27 @@ public class BrowserContract {
      */
     public static final class Settings {
         /**
-         * This utility class cannot be instantiated
-         */
-        private Settings() {
-        }
-
-        /**
          * The content:// style URI for this table
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "settings");
-
         /**
          * Key for a setting value.
          */
         public static final String KEY = "key";
-
         /**
          * Value for a setting.
          */
         public static final String VALUE = "value";
-
         /**
          * If set to non-0 the user has opted into bookmark sync.
          */
         public static final String KEY_SYNC_ENABLED = "sync_enabled";
+
+        /**
+         * This utility class cannot be instantiated
+         */
+        private Settings() {
+        }
 
         /**
          * Returns true if bookmark sync is enabled
@@ -767,7 +724,7 @@ public class BrowserContract {
             Cursor cursor = null;
             try {
                 cursor = context.getContentResolver().query(CONTENT_URI, new String[]{VALUE},
-                        KEY + "=?", new String[]{KEY_SYNC_ENABLED}, null);
+                    KEY + "=?", new String[]{KEY_SYNC_ENABLED}, null);
                 if (cursor == null || !cursor.moveToFirst()) {
                     return false;
                 }

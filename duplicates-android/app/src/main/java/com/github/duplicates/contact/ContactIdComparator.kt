@@ -16,8 +16,7 @@
 package com.github.duplicates.contact
 
 import com.github.duplicates.DuplicateComparator
-
-import java.util.Comparator
+import java.util.*
 
 /**
  * Compare contacts by ID.

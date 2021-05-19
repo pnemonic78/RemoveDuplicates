@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateFindTaskListener
  *
  * @author moshe.w
  */
-class CalendarFindTask<L : DuplicateFindTaskListener<CalendarItem, CalendarViewHolder>>(context: Context, listener: L) : DuplicateFindTask<CalendarItem, CalendarViewHolder, L>(context, listener) {
+class CalendarFindTask<L : DuplicateFindTaskListener<CalendarItem, CalendarViewHolder>>(
+    context: Context,
+    listener: L
+) : DuplicateFindTask<CalendarItem, CalendarViewHolder, L>(context, listener) {
 
     override fun createProvider(context: Context): CalendarProvider {
         return CalendarProvider(context)

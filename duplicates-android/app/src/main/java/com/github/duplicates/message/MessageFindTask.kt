@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateFindTaskListener
  *
  * @author moshe.w
  */
-class MessageFindTask<L : DuplicateFindTaskListener<MessageItem, MessageViewHolder>>(context: Context, listener: L) : DuplicateFindTask<MessageItem, MessageViewHolder, L>(context, listener) {
+class MessageFindTask<L : DuplicateFindTaskListener<MessageItem, MessageViewHolder>>(
+    context: Context,
+    listener: L
+) : DuplicateFindTask<MessageItem, MessageViewHolder, L>(context, listener) {
 
     override fun createProvider(context: Context): MessageProvider {
         return MessageProvider(context)

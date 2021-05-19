@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateFindTaskListener
  *
  * @author moshe.w
  */
-class CallLogFindTask<L : DuplicateFindTaskListener<CallLogItem, CallLogViewHolder>>(context: Context, listener: L) : DuplicateFindTask<CallLogItem, CallLogViewHolder, L>(context, listener) {
+class CallLogFindTask<L : DuplicateFindTaskListener<CallLogItem, CallLogViewHolder>>(
+    context: Context,
+    listener: L
+) : DuplicateFindTask<CallLogItem, CallLogViewHolder, L>(context, listener) {
 
     override fun createProvider(context: Context): CallLogProvider {
         return CallLogProvider(context)

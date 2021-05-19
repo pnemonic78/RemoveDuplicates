@@ -18,11 +18,9 @@ package com.github.duplicates.alarm
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-
+import android.provider.BaseColumns._ID
 import com.github.duplicates.DaysOfWeek
 import com.github.duplicates.DuplicateProvider
-
-import android.provider.BaseColumns._ID
 
 /**
  * Provide duplicate messages for Samsung devices.
@@ -94,10 +92,34 @@ class SamsungAlarmProvider(context: Context) : DuplicateProvider<AlarmItem>(cont
 
         const val PACKAGE = "com.sec.android.app.clockpackage"
 
-        private val PERMISSIONS_READ = arrayOf("com.sec.android.app.clockpackage.permission.READ_ALARM")
-        private val PERMISSIONS_WRITE = arrayOf("com.sec.android.app.clockpackage.permission.WRITE_ALARM")
+        private val PERMISSIONS_READ =
+            arrayOf("com.sec.android.app.clockpackage.permission.READ_ALARM")
+        private val PERMISSIONS_WRITE =
+            arrayOf("com.sec.android.app.clockpackage.permission.WRITE_ALARM")
 
-        private val PROJECTION = arrayOf(_ID, "active", "createtime", "alerttime", "alarmtime", "repeattype", "notitype", "snzactive", "snzduration", "snzrepeat", "snzcount", "dailybrief", "sbdactive", "sbdduration", "sbdtone", "alarmsound", "alarmtone", "volume", "sbduri", "alarmuri", "name")
+        private val PROJECTION = arrayOf(
+            _ID,
+            "active",
+            "createtime",
+            "alerttime",
+            "alarmtime",
+            "repeattype",
+            "notitype",
+            "snzactive",
+            "snzduration",
+            "snzrepeat",
+            "snzcount",
+            "dailybrief",
+            "sbdactive",
+            "sbdduration",
+            "sbdtone",
+            "alarmsound",
+            "alarmtone",
+            "volume",
+            "sbduri",
+            "alarmuri",
+            "name"
+        )
 
         private const val INDEX_ID = 0
         private const val INDEX_ACTIVE = 1

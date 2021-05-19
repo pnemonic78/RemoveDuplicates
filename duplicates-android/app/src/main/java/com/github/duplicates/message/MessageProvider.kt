@@ -21,7 +21,20 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns._ID
 import android.provider.Telephony
-import android.provider.Telephony.TextBasedSmsColumns.*
+import android.provider.Telephony.TextBasedSmsColumns.ADDRESS
+import android.provider.Telephony.TextBasedSmsColumns.BODY
+import android.provider.Telephony.TextBasedSmsColumns.DATE
+import android.provider.Telephony.TextBasedSmsColumns.DATE_SENT
+import android.provider.Telephony.TextBasedSmsColumns.ERROR_CODE
+import android.provider.Telephony.TextBasedSmsColumns.LOCKED
+import android.provider.Telephony.TextBasedSmsColumns.PERSON
+import android.provider.Telephony.TextBasedSmsColumns.PROTOCOL
+import android.provider.Telephony.TextBasedSmsColumns.READ
+import android.provider.Telephony.TextBasedSmsColumns.SEEN
+import android.provider.Telephony.TextBasedSmsColumns.STATUS
+import android.provider.Telephony.TextBasedSmsColumns.SUBJECT
+import android.provider.Telephony.TextBasedSmsColumns.THREAD_ID
+import android.provider.Telephony.TextBasedSmsColumns.TYPE
 import com.github.duplicates.DuplicateProvider
 
 /**

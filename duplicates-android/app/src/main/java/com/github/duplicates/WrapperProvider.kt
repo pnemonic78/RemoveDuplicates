@@ -26,7 +26,8 @@ import java.util.concurrent.CancellationException
  *
  * @author moshe.w
  */
-abstract class WrapperProvider<T : DuplicateItem>(private val context: Context) : DuplicateProvider<T>(context) {
+abstract class WrapperProvider<T : DuplicateItem>(private val context: Context) :
+    DuplicateProvider<T>(context) {
 
     private var _delegate: DuplicateProvider<T>? = null
     private val delegate: DuplicateProvider<T>

@@ -15,20 +15,21 @@
  */
 package com.github.duplicates
 
-import com.github.android.removeduplicates.BuildConfig
-import com.github.android.removeduplicates.R
-
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.github.android.removeduplicates.BuildConfig
+import com.github.android.removeduplicates.R
 
 /**
  * Main spinner items.
  *
  * @author moshe.w
  */
-enum class MainSpinnerItem(@StringRes val label: Int,
-                           @DrawableRes val icon: Int,
-                           val enabled: Boolean = true) {
+enum class MainSpinnerItem(
+    @StringRes val label: Int,
+    @DrawableRes val icon: Int,
+    val enabled: Boolean = true
+) {
 
     ALARMS(R.string.item_alarms, R.drawable.ic_alarm),
     BOOKMARKS(R.string.item_bookmarks, R.drawable.ic_bookmark),

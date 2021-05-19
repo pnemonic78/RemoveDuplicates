@@ -15,9 +15,8 @@
  */
 package com.github.duplicates.contact
 
-import android.text.TextUtils
-
 import android.provider.ContactsContract.CommonDataKinds.Event
+import android.text.TextUtils
 
 /**
  * Contact event data.

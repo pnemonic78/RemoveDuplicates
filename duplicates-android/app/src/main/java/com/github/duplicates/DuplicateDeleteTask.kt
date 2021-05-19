@@ -24,7 +24,10 @@ import java.util.concurrent.CancellationException
  *
  * @author moshe.w
  */
-abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskListener<I>>(context: Context, listener: L) : DuplicateTask<I, DuplicateItemPair<I>, Any, Unit, L>(context, listener) {
+abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskListener<I>>(
+    context: Context,
+    listener: L
+) : DuplicateTask<I, DuplicateItemPair<I>, Any, Unit, L>(context, listener) {
 
     private val pairs = ArrayList<DuplicateItemPair<I>>()
 
@@ -68,7 +71,11 @@ abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskLis
         publishProgress(count, item)
     }
 
-    override fun onPairDeleted(provider: DuplicateProvider<I>, count: Int, pair: DuplicateItemPair<I>) {
+    override fun onPairDeleted(
+        provider: DuplicateProvider<I>,
+        count: Int,
+        pair: DuplicateItemPair<I>
+    ) {
         publishProgress(count, pair)
     }
 

@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateFindTaskListener
  *
  * @author moshe.w
  */
-class ContactFindTask<L : DuplicateFindTaskListener<ContactItem, ContactViewHolder>>(context: Context, listener: L) : DuplicateFindTask<ContactItem, ContactViewHolder, L>(context, listener) {
+class ContactFindTask<L : DuplicateFindTaskListener<ContactItem, ContactViewHolder>>(
+    context: Context,
+    listener: L
+) : DuplicateFindTask<ContactItem, ContactViewHolder, L>(context, listener) {
 
     override fun createProvider(context: Context): ContactProvider {
         return ContactProvider(context)

@@ -126,7 +126,8 @@ class CalendarItem : DuplicateItem() {
     var recurrenceSet: RecurrenceSet
         get() {
             if (_recurrenceSet == null) {
-                _recurrenceSet = RecurrenceSet(recurrenceRule, recurrenceDate, exceptionRule, exceptionDate)
+                _recurrenceSet =
+                    RecurrenceSet(recurrenceRule, recurrenceDate, exceptionRule, exceptionDate)
             }
             return _recurrenceSet!!
         }

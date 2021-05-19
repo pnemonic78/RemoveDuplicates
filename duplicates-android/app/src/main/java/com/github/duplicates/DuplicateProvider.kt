@@ -20,11 +20,9 @@ import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-
-import java.util.ArrayList
-import java.util.concurrent.CancellationException
-
 import timber.log.Timber
+import java.util.*
+import java.util.concurrent.CancellationException
 
 /**
  * Provider of duplicate items.
@@ -105,7 +103,13 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
         val cr = context.contentResolver
 
         val contentUri = getContentUri() ?: return
-        val cursor = cr.query(contentUri, getCursorProjection(), getCursorSelection(), null, getCursorOrder())
+        val cursor = cr.query(
+            contentUri,
+            getCursorProjection(),
+            getCursorSelection(),
+            null,
+            getCursorOrder()
+        )
         if (cursor != null) {
             try {
                 if (cursor.moveToFirst()) {
@@ -182,7 +186,12 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
         val contentUri = getContentUri()
         try {
             item.isError = false
-            return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.id), null, null) > 0
+            return (contentUri != null) && cr.delete(
+                ContentUris.withAppendedId(
+                    contentUri,
+                    item.id
+                ), null, null
+            ) > 0
         } catch (e: IllegalArgumentException) {
             item.isError = true
             Timber.e(e, "deleteItem: %s: %s", item, e.message)

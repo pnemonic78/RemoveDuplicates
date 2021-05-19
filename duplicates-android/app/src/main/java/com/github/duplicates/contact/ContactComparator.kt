@@ -18,7 +18,7 @@ package com.github.duplicates.contact
 import android.telephony.PhoneNumberUtils
 import android.text.TextUtils
 import com.github.duplicates.DuplicateComparator
-import java.util.HashSet
+import java.util.*
 
 /**
  * Compare duplicate contacts.
