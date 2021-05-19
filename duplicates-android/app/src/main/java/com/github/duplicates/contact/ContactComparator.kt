@@ -31,25 +31,15 @@ class ContactComparator : DuplicateComparator<ContactItem>() {
         var c: Int
 
         c = compareData(lhs.emails, rhs.emails)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compareData(lhs.events, rhs.events)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compareData(lhs.ims, rhs.ims)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compareData(lhs.names, rhs.names)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compareData(lhs.phones, rhs.phones)
-        return if (c != SAME) {
-            c
-        } else super.compare(lhs, rhs)
+        return if (c != SAME) c else super.compare(lhs, rhs)
     }
 
     override fun difference(lhs: ContactItem, rhs: ContactItem): BooleanArray {
@@ -65,25 +55,22 @@ class ContactComparator : DuplicateComparator<ContactItem>() {
     }
 
     override fun match(lhs: ContactItem, rhs: ContactItem, difference: BooleanArray?): Float {
-        var difference = difference
-        if (difference == null) {
-            difference = difference(lhs, rhs)
-        }
+        val different = difference ?: difference(lhs, rhs)
         var match = MATCH_SAME
 
-        if (difference[EMAIL]) {
+        if (different[EMAIL]) {
             match *= matchEmails(lhs.emails, rhs.emails)
         }
-        if (difference[EVENT]) {
+        if (different[EVENT]) {
             match *= matchEvents(lhs.events, rhs.events)
         }
-        if (difference[IM]) {
+        if (different[IM]) {
             match *= matchIms(lhs.ims, rhs.ims)
         }
-        if (difference[NAME]) {
+        if (different[NAME]) {
             match *= matchNames(lhs.names, rhs.names)
         }
-        if (difference[PHONE]) {
+        if (different[PHONE]) {
             match *= matchPhones(lhs.phones, rhs.phones)
         }
 

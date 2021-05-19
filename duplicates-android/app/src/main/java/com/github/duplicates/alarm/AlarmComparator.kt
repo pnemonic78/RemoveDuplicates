@@ -29,85 +29,45 @@ class AlarmComparator : DuplicateComparator<AlarmItem>() {
         var c: Int
 
         c = compare(lhs.activate, rhs.activate)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.alarmTime, rhs.alarmTime)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.alertTime, rhs.alertTime)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.createTime, rhs.createTime)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.isDailyBriefing, rhs.isDailyBriefing)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.name, rhs.name)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.notificationType, rhs.notificationType)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.repeat, rhs.repeat)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.isSnoozeActivate, rhs.isSnoozeActivate)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.snoozeDoneCount, rhs.snoozeDoneCount)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.snoozeDuration, rhs.snoozeDuration)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.snoozeRepeat, rhs.snoozeRepeat)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.soundTone, rhs.soundTone)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.soundType, rhs.soundType)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.soundUri, rhs.soundUri)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.isSubdueActivate, rhs.isSubdueActivate)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.subdueDuration, rhs.subdueDuration)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.subdueTone, rhs.subdueTone)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.subdueUri, rhs.subdueUri)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.volume, rhs.volume)
-        return if (c != SAME) {
-            c
-        } else super.compare(lhs, rhs)
+        return if (c != SAME) c else super.compare(lhs, rhs)
     }
 
     override fun difference(lhs: AlarmItem, rhs: AlarmItem): BooleanArray {
@@ -122,24 +82,19 @@ class AlarmComparator : DuplicateComparator<AlarmItem>() {
     }
 
     override fun match(lhs: AlarmItem, rhs: AlarmItem, difference: BooleanArray?): Float {
-        var difference = difference
-        if (difference == null) {
-            difference = difference(lhs, rhs)
-        }
+        val different = difference ?: difference(lhs, rhs)
         var match = MATCH_SAME
 
-        if (difference[ALARM_TIME]) {
+        if (different[ALARM_TIME]) {
             match *= 0.7f
         }
-
-        if (difference[REPEAT]) {
+        if (different[REPEAT]) {
             match *= 0.8f
         }
-
-        if (difference[ALERT_TIME]) {
+        if (different[ALERT_TIME]) {
             match *= 0.9f
         }
-        if (difference[NAME]) {
+        if (different[NAME]) {
             match *= matchTitle(lhs.name, rhs.name, 0.9f)
         }
 

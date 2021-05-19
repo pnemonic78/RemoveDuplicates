@@ -27,10 +27,6 @@ class ContactNameComparator : ContactIdComparator() {
 
     override fun compare(lhs: ContactItem, rhs: ContactItem): Int {
         val c = compareIgnoreCase(lhs.displayName, rhs.displayName)
-        return if (c != SAME) {
-            c
-        } else {
-            super.compare(lhs, rhs)
-        }
+        return if (c != SAME) c else super.compare(lhs, rhs)
     }
 }

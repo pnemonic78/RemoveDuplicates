@@ -41,9 +41,7 @@ class DuplicateItemPair<T : DuplicateItem>(val item1: T, val item2: T, val match
         val thisId1 = this.item1.id
         val thatId1 = other.item1.id
         val c = thisId1.compareTo(thatId1)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         val thisId2 = this.item2.id
         val thatId2 = other.item2.id
         return thisId2.compareTo(thatId2)

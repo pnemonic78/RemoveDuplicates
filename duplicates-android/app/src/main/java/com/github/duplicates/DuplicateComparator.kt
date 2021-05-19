@@ -208,9 +208,7 @@ abstract class DuplicateComparator<T : DuplicateItem> : Comparator<T> {
             val l2 = if (rhs is List<C>) rhs else ArrayList(rhs)
             for (i in 0 until size) {
                 c = compare(l1[i], l2[i])
-                if (c != SAME) {
-                    return c
-                }
+                if (c != SAME) return c
             }
             return SAME
         }

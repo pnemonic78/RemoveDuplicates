@@ -29,29 +29,17 @@ class BookmarkComparator : DuplicateComparator<BookmarkItem>() {
         var c: Int
 
         c = compare(lhs.created, rhs.created)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.date, rhs.date)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.favIcon, rhs.favIcon)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.title, rhs.title)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.uri, rhs.uri)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.visits, rhs.visits)
-        return if (c != SAME) {
-            c
-        } else super.compare(lhs, rhs)
+        return if (c != SAME) c else super.compare(lhs, rhs)
     }
 
     override fun difference(lhs: BookmarkItem, rhs: BookmarkItem): BooleanArray {
@@ -68,31 +56,25 @@ class BookmarkComparator : DuplicateComparator<BookmarkItem>() {
     }
 
     override fun match(lhs: BookmarkItem, rhs: BookmarkItem, difference: BooleanArray?): Float {
-        var difference = difference
-        if (difference == null) {
-            difference = difference(lhs, rhs)
-        }
+        val different = difference ?: difference(lhs, rhs)
         var match = MATCH_SAME
 
-        if (difference[URL]) {
+        if (different[URL]) {
             match *= 0.8f
         }
-
-        if (difference[TITLE]) {
+        if (different[TITLE]) {
             match *= matchTitle(lhs.title, rhs.title, 0.9f)
         }
-
-        if (difference[CREATED]) {
+        if (different[CREATED]) {
             match *= 0.95f
         }
-        if (difference[FAVICON]) {
+        if (different[FAVICON]) {
             match *= 0.95f
         }
-
-        if (difference[DATE]) {
+        if (different[DATE]) {
             match *= 0.975f
         }
-        if (difference[VISITS]) {
+        if (different[VISITS]) {
             match *= 0.975f
         }
 

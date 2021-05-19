@@ -49,25 +49,15 @@ class CalendarComparator : DuplicateComparator<CalendarItem>() {
         var c: Int
 
         c = compareIgnoreCase(lhs.title, rhs.title)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compareIgnoreCase(lhs.description, rhs.description)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compareIgnoreCase(lhs.location, rhs.location)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.start, rhs.start)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.endEffective, rhs.endEffective)
-        return if (c != SAME) {
-            c
-        } else super.compare(lhs, rhs)
+        return if (c != SAME) c else super.compare(lhs, rhs)
     }
 
     override fun difference(lhs: CalendarItem, rhs: CalendarItem): BooleanArray {
@@ -87,38 +77,34 @@ class CalendarComparator : DuplicateComparator<CalendarItem>() {
     }
 
     override fun match(lhs: CalendarItem, rhs: CalendarItem, difference: BooleanArray?): Float {
-        var difference = difference
-        if (difference == null) {
-            difference = difference(lhs, rhs)
-        }
+        val different = difference ?: difference(lhs, rhs)
         var match = MATCH_SAME
         if (lhs.id == rhs.id) {
             return 0f
         }
 
-        if (difference[TITLE]) {
+        if (different[TITLE]) {
             match *= matchTitle(lhs.title, rhs.title, 0.85f)
         }
-        if (difference[DTSTART]) {
+        if (different[DTSTART]) {
             match *= matchDate(
                 lhs.start, lhs.getStartTimeZoneNN(), lhs.recurrenceSet, lhs.isAllDay,
                 rhs.start, rhs.getStartTimeZoneNN(), rhs.recurrenceSet, rhs.isAllDay
             )
         }
-        if (difference[DTEND]) {
+        if (different[DTEND]) {
             match *= matchDate(
                 lhs.endEffective, lhs.getEndTimeZoneNN(), lhs.recurrenceSet, lhs.isAllDay,
                 rhs.endEffective, rhs.getEndTimeZoneNN(), rhs.recurrenceSet, rhs.isAllDay
             )
         }
-
-        if (difference[DESCRIPTION]) {
+        if (different[DESCRIPTION]) {
             match *= 0.95f
         }
-        if (difference[LOCATION]) {
+        if (different[LOCATION]) {
             match *= 0.96f
         }
-        if (difference[ATTENDEES]) {
+        if (different[ATTENDEES]) {
             match *= 0.96f
         }
 

@@ -29,61 +29,33 @@ class MessageComparator : DuplicateComparator<MessageItem>() {
         var c: Int
 
         c = compare(lhs.type, rhs.type)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.dateReceived, rhs.dateReceived)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.dateSent, rhs.dateSent)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.address, rhs.address)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.person, rhs.person)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.body, rhs.body)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.subject, rhs.subject)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.threadId, rhs.threadId)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.status, rhs.status)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.errorCode, rhs.errorCode)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.isLocked, rhs.isLocked)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.protocol, rhs.protocol)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.isRead, rhs.isRead)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.isSeen, rhs.isSeen)
-        return if (c != SAME) {
-            c
-        } else super.compare(lhs, rhs)
+        return if (c != SAME) c else super.compare(lhs, rhs)
     }
 
     override fun difference(lhs: MessageItem, rhs: MessageItem): BooleanArray {
@@ -108,55 +80,49 @@ class MessageComparator : DuplicateComparator<MessageItem>() {
     }
 
     override fun match(lhs: MessageItem, rhs: MessageItem, difference: BooleanArray?): Float {
-        var difference = difference
-        if (difference == null) {
-            difference = difference(lhs, rhs)
-        }
-        var match = DuplicateComparator.MATCH_SAME
+        val different = difference ?: difference(lhs, rhs)
+        var match = MATCH_SAME
 
-        if (difference[DATE]) {
+        if (different[DATE]) {
             match *= 0.7f
         }
-
-        if (difference[TYPE]) {
+        if (different[TYPE]) {
             match *= 0.8f
         }
-        if (difference[DATE_SENT]) {
+        if (different[DATE_SENT]) {
             match *= 0.8f
         }
-        if (difference[ADDRESS]) {
+        if (different[ADDRESS]) {
             match *= matchTitle(lhs.address, rhs.address, 0.8f)
         }
-        if (difference[PERSON]) {
+        if (different[PERSON]) {
             match *= 0.8f
         }
-        if (difference[BODY]) {
+        if (different[BODY]) {
             match *= 0.75f
         }
-
-        if (difference[SUBJECT]) {
+        if (different[SUBJECT]) {
             match *= matchTitle(lhs.subject, rhs.subject, 0.85f)
         }
-        if (difference[THREAD_ID]) {
+        if (different[THREAD_ID]) {
             match *= 0.9f
         }
-
-        if (difference[STATUS]) {
+        if (different[STATUS]) {
             match *= 0.95f
         }
-        if (difference[ERROR_CODE]) {
+        if (different[ERROR_CODE]) {
             match *= 0.95f
         }
-        if (difference[LOCKED]) {
+        if (different[LOCKED]) {
             match *= 0.95f
         }
-        if (difference[PROTOCOL]) {
+        if (different[PROTOCOL]) {
             match *= 0.95f
         }
-        if (difference[READ]) {
+        if (different[READ]) {
             match *= 0.95f
         }
-        if (difference[SEEN]) {
+        if (different[SEEN]) {
             match *= 0.95f
         }
 
