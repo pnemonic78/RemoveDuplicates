@@ -16,11 +16,24 @@
 package com.github.duplicates.calendar
 
 import android.text.format.DateUtils.MINUTE_IN_MILLIS
-import com.android.calendarcommon2.EventRecurrence.*
+import com.android.calendarcommon2.EventRecurrence.DAILY
+import com.android.calendarcommon2.EventRecurrence.HOURLY
+import com.android.calendarcommon2.EventRecurrence.MINUTELY
+import com.android.calendarcommon2.EventRecurrence.MONTHLY
+import com.android.calendarcommon2.EventRecurrence.SECONDLY
+import com.android.calendarcommon2.EventRecurrence.WEEKLY
+import com.android.calendarcommon2.EventRecurrence.YEARLY
 import com.android.calendarcommon2.RecurrenceSet
 import com.github.duplicates.DuplicateComparator
 import com.github.duplicates.calendar.CalendarItem.Companion.NEVER
 import java.util.*
+import java.util.Calendar.DAY_OF_MONTH
+import java.util.Calendar.DAY_OF_WEEK
+import java.util.Calendar.HOUR_OF_DAY
+import java.util.Calendar.MILLISECOND
+import java.util.Calendar.MINUTE
+import java.util.Calendar.MONTH
+import java.util.Calendar.SECOND
 
 /**
  * Compare duplicate calendar events.
@@ -63,12 +76,12 @@ class CalendarComparator : DuplicateComparator<CalendarItem>() {
             return result
         }
 
-        result[ATTENDEES] = compare(lhs.isHasAttendeeData, rhs.isHasAttendeeData) != SAME
-        result[DESCRIPTION] = compare(lhs.description, rhs.description) != SAME
-        result[DTSTART] = compare(lhs.start, rhs.start) != SAME
-        result[DTEND] = compare(lhs.endEffective, rhs.endEffective) != SAME
-        result[LOCATION] = compare(lhs.location, rhs.location) != SAME
-        result[TITLE] = compare(lhs.title.toLowerCase(locale), rhs.title.toLowerCase(locale)) != SAME
+        result[ATTENDEES] = isDifferent(lhs.isHasAttendeeData, rhs.isHasAttendeeData)
+        result[DESCRIPTION] = isDifferent(lhs.description, rhs.description)
+        result[DTSTART] = isDifferent(lhs.start, rhs.start)
+        result[DTEND] = isDifferent(lhs.endEffective, rhs.endEffective)
+        result[LOCATION] = isDifferent(lhs.location, rhs.location)
+        result[TITLE] = isDifferent(lhs.title.toLowerCase(locale), rhs.title.toLowerCase(locale))
 
         return result
     }
@@ -87,12 +100,16 @@ class CalendarComparator : DuplicateComparator<CalendarItem>() {
             match *= matchTitle(lhs.title, rhs.title, 0.85f)
         }
         if (difference[DTSTART]) {
-            match *= matchDate(lhs.start, lhs.getStartTimeZoneNN(), lhs.recurrenceSet, lhs.isAllDay,
-                rhs.start, rhs.getStartTimeZoneNN(), rhs.recurrenceSet, rhs.isAllDay)
+            match *= matchDate(
+                lhs.start, lhs.getStartTimeZoneNN(), lhs.recurrenceSet, lhs.isAllDay,
+                rhs.start, rhs.getStartTimeZoneNN(), rhs.recurrenceSet, rhs.isAllDay
+            )
         }
         if (difference[DTEND]) {
-            match *= matchDate(lhs.endEffective, lhs.getEndTimeZoneNN(), lhs.recurrenceSet, lhs.isAllDay,
-                rhs.endEffective, rhs.getEndTimeZoneNN(), rhs.recurrenceSet, rhs.isAllDay)
+            match *= matchDate(
+                lhs.endEffective, lhs.getEndTimeZoneNN(), lhs.recurrenceSet, lhs.isAllDay,
+                rhs.endEffective, rhs.getEndTimeZoneNN(), rhs.recurrenceSet, rhs.isAllDay
+            )
         }
 
         if (difference[DESCRIPTION]) {
@@ -108,7 +125,16 @@ class CalendarComparator : DuplicateComparator<CalendarItem>() {
         return match
     }
 
-    protected fun matchDate(lhs: Long, lhsTimeZone: TimeZone, lhsRecurrence: RecurrenceSet, lhsAllDay: Boolean, rhs: Long, rhsTimeZone: TimeZone, rhsRecurrence: RecurrenceSet, rhsAllDay: Boolean): Float {
+    protected fun matchDate(
+        lhs: Long,
+        lhsTimeZone: TimeZone,
+        lhsRecurrence: RecurrenceSet,
+        lhsAllDay: Boolean,
+        rhs: Long,
+        rhsTimeZone: TimeZone,
+        rhsRecurrence: RecurrenceSet,
+        rhsAllDay: Boolean
+    ): Float {
         cal1.timeZone = lhsTimeZone
         cal1.timeInMillis = lhs
         cal2.timeZone = rhsTimeZone
@@ -127,16 +153,16 @@ class CalendarComparator : DuplicateComparator<CalendarItem>() {
                 var same = false
 
                 when (lhsRecurrence.rrules[0].freq) {
-                    SECONDLY -> same = isSame(cal1, cal2, Calendar.MILLISECOND)
-                    MINUTELY -> same = isSame(cal1, cal2, Calendar.SECOND)
-                    HOURLY -> same = isSame(cal1, cal2, Calendar.MINUTE)
-                    DAILY -> same = isSame(cal1, cal2, Calendar.HOUR_OF_DAY, Calendar.MINUTE)
-                    WEEKLY -> same = isSame(cal1, cal2, Calendar.DAY_OF_WEEK, Calendar.HOUR_OF_DAY)
-                    MONTHLY -> same = isSame(cal1, cal2, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY)
+                    SECONDLY -> same = isSame(cal1, cal2, MILLISECOND)
+                    MINUTELY -> same = isSame(cal1, cal2, SECOND)
+                    HOURLY -> same = isSame(cal1, cal2, MINUTE)
+                    DAILY -> same = isSame(cal1, cal2, HOUR_OF_DAY, MINUTE)
+                    WEEKLY -> same = isSame(cal1, cal2, DAY_OF_WEEK, HOUR_OF_DAY)
+                    MONTHLY -> same = isSame(cal1, cal2, DAY_OF_MONTH, HOUR_OF_DAY)
                     YEARLY -> if (lhsAllDay && rhsAllDay) {
-                        same = isSame(cal1, cal2, Calendar.MONTH, Calendar.DAY_OF_MONTH)
+                        same = isSame(cal1, cal2, MONTH, DAY_OF_MONTH)
                     } else {
-                        same = isSame(cal1, cal2, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY)
+                        same = isSame(cal1, cal2, MONTH, DAY_OF_MONTH, HOUR_OF_DAY)
                     }
                 }
                 if (same) {

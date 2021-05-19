@@ -17,7 +17,6 @@ package com.github.duplicates.contact
 
 import android.telephony.PhoneNumberUtils
 import android.text.TextUtils
-
 import com.github.duplicates.DuplicateComparator
 import java.util.HashSet
 
@@ -56,11 +55,11 @@ class ContactComparator : DuplicateComparator<ContactItem>() {
     override fun difference(lhs: ContactItem, rhs: ContactItem): BooleanArray {
         val result = BooleanArray(5)
 
-        result[EMAIL] = compareData(lhs.emails, rhs.emails) != SAME
-        result[EVENT] = compareData(lhs.events, rhs.events) != SAME
-        result[IM] = compareData(lhs.ims, rhs.ims) != SAME
-        result[NAME] = compare(lhs.displayName, rhs.displayName) != SAME
-        result[PHONE] = compareData(lhs.phones, rhs.phones) != SAME
+        result[EMAIL] = isDifferentData(lhs.emails, rhs.emails)
+        result[EVENT] = isDifferentData(lhs.events, rhs.events)
+        result[IM] = isDifferentData(lhs.ims, rhs.ims)
+        result[NAME] = isDifferent(lhs.displayName, rhs.displayName)
+        result[PHONE] = isDifferentData(lhs.phones, rhs.phones)
 
         return result
     }
@@ -107,6 +106,10 @@ class ContactComparator : DuplicateComparator<ContactItem>() {
             set2.add(datum.toString().toLowerCase(locale))
         }
         return compare(set1, set2)
+    }
+
+    fun isDifferentData(lhs: Collection<ContactData>, rhs: Collection<ContactData>): Boolean {
+        return compareData(lhs, rhs) != SAME
     }
 
     protected fun matchEmails(lhs: Collection<EmailData>, rhs: Collection<EmailData>): Float {
@@ -168,7 +171,10 @@ class ContactComparator : DuplicateComparator<ContactItem>() {
         return MATCH_DATA
     }
 
-    protected fun matchNames(lhs: Collection<StructuredNameData>, rhs: Collection<StructuredNameData>): Float {
+    protected fun matchNames(
+        lhs: Collection<StructuredNameData>,
+        rhs: Collection<StructuredNameData>
+    ): Float {
         if (lhs.isEmpty() || rhs.isEmpty()) {
             return MATCH_NAME
         }

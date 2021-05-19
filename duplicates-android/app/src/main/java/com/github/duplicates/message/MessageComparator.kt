@@ -15,8 +15,7 @@
  */
 package com.github.duplicates.message
 
-import android.text.format.DateUtils
-
+import android.text.format.DateUtils.SECOND_IN_MILLIS
 import com.github.duplicates.DuplicateComparator
 
 /**
@@ -90,20 +89,20 @@ class MessageComparator : DuplicateComparator<MessageItem>() {
     override fun difference(lhs: MessageItem, rhs: MessageItem): BooleanArray {
         val result = BooleanArray(14)
 
-        result[ADDRESS] = compareIgnoreCase(lhs.address, rhs.address) != SAME
-        result[BODY] = compare(lhs.body, rhs.body) != SAME
-        result[DATE] = compareTime(lhs.dateReceived, rhs.dateReceived, DateUtils.SECOND_IN_MILLIS) != SAME
-        result[DATE_SENT] = compareTime(lhs.dateSent, rhs.dateSent, DateUtils.SECOND_IN_MILLIS) != SAME
-        result[ERROR_CODE] = compare(lhs.errorCode, rhs.errorCode) != SAME
-        result[LOCKED] = compare(lhs.isLocked, rhs.isLocked) != SAME
-        result[PERSON] = compare(lhs.person, rhs.person) != SAME
-        result[PROTOCOL] = compare(lhs.protocol, rhs.protocol) != SAME
-        result[READ] = compare(lhs.isRead, rhs.isRead) != SAME
-        result[SEEN] = compare(lhs.isSeen, rhs.isSeen) != SAME
-        result[STATUS] = compare(lhs.status, rhs.status) != SAME
-        result[SUBJECT] = compareIgnoreCase(lhs.subject, rhs.subject) != SAME
-        result[THREAD_ID] = compare(lhs.threadId, rhs.threadId) != SAME
-        result[TYPE] = compare(lhs.type, rhs.type) != SAME
+        result[ADDRESS] = isDifferentIgnoreCase(lhs.address, rhs.address)
+        result[BODY] = isDifferent(lhs.body, rhs.body)
+        result[DATE] = isDifferentTime(lhs.dateReceived, rhs.dateReceived, SECOND_IN_MILLIS)
+        result[DATE_SENT] = isDifferentTime(lhs.dateSent, rhs.dateSent, SECOND_IN_MILLIS)
+        result[ERROR_CODE] = isDifferent(lhs.errorCode, rhs.errorCode)
+        result[LOCKED] = isDifferent(lhs.isLocked, rhs.isLocked)
+        result[PERSON] = isDifferent(lhs.person, rhs.person)
+        result[PROTOCOL] = isDifferent(lhs.protocol, rhs.protocol)
+        result[READ] = isDifferent(lhs.isRead, rhs.isRead)
+        result[SEEN] = isDifferent(lhs.isSeen, rhs.isSeen)
+        result[STATUS] = isDifferent(lhs.status, rhs.status)
+        result[SUBJECT] = isDifferentIgnoreCase(lhs.subject, rhs.subject)
+        result[THREAD_ID] = isDifferent(lhs.threadId, rhs.threadId)
+        result[TYPE] = isDifferent(lhs.type, rhs.type)
 
         return result
     }

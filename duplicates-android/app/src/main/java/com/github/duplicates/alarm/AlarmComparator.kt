@@ -15,7 +15,7 @@
  */
 package com.github.duplicates.alarm
 
-import android.text.format.DateUtils
+import android.text.format.DateUtils.MINUTE_IN_MILLIS
 import com.github.duplicates.DuplicateComparator
 
 /**
@@ -113,10 +113,10 @@ class AlarmComparator : DuplicateComparator<AlarmItem>() {
     override fun difference(lhs: AlarmItem, rhs: AlarmItem): BooleanArray {
         val result = BooleanArray(4)
 
-        result[ALARM_TIME] = compare(lhs.alarmTime, rhs.alarmTime) != SAME
-        result[ALERT_TIME] = compareTime(lhs.alertTime, rhs.alertTime, DateUtils.MINUTE_IN_MILLIS) != SAME
-        result[NAME] = compareIgnoreCase(lhs.name, rhs.name) != SAME
-        result[REPEAT] = compare(lhs.repeat, rhs.repeat) != SAME
+        result[ALARM_TIME] = isDifferent(lhs.alarmTime, rhs.alarmTime)
+        result[ALERT_TIME] = isDifferentTime(lhs.alertTime, rhs.alertTime, MINUTE_IN_MILLIS)
+        result[NAME] = isDifferentIgnoreCase(lhs.name, rhs.name)
+        result[REPEAT] = isDifferent(lhs.repeat, rhs.repeat)
 
         return result
     }

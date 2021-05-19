@@ -15,8 +15,7 @@
  */
 package com.github.duplicates.call
 
-import android.text.format.DateUtils
-
+import android.text.format.DateUtils.SECOND_IN_MILLIS
 import com.github.duplicates.DuplicateComparator
 
 /**
@@ -66,14 +65,14 @@ class CallLogComparator : DuplicateComparator<CallLogItem>() {
     override fun difference(lhs: CallLogItem, rhs: CallLogItem): BooleanArray {
         val result = BooleanArray(8)
 
-        result[DATE] = compareTime(lhs.date, rhs.date, DateUtils.SECOND_IN_MILLIS) != SAME
-        result[DURATION] = compareTime(lhs.duration, rhs.duration, 1) != SAME
-        result[NAME] = compareIgnoreCase(lhs.name, rhs.name) != SAME
-        result[NEW] = compare(lhs.isNew, rhs.isNew) != SAME
-        result[NUMBER] = comparePhoneNumber(lhs.number, rhs.number) != SAME
-        result[NUMBER_TYPE] = compare(lhs.numberType, rhs.numberType) != SAME
-        result[READ] = compare(lhs.isRead, rhs.isRead) != SAME
-        result[TYPE] = compare(lhs.type, rhs.type) != SAME
+        result[DATE] = isDifferentTime(lhs.date, rhs.date, SECOND_IN_MILLIS)
+        result[DURATION] = isDifferentTime(lhs.duration, rhs.duration, 1)
+        result[NAME] = isDifferentIgnoreCase(lhs.name, rhs.name)
+        result[NEW] = isDifferent(lhs.isNew, rhs.isNew)
+        result[NUMBER] = isDifferentPhoneNumber(lhs.number, rhs.number)
+        result[NUMBER_TYPE] = isDifferent(lhs.numberType, rhs.numberType)
+        result[READ] = isDifferent(lhs.isRead, rhs.isRead)
+        result[TYPE] = isDifferent(lhs.type, rhs.type)
 
         return result
     }

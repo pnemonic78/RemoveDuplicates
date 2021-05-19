@@ -15,8 +15,7 @@
  */
 package com.github.duplicates.bookmark
 
-import android.text.format.DateUtils
-
+import android.text.format.DateUtils.MINUTE_IN_MILLIS
 import com.github.duplicates.DuplicateComparator
 
 /**
@@ -58,12 +57,12 @@ class BookmarkComparator : DuplicateComparator<BookmarkItem>() {
     override fun difference(lhs: BookmarkItem, rhs: BookmarkItem): BooleanArray {
         val result = BooleanArray(6)
 
-        result[CREATED] = DuplicateComparator.compareTime(lhs.created, rhs.created, DateUtils.MINUTE_IN_MILLIS) != SAME
-        result[DATE] = DuplicateComparator.compareTime(lhs.date, rhs.date, DateUtils.MINUTE_IN_MILLIS) != SAME
-        result[FAVICON] = compare(lhs.favIcon, rhs.favIcon) != SAME
-        result[TITLE] = DuplicateComparator.compareIgnoreCase(lhs.title, rhs.title) != SAME
-        result[URL] = compare(lhs.uri, rhs.uri) != SAME
-        result[VISITS] = compare(lhs.visits, rhs.visits) != SAME
+        result[CREATED] = isDifferentTime(lhs.created, rhs.created, MINUTE_IN_MILLIS)
+        result[DATE] = isDifferentTime(lhs.date, rhs.date, MINUTE_IN_MILLIS)
+        result[FAVICON] = isDifferent(lhs.favIcon, rhs.favIcon)
+        result[TITLE] = isDifferentIgnoreCase(lhs.title, rhs.title)
+        result[URL] = isDifferent(lhs.uri, rhs.uri)
+        result[VISITS] = isDifferent(lhs.visits, rhs.visits)
 
         return result
     }
