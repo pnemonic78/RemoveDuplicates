@@ -87,6 +87,12 @@ dependencies {
     // Views
     implementation("androidx.cardview:cardview:1.0.0")
 
+    // Database
+    implementation("androidx.room:room-common:${BuildVersions.roomVersion}")
+    implementation("androidx.room:room-runtime:${BuildVersions.roomVersion}")
+    implementation("androidx.room:room-ktx:${BuildVersions.roomVersion}")
+    kapt("androidx.room:room-compiler:${BuildVersions.roomVersion}")
+
     // Testing
     testImplementation("junit:junit:${BuildVersions.junitVersion}")
 }

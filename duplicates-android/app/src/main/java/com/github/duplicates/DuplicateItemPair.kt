@@ -25,7 +25,7 @@ import com.github.duplicates.DuplicateComparator.Companion.SAME
 class DuplicateItemPair<T : DuplicateItem>(
     val item1: T,
     val item2: T,
-    val match: Float = 1f,
+    val match: Float = 0f,
     val difference: BooleanArray
 ) : Comparable<DuplicateItemPair<T>> {
 
@@ -33,7 +33,7 @@ class DuplicateItemPair<T : DuplicateItem>(
         get() {
             val id1 = item1.id
             val id2 = item2.id
-            return id1 and 0xFFFFFFFFL shl 32 or (id2 and 0xFFFFFFFFL)
+            return ((id1 and 0xFFFFFFFFL) shl 32) or (id2 and 0xFFFFFFFFL)
         }
 
     init {
