@@ -55,20 +55,6 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         return items
     }
 
-    @Suppress("UNCHECKED_CAST")
-    override fun onProgressUpdate(vararg progress: Any) {
-        val listener = this.listener
-        if (progress.size == 1) {
-            listener.onDuplicateTaskProgress(this, progress[0] as Int)
-        } else {
-            val item1 = progress[1] as I
-            val item2 = progress[2] as I
-            val match = progress[3] as Float
-            val difference = progress[4] as BooleanArray
-            listener.onDuplicateTaskMatch(this, item1, item2, match, difference)
-        }
-    }
-
     override fun onItemFetched(provider: DuplicateProvider<I>, count: Int, item: I) {
         val size = items.size
 
@@ -104,7 +90,7 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
             }
         }
         if (bestItem != null) {
-            publishProgress(size, bestItem, item, bestMatch, bestDifference)
+            listener.onDuplicateTaskMatch(this, bestItem, item, bestMatch, bestDifference!!)
         }
 
         if (items.add(item)) {

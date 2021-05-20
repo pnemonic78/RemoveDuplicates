@@ -252,7 +252,7 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         difference: BooleanArray
     ) {
         if (task === this.task) {
-            adapter?.add(item1, item2, match, difference)
+            runOnUiThread { adapter?.add(item1, item2, match, difference) }
         }
     }
 

@@ -48,26 +48,12 @@ abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskLis
         }
     }
 
-    override fun onProgressUpdate(vararg progress: Any) {
-        val listener = this.listener
-        listener.onDuplicateTaskProgress(this, progress[0] as Int)
-        if (progress.size > 1) {
-            val arg1 = progress[1]
-            if (arg1 is DuplicateItem) {
-                val item = arg1 as I
-                listener.onDuplicateTaskItemDeleted(this, item)
-            } else {
-                val pair = arg1 as DuplicateItemPair<I>
-                listener.onDuplicateTaskPairDeleted(this, pair)
-            }
-        }
-    }
-
     override fun onItemFetched(provider: DuplicateProvider<I>, count: Int, item: I) {
         // Nothing to do.
     }
 
     override fun onItemDeleted(provider: DuplicateProvider<I>, count: Int, item: I) {
+        listener.onDuplicateTaskItemDeleted(this, item)
         publishProgress(count, item)
     }
 
@@ -76,6 +62,7 @@ abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskLis
         count: Int,
         pair: DuplicateItemPair<I>
     ) {
+        listener.onDuplicateTaskPairDeleted(this, pair)
         publishProgress(count, pair)
     }
 
