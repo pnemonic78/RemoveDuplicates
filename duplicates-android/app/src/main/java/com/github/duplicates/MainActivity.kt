@@ -25,7 +25,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
 import com.github.android.removeduplicates.databinding.ActivityMainBinding
 import com.github.duplicates.alarm.AlarmDeleteTask
@@ -52,8 +51,6 @@ import com.github.duplicates.message.MessageDeleteTask
 import com.github.duplicates.message.MessageFindTask
 import com.github.duplicates.message.MessageItem
 import com.github.duplicates.message.MessageViewHolder
-import com.github.util.LogTree
-import timber.log.Timber
 
 /**
  * Main activity.
@@ -261,7 +258,7 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         item: I
     ) {
         if (task === this.task) {
-            adapter?.removeItem(item)
+            runOnUiThread { adapter?.removeItem(item) }
         }
     }
 
@@ -270,7 +267,7 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         pair: DuplicateItemPair<I>
     ) {
         if (task === this.task) {
-            adapter?.remove(pair)
+            runOnUiThread { adapter?.remove(pair) }
         }
     }
 
@@ -281,7 +278,6 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        val task = this.task
         task?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
