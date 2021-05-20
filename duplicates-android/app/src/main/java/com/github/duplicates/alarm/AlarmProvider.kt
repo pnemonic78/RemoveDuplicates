@@ -18,8 +18,10 @@ package com.github.duplicates.alarm
 import android.content.Context
 import android.content.pm.PackageManager
 import com.github.duplicates.DefaultProvider
+import com.github.duplicates.DuplicateItemType
 import com.github.duplicates.DuplicateProvider
 import com.github.duplicates.WrapperProvider
+import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Provide duplicate alarms.
@@ -46,6 +48,10 @@ class AlarmProvider(context: Context) : WrapperProvider<AlarmItem>(context) {
         } else {
             DefaultProvider(context)
         }
+    }
+
+    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
+        dao.deleteAll(DuplicateItemType.ALARM)
     }
 
     companion object {

@@ -20,7 +20,9 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns._ID
 import com.github.duplicates.DaysOfWeek
+import com.github.duplicates.DuplicateItemType
 import com.github.duplicates.DuplicateProvider
+import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Provide duplicate messages for Samsung devices.
@@ -86,6 +88,10 @@ class SamsungAlarmProvider(context: Context) : DuplicateProvider<AlarmItem>(cont
         daysOfWeek.set(5, repeat and DAY_FRIDAY == DAY_FRIDAY)
         daysOfWeek.set(6, repeat and DAY_SATURDAY == DAY_SATURDAY)
         return daysOfWeek
+    }
+
+    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
+        dao.deleteAll(DuplicateItemType.ALARM)
     }
 
     companion object {

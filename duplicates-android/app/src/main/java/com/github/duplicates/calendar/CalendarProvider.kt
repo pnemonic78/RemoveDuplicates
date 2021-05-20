@@ -47,8 +47,10 @@ import android.provider.CalendarContract.Events.TITLE
 import android.provider.CalendarContract.Events.VISIBLE
 import android.util.LongSparseArray
 import com.github.android.removeduplicates.BuildConfig
+import com.github.duplicates.DuplicateItemType
 import com.github.duplicates.DuplicateProvider
 import com.github.duplicates.calendar.CalendarItem.Companion.NEVER
+import com.github.duplicates.db.DuplicateItemPairDao
 import com.github.duplicates.toTimeZone
 
 /**
@@ -136,6 +138,10 @@ class CalendarProvider(context: Context) : DuplicateProvider<CalendarItem>(conte
 
     override fun getDeletePermissions(): Array<String>? {
         return PERMISSIONS_WRITE
+    }
+
+    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
+        dao.deleteAll(DuplicateItemType.CALENDAR)
     }
 
     companion object {

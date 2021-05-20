@@ -20,9 +20,12 @@ import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import androidx.annotation.MainThread
+import com.github.duplicates.db.DuplicateItemPairDao
+import com.github.duplicates.db.DuplicatesDatabase
 import timber.log.Timber
 import java.util.*
-import java.util.concurrent.CancellationException
+import java.util.concurrent.*
 
 /**
  * Provider of duplicate items.
@@ -235,11 +238,13 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
     /**
      * Execute some code before task does background work.
      */
+    @MainThread
     open fun onPreExecute() {}
 
     /**
      * Execute some code after the task did background work.
      */
+    @MainThread
     open fun onPostExecute() {}
 
     /**
@@ -273,4 +278,11 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
     protected fun empty(cursor: Cursor, index: Int): String {
         return if (cursor.isNull(index)) "" else cursor.getString(index)
     }
+
+    fun clearDatabase() {
+        val dao = DuplicatesDatabase.getDatabase(context).pairDao()
+        clearDatabaseTable(dao)
+    }
+
+    protected abstract fun clearDatabaseTable(dao: DuplicateItemPairDao)
 }

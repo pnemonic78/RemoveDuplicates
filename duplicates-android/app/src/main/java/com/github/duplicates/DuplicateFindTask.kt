@@ -44,6 +44,7 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
     }
 
     override fun doInBackground(vararg params: Any): List<I> {
+        provider.clearDatabase()
         try {
             provider.fetchItems(this)
         } catch (ignore: CancellationException) {

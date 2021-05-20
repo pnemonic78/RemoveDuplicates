@@ -20,7 +20,9 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns._ID
+import com.github.duplicates.DuplicateItemType
 import com.github.duplicates.DuplicateProvider
+import com.github.duplicates.db.DuplicateItemPairDao
 import com.github.provider.Browser
 import com.github.provider.Browser.BookmarkColumns.BOOKMARK
 import com.github.provider.Browser.BookmarkColumns.CREATED
@@ -73,6 +75,10 @@ class BookmarkProvider(context: Context) : DuplicateProvider<BookmarkItem>(conte
 
     override fun getDeletePermissions(): Array<String>? {
         return PERMISSIONS_WRITE
+    }
+
+    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
+        dao.deleteAll(DuplicateItemType.BOOKMARK)
     }
 
     companion object {
