@@ -35,9 +35,7 @@ import android.provider.Telephony.TextBasedSmsColumns.STATUS
 import android.provider.Telephony.TextBasedSmsColumns.SUBJECT
 import android.provider.Telephony.TextBasedSmsColumns.THREAD_ID
 import android.provider.Telephony.TextBasedSmsColumns.TYPE
-import com.github.duplicates.DuplicateItemType
 import com.github.duplicates.DuplicateProvider
-import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Provide duplicate messages.
@@ -82,10 +80,6 @@ class MessageProvider(context: Context) : DuplicateProvider<MessageItem>(context
 
     override fun getDeletePermissions(): Array<String>? {
         return PERMISSIONS_WRITE
-    }
-
-    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
-        dao.deleteAll(DuplicateItemType.MESSAGE)
     }
 
     companion object {

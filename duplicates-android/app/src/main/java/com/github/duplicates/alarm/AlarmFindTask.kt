@@ -18,6 +18,8 @@ package com.github.duplicates.alarm
 import android.content.Context
 import com.github.duplicates.DuplicateFindTask
 import com.github.duplicates.DuplicateFindTaskListener
+import com.github.duplicates.DuplicateItemType
+import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Task to find duplicate alarms.
@@ -39,5 +41,9 @@ class AlarmFindTask<L : DuplicateFindTaskListener<AlarmItem, AlarmViewHolder>>(
 
     override fun createComparator(): AlarmComparator {
         return AlarmComparator()
+    }
+
+    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
+        dao.deleteAll(DuplicateItemType.ALARM)
     }
 }

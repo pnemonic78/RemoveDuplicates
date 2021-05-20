@@ -17,8 +17,10 @@ package com.github.duplicates
 
 import android.content.Context
 import com.github.duplicates.DuplicateComparator.Companion.MATCH_SAME
+import com.github.duplicates.db.DuplicateItemPairDao
+import com.github.duplicates.db.DuplicatesDatabase
 import java.util.*
-import java.util.concurrent.CancellationException
+import java.util.concurrent.*
 
 /**
  * Task to find duplicates.
@@ -44,7 +46,8 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
     }
 
     override fun doInBackground(vararg params: Any): List<I> {
-        provider.clearDatabase()
+        val db = DuplicatesDatabase.getDatabase(context)
+        clearDatabase(db)
         try {
             provider.fetchItems(this)
         } catch (ignore: CancellationException) {
@@ -52,6 +55,7 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         return items
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun onProgressUpdate(vararg progress: Any) {
         val listener = this.listener
         if (progress.size == 1) {
@@ -124,11 +128,18 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         return provider.getReadPermissions()
     }
 
+    private fun clearDatabase(db: DuplicatesDatabase) {
+        val dao = db.pairDao()
+        clearDatabaseTable(dao)
+    }
+
+    protected abstract fun clearDatabaseTable(dao: DuplicateItemPairDao)
+
     companion object {
 
         /**
          * Percentage for two items to be considered a good match.
          */
-        const val MATCH_GOOD = 0.71f
+        const val MATCH_GOOD = 0.7f
     }
 }

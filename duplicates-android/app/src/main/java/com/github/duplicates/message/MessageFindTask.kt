@@ -18,6 +18,8 @@ package com.github.duplicates.message
 import android.content.Context
 import com.github.duplicates.DuplicateFindTask
 import com.github.duplicates.DuplicateFindTaskListener
+import com.github.duplicates.DuplicateItemType
+import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Task to find duplicate messages.
@@ -39,5 +41,9 @@ class MessageFindTask<L : DuplicateFindTaskListener<MessageItem, MessageViewHold
 
     override fun createComparator(): MessageComparator {
         return MessageComparator()
+    }
+
+    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
+        dao.deleteAll(DuplicateItemType.MESSAGE)
     }
 }

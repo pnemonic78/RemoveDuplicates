@@ -18,7 +18,6 @@ package com.github.duplicates
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Default provider that does nothing.
@@ -43,9 +42,5 @@ class DefaultProvider<T : DuplicateItem>(context: Context) : DuplicateProvider<T
 
     override fun getDeletePermissions(): Array<String>? {
         return null
-    }
-
-    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
-        dao.deleteAll()
     }
 }

@@ -18,6 +18,8 @@ package com.github.duplicates.call
 import android.content.Context
 import com.github.duplicates.DuplicateFindTask
 import com.github.duplicates.DuplicateFindTaskListener
+import com.github.duplicates.DuplicateItemType
+import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Task to find duplicate calls.
@@ -39,5 +41,9 @@ class CallLogFindTask<L : DuplicateFindTaskListener<CallLogItem, CallLogViewHold
 
     override fun createComparator(): CallLogComparator {
         return CallLogComparator()
+    }
+
+    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
+        dao.deleteAll(DuplicateItemType.CALL_LOG)
     }
 }

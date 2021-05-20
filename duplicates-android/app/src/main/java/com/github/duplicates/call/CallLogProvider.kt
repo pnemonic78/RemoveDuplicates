@@ -31,9 +31,7 @@ import android.provider.CallLog.Calls.IS_READ
 import android.provider.CallLog.Calls.NEW
 import android.provider.CallLog.Calls.NUMBER
 import android.provider.CallLog.Calls.TYPE
-import com.github.duplicates.DuplicateItemType
 import com.github.duplicates.DuplicateProvider
-import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Provide duplicate calls.
@@ -77,10 +75,6 @@ class CallLogProvider(context: Context) : DuplicateProvider<CallLogItem>(context
 
     override fun getDeletePermissions(): Array<String>? {
         return PERMISSIONS_WRITE
-    }
-
-    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
-        dao.deleteAll(DuplicateItemType.CALL_LOG)
     }
 
     companion object {

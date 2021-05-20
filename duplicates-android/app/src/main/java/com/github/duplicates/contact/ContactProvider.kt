@@ -60,12 +60,10 @@ import android.provider.ContactsContract.RawContacts.ACCOUNT_TYPE
 import android.util.Base64
 import android.util.LongSparseArray
 import com.github.duplicates.DuplicateItemPair
-import com.github.duplicates.DuplicateItemType
 import com.github.duplicates.DuplicateProvider
 import com.github.duplicates.DuplicateProviderListener
-import com.github.duplicates.db.DuplicateItemPairDao
 import java.util.*
-import java.util.concurrent.CancellationException
+import java.util.concurrent.*
 
 /**
  * Provide duplicate contacts.
@@ -260,10 +258,6 @@ class ContactProvider(context: Context) : DuplicateProvider<ContactItem>(context
             FIELD_TYPE_INTEGER -> return cursor.getInt(index).toString()
             else -> return cursor.getString(index)
         }
-    }
-
-    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
-        dao.deleteAll(DuplicateItemType.CONTACT)
     }
 
     companion object {
