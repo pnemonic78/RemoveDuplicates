@@ -77,6 +77,7 @@ android {
         }
         create("regular") {
             dimension = "privacy"
+            isDefault = true
         }
     }
 }
