@@ -19,7 +19,6 @@ import android.content.Context
 import com.github.duplicates.DuplicateFindTask
 import com.github.duplicates.DuplicateFindTaskListener
 import com.github.duplicates.DuplicateItemType
-import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Task to find duplicate calendar events.
@@ -29,7 +28,11 @@ import com.github.duplicates.db.DuplicateItemPairDao
 class CalendarFindTask<L : DuplicateFindTaskListener<CalendarItem, CalendarViewHolder>>(
     context: Context,
     listener: L
-) : DuplicateFindTask<CalendarItem, CalendarViewHolder, L>(context, listener) {
+) : DuplicateFindTask<CalendarItem, CalendarViewHolder, L>(
+    DuplicateItemType.CALENDAR,
+    context,
+    listener
+) {
 
     override fun createProvider(context: Context): CalendarProvider {
         return CalendarProvider(context)
@@ -41,9 +44,5 @@ class CalendarFindTask<L : DuplicateFindTaskListener<CalendarItem, CalendarViewH
 
     override fun createComparator(): CalendarComparator {
         return CalendarComparator()
-    }
-
-    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
-        dao.deleteAll(DuplicateItemType.CALENDAR)
     }
 }

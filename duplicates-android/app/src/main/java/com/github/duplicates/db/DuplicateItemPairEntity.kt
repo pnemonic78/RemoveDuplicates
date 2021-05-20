@@ -15,20 +15,14 @@
  */
 package com.github.duplicates.db
 
-import android.provider.BaseColumns
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import com.github.duplicates.DuplicateItem
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateItemType
 
-@Entity(tableName = "pair")
+@Entity(tableName = "pair", primaryKeys = ["type", "id1", "id2"])
 data class DuplicateItemPairEntity(
-    @ColumnInfo(name = BaseColumns._ID)
-    @PrimaryKey
-    var id: Long,
     @ColumnInfo(name = "type")
     val type: DuplicateItemType,
     @ColumnInfo(name = "match")
@@ -45,7 +39,6 @@ data class DuplicateItemPairEntity(
 
 fun <T : DuplicateItem> DuplicateItemPair<T>.toEntity(): DuplicateItemPairEntity {
     return DuplicateItemPairEntity(
-        id = id,
         type = item1.itemType,
         match = match,
         id1 = item1.id,

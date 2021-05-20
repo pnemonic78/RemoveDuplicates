@@ -17,7 +17,7 @@ package com.github.duplicates
 
 import android.content.Context
 import com.github.duplicates.DuplicateComparator.Companion.MATCH_SAME
-import com.github.duplicates.db.DuplicateItemPairDao
+import com.github.duplicates.db.DuplicateItemPairEntity
 import com.github.duplicates.db.DuplicatesDatabase
 import java.util.*
 import java.util.concurrent.*
@@ -28,12 +28,14 @@ import java.util.concurrent.*
  * @author moshe.w
  */
 abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>, L : DuplicateFindTaskListener<I, VH>>(
+    private val itemType: DuplicateItemType,
     context: Context,
     listener: L
 ) : DuplicateTask<I, Any, Any, List<I>, L>(context, listener) {
 
     private var comparator: DuplicateComparator<I>? = null
     private val items = ArrayList<I>()
+    private lateinit var db: DuplicatesDatabase
 
     abstract fun createAdapter(): DuplicateAdapter<I, VH>
 
@@ -46,8 +48,8 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
     }
 
     override fun doInBackground(vararg params: Any): List<I> {
-        val db = DuplicatesDatabase.getDatabase(context)
-        clearDatabase(db)
+        db = DuplicatesDatabase.getDatabase(context)
+        clearDatabaseTable(db)
         try {
             provider.fetchItems(this)
         } catch (ignore: CancellationException) {
@@ -90,7 +92,11 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
             }
         }
         if (bestItem != null) {
-            listener.onDuplicateTaskMatch(this, bestItem, item, bestMatch, bestDifference!!)
+            item1 = bestItem
+            match = bestMatch
+            difference = bestDifference!!
+            listener.onDuplicateTaskMatch(this, item1, item, match, difference)
+            insertDatabase(item1, item, match)
         }
 
         if (items.add(item)) {
@@ -114,12 +120,24 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         return provider.getReadPermissions()
     }
 
-    private fun clearDatabase(db: DuplicatesDatabase) {
+    private fun clearDatabaseTable(db: DuplicatesDatabase) {
         val dao = db.pairDao()
-        clearDatabaseTable(dao)
+        dao.deleteAll(itemType)
     }
 
-    protected abstract fun clearDatabaseTable(dao: DuplicateItemPairDao)
+    private fun insertDatabase(item1: I, item2: I, match: Float) {
+        val isChecked2 = item2.isChecked or (match >= DuplicateItemPair.MATCH_GREAT)
+        val dao = db.pairDao()
+        val entity = DuplicateItemPairEntity(
+            type = itemType,
+            match = match,
+            id1 = item1.id,
+            isChecked1 = item1.isChecked,
+            id2 = item2.id,
+            isChecked2 = isChecked2
+        )
+        dao.insert(entity)
+    }
 
     companion object {
 

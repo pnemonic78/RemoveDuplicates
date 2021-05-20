@@ -19,7 +19,6 @@ import android.content.Context
 import com.github.duplicates.DuplicateFindTask
 import com.github.duplicates.DuplicateFindTaskListener
 import com.github.duplicates.DuplicateItemType
-import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Task to find duplicate bookmarks.
@@ -29,7 +28,11 @@ import com.github.duplicates.db.DuplicateItemPairDao
 class BookmarkFindTask<L : DuplicateFindTaskListener<BookmarkItem, BookmarkViewHolder>>(
     context: Context,
     listener: L
-) : DuplicateFindTask<BookmarkItem, BookmarkViewHolder, L>(context, listener) {
+) : DuplicateFindTask<BookmarkItem, BookmarkViewHolder, L>(
+    DuplicateItemType.BOOKMARK,
+    context,
+    listener
+) {
 
     override fun createProvider(context: Context): BookmarkProvider {
         return BookmarkProvider(context)
@@ -41,9 +44,5 @@ class BookmarkFindTask<L : DuplicateFindTaskListener<BookmarkItem, BookmarkViewH
 
     override fun createComparator(): BookmarkComparator {
         return BookmarkComparator()
-    }
-
-    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
-        dao.deleteAll(DuplicateItemType.BOOKMARK)
     }
 }

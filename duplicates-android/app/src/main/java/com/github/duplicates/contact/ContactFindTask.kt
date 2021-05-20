@@ -19,7 +19,6 @@ import android.content.Context
 import com.github.duplicates.DuplicateFindTask
 import com.github.duplicates.DuplicateFindTaskListener
 import com.github.duplicates.DuplicateItemType
-import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Task to find duplicate contacts.
@@ -29,7 +28,11 @@ import com.github.duplicates.db.DuplicateItemPairDao
 class ContactFindTask<L : DuplicateFindTaskListener<ContactItem, ContactViewHolder>>(
     context: Context,
     listener: L
-) : DuplicateFindTask<ContactItem, ContactViewHolder, L>(context, listener) {
+) : DuplicateFindTask<ContactItem, ContactViewHolder, L>(
+    DuplicateItemType.CONTACT,
+    context,
+    listener
+) {
 
     override fun createProvider(context: Context): ContactProvider {
         return ContactProvider(context)
@@ -41,9 +44,5 @@ class ContactFindTask<L : DuplicateFindTaskListener<ContactItem, ContactViewHold
 
     override fun createComparator(): ContactComparator {
         return ContactComparator()
-    }
-
-    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
-        dao.deleteAll(DuplicateItemType.CONTACT)
     }
 }

@@ -19,7 +19,6 @@ import android.content.Context
 import com.github.duplicates.DuplicateFindTask
 import com.github.duplicates.DuplicateFindTaskListener
 import com.github.duplicates.DuplicateItemType
-import com.github.duplicates.db.DuplicateItemPairDao
 
 /**
  * Task to find duplicate calls.
@@ -29,7 +28,11 @@ import com.github.duplicates.db.DuplicateItemPairDao
 class CallLogFindTask<L : DuplicateFindTaskListener<CallLogItem, CallLogViewHolder>>(
     context: Context,
     listener: L
-) : DuplicateFindTask<CallLogItem, CallLogViewHolder, L>(context, listener) {
+) : DuplicateFindTask<CallLogItem, CallLogViewHolder, L>(
+    DuplicateItemType.CALL_LOG,
+    context,
+    listener
+) {
 
     override fun createProvider(context: Context): CallLogProvider {
         return CallLogProvider(context)
@@ -41,9 +44,5 @@ class CallLogFindTask<L : DuplicateFindTaskListener<CallLogItem, CallLogViewHold
 
     override fun createComparator(): CallLogComparator {
         return CallLogComparator()
-    }
-
-    override fun clearDatabaseTable(dao: DuplicateItemPairDao) {
-        dao.deleteAll(DuplicateItemType.CALL_LOG)
     }
 }
