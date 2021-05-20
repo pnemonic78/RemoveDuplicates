@@ -17,13 +17,14 @@ package com.github.duplicates.message
 
 import android.provider.Telephony
 import com.github.duplicates.DuplicateItem
+import com.github.duplicates.DuplicateItemType
 
 /**
  * Duplicate message item.
  *
  * @author moshe.w
  */
-class MessageItem : DuplicateItem() {
+class MessageItem : DuplicateItem(DuplicateItemType.MESSAGE) {
 
     var address: String? = null
     var body: String? = null

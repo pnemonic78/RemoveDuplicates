@@ -17,13 +17,14 @@ package com.github.duplicates.alarm
 
 import com.github.duplicates.DaysOfWeek
 import com.github.duplicates.DuplicateItem
+import com.github.duplicates.DuplicateItemType
 
 /**
  * Duplicate alarm item.
  *
  * @author moshe.w
  */
-class AlarmItem : DuplicateItem() {
+class AlarmItem : DuplicateItem(DuplicateItemType.ALARM) {
 
     var activate: Int = 0
     var alarmTime: Int = 0

@@ -18,6 +18,7 @@ package com.github.duplicates.contact
 import android.net.Uri
 import androidx.core.net.toUri
 import com.github.duplicates.DuplicateItem
+import com.github.duplicates.DuplicateItemType
 import java.util.*
 
 /**
@@ -25,7 +26,7 @@ import java.util.*
  *
  * @author moshe.w
  */
-class ContactItem : DuplicateItem() {
+class ContactItem : DuplicateItem(DuplicateItemType.CONTACT) {
 
     var lookup: String? = null
     var accountName: String? = null

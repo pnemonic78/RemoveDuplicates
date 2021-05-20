@@ -16,13 +16,14 @@
 package com.github.duplicates.call
 
 import com.github.duplicates.DuplicateItem
+import com.github.duplicates.DuplicateItemType
 
 /**
  * Duplicate call log entry.
  *
  * @author moshe.w
  */
-class CallLogItem : DuplicateItem() {
+class CallLogItem : DuplicateItem(DuplicateItemType.CALL_LOG) {
 
     var name: String? = null
     var numberLabel: String? = null

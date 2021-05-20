@@ -155,11 +155,11 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
                 context,
                 listener as DuplicateFindTaskListener<BookmarkItem, BookmarkViewHolder>
             )
-            MainSpinnerItem.CALENDAR -> CalendarFindTask(
+            MainSpinnerItem.CALENDARS -> CalendarFindTask(
                 context,
                 listener as DuplicateFindTaskListener<CalendarItem, CalendarViewHolder>
             )
-            MainSpinnerItem.CALL_LOG -> CallLogFindTask(
+            MainSpinnerItem.CALL_LOGS -> CallLogFindTask(
                 context,
                 listener as DuplicateFindTaskListener<CallLogItem, CallLogViewHolder>
             )
@@ -188,11 +188,11 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
                 context,
                 listener as DuplicateDeleteTaskListener<BookmarkItem>
             )
-            MainSpinnerItem.CALENDAR -> CalendarDeleteTask(
+            MainSpinnerItem.CALENDARS -> CalendarDeleteTask(
                 context,
                 listener as DuplicateDeleteTaskListener<CalendarItem>
             )
-            MainSpinnerItem.CALL_LOG -> CallLogDeleteTask(
+            MainSpinnerItem.CALL_LOGS -> CallLogDeleteTask(
                 context,
                 listener as DuplicateDeleteTaskListener<CallLogItem>
             )

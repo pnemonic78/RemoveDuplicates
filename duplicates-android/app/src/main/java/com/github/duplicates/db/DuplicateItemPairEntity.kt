@@ -20,16 +20,17 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.github.duplicates.MainSpinnerItem
+import com.github.duplicates.DuplicateItem
+import com.github.duplicates.DuplicateItemPair
+import com.github.duplicates.DuplicateItemType
 
 @Entity(tableName = "pair")
-@TypeConverters(DuplicateConverters::class)
 data class DuplicateItemPairEntity(
     @ColumnInfo(name = BaseColumns._ID)
     @PrimaryKey
     var id: Long,
     @ColumnInfo(name = "type")
-    val type: MainSpinnerItem,
+    val type: DuplicateItemType,
     @ColumnInfo(name = "match")
     val match: Float = 0f,
     @ColumnInfo(name = "id1")
@@ -41,3 +42,15 @@ data class DuplicateItemPairEntity(
     @ColumnInfo(name = "checked2")
     var isChecked2: Boolean
 )
+
+fun <T : DuplicateItem> DuplicateItemPair<T>.toEntity(): DuplicateItemPairEntity {
+    return DuplicateItemPairEntity(
+        id = id,
+        type = item1.itemType,
+        match = match,
+        id1 = item1.id,
+        isChecked1 = item1.isChecked,
+        id2 = item2.id,
+        isChecked2 = item2.isChecked
+    )
+}

@@ -19,6 +19,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
+import com.github.duplicates.DuplicateItemType
 
 /**
  * Pair entity DAO.
@@ -44,8 +45,22 @@ interface DuplicateItemPairDao : BaseDao<DuplicateItemPairEntity> {
     fun queryAllWithTasksLive(): LiveData<List<DuplicateItemPairEntity>>
 
     /**
+     * Select all pairs from the table.
+     *
+     * @return all pairs.
+     */
+    @Query("SELECT * FROM pair WHERE type=:type")
+    fun queryAll(type: DuplicateItemType): List<DuplicateItemPairEntity>
+
+    /**
      * Delete all pairs.
      */
     @Query("DELETE FROM pair")
     fun deleteAll(): Int
+
+    /**
+     * Delete all pairs.
+     */
+    @Query("DELETE FROM pair WHERE type=:type")
+    fun deleteAll(type: DuplicateItemType): Int
 }

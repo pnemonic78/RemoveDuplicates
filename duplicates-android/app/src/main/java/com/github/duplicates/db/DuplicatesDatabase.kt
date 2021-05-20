@@ -19,6 +19,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
 /**
  * Duplicate items database.
@@ -30,6 +31,7 @@ import androidx.room.RoomDatabase
     version = 1,
     exportSchema = false
 )
+@TypeConverters(DuplicateConverters::class)
 abstract class DuplicatesDatabase : RoomDatabase() {
     abstract fun pairDao(): DuplicateItemPairDao
 
