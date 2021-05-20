@@ -74,8 +74,6 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Timber.plant(LogTree(BuildConfig.DEBUG))
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
