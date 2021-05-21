@@ -64,15 +64,15 @@ class CalendarProvider(context: Context) : DuplicateProvider<CalendarItem>(conte
         return CONTENT_URI
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun getCursorSelection(): String? {
+    override fun getCursorSelection(): String {
         return "$DELETED=0"
     }
 
-    override fun getCursorOrder(): String? {
+    override fun getCursorOrder(): String {
         return if (BuildConfig.DEBUG) {
             "$_ID ASC"
         } else {
@@ -80,7 +80,7 @@ class CalendarProvider(context: Context) : DuplicateProvider<CalendarItem>(conte
         }
     }
 
-    override fun createItem(cursor: Cursor): CalendarItem? {
+    override fun createItem(cursor: Cursor): CalendarItem {
         return CalendarItem()
     }
 
@@ -126,15 +126,15 @@ class CalendarProvider(context: Context) : DuplicateProvider<CalendarItem>(conte
         item.calendar = cal
     }
 
-    override fun deleteItem(cr: ContentResolver, item: CalendarItem): Boolean {
-        return cr.delete(getContentUri(), _ID + "=" + item.id, null) > 0
+    override fun deleteItem(cr: ContentResolver, contentUri: Uri, item: CalendarItem): Boolean {
+        return cr.delete(contentUri, _ID + "=" + item.id, null) > 0
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 

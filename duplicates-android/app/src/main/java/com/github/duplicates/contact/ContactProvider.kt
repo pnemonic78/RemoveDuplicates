@@ -78,11 +78,11 @@ class ContactProvider(context: Context) : DuplicateProvider<ContactItem>(context
         return CONTENT_URI
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun createItem(cursor: Cursor): ContactItem? {
+    override fun createItem(cursor: Cursor): ContactItem {
         val id = cursor.getLong(INDEX_CONTACT_ID)
         var item: ContactItem? = contacts.get(id)
         if (item != null) {
@@ -209,15 +209,15 @@ class ContactProvider(context: Context) : DuplicateProvider<ContactItem>(context
         }
     }
 
-    override fun deleteItem(cr: ContentResolver, item: ContactItem): Boolean {
-        return cr.delete(getContentUri(), RawContacts.CONTACT_ID + "=" + item.id, null) > 0
+    override fun deleteItem(cr: ContentResolver, contentUri: Uri, item: ContactItem): Boolean {
+        return cr.delete(contentUri, RawContacts.CONTACT_ID + "=" + item.id, null) > 0
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 

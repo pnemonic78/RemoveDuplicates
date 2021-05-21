@@ -48,11 +48,11 @@ class MessageProvider(context: Context) : DuplicateProvider<MessageItem>(context
         return Telephony.Sms.CONTENT_URI
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun createItem(cursor: Cursor): MessageItem? {
+    override fun createItem(cursor: Cursor): MessageItem {
         return MessageItem()
     }
 
@@ -74,11 +74,11 @@ class MessageProvider(context: Context) : DuplicateProvider<MessageItem>(context
         item.type = cursor.getInt(INDEX_TYPE)
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 

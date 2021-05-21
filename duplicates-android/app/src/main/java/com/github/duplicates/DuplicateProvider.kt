@@ -183,21 +183,32 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
      * @param cr   the content resolver.
      * @param item the item.
      */
-    open fun deleteItem(cr: ContentResolver, item: T): Boolean {
-        val contentUri = getContentUri()
+    private fun deleteItem(cr: ContentResolver, item: T): Boolean {
+        if (item.isDeleted) return true
+        val contentUri = getContentUri() ?: return false
         try {
             item.isError = false
-            return (contentUri != null) && cr.delete(
-                ContentUris.withAppendedId(
-                    contentUri,
-                    item.id
-                ), null, null
-            ) > 0
+            if (deleteItem(cr, contentUri, item)) {
+                item.isDeleted = true
+                return true
+            }
         } catch (e: IllegalArgumentException) {
             item.isError = true
             Timber.e(e, "deleteItem: %s: %s", item, e.message)
         }
         return false
+    }
+
+    /**
+     * Delete an item from the system provider.
+     *
+     * @param cr   the content resolver.
+     * @param contentUri the content uri.
+     * @param item the item.
+     */
+    open fun deleteItem(cr: ContentResolver, contentUri: Uri, item: T): Boolean {
+        val uri = ContentUris.withAppendedId(contentUri, item.id)
+        return cr.delete(uri, null, null) > 0
     }
 
     /**
@@ -237,13 +248,15 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
      * Execute some code before task does background work.
      */
     @MainThread
-    open fun onPreExecute() {}
+    open fun onPreExecute() {
+    }
 
     /**
      * Execute some code after the task did background work.
      */
     @MainThread
-    open fun onPostExecute() {}
+    open fun onPostExecute() {
+    }
 
     /**
      * Get the permissions necessary for reading content from the system provider.

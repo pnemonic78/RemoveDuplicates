@@ -27,6 +27,7 @@ abstract class DuplicateItem(val itemType: DuplicateItemType) : Comparable<Dupli
     var id: Long = 0
     var isChecked: Boolean = false
     var isError: Boolean = false
+    var isDeleted: Boolean = false
 
     override fun compareTo(other: DuplicateItem): Int {
         return compare(this.id, other.id)

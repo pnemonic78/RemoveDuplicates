@@ -39,8 +39,8 @@ abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskLis
     override fun doInBackground(vararg params: DuplicateItemPair<I>) {
         pairs += params
         publishProgress(pairs.size)
-        // Sort by descending id to avoid "index out of bounds" when displaying the list.
         pairs.sort()
+        // Sort by descending id to avoid "index out of bounds" when displaying the list.
         pairs.reverse()
         try {
             provider.deletePairs(pairs)

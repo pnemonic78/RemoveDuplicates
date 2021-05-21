@@ -33,11 +33,11 @@ class SamsungAlarmProvider(context: Context) : DuplicateProvider<AlarmItem>(cont
         return Uri.parse("content://com.samsung.sec.android.clockpackage/alarm")
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun createItem(cursor: Cursor): AlarmItem? {
+    override fun createItem(cursor: Cursor): AlarmItem {
         return AlarmItem()
     }
 
@@ -65,11 +65,11 @@ class SamsungAlarmProvider(context: Context) : DuplicateProvider<AlarmItem>(cont
         item.volume = cursor.getInt(INDEX_VOLUME)
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 

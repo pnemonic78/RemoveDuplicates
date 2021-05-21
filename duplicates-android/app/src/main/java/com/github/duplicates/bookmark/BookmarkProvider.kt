@@ -41,15 +41,15 @@ class BookmarkProvider(context: Context) : DuplicateProvider<BookmarkItem>(conte
         return Browser.BOOKMARKS_URI
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun getCursorSelection(): String? {
+    override fun getCursorSelection(): String {
         return "$BOOKMARK=1"
     }
 
-    override fun createItem(cursor: Cursor): BookmarkItem? {
+    override fun createItem(cursor: Cursor): BookmarkItem {
         return BookmarkItem()
     }
 
@@ -63,15 +63,15 @@ class BookmarkProvider(context: Context) : DuplicateProvider<BookmarkItem>(conte
         item.visits = cursor.getInt(INDEX_VISITS)
     }
 
-    override fun deleteItem(cr: ContentResolver, item: BookmarkItem): Boolean {
-        return cr.delete(getContentUri(), _ID + "=" + item.id, null) > 0
+    override fun deleteItem(cr: ContentResolver, contentUri: Uri, item: BookmarkItem): Boolean {
+        return cr.delete(contentUri, _ID + "=" + item.id, null) > 0
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 

@@ -44,11 +44,11 @@ class CallLogProvider(context: Context) : DuplicateProvider<CallLogItem>(context
         return CallLog.Calls.CONTENT_URI
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun createItem(cursor: Cursor): CallLogItem? {
+    override fun createItem(cursor: Cursor): CallLogItem {
         return CallLogItem()
     }
 
@@ -65,15 +65,15 @@ class CallLogProvider(context: Context) : DuplicateProvider<CallLogItem>(context
         item.type = cursor.getInt(INDEX_TYPE)
     }
 
-    override fun deleteItem(cr: ContentResolver, item: CallLogItem): Boolean {
-        return cr.delete(getContentUri(), _ID + "=" + item.id, null) > 0
+    override fun deleteItem(cr: ContentResolver, contentUri: Uri, item: CallLogItem): Boolean {
+        return cr.delete(contentUri, _ID + "=" + item.id, null) > 0
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 
