@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.AdapterView
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.android.removeduplicates.R
@@ -74,36 +75,54 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.spinner.adapter = MainSpinnerAdapter()
+        val adapter = MainSpinnerAdapter()
+        binding.spinner.adapter = adapter
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                onSpinnerItemSelected(adapter.getItem(position))
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
         binding.spinnerAction.setOnClickListener { searchClicked() }
         searchStopped(false)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (task != null && !task!!.isCancelled) {
-            task!!.cancel()
-        }
+        task?.cancel()
+    }
+
+    private fun onSpinnerItemSelected(item: MainSpinnerItem) {
+        //TODO("Load the previous find from the pair table")
     }
 
     private fun searchClicked() {
         binding.spinnerAction.isEnabled = false
-        val taskActive = this.task
-        if (taskActive != null && !taskActive.isCancelled) {
-            taskActive.cancel()
+        if (stopSearch()) return
+
+        spinnerItem = binding.spinner.selectedItem as MainSpinnerItem
+        startSearch(spinnerItem!!)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun startSearch(item: MainSpinnerItem) {
+        val task = createFindTask(item)
+        if (task != null) {
+            this.task = task as DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>
+            this.adapter = task.createAdapter()
+            adapter!!.setHasStableIds(true)
+            binding.list.adapter = adapter
+            task.start(this)
         } else {
-            spinnerItem = binding.spinner.selectedItem as MainSpinnerItem
-            val task = createFindTask(spinnerItem!!)
-            if (task != null) {
-                this.task = task as DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>
-                this.adapter = task.createAdapter()
-                adapter!!.setHasStableIds(true)
-                binding.list.adapter = adapter
-                task.start(this)
-            } else {
-                this.task = null
-                searchStopped(false)
-            }
+            this.task = null
+            searchStopped(false)
         }
     }
 
@@ -118,6 +137,14 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
             listSwitcher.displayedChild = CHILD_LIST
         }
         invalidateOptionsMenu()
+    }
+
+    private fun stopSearch(): Boolean {
+        val taskActive = this.task ?: return false
+        if (!taskActive.isCancelled) {
+            return taskActive.cancel()
+        }
+        return false
     }
 
     private fun searchStopped(cancelled: Boolean) {
@@ -312,6 +339,7 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
         return super.onOptionsItemSelected(item)
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun deleteItems() {
         if (task != null && !task!!.isCancelled) {
             task!!.cancel()
