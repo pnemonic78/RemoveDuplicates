@@ -39,7 +39,7 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
     DuplicateProviderListener<I, DuplicateProvider<I>> {
 
     private var _provider: DuplicateProvider<I>? = null
-    private var params: Array<Params>? = null
+    private var params: Array<out Params>? = null
 
     protected abstract fun createProvider(context: Context): DuplicateProvider<I>
 
@@ -84,7 +84,7 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
      * @param activity the activity for permissions.
      * @param params   the execution parameters.
      */
-    fun start(activity: Activity, params: Array<Params>? = null) {
+    fun start(activity: Activity, vararg params: Params) {
         this.params = params
         checkPermissions(activity)
     }

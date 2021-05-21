@@ -349,7 +349,7 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
                 this.task = task as DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>
                 val pairs = adapter!!.getCheckedPairs()
                 val params = pairs.toTypedArray()
-                task.start(this, params)
+                task.start(this, *params)
             } else {
                 this.task = null
                 searchStopped(false)
