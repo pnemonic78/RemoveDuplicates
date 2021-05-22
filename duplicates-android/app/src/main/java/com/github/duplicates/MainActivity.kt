@@ -58,14 +58,14 @@ import com.github.duplicates.message.MessageViewHolder
  *
  * @author moshe.w
  */
-class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>> :
+class MainActivity<I : DuplicateItem, L : DuplicateTaskListener<I>, T : DuplicateTask<I, *, *, *, L>> :
     AppCompatActivity(),
     DuplicateFindTaskListener<I, DuplicateViewHolder<I>>,
     DuplicateDeleteTaskListener<I>,
     SearchView.OnQueryTextListener {
 
     private lateinit var binding: ActivityMainBinding
-    private var task: DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>? = null
+    private var task: T? = null
     private var adapter: DuplicateAdapter<I, DuplicateViewHolder<I>>? = null
     private var spinnerItem: MainSpinnerItem? = null
 
@@ -96,35 +96,36 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
 
     override fun onDestroy() {
         super.onDestroy()
+        adapter = null
+        spinnerItem = null
         task?.cancel()
+        task = null
     }
 
-    private fun onSpinnerItemSelected(item: MainSpinnerItem) {
+    private fun onSpinnerItemSelected(spinnerItem: MainSpinnerItem) {
         // Load the previous find from the pair table
-        startSearch(item, true)
+        if (spinnerItem != this.spinnerItem) {
+            startSearch(spinnerItem, true)
+        }
     }
 
     private fun searchClicked() {
         binding.spinnerAction.isEnabled = false
         if (stopSearch()) return
 
-        spinnerItem = binding.spinner.selectedItem as MainSpinnerItem
-        startSearch(spinnerItem!!)
+        val spinnerItem = binding.spinner.selectedItem as MainSpinnerItem
+        startSearch(spinnerItem)
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun startSearch(item: MainSpinnerItem, isRestore: Boolean = false) {
-        val task = createFindTask(item)
-        if (task != null) {
-            this.task = task as DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>
-            this.adapter = task.createAdapter()
-            adapter!!.setHasStableIds(true)
-            binding.list.adapter = adapter
-            task.start(this, isRestore)
-        } else {
-            this.task = null
-            searchStopped(false)
-        }
+    private fun startSearch(spinnerItem: MainSpinnerItem, isRestore: Boolean = false) {
+        this.spinnerItem = spinnerItem
+        val task = createFindTask(spinnerItem)
+        this.task = task as T
+        this.adapter = task.createAdapter()
+        adapter!!.setHasStableIds(true)
+        binding.list.adapter = adapter
+        task.start(this, isRestore)
     }
 
     private fun searchStarted() {
@@ -165,7 +166,7 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun createFindTask(item: MainSpinnerItem): DuplicateFindTask<I, DuplicateViewHolder<I>, DuplicateFindTaskListener<I, DuplicateViewHolder<I>>>? {
+    private fun createFindTask(item: MainSpinnerItem): DuplicateFindTask<I, DuplicateViewHolder<I>, DuplicateFindTaskListener<I, DuplicateViewHolder<I>>> {
         val context: Context = this
         val listener: DuplicateFindTaskListener<I, DuplicateViewHolder<I>> = this
 
@@ -198,7 +199,7 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun createDeleteTask(item: MainSpinnerItem): DuplicateDeleteTask<I, DuplicateDeleteTaskListener<I>>? {
+    private fun createDeleteTask(item: MainSpinnerItem): DuplicateDeleteTask<I, DuplicateDeleteTaskListener<I>> {
         val context: Context = this
         val listener: DuplicateDeleteTaskListener<I> = this
 
@@ -346,15 +347,10 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
             task!!.cancel()
         } else if (adapter != null && adapter!!.itemCount > 0 && spinnerItem != null) {
             val task = createDeleteTask(spinnerItem!!)
-            if (task != null) {
-                this.task = task as DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>
-                val pairs = adapter!!.getCheckedPairs()
-                val params = pairs.toTypedArray()
-                task.start(this, *params)
-            } else {
-                this.task = null
-                searchStopped(false)
-            }
+            this.task = task as T
+            val pairs = adapter!!.getCheckedPairs()
+            val params = pairs.toTypedArray()
+            task.start(this, *params)
         }
     }
 
