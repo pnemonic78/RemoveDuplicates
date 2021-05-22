@@ -36,6 +36,7 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
 
     private var comparator: DuplicateComparator<I>? = null
     private val items = ArrayList<I>()
+    private val itemsCached = mutableMapOf<Long, I>()
 
     abstract fun createAdapter(): DuplicateAdapter<I, VH>
 
@@ -44,6 +45,7 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
     override fun onPreExecute() {
         super.onPreExecute()
         items.clear()
+        itemsCached.clear()
         this.comparator = createComparator()
     }
 
@@ -74,10 +76,12 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         val comparator = this.comparator ?: return
         try {
             for (entity in entities) {
-                val item1 = provider.fetchItem(entity.id1) ?: continue
-                val item2 = provider.fetchItem(entity.id2) ?: continue
+                val item1 = fetchItem(entity.id1) ?: continue
                 item1.isChecked = entity.isChecked1
+
+                val item2 = fetchItem(entity.id2) ?: continue
                 item2.isChecked = entity.isChecked2
+
                 val difference = comparator.difference(item1, item2)
                 val match = comparator.match(item1, item2, difference)
 
@@ -177,6 +181,17 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
             isChecked2 = isChecked2
         )
         dao.insert(entity)
+    }
+
+    private fun fetchItem(id: Long): I? {
+        var item = itemsCached[id]
+        if (item == null) {
+            item = provider.fetchItem(id)
+            if (item != null) {
+                itemsCached[id] = item
+            }
+        }
+        return item
     }
 
     companion object {
