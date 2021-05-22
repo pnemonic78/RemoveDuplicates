@@ -136,7 +136,7 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
     ) {
         if (requestCode == REQUEST_PERMISSIONS) {
             if (permissions.isNotEmpty() && grantResults.isNotEmpty()) {
-                if (grantResults[0] == PERMISSION_GRANTED) {//FIXME: check entire array.
+                if (isAllPermissionsGranted(grantResults)) {
                     onPermissionGranted()
                 } else {
                     onPermissionDenied()
@@ -145,6 +145,10 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
                 onPermissionDenied()
             }
         }
+    }
+
+    private fun isAllPermissionsGranted(grantResults: IntArray): Boolean {
+        return grantResults.all { it == PERMISSION_GRANTED }
     }
 
     protected abstract fun getPermissions(): Array<String>?

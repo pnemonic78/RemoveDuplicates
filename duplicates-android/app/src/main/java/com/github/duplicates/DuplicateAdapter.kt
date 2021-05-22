@@ -25,6 +25,10 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.github.android.removeduplicates.databinding.SameItemBinding
 import com.github.android.removeduplicates.databinding.SameItemShadowBinding
+import com.github.duplicates.db.DuplicatesDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 /**
@@ -228,7 +232,8 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
 
     override fun onItemCheckedChangeListener(item: T, checked: Boolean) {
         item.isChecked = checked
-        // TODO update the database pair table `entity.isChecked = checked`
+        // update the database pair table `entity.isChecked = checked`
+        updateDatabase(item)
         notifyDataSetChanged()
     }
 
@@ -271,6 +276,16 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
     protected fun notifyDataSetChangedWithClear() {
         recyclerView?.recycledViewPool?.clear()
         notifyDataSetChanged()
+    }
+
+    private fun updateDatabase(item: T) {
+        val context: Context = recyclerView?.context ?: return
+        CoroutineScope(Dispatchers.IO).launch {
+            val db = DuplicatesDatabase.getDatabase(context)
+            val dao = db.pairDao()
+            dao.updateItemChecked1(item.itemType, item.id, item.isChecked)
+            dao.updateItemChecked2(item.itemType, item.id, item.isChecked)
+        }
     }
 
     private inner class DuplicateAdapterFilter : Filter() {

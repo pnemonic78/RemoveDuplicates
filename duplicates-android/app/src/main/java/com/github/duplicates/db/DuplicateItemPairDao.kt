@@ -70,4 +70,16 @@ interface DuplicateItemPairDao : BaseDao<DuplicateItemPairEntity> {
      */
     @Query("DELETE FROM pair WHERE (type=:type) AND ((id1=:id) OR (id2=:id))")
     fun deleteAll(type: DuplicateItemType, id: Long)
+
+    /**
+     * Update the item1's checked status.
+     */
+    @Query("UPDATE pair SET checked1=:checked WHERE (type=:type) AND (id1=:id)")
+    fun updateItemChecked1(type: DuplicateItemType, id: Long, checked: Boolean): Int
+
+    /**
+     * Update the item2's checked status.
+     */
+    @Query("UPDATE pair SET checked2=:checked WHERE (type=:type) AND (id2=:id)")
+    fun updateItemChecked2(type: DuplicateItemType, id: Long, checked: Boolean): Int
 }
