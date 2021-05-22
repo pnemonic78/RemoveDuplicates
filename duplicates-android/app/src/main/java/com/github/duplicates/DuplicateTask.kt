@@ -26,6 +26,7 @@ import android.os.AsyncTask
 import android.os.Build
 import android.widget.Toast
 import com.github.android.removeduplicates.R
+import com.github.duplicates.db.DuplicatesDatabase
 
 /**
  * Task for duplicates.
@@ -40,6 +41,7 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
 
     private var _provider: DuplicateProvider<I>? = null
     private var params: Array<out Params>? = null
+    protected lateinit var db: DuplicatesDatabase
 
     protected abstract fun createProvider(context: Context): DuplicateProvider<I>
 

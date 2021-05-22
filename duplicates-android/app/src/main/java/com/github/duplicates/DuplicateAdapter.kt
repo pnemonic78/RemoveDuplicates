@@ -41,6 +41,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
     private var recyclerView: RecyclerView? = null
 
     init {
+        @Suppress("LeakingThis")
         setHasStableIds(true)
     }
 
@@ -86,10 +87,19 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
      * @param difference the array of differences.
      */
     fun add(item1: T, item2: T, match: Float = 1f, difference: BooleanArray) {
-        if (item1.isChecked && item2.isChecked) {
+        val pair = DuplicateItemPair(item1, item2, match, difference)
+        add(pair)
+    }
+
+    /**
+     * Add a pair.
+     *
+     * @param pair      the pair.
+     */
+    fun add(pair: DuplicateItemPair<T>) {
+        if (pair.item1.isChecked && pair.item2.isChecked) {
             return
         }
-        val pair = DuplicateItemPair(item1, item2, match, difference)
         if (pairs.add(pair)) {
             notifyItemInserted(pairs.size)
         }
@@ -284,6 +294,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
             return results
         }
 
+        @Suppress("UNCHECKED_CAST")
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
             pairs = results.values as MutableList<DuplicateItemPair<T>>
             notifyDataSetChangedWithClear()
