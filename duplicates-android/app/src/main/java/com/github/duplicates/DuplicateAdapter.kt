@@ -218,6 +218,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
 
     override fun onItemCheckedChangeListener(item: T, checked: Boolean) {
         item.isChecked = checked
+        // TODO update the database pair table `entity.isChecked = checked`
         notifyDataSetChanged()
     }
 

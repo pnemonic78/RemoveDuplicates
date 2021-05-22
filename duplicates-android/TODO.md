@@ -1,7 +1,6 @@
 To-Do List
 ====
 
-* cache duplicate pairs in db (room)
+* AsyncTask to RxJava
+* RxJava to kotlin Flow
 * disclosure alert dialog
-* layout margins + padding
-* layout styles

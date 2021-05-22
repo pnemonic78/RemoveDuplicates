@@ -21,6 +21,7 @@ import com.github.duplicates.db.DuplicateItemPairEntity
 import com.github.duplicates.db.DuplicatesDatabase
 import java.util.*
 import java.util.concurrent.*
+import kotlin.math.abs
 
 /**
  * Task to find duplicates.
@@ -49,12 +50,52 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
 
     override fun doInBackground(vararg params: Any): List<I> {
         db = DuplicatesDatabase.getDatabase(context)
+        if (params.isNotEmpty()) {
+            val param0 = params[0]
+            if ((param0 is Boolean) && param0) {
+                doFindDatabase(db)
+                return items
+            }
+        }
+        doFind(db)
+        return items
+    }
+
+    private fun doFind(db: DuplicatesDatabase) {
         clearDatabaseTable(db)
         try {
             provider.fetchItems(this)
         } catch (ignore: CancellationException) {
         }
-        return items
+    }
+
+    private fun doFindDatabase(db: DuplicatesDatabase) {
+        val dao = db.pairDao()
+        val entities = dao.queryAll(itemType)
+        val comparator = this.comparator ?: return
+        try {
+            for (entity in entities) {
+                val item1 = provider.fetchItem(entity.id1) ?: return
+                val item2 = provider.fetchItem(entity.id2) ?: return
+                item1.isChecked = entity.isChecked1
+                item2.isChecked = entity.isChecked2
+                val difference = comparator.difference(item1, item2)
+                val match = comparator.match(item1, item2, difference)
+
+                // Did the data change in the interim?
+                if ((abs(match - entity.match) >= 0.01f)) continue
+
+                listener.onDuplicateTaskMatch(this, item1, item2, match, difference)
+                if (items.add(item1) && items.add(item2)) {
+                    publishProgress(items.size)
+                }
+
+                if (isCancelled) {
+                    break
+                }
+            }
+        } catch (ignore: CancellationException) {
+        }
     }
 
     override fun onItemFetched(provider: DuplicateProvider<I>, count: Int, item: I) {
@@ -75,7 +116,7 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         var bestDifference: BooleanArray? = null
         var difference: BooleanArray
         var match: Float
-        val comparator = this.comparator!!
+        val comparator = this.comparator ?: return
 
         // Most likely that a matching item is a neighbour, so count backwards.
         for (i in size - 1 downTo 0) {

@@ -100,7 +100,8 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
     }
 
     private fun onSpinnerItemSelected(item: MainSpinnerItem) {
-        //TODO("Load the previous find from the pair table")
+        // Load the previous find from the pair table
+        startSearch(item, true)
     }
 
     private fun searchClicked() {
@@ -112,14 +113,14 @@ class MainActivity<I : DuplicateItem, T : DuplicateTask<I, *, *, *, DuplicateTas
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun startSearch(item: MainSpinnerItem) {
+    private fun startSearch(item: MainSpinnerItem, isRestore: Boolean = false) {
         val task = createFindTask(item)
         if (task != null) {
             this.task = task as DuplicateTask<I, *, *, *, DuplicateTaskListener<I>>
             this.adapter = task.createAdapter()
             adapter!!.setHasStableIds(true)
             binding.list.adapter = adapter
-            task.start(this)
+            task.start(this, isRestore)
         } else {
             this.task = null
             searchStopped(false)

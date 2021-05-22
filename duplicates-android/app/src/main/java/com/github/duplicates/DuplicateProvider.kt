@@ -66,7 +66,7 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
             throw CancellationException()
         }
         val items = ArrayList<T>()
-        val cr = context.contentResolver
+        val cr = context.contentResolver ?: return items
 
         val contentUri = getContentUri() ?: return items
         val cursor = cr.query(contentUri, getCursorProjection(), null, null, null)
@@ -101,7 +101,7 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
         if (isCancelled) {
             throw CancellationException()
         }
-        val cr = context.contentResolver
+        val cr = context.contentResolver ?: return
 
         val contentUri = getContentUri() ?: return
         val cursor = cr.query(
@@ -151,7 +151,7 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
             throw CancellationException()
         }
         val listener = this.listener ?: return
-        val cr = context.contentResolver
+        val cr = context.contentResolver ?: return
 
         var count = 0
         for (item in items) {
@@ -170,11 +170,7 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
      * @param item the item.
      */
     open fun deleteItem(item: T): Boolean {
-        return if (isCancelled) {
-            false
-        } else {
-            deleteItem(context.contentResolver, item)
-        }
+        return if (isCancelled) false else deleteItem(context.contentResolver, item)
     }
 
     /**
@@ -223,7 +219,7 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
             throw CancellationException()
         }
         val listener = this.listener ?: return
-        val cr = context.contentResolver
+        val cr = context.contentResolver ?: return
 
         var count = 0
         var item1: T
@@ -288,5 +284,30 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
      */
     protected fun empty(cursor: Cursor, index: Int): String {
         return if (cursor.isNull(index)) "" else cursor.getString(index)
+    }
+
+    fun fetchItem(id: Long): T? {
+        val cr = context.contentResolver ?: return null
+        val contentUri = getContentUri() ?: return null
+        val uri = ContentUris.withAppendedId(contentUri, id)
+        val cursor = cr.query(
+            uri, getCursorProjection(), getCursorSelection(), null, getCursorOrder()
+        )
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    val item = createItem(cursor)
+                    if (item != null) {
+                        populateItem(cursor, item)
+                        return item
+                    }
+                }
+            } catch (e: RuntimeException) {
+                Timber.e(e, "Error fetching item: %s", e.message)
+            } finally {
+                cursor.close()
+            }
+        }
+        return null
     }
 }
