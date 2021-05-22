@@ -63,4 +63,11 @@ interface DuplicateItemPairDao : BaseDao<DuplicateItemPairEntity> {
      */
     @Query("DELETE FROM pair WHERE type=:type")
     fun deleteAll(type: DuplicateItemType): Int
+
+
+    /**
+     * Delete all items.
+     */
+    @Query("DELETE FROM pair WHERE (type=:type) AND ((id1=:id) OR (id2=:id))")
+    fun deleteAll(type: DuplicateItemType, id: Long)
 }

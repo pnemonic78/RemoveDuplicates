@@ -36,7 +36,6 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
 
     private var comparator: DuplicateComparator<I>? = null
     private val items = ArrayList<I>()
-    private lateinit var db: DuplicatesDatabase
 
     abstract fun createAdapter(): DuplicateAdapter<I, VH>
 
@@ -75,8 +74,8 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         val comparator = this.comparator ?: return
         try {
             for (entity in entities) {
-                val item1 = provider.fetchItem(entity.id1) ?: return
-                val item2 = provider.fetchItem(entity.id2) ?: return
+                val item1 = provider.fetchItem(entity.id1) ?: continue
+                val item2 = provider.fetchItem(entity.id2) ?: continue
                 item1.isChecked = entity.isChecked1
                 item2.isChecked = entity.isChecked2
                 val difference = comparator.difference(item1, item2)

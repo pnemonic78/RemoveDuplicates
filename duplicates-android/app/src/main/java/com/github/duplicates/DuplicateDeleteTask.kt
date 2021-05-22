@@ -16,6 +16,7 @@
 package com.github.duplicates
 
 import android.content.Context
+import com.github.duplicates.db.DuplicatesDatabase
 import java.util.*
 import java.util.concurrent.CancellationException
 
@@ -37,6 +38,7 @@ abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskLis
     }
 
     override fun doInBackground(vararg params: DuplicateItemPair<I>) {
+        db = DuplicatesDatabase.getDatabase(context)
         pairs += params
         publishProgress(pairs.size)
         pairs.sort()
@@ -54,6 +56,7 @@ abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskLis
 
     override fun onItemDeleted(provider: DuplicateProvider<I>, count: Int, item: I) {
         listener.onDuplicateTaskItemDeleted(this, item)
+        deleteDatabase(item)
         publishProgress(count, item)
     }
 
@@ -63,10 +66,21 @@ abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskLis
         pair: DuplicateItemPair<I>
     ) {
         listener.onDuplicateTaskPairDeleted(this, pair)
+        deleteDatabase(pair.item1, pair.item2)
         publishProgress(count, pair)
     }
 
     override fun getPermissions(): Array<String>? {
         return provider.getDeletePermissions()
+    }
+
+    private fun deleteDatabase(item1: I, item2: I? = null) {
+        val dao = db.pairDao()
+        if (item1.isChecked) {
+            dao.deleteAll(item1.itemType, item1.id)
+        }
+        if ((item2 != null) && item2.isChecked) {
+            dao.deleteAll(item2.itemType, item2.id)
+        }
     }
 }
