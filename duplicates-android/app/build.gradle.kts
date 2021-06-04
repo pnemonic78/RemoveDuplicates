@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 val versionMajor = (project.properties["APP_VERSION_MAJOR"] as String).toInt()
@@ -93,6 +95,9 @@ dependencies {
     implementation("androidx.room:room-runtime:${BuildVersions.roomVersion}")
     implementation("androidx.room:room-ktx:${BuildVersions.roomVersion}")
     kapt("androidx.room:room-compiler:${BuildVersions.roomVersion}")
+
+    // Logging
+    implementation("com.google.firebase:firebase-crashlytics:18.0.1")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junitVersion}")
