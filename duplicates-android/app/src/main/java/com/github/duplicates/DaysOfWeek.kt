@@ -16,11 +16,9 @@
 package com.github.duplicates
 
 import android.content.Context
-
 import com.github.android.removeduplicates.R
-
 import java.text.DateFormatSymbols
-import java.util.Calendar
+import java.util.*
 
 /*
  * Days of week code as a single int.
@@ -114,7 +112,7 @@ class DaysOfWeek(days: Int) : Comparable<DaysOfWeek> {
             return ret
         }
 
-    fun isRepeatSet(): Boolean= days != 0
+    fun isRepeatSet(): Boolean = days != 0
 
     /**
      * returns number of days from today until next alarm
@@ -140,12 +138,20 @@ class DaysOfWeek(days: Int) : Comparable<DaysOfWeek> {
         return dayCount
     }
 
-    override fun compareTo(another: DaysOfWeek): Int {
-        return this.days - another.days
+    override fun compareTo(other: DaysOfWeek): Int {
+        return this.days - other.days
     }
 
     companion object {
 
-        private val DAY_MAP = intArrayOf(Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY)
+        private val DAY_MAP = intArrayOf(
+            Calendar.MONDAY,
+            Calendar.TUESDAY,
+            Calendar.WEDNESDAY,
+            Calendar.THURSDAY,
+            Calendar.FRIDAY,
+            Calendar.SATURDAY,
+            Calendar.SUNDAY
+        )
     }
 }

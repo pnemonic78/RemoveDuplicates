@@ -15,8 +15,7 @@
  */
 package com.github.duplicates.bookmark
 
-import android.text.format.DateUtils
-
+import android.text.format.DateUtils.MINUTE_IN_MILLIS
 import com.github.duplicates.DuplicateComparator
 
 /**
@@ -30,70 +29,52 @@ class BookmarkComparator : DuplicateComparator<BookmarkItem>() {
         var c: Int
 
         c = compare(lhs.created, rhs.created)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.date, rhs.date)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.favIcon, rhs.favIcon)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.title, rhs.title)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.uri, rhs.uri)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.visits, rhs.visits)
-        return if (c != SAME) {
-            c
-        } else super.compare(lhs, rhs)
+        return if (c != SAME) c else super.compare(lhs, rhs)
     }
 
     override fun difference(lhs: BookmarkItem, rhs: BookmarkItem): BooleanArray {
         val result = BooleanArray(6)
 
-        result[CREATED] = DuplicateComparator.compareTime(lhs.created, rhs.created, DateUtils.MINUTE_IN_MILLIS) != SAME
-        result[DATE] = DuplicateComparator.compareTime(lhs.date, rhs.date, DateUtils.MINUTE_IN_MILLIS) != SAME
-        result[FAVICON] = compare(lhs.favIcon, rhs.favIcon) != SAME
-        result[TITLE] = DuplicateComparator.compareIgnoreCase(lhs.title, rhs.title) != SAME
-        result[URL] = compare(lhs.uri, rhs.uri) != SAME
-        result[VISITS] = compare(lhs.visits, rhs.visits) != SAME
+        result[CREATED] = isDifferentTime(lhs.created, rhs.created, MINUTE_IN_MILLIS)
+        result[DATE] = isDifferentTime(lhs.date, rhs.date, MINUTE_IN_MILLIS)
+        result[FAVICON] = isDifferent(lhs.favIcon, rhs.favIcon)
+        result[TITLE] = isDifferentIgnoreCase(lhs.title, rhs.title)
+        result[URL] = isDifferent(lhs.uri, rhs.uri)
+        result[VISITS] = isDifferent(lhs.visits, rhs.visits)
 
         return result
     }
 
     override fun match(lhs: BookmarkItem, rhs: BookmarkItem, difference: BooleanArray?): Float {
-        var difference = difference
-        if (difference == null) {
-            difference = difference(lhs, rhs)
-        }
+        val different = difference ?: difference(lhs, rhs)
         var match = MATCH_SAME
 
-        if (difference[URL]) {
+        if (different[URL]) {
             match *= 0.8f
         }
-
-        if (difference[TITLE]) {
+        if (different[TITLE]) {
             match *= matchTitle(lhs.title, rhs.title, 0.9f)
         }
-
-        if (difference[CREATED]) {
+        if (different[CREATED]) {
             match *= 0.95f
         }
-        if (difference[FAVICON]) {
+        if (different[FAVICON]) {
             match *= 0.95f
         }
-
-        if (difference[DATE]) {
+        if (different[DATE]) {
             match *= 0.975f
         }
-        if (difference[VISITS]) {
+        if (different[VISITS]) {
             match *= 0.975f
         }
 

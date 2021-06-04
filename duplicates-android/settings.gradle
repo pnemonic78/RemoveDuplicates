@@ -1,2 +1,0 @@
-include ':app'
-include ':android-lib:lib'

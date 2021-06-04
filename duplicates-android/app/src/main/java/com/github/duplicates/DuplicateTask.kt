@@ -21,13 +21,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.AsyncTask
 import android.os.Build
 import android.widget.Toast
-
 import com.github.android.removeduplicates.R
-
-import android.content.pm.PackageManager.PERMISSION_GRANTED
+import com.github.duplicates.db.DuplicatesDatabase
 
 /**
  * Task for duplicates.
@@ -41,7 +40,8 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
     DuplicateProviderListener<I, DuplicateProvider<I>> {
 
     private var _provider: DuplicateProvider<I>? = null
-    private var params: Array<Params>? = null
+    private var params: Array<out Params>? = null
+    protected lateinit var db: DuplicatesDatabase
 
     protected abstract fun createProvider(context: Context): DuplicateProvider<I>
 
@@ -86,7 +86,7 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
      * @param activity the activity for permissions.
      * @param params   the execution parameters.
      */
-    fun start(activity: Activity, params: Array<Params>? = null) {
+    fun start(activity: Activity, vararg params: Params) {
         this.params = params
         checkPermissions(activity)
     }
@@ -129,10 +129,14 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
      * @param grantResults The grant results for the corresponding permissions which is either [PackageManager.PERMISSION_GRANTED] or [PackageManager.PERMISSION_DENIED]. Never null.
      */
     @TargetApi(Build.VERSION_CODES.M)
-    fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         if (requestCode == REQUEST_PERMISSIONS) {
             if (permissions.isNotEmpty() && grantResults.isNotEmpty()) {
-                if (grantResults[0] == PERMISSION_GRANTED) {//FIXME: check entire array.
+                if (isAllPermissionsGranted(grantResults)) {
                     onPermissionGranted()
                 } else {
                     onPermissionDenied()
@@ -141,6 +145,10 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
                 onPermissionDenied()
             }
         }
+    }
+
+    private fun isAllPermissionsGranted(grantResults: IntArray): Boolean {
+        return grantResults.all { it == PERMISSION_GRANTED }
     }
 
     protected abstract fun getPermissions(): Array<String>?
@@ -166,7 +174,13 @@ abstract class DuplicateTask<I : DuplicateItem, Params, Progress, Result, L : Du
         onCancelled()
     }
 
-    open fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {}
+    open fun onActivityResult(
+        activity: Activity,
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+    }
 
     /**
      * Cancel the task.

@@ -15,8 +15,10 @@
  */
 package com.github.duplicates.calendar
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameCalendarBinding
 import com.github.duplicates.DuplicateAdapter
 
 /**
@@ -26,8 +28,14 @@ import com.github.duplicates.DuplicateAdapter
  */
 class CalendarAdapter : DuplicateAdapter<CalendarItem, CalendarViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
-        val itemView = createViewHolder(R.layout.same_calendar, parent, viewType)
-        return CalendarViewHolder(itemView, this)
+    override fun createCardViewHolder(
+        context: Context,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        cardView: ViewGroup,
+        viewType: Int
+    ): CalendarViewHolder {
+        val binding = SameCalendarBinding.inflate(inflater, cardView, true)
+        return CalendarViewHolder(parent, binding, this)
     }
 }

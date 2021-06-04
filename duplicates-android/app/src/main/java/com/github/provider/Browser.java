@@ -77,17 +77,17 @@ public class Browser {
 
     /* if you change column order you must also change indices
        below */
-    public static final String[] HISTORY_PROJECTION = new String[] {
-            BookmarkColumns._ID, // 0
-            BookmarkColumns.URL, // 1
-            BookmarkColumns.VISITS, // 2
-            BookmarkColumns.DATE, // 3
-            BookmarkColumns.BOOKMARK, // 4
-            BookmarkColumns.TITLE, // 5
-            BookmarkColumns.FAVICON, // 6
-            BookmarkColumns.THUMBNAIL, // 7
-            BookmarkColumns.TOUCH_ICON, // 8
-            BookmarkColumns.USER_ENTERED, // 9
+    public static final String[] HISTORY_PROJECTION = new String[]{
+        BookmarkColumns._ID, // 0
+        BookmarkColumns.URL, // 1
+        BookmarkColumns.VISITS, // 2
+        BookmarkColumns.DATE, // 3
+        BookmarkColumns.BOOKMARK, // 4
+        BookmarkColumns.TITLE, // 5
+        BookmarkColumns.FAVICON, // 6
+        BookmarkColumns.THUMBNAIL, // 7
+        BookmarkColumns.TOUCH_ICON, // 8
+        BookmarkColumns.USER_ENTERED, // 9
     };
 
     /* these indices dependent on HISTORY_PROJECTION */
@@ -108,9 +108,9 @@ public class Browser {
     public static final int HISTORY_PROJECTION_TOUCH_ICON_INDEX = 8;
 
     /* columns needed to determine whether to truncate history */
-    public static final String[] TRUNCATE_HISTORY_PROJECTION = new String[] {
-            BookmarkColumns._ID,
-            BookmarkColumns.DATE,
+    public static final String[] TRUNCATE_HISTORY_PROJECTION = new String[]{
+        BookmarkColumns._ID,
+        BookmarkColumns.DATE,
     };
 
     public static final int TRUNCATE_HISTORY_PROJECTION_ID_INDEX = 0;
@@ -130,17 +130,38 @@ public class Browser {
      * A projection of {@link #SEARCHES_URI} that contains {@link SearchColumns#_ID},
      * {@link SearchColumns#SEARCH}, and {@link SearchColumns#DATE}.
      */
-    public static final String[] SEARCHES_PROJECTION = new String[] {
-            // if you change column order you must also change indices below
-            SearchColumns._ID, // 0
-            SearchColumns.SEARCH, // 1
-            SearchColumns.DATE, // 2
+    public static final String[] SEARCHES_PROJECTION = new String[]{
+        // if you change column order you must also change indices below
+        SearchColumns._ID, // 0
+        SearchColumns.SEARCH, // 1
+        SearchColumns.DATE, // 2
     };
 
     /* these indices dependent on SEARCHES_PROJECTION */
     public static final int SEARCHES_PROJECTION_SEARCH_INDEX = 1;
     public static final int SEARCHES_PROJECTION_DATE_INDEX = 2;
-
+    /**
+     * Boolean extra passed along with an Intent to a browser, specifying that
+     * a new tab be created.  Overrides EXTRA_APPLICATION_ID; if both are set,
+     * a new tab will be used, rather than using the same one.
+     */
+    public static final String EXTRA_CREATE_NEW_TAB = "create_new_tab";
+    /**
+     * Stores a Bitmap extra in an {@link Intent} representing the screenshot of
+     * a page to share.  When receiving an {@link Intent#ACTION_SEND} from the
+     * Browser, use this to access the screenshot.
+     *
+     * @hide
+     */
+    public final static String EXTRA_SHARE_SCREENSHOT = "share_screenshot";
+    /**
+     * Stores a Bitmap extra in an {@link Intent} representing the favicon of a
+     * page to share.  When receiving an {@link Intent#ACTION_SEND} from the
+     * Browser, use this to access the favicon.
+     *
+     * @hide
+     */
+    public final static String EXTRA_SHARE_FAVICON = "share_favicon";
     /* Set a cap on the count of history items in the history/bookmark
        table, to prevent db and layout operations from dragging to a
        crawl.  Revisit this cap when/if db/layout performance
@@ -150,12 +171,12 @@ public class Browser {
     private static final int MAX_HISTORY_COUNT = 250;
 
     /**
-     *  Open an activity to save a bookmark. Launch with a title
-     *  and/or a url, both of which can be edited by the user before saving.
+     * Open an activity to save a bookmark. Launch with a title
+     * and/or a url, both of which can be edited by the user before saving.
      *
-     *  @param c        Context used to launch the activity to add a bookmark.
-     *  @param title    Title for the bookmark. Can be null or empty string.
-     *  @param url      Url for the bookmark. Can be null or empty string.
+     * @param c     Context used to launch the activity to add a bookmark.
+     * @param title Title for the bookmark. Can be null or empty string.
+     * @param url   Url for the bookmark. Can be null or empty string.
      */
     public static final void saveBookmark(Context c,
                                           String title,
@@ -167,48 +188,26 @@ public class Browser {
     }
 
     /**
-     * Boolean extra passed along with an Intent to a browser, specifying that
-     * a new tab be created.  Overrides EXTRA_APPLICATION_ID; if both are set,
-     * a new tab will be used, rather than using the same one.
-     */
-    public static final String EXTRA_CREATE_NEW_TAB = "create_new_tab";
-
-    /**
-     * Stores a Bitmap extra in an {@link Intent} representing the screenshot of
-     * a page to share.  When receiving an {@link Intent#ACTION_SEND} from the
-     * Browser, use this to access the screenshot.
-     * @hide
-     */
-    public final static String EXTRA_SHARE_SCREENSHOT = "share_screenshot";
-
-    /**
-     * Stores a Bitmap extra in an {@link Intent} representing the favicon of a
-     * page to share.  When receiving an {@link Intent#ACTION_SEND} from the
-     * Browser, use this to access the favicon.
-     * @hide
-     */
-    public final static String EXTRA_SHARE_FAVICON = "share_favicon";
-
-    /**
      * Sends the given string using an Intent with {@link Intent#ACTION_SEND} and a mime type
      * of text/plain. The string is put into {@link Intent#EXTRA_TEXT}.
      *
      * @param context the context used to start the activity
-     * @param string the string to send
+     * @param string  the string to send
      */
     public static final void sendString(Context context, String string) {
         //sendString(context, string, context.getString(android.R.string.sendText));
     }
 
     /**
-     *  Find an application to handle the given string and, if found, invoke
-     *  it with the given string as a parameter.
-     *  @param c Context used to launch the new activity.
-     *  @param stringToSend The string to be handled.
-     *  @param chooserDialogTitle The title of the dialog that allows the user
-     *  to select between multiple applications that are all capable of handling
-     *  the string.
-     *  @hide pending API council approval
+     * Find an application to handle the given string and, if found, invoke
+     * it with the given string as a parameter.
+     *
+     * @param c                  Context used to launch the new activity.
+     * @param stringToSend       The string to be handled.
+     * @param chooserDialogTitle The title of the dialog that allows the user
+     *                           to select between multiple applications that are all capable of handling
+     *                           the string.
+     * @hide pending API council approval
      */
     public static final void sendString(Context c,
                                         String stringToSend,
@@ -222,39 +221,39 @@ public class Browser {
             // In case this is called from outside an Activity
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             c.startActivity(i);
-        } catch(android.content.ActivityNotFoundException ex) {
+        } catch (android.content.ActivityNotFoundException ex) {
             // if no app handles it, do nothing
         }
     }
 
     /**
-     *  Return a cursor pointing to a list of all the bookmarks. The cursor will have a single
-     *  column, {@link BookmarkColumns#URL}.
-     *  <p>
-     *  Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
+     * Return a cursor pointing to a list of all the bookmarks. The cursor will have a single
+     * column, {@link BookmarkColumns#URL}.
+     * <p>
+     * Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
      *
-     *  @param cr   The ContentResolver used to access the database.
+     * @param cr The ContentResolver used to access the database.
      */
     public static final Cursor getAllBookmarks(ContentResolver cr) throws
-            IllegalStateException {
+        IllegalStateException {
         return cr.query(Bookmarks.CONTENT_URI,
-                new String[] { Bookmarks.URL },
-                Bookmarks.IS_FOLDER + " = 0", null, null);
+            new String[]{Bookmarks.URL},
+            Bookmarks.IS_FOLDER + " = 0", null, null);
     }
 
     /**
-     *  Return a cursor pointing to a list of all visited site urls. The cursor will
-     *  have a single column, {@link BookmarkColumns#URL}.
-     *  <p>
-     *  Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
+     * Return a cursor pointing to a list of all visited site urls. The cursor will
+     * have a single column, {@link BookmarkColumns#URL}.
+     * <p>
+     * Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
      *
-     *  @param cr   The ContentResolver used to access the database.
+     * @param cr The ContentResolver used to access the database.
      */
     public static final Cursor getAllVisitedUrls(ContentResolver cr) throws
-            IllegalStateException {
+        IllegalStateException {
         return cr.query(Combined.CONTENT_URI,
-                new String[] { Combined.URL }, null, null,
-                Combined.DATE_CREATED + " ASC");
+            new String[]{Combined.URL}, null, null,
+            Combined.DATE_CREATED + " ASC");
     }
 
     private static final void addOrUrlEquals(StringBuilder sb) {
@@ -277,38 +276,39 @@ public class Browser {
         if (secure) {
             whereClause = new StringBuilder(Bookmarks.URL + " = ");
             DatabaseUtils.appendEscapedSQLString(whereClause,
-                    "https://" + compareString);
+                "https://" + compareString);
             addOrUrlEquals(whereClause);
             DatabaseUtils.appendEscapedSQLString(whereClause,
-                    "https://www." + compareString);
+                "https://www." + compareString);
         } else {
             whereClause = new StringBuilder(Bookmarks.URL + " = ");
             DatabaseUtils.appendEscapedSQLString(whereClause,
-                    compareString);
+                compareString);
             addOrUrlEquals(whereClause);
             String wwwString = "www." + compareString;
             DatabaseUtils.appendEscapedSQLString(whereClause,
-                    wwwString);
+                wwwString);
             addOrUrlEquals(whereClause);
             DatabaseUtils.appendEscapedSQLString(whereClause,
-                    "http://" + compareString);
+                "http://" + compareString);
             addOrUrlEquals(whereClause);
             DatabaseUtils.appendEscapedSQLString(whereClause,
-                    "http://" + wwwString);
+                "http://" + wwwString);
         }
-        return cr.query(History.CONTENT_URI, new String[] { History._ID, History.VISITS },
-                whereClause.toString(), null, null);
+        return cr.query(History.CONTENT_URI, new String[]{History._ID, History.VISITS},
+            whereClause.toString(), null, null);
     }
 
     /**
-     *  Update the visited history to acknowledge that a site has been
-     *  visited.
-     *  Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
-     *  Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
-     *  @param cr   The ContentResolver used to access the database.
-     *  @param url  The site being visited.
-     *  @param real If true, this is an actual visit, and should add to the
-     *              number of visits.  If false, the user entered it manually.
+     * Update the visited history to acknowledge that a site has been
+     * visited.
+     * Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
+     * Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
+     *
+     * @param cr   The ContentResolver used to access the database.
+     * @param url  The site being visited.
+     * @param real If true, this is an actual visit, and should add to the
+     *             number of visits.  If false, the user entered it manually.
      */
     public static final void updateVisitedHistory(ContentResolver cr,
                                                   String url, boolean real) {
@@ -326,7 +326,7 @@ public class Browser {
                 }
                 values.put(History.DATE_LAST_VISITED, now);
                 cr.update(ContentUris.withAppendedId(History.CONTENT_URI, c.getLong(0)),
-                        values, null, null);
+                    values, null, null);
             } else {
                 truncateHistory(cr);
                 ContentValues values = new ContentValues();
@@ -355,17 +355,18 @@ public class Browser {
     }
 
     /**
-     *  Returns all the URLs in the history.
-     *  Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
-     *  @param cr   The ContentResolver used to access the database.
-     *  @hide pending API council approval
+     * Returns all the URLs in the history.
+     * Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
+     *
+     * @param cr The ContentResolver used to access the database.
+     * @hide pending API council approval
      */
     public static final String[] getVisitedHistory(ContentResolver cr) {
         Cursor c = null;
         String[] str = null;
         try {
-            String[] projection = new String[] {
-                    History.URL,
+            String[] projection = new String[]{
+                History.URL,
             };
             c = cr.query(History.CONTENT_URI, projection, History.VISITS + " > 0", null, null);
             if (c == null) return new String[0];
@@ -390,8 +391,8 @@ public class Browser {
      * of them.  This is used to keep our history table to a
      * reasonable size.  Note: it does not prune bookmarks.  If the
      * user wants 1000 bookmarks, the user gets 1000 bookmarks.
-     *  Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
-     *  Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
+     * Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
+     * Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
      *
      * @param cr The ContentResolver used to access the database.
      */
@@ -402,8 +403,8 @@ public class Browser {
 
             // Select non-bookmark history, ordered by date
             cursor = cr.query(History.CONTENT_URI,
-                    new String[] { History._ID, History.URL, History.DATE_LAST_VISITED },
-                    null, null, History.DATE_LAST_VISITED + " ASC");
+                new String[]{History._ID, History.URL, History.DATE_LAST_VISITED},
+                null, null, History.DATE_LAST_VISITED + " ASC");
 
             if (cursor.moveToFirst() && cursor.getCount() >= MAX_HISTORY_COUNT) {
                 /* eliminate oldest history items */
@@ -422,8 +423,9 @@ public class Browser {
 
     /**
      * Returns whether there is any history to clear.
-     *  Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
-     * @param cr   The ContentResolver used to access the database.
+     * Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
+     *
+     * @param cr The ContentResolver used to access the database.
      * @return boolean  True if the history can be cleared.
      */
     public static final boolean canClearHistory(ContentResolver cr) {
@@ -431,7 +433,7 @@ public class Browser {
         boolean ret = false;
         try {
             cursor = cr.query(History.CONTENT_URI,
-                new String [] { History._ID, History.VISITS },
+                new String[]{History._ID, History.VISITS},
                 null, null, null);
             ret = cursor.getCount() > 0;
         } catch (IllegalStateException e) {
@@ -443,10 +445,11 @@ public class Browser {
     }
 
     /**
-     *  Delete all entries from the bookmarks/history table which are
-     *  not bookmarks.  Also set all visited bookmarks to unvisited.
-     *  Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
-     *  @param cr   The ContentResolver used to access the database.
+     * Delete all entries from the bookmarks/history table which are
+     * not bookmarks.  Also set all visited bookmarks to unvisited.
+     * Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
+     *
+     * @param cr The ContentResolver used to access the database.
      */
     public static final void clearHistory(ContentResolver cr) {
         deleteHistoryWhere(cr, null);
@@ -455,19 +458,19 @@ public class Browser {
     /**
      * Helper function to delete all history items and release the icons for them in the
      * {@link WebIconDatabase}.
-     *
+     * <p>
      * Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
      * Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
      *
-     * @param cr   The ContentResolver used to access the database.
-     * @param whereClause   String to limit the items affected.
-     *                      null means all items.
+     * @param cr          The ContentResolver used to access the database.
+     * @param whereClause String to limit the items affected.
+     *                    null means all items.
      */
     private static final void deleteHistoryWhere(ContentResolver cr, String whereClause) {
         Cursor cursor = null;
         try {
-            cursor = cr.query(History.CONTENT_URI, new String[] { History.URL }, whereClause,
-                    null, null);
+            cursor = cr.query(History.CONTENT_URI, new String[]{History.URL}, whereClause,
+                null, null);
             if (cursor.moveToFirst()) {
                 cr.delete(History.CONTENT_URI, whereClause, null);
             }
@@ -481,7 +484,8 @@ public class Browser {
 
     /**
      * Delete all history items from begin to end.
-     *  Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
+     * Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
+     *
      * @param cr    The ContentResolver used to access the database.
      * @param begin First date to remove.  If -1, all dates before end.
      *              Inclusive.
@@ -489,7 +493,7 @@ public class Browser {
      *              Non-inclusive.
      */
     public static final void deleteHistoryTimeFrame(ContentResolver cr,
-            long begin, long end) {
+                                                    long begin, long end) {
         String whereClause;
         String date = BookmarkColumns.DATE;
         if (-1 == begin) {
@@ -502,28 +506,30 @@ public class Browser {
             whereClause = date + " >= " + Long.toString(begin);
         } else {
             whereClause = date + " >= " + Long.toString(begin) + " AND " + date
-                    + " < " + Long.toString(end);
+                + " < " + Long.toString(end);
         }
         deleteHistoryWhere(cr, whereClause);
     }
 
     /**
      * Remove a specific url from the history database.
-     *  Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
-     * @param cr    The ContentResolver used to access the database.
-     * @param url   url to remove.
+     * Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
+     *
+     * @param cr  The ContentResolver used to access the database.
+     * @param url url to remove.
      */
     public static final void deleteFromHistory(ContentResolver cr,
                                                String url) {
-        cr.delete(History.CONTENT_URI, History.URL + "=?", new String[] { url });
+        cr.delete(History.CONTENT_URI, History.URL + "=?", new String[]{url});
     }
 
     /**
      * Add a search string to the searches database.
-     *  Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
-     *  Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
-     * @param cr   The ContentResolver used to access the database.
-     * @param search    The string to add to the searches database.
+     * Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
+     * Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
+     *
+     * @param cr     The ContentResolver used to access the database.
+     * @param search The string to add to the searches database.
      */
     public static final void addSearchUrl(ContentResolver cr, String search) {
         // The content provider will take care of updating existing searches instead of duplicating
@@ -535,8 +541,9 @@ public class Browser {
 
     /**
      * Remove all searches from the search database.
-     *  Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
-     * @param cr   The ContentResolver used to access the database.
+     * Requires {@link android.Manifest.permission#WRITE_HISTORY_BOOKMARKS}
+     *
+     * @param cr The ContentResolver used to access the database.
      */
     public static final void clearSearches(ContentResolver cr) {
         // FIXME: Should this clear the urls to which these searches lead?
@@ -549,18 +556,19 @@ public class Browser {
     }
 
     /**
-     *  Request all icons from the database.  This call must either be called
-     *  in the main thread or have had Looper.prepare() invoked in the calling
-     *  thread.
-     *  Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
-     *  @param  cr The ContentResolver used to access the database.
-     *  @param  where Clause to be used to limit the query from the database.
-     *          Must be an allowable string to be passed into a database query.
-     *  @param  listener IconListener that gets the icons once they are
-     *          retrieved.
+     * Request all icons from the database.  This call must either be called
+     * in the main thread or have had Looper.prepare() invoked in the calling
+     * thread.
+     * Requires {@link android.Manifest.permission#READ_HISTORY_BOOKMARKS}
+     *
+     * @param cr       The ContentResolver used to access the database.
+     * @param where    Clause to be used to limit the query from the database.
+     *                 Must be an allowable string to be passed into a database query.
+     * @param listener IconListener that gets the icons once they are
+     *                 retrieved.
      */
     public static final void requestAllIcons(ContentResolver cr, String where,
-            WebIconDatabase.IconListener listener) {
+                                             WebIconDatabase.IconListener listener) {
         // Do nothing: this is no longer used.
     }
 

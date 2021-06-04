@@ -15,8 +15,7 @@
  */
 package com.github.duplicates.call
 
-import android.text.format.DateUtils
-
+import android.text.format.DateUtils.SECOND_IN_MILLIS
 import com.github.duplicates.DuplicateComparator
 
 /**
@@ -30,86 +29,64 @@ class CallLogComparator : DuplicateComparator<CallLogItem>() {
         var c: Int
 
         c = compare(lhs.type, rhs.type)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.date, rhs.date)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.duration, rhs.duration)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.number, rhs.number)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.numberType, rhs.numberType)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compareIgnoreCase(lhs.name, rhs.name)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.isRead, rhs.isRead)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         c = compare(lhs.isNew, rhs.isNew)
-        return if (c != SAME) {
-            c
-        } else super.compare(lhs, rhs)
+        return if (c != SAME) c else super.compare(lhs, rhs)
     }
 
     override fun difference(lhs: CallLogItem, rhs: CallLogItem): BooleanArray {
         val result = BooleanArray(8)
 
-        result[DATE] = compareTime(lhs.date, rhs.date, DateUtils.SECOND_IN_MILLIS) != SAME
-        result[DURATION] = compareTime(lhs.duration, rhs.duration, 1) != SAME
-        result[NAME] = compareIgnoreCase(lhs.name, rhs.name) != SAME
-        result[NEW] = compare(lhs.isNew, rhs.isNew) != SAME
-        result[NUMBER] = comparePhoneNumber(lhs.number, rhs.number) != SAME
-        result[NUMBER_TYPE] = compare(lhs.numberType, rhs.numberType) != SAME
-        result[READ] = compare(lhs.isRead, rhs.isRead) != SAME
-        result[TYPE] = compare(lhs.type, rhs.type) != SAME
+        result[DATE] = isDifferentTime(lhs.date, rhs.date, SECOND_IN_MILLIS)
+        result[DURATION] = isDifferentTime(lhs.duration, rhs.duration, 1)
+        result[NAME] = isDifferentIgnoreCase(lhs.name, rhs.name)
+        result[NEW] = isDifferent(lhs.isNew, rhs.isNew)
+        result[NUMBER] = isDifferentPhoneNumber(lhs.number, rhs.number)
+        result[NUMBER_TYPE] = isDifferent(lhs.numberType, rhs.numberType)
+        result[READ] = isDifferent(lhs.isRead, rhs.isRead)
+        result[TYPE] = isDifferent(lhs.type, rhs.type)
 
         return result
     }
 
     override fun match(lhs: CallLogItem, rhs: CallLogItem, difference: BooleanArray?): Float {
-        var difference = difference
-        if (difference == null) {
-            difference = difference(lhs, rhs)
-        }
+        val different = difference ?: difference(lhs, rhs)
         var match = MATCH_SAME
 
-        if (difference[DATE]) {
+        if (different[DATE]) {
             match *= 0.7f
         }
-
-        if (difference[TYPE]) {
+        if (different[TYPE]) {
             match *= 0.8f
         }
-        if (difference[DURATION]) {
+        if (different[DURATION]) {
             match *= 0.8f
         }
-        if (difference[NUMBER]) {
+        if (different[NUMBER]) {
             match *= 0.8f
         }
-
-        if (difference[NUMBER_TYPE]) {
+        if (different[NUMBER_TYPE]) {
             match *= 0.9f
         }
-        if (difference[NAME]) {
+        if (different[NAME]) {
             match *= matchTitle(lhs.name, rhs.name, 0.9f)
         }
-
-        if (difference[READ]) {
+        if (different[READ]) {
             match *= 0.95f
         }
-        if (difference[NEW]) {
+        if (different[NEW]) {
             match *= 0.95f
         }
 

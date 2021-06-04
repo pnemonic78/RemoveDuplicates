@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -16,84 +15,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
-        android:id="@+id/checkbox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/match" />
-
-    <ImageView
-        android:id="@+id/icon1"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="@string/contact_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/checkbox1"
-        tools:src="@drawable/ic_contact_picture" />
-
-    <TextView
-        android:id="@+id/name1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/icon1"
-        app:layout_constraintStart_toEndOf="@+id/checkbox1"
-        app:layout_constraintTop_toTopOf="@+id/icon1"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/phone1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintEnd_toStartOf="@+id/icon1"
-        app:layout_constraintStart_toStartOf="@+id/name1"
-        app:layout_constraintTop_toBottomOf="@+id/name1"
-        tools:text="@string/dummy_text_long3" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="icon1,phone1" />
-
-    <TextView
-        android:id="@+id/email1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier10"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/im1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email1"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/event1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/im1"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/account1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event1"
-        tools:text="@string/dummy_text" />
+    <include
+        android:id="@+id/item1"
+        layout="@layout/item_contact" />
 
     <View
         android:id="@+id/divider"
@@ -102,86 +26,10 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
-        android:background="@android:drawable/divider_horizontal_bright"
-        app:layout_constraintTop_toBottomOf="@+id/account1" />
+        android:background="@android:drawable/divider_horizontal_bright" />
 
-    <CheckBox
-        android:id="@+id/checkbox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+    <include
+        android:id="@+id/item2"
+        layout="@layout/item_contact" />
 
-    <ImageView
-        android:id="@+id/icon2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="@string/contact_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/checkbox2"
-        tools:src="@drawable/ic_contact_picture" />
-
-    <TextView
-        android:id="@+id/name2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/icon2"
-        app:layout_constraintStart_toEndOf="@+id/checkbox2"
-        app:layout_constraintTop_toTopOf="@+id/icon2"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/phone2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintEnd_toStartOf="@+id/icon2"
-        app:layout_constraintStart_toStartOf="@+id/name2"
-        app:layout_constraintTop_toBottomOf="@+id/name2"
-        tools:text="@string/dummy_text_long3" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="icon2,phone2" />
-
-    <TextView
-        android:id="@+id/email2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrier20"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/im2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email2"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/event2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/im2"
-        tools:text="@string/dummy_text" />
-
-    <TextView
-        android:id="@+id/account2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/event2"
-        tools:text="@string/dummy_text" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

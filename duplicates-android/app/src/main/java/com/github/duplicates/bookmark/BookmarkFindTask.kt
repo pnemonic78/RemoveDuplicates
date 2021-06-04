@@ -18,13 +18,21 @@ package com.github.duplicates.bookmark
 import android.content.Context
 import com.github.duplicates.DuplicateFindTask
 import com.github.duplicates.DuplicateFindTaskListener
+import com.github.duplicates.DuplicateItemType
 
 /**
  * Task to find duplicate bookmarks.
  *
  * @author moshe.w
  */
-class BookmarkFindTask<L : DuplicateFindTaskListener<BookmarkItem, BookmarkViewHolder>>(context: Context, listener: L) : DuplicateFindTask<BookmarkItem, BookmarkViewHolder, L>(context, listener) {
+class BookmarkFindTask<L : DuplicateFindTaskListener<BookmarkItem, BookmarkViewHolder>>(
+    context: Context,
+    listener: L
+) : DuplicateFindTask<BookmarkItem, BookmarkViewHolder, L>(
+    DuplicateItemType.BOOKMARK,
+    context,
+    listener
+) {
 
     override fun createProvider(context: Context): BookmarkProvider {
         return BookmarkProvider(context)

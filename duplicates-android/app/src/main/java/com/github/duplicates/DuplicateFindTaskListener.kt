@@ -20,7 +20,8 @@ package com.github.duplicates
  *
  * @author moshe.w
  */
-interface DuplicateFindTaskListener<I : DuplicateItem, VH : DuplicateViewHolder<I>> : DuplicateTaskListener<I> {
+interface DuplicateFindTaskListener<I : DuplicateItem, VH : DuplicateViewHolder<I>> :
+    DuplicateTaskListener<I> {
 
     /**
      * Notification that the task has found a possible match where the similarity is above 75%.
@@ -31,5 +32,11 @@ interface DuplicateFindTaskListener<I : DuplicateItem, VH : DuplicateViewHolder<
      * @param match      the match percentage.
      * @param difference the array of differences.
      */
-    fun <L : DuplicateFindTaskListener<I, VH>, T : DuplicateFindTask<I, VH, L>> onDuplicateTaskMatch(task: T, item1: I, item2: I, match: Float, difference: BooleanArray)
+    fun <L : DuplicateFindTaskListener<I, VH>, T : DuplicateFindTask<I, VH, L>> onDuplicateTaskMatch(
+        task: T,
+        item1: I,
+        item2: I,
+        match: Float,
+        difference: BooleanArray
+    )
 }

@@ -20,11 +20,8 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.provider.CallLog
-
-import com.github.duplicates.DuplicateProvider
-
 import android.provider.BaseColumns._ID
+import android.provider.CallLog
 import android.provider.CallLog.Calls.CACHED_NAME
 import android.provider.CallLog.Calls.CACHED_NUMBER_LABEL
 import android.provider.CallLog.Calls.CACHED_NUMBER_TYPE
@@ -34,6 +31,7 @@ import android.provider.CallLog.Calls.IS_READ
 import android.provider.CallLog.Calls.NEW
 import android.provider.CallLog.Calls.NUMBER
 import android.provider.CallLog.Calls.TYPE
+import com.github.duplicates.DuplicateProvider
 
 /**
  * Provide duplicate calls.
@@ -46,11 +44,11 @@ class CallLogProvider(context: Context) : DuplicateProvider<CallLogItem>(context
         return CallLog.Calls.CONTENT_URI
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun createItem(cursor: Cursor): CallLogItem? {
+    override fun createItem(cursor: Cursor): CallLogItem {
         return CallLogItem()
     }
 
@@ -67,24 +65,37 @@ class CallLogProvider(context: Context) : DuplicateProvider<CallLogItem>(context
         item.type = cursor.getInt(INDEX_TYPE)
     }
 
-    override fun deleteItem(cr: ContentResolver, item: CallLogItem): Boolean {
-        return cr.delete(getContentUri(), _ID + "=" + item.id, null) > 0
+    override fun deleteItem(cr: ContentResolver, contentUri: Uri, item: CallLogItem): Boolean {
+        return cr.delete(contentUri, _ID + "=" + item.id, null) > 0
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 
     companion object {
 
-        private val PERMISSIONS_READ = arrayOf("android.permission.READ_CALL_LOG", Manifest.permission.READ_CONTACTS)
-        private val PERMISSIONS_WRITE = arrayOf("android.permission.WRITE_CALL_LOG", Manifest.permission.WRITE_CONTACTS)
+        private val PERMISSIONS_READ =
+            arrayOf("android.permission.READ_CALL_LOG", Manifest.permission.READ_CONTACTS)
+        private val PERMISSIONS_WRITE =
+            arrayOf("android.permission.WRITE_CALL_LOG", Manifest.permission.WRITE_CONTACTS)
 
-        private val PROJECTION = arrayOf(_ID, CACHED_NAME, CACHED_NUMBER_LABEL, CACHED_NUMBER_TYPE, DATE, DURATION, IS_READ, NEW, NUMBER, TYPE)
+        private val PROJECTION = arrayOf(
+            _ID,
+            CACHED_NAME,
+            CACHED_NUMBER_LABEL,
+            CACHED_NUMBER_TYPE,
+            DATE,
+            DURATION,
+            IS_READ,
+            NEW,
+            NUMBER,
+            TYPE
+        )
 
         private const val INDEX_ID = 0
         private const val INDEX_CACHED_NAME = 1

@@ -19,11 +19,9 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-
+import android.provider.BaseColumns._ID
 import com.github.duplicates.DuplicateProvider
 import com.github.provider.Browser
-
-import android.provider.BaseColumns._ID
 import com.github.provider.Browser.BookmarkColumns.BOOKMARK
 import com.github.provider.Browser.BookmarkColumns.CREATED
 import com.github.provider.Browser.BookmarkColumns.DATE
@@ -43,15 +41,15 @@ class BookmarkProvider(context: Context) : DuplicateProvider<BookmarkItem>(conte
         return Browser.BOOKMARKS_URI
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun getCursorSelection(): String? {
+    override fun getCursorSelection(): String {
         return "$BOOKMARK=1"
     }
 
-    override fun createItem(cursor: Cursor): BookmarkItem? {
+    override fun createItem(cursor: Cursor): BookmarkItem {
         return BookmarkItem()
     }
 
@@ -65,22 +63,24 @@ class BookmarkProvider(context: Context) : DuplicateProvider<BookmarkItem>(conte
         item.visits = cursor.getInt(INDEX_VISITS)
     }
 
-    override fun deleteItem(cr: ContentResolver, item: BookmarkItem): Boolean {
-        return cr.delete(getContentUri(), _ID + "=" + item.id, null) > 0
+    override fun deleteItem(cr: ContentResolver, contentUri: Uri, item: BookmarkItem): Boolean {
+        return cr.delete(contentUri, _ID + "=" + item.id, null) > 0
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 
     companion object {
 
-        private val PERMISSIONS_READ = arrayOf("com.android.browser.permission.READ_HISTORY_BOOKMARKS")
-        private val PERMISSIONS_WRITE = arrayOf("com.android.browser.permission.WRITE_HISTORY_BOOKMARKS")
+        private val PERMISSIONS_READ =
+            arrayOf("com.android.browser.permission.READ_HISTORY_BOOKMARKS")
+        private val PERMISSIONS_WRITE =
+            arrayOf("com.android.browser.permission.WRITE_HISTORY_BOOKMARKS")
 
         private val PROJECTION = arrayOf(_ID, CREATED, DATE, FAVICON, TITLE, URL, VISITS)
 

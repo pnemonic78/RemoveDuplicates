@@ -15,25 +15,37 @@
  */
 package com.github.duplicates
 
-import com.github.android.removeduplicates.BuildConfig
-import com.github.android.removeduplicates.R
-
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.github.android.removeduplicates.BuildConfig
+import com.github.android.removeduplicates.R
 
 /**
  * Main spinner items.
  *
  * @author moshe.w
  */
-enum class MainSpinnerItem(@StringRes val label: Int,
-                           @DrawableRes val icon: Int,
-                           val enabled: Boolean = true) {
+enum class MainSpinnerItem(
+    val type: DuplicateItemType,
+    @StringRes val label: Int,
+    @DrawableRes val icon: Int,
+    val enabled: Boolean = true
+) {
 
-    ALARMS(R.string.item_alarms, R.drawable.ic_alarm),
-    BOOKMARKS(R.string.item_bookmarks, R.drawable.ic_bookmark),
-    CALENDAR(R.string.item_calendar, R.drawable.ic_event),
-    CALL_LOG(R.string.item_call_log, R.drawable.ic_call, BuildConfig.FEATURE_CALL_LOGS),
-    CONTACTS(R.string.item_contacts, R.drawable.ic_contacts),
-    MESSAGES(R.string.item_messages, R.drawable.ic_message, BuildConfig.FEATURE_SMS)
+    ALARMS(DuplicateItemType.ALARM, R.string.item_alarms, R.drawable.ic_alarm),
+    BOOKMARKS(DuplicateItemType.BOOKMARK, R.string.item_bookmarks, R.drawable.ic_bookmark),
+    CALENDARS(DuplicateItemType.CALENDAR, R.string.item_calendar, R.drawable.ic_event),
+    CALL_LOGS(
+        DuplicateItemType.CALL_LOG,
+        R.string.item_call_log,
+        R.drawable.ic_call,
+        BuildConfig.FEATURE_CALL_LOGS
+    ),
+    CONTACTS(DuplicateItemType.CONTACT, R.string.item_contacts, R.drawable.ic_contacts),
+    MESSAGES(
+        DuplicateItemType.MESSAGE,
+        R.string.item_messages,
+        R.drawable.ic_message,
+        BuildConfig.FEATURE_SMS
+    )
 }

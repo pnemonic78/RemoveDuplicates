@@ -19,11 +19,41 @@ import android.Manifest
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
-import android.database.Cursor.*
+import android.database.Cursor.FIELD_TYPE_BLOB
+import android.database.Cursor.FIELD_TYPE_FLOAT
+import android.database.Cursor.FIELD_TYPE_INTEGER
+import android.database.Cursor.FIELD_TYPE_NULL
 import android.net.Uri
 import android.provider.BaseColumns._ID
-import android.provider.ContactsContract.CommonDataKinds.*
-import android.provider.ContactsContract.Data.*
+import android.provider.ContactsContract.CommonDataKinds.Email
+import android.provider.ContactsContract.CommonDataKinds.Event
+import android.provider.ContactsContract.CommonDataKinds.Im
+import android.provider.ContactsContract.CommonDataKinds.Phone
+import android.provider.ContactsContract.CommonDataKinds.Photo
+import android.provider.ContactsContract.CommonDataKinds.StructuredName
+import android.provider.ContactsContract.Data.CONTACT_ID
+import android.provider.ContactsContract.Data.CONTENT_URI
+import android.provider.ContactsContract.Data.DATA1
+import android.provider.ContactsContract.Data.DATA10
+import android.provider.ContactsContract.Data.DATA11
+import android.provider.ContactsContract.Data.DATA12
+import android.provider.ContactsContract.Data.DATA13
+import android.provider.ContactsContract.Data.DATA14
+import android.provider.ContactsContract.Data.DATA15
+import android.provider.ContactsContract.Data.DATA2
+import android.provider.ContactsContract.Data.DATA3
+import android.provider.ContactsContract.Data.DATA4
+import android.provider.ContactsContract.Data.DATA5
+import android.provider.ContactsContract.Data.DATA6
+import android.provider.ContactsContract.Data.DATA7
+import android.provider.ContactsContract.Data.DATA8
+import android.provider.ContactsContract.Data.DATA9
+import android.provider.ContactsContract.Data.DATA_VERSION
+import android.provider.ContactsContract.Data.DISPLAY_NAME
+import android.provider.ContactsContract.Data.LOOKUP_KEY
+import android.provider.ContactsContract.Data.MIMETYPE
+import android.provider.ContactsContract.Data.PHOTO_THUMBNAIL_URI
+import android.provider.ContactsContract.Data.RAW_CONTACT_ID
 import android.provider.ContactsContract.RawContacts
 import android.provider.ContactsContract.RawContacts.ACCOUNT_NAME
 import android.provider.ContactsContract.RawContacts.ACCOUNT_TYPE
@@ -33,7 +63,7 @@ import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateProvider
 import com.github.duplicates.DuplicateProviderListener
 import java.util.*
-import java.util.concurrent.CancellationException
+import java.util.concurrent.*
 
 /**
  * Provide duplicate contacts.
@@ -48,11 +78,11 @@ class ContactProvider(context: Context) : DuplicateProvider<ContactItem>(context
         return CONTENT_URI
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun createItem(cursor: Cursor): ContactItem? {
+    override fun createItem(cursor: Cursor): ContactItem {
         val id = cursor.getLong(INDEX_CONTACT_ID)
         var item: ContactItem? = contacts.get(id)
         if (item != null) {
@@ -127,26 +157,41 @@ class ContactProvider(context: Context) : DuplicateProvider<ContactItem>(context
     @Throws(CancellationException::class)
     override fun fetchItems(listener: DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>>) {
         val items = ArrayList<ContactItem>()
-        val listener2 = object : DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>> {
-            override fun onItemFetched(provider: DuplicateProvider<ContactItem>, count: Int, item: ContactItem) {
-                val size = items.size
+        val listener2 =
+            object : DuplicateProviderListener<ContactItem, DuplicateProvider<ContactItem>> {
+                override fun onItemFetched(
+                    provider: DuplicateProvider<ContactItem>,
+                    count: Int,
+                    item: ContactItem
+                ) {
+                    val size = items.size
 
-                // Maybe the item already exists in the list?
-                var item1: ContactItem
-                for (i in size - 1 downTo 0) {
-                    item1 = items[i]
-                    if (item === item1) {
-                        return
+                    // Maybe the item already exists in the list?
+                    var item1: ContactItem
+                    for (i in size - 1 downTo 0) {
+                        item1 = items[i]
+                        if (item === item1) {
+                            return
+                        }
                     }
+
+                    items.add(item)
                 }
 
-                items.add(item)
+                override fun onItemDeleted(
+                    provider: DuplicateProvider<ContactItem>,
+                    count: Int,
+                    item: ContactItem
+                ) {
+                }
+
+                override fun onPairDeleted(
+                    provider: DuplicateProvider<ContactItem>,
+                    count: Int,
+                    pair: DuplicateItemPair<ContactItem>
+                ) {
+                }
             }
-
-            override fun onItemDeleted(provider: DuplicateProvider<ContactItem>, count: Int, item: ContactItem) {}
-
-            override fun onPairDeleted(provider: DuplicateProvider<ContactItem>, count: Int, pair: DuplicateItemPair<ContactItem>) {}
-        }
         super.fetchItems(listener2)
 
         if (isCancelled) {
@@ -164,15 +209,15 @@ class ContactProvider(context: Context) : DuplicateProvider<ContactItem>(context
         }
     }
 
-    override fun deleteItem(cr: ContentResolver, item: ContactItem): Boolean {
-        return cr.delete(getContentUri(), RawContacts.CONTACT_ID + "=" + item.id, null) > 0
+    override fun deleteItem(cr: ContentResolver, contentUri: Uri, item: ContactItem): Boolean {
+        return cr.delete(contentUri, RawContacts.CONTACT_ID + "=" + item.id, null) > 0
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 

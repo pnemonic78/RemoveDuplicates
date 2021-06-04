@@ -22,11 +22,12 @@ import com.github.duplicates.DuplicateComparator.Companion.compare
  *
  * @author moshe.w
  */
-abstract class DuplicateItem : Comparable<DuplicateItem> {
+abstract class DuplicateItem(val itemType: DuplicateItemType) : Comparable<DuplicateItem> {
 
     var id: Long = 0
     var isChecked: Boolean = false
     var isError: Boolean = false
+    var isDeleted: Boolean = false
 
     override fun compareTo(other: DuplicateItem): Int {
         return compare(this.id, other.id)

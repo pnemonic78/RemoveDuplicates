@@ -51,7 +51,8 @@ class MainSpinnerAdapter : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         if (view == null) {
-            view = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_spinner_item, parent, false)
+            view = LayoutInflater.from(parent.context)
+                .inflate(android.R.layout.simple_spinner_item, parent, false)
         }
 
         bindView(position, view!!)
@@ -62,7 +63,8 @@ class MainSpinnerAdapter : BaseAdapter() {
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
         if (view == null) {
-            view = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_spinner_dropdown_item, parent, false)
+            view = LayoutInflater.from(parent.context)
+                .inflate(android.R.layout.simple_spinner_dropdown_item, parent, false)
         }
 
         bindView(position, view!!)
@@ -77,7 +79,8 @@ class MainSpinnerAdapter : BaseAdapter() {
         textView.setText(item.label)
         val icon = AppCompatResources.getDrawable(context, item.icon)
         textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
-        textView.compoundDrawablePadding = context.resources.getDimensionPixelSize(R.dimen.drawable_padding)
+        textView.compoundDrawablePadding =
+            context.resources.getDimensionPixelSize(R.dimen.drawable_padding)
         view.isEnabled = item.enabled
     }
 

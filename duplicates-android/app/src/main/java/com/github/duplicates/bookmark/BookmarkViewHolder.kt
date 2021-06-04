@@ -17,9 +17,10 @@ package com.github.duplicates.bookmark
 
 import android.content.Context
 import android.text.format.DateUtils
-import android.view.View
+import android.view.ViewGroup
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameBookmarkBinding
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
 import com.github.duplicates.SHOW_DATE_TIME
@@ -28,30 +29,33 @@ import com.github.duplicates.bookmark.BookmarkComparator.Companion.DATE
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.FAVICON
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.TITLE
 import com.github.duplicates.bookmark.BookmarkComparator.Companion.URL
-import kotlinx.android.synthetic.main.same_bookmark.view.*
 
 /**
  * View holder of a duplicate bookmark.
  *
  * @author moshe.w
  */
-class BookmarkViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<BookmarkItem>? = null) : DuplicateViewHolder<BookmarkItem>(itemView, onCheckedChangeListener) {
+class BookmarkViewHolder(
+    itemView: ViewGroup,
+    binding: SameBookmarkBinding,
+    onCheckedChangeListener: OnItemCheckedChangeListener<BookmarkItem>? = null
+) : DuplicateViewHolder<BookmarkItem>(itemView, onCheckedChangeListener) {
 
-    private val match = itemView.match
+    private val match = binding.match
 
-    private val checkbox1 = itemView.checkbox1
-    private val created1 = itemView.created1
-    private val date1 = itemView.date1
-    private val icon1 = itemView.icon1
-    private val title1 = itemView.title1
-    private val url1 = itemView.url1
+    private val checkbox1 = binding.item1.checkbox
+    private val created1 = binding.item1.created
+    private val date1 = binding.item1.date
+    private val icon1 = binding.item1.icon
+    private val title1 = binding.item1.title
+    private val url1 = binding.item1.url
 
-    private val checkbox2 = itemView.checkbox2
-    private val created2 = itemView.created2
-    private val date2 = itemView.date2
-    private val icon2 = itemView.icon2
-    private val title2 = itemView.title2
-    private val url2 = itemView.url2
+    private val checkbox2 = binding.item2.checkbox
+    private val created2 = binding.item2.created
+    private val date2 = binding.item2.date
+    private val icon2 = binding.item2.icon
+    private val title2 = binding.item2.title
+    private val url2 = binding.item2.url
 
     init {
         checkbox1.setOnClickListener {
@@ -63,7 +67,8 @@ class BookmarkViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedC
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<BookmarkItem>) {
-        match.text = context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
+        match.text =
+            context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
     }
 
     override fun bindItem1(context: Context, item: BookmarkItem) {

@@ -99,14 +99,6 @@ abstract class DuplicateComparator<T : DuplicateItem> : Comparator<T> {
 
         const val MATCH_SAME = 1f
 
-        fun compare(lhs: Int, rhs: Int): Int {
-            return lhs.compareTo(rhs)
-        }
-
-        fun compare(lhs: Long, rhs: Long): Int {
-            return lhs.compareTo(rhs)
-        }
-
         fun <T : Comparable<T>> compare(lhs: T?, rhs: T?): Int {
             if (lhs === rhs) {
                 return SAME
@@ -114,8 +106,8 @@ abstract class DuplicateComparator<T : DuplicateItem> : Comparator<T> {
             return if (lhs == null) RHS else if (rhs == null) LHS else lhs.compareTo(rhs)
         }
 
-        fun compare(lhs: Boolean, rhs: Boolean): Int {
-            return lhs.compareTo(rhs)
+        fun <T : Comparable<T>> isDifferent(lhs: T?, rhs: T?): Boolean {
+            return compare(lhs, rhs) != SAME
         }
 
         fun compare(lhs: ByteArray?, rhs: ByteArray?): Int {
@@ -136,6 +128,10 @@ abstract class DuplicateComparator<T : DuplicateItem> : Comparator<T> {
             } else {
                 c
             }
+        }
+
+        fun isDifferent(lhs: ByteArray?, rhs: ByteArray?): Boolean {
+            return compare(lhs, rhs) != SAME
         }
 
         fun compare(lhs: Bitmap?, rhs: Bitmap?): Int {
@@ -164,6 +160,10 @@ abstract class DuplicateComparator<T : DuplicateItem> : Comparator<T> {
             }
         }
 
+        fun isDifferent(lhs: Bitmap?, rhs: Bitmap?): Boolean {
+            return compare(lhs, rhs) != SAME
+        }
+
         fun compare(lhs: Uri?, rhs: Uri?): Int {
             if (lhs === rhs) {
                 return SAME
@@ -185,6 +185,10 @@ abstract class DuplicateComparator<T : DuplicateItem> : Comparator<T> {
             return s1.compareTo(s2)
         }
 
+        fun isDifferent(lhs: Uri?, rhs: Uri?): Boolean {
+            return compare(lhs, rhs) != SAME
+        }
+
         fun <C : Comparable<C>> compare(lhs: Collection<C>?, rhs: Collection<C>?): Int {
             if (lhs === rhs) {
                 return SAME
@@ -204,25 +208,27 @@ abstract class DuplicateComparator<T : DuplicateItem> : Comparator<T> {
             val l2 = if (rhs is List<C>) rhs else ArrayList(rhs)
             for (i in 0 until size) {
                 c = compare(l1[i], l2[i])
-                if (c != SAME) {
-                    return c
-                }
+                if (c != SAME) return c
             }
             return SAME
+        }
+
+        fun <C : Comparable<C>> isDifferent(lhs: Collection<C>?, rhs: Collection<C>?): Boolean {
+            return compare(lhs, rhs) != SAME
         }
 
         fun compareIgnoreCase(lhs: String?, rhs: String?): Int {
             if (lhs === rhs) {
                 return SAME
             }
-            return if (lhs == null) RHS else if (rhs == null) LHS else lhs.compareTo(rhs, ignoreCase = true)
+            return if (lhs == null) RHS else if (rhs == null) LHS else lhs.compareTo(
+                rhs,
+                ignoreCase = true
+            )
         }
 
-        fun compareIgnoreSpace(lhs: String?, rhs: String?): Int {
-            if (lhs === rhs) {
-                return SAME
-            }
-            return if (lhs == null) RHS else if (rhs == null) LHS else lhs.replace("\\s+".toRegex(), " ").compareTo(rhs.replace("\\s+".toRegex(), " "))
+        fun isDifferentIgnoreCase(lhs: String?, rhs: String?): Boolean {
+            return compareIgnoreCase(lhs, rhs) != SAME
         }
 
         fun comparePhoneNumber(lhs: String?, rhs: String?): Int {
@@ -233,8 +239,16 @@ abstract class DuplicateComparator<T : DuplicateItem> : Comparator<T> {
             return if (PhoneNumberUtils.compare(lhs, rhs)) SAME else c
         }
 
-        fun compareTime(lhs: Long, rhs: Long, delta: Long): Int {
+        fun isDifferentPhoneNumber(lhs: String?, rhs: String?): Boolean {
+            return comparePhoneNumber(lhs, rhs) != SAME
+        }
+
+        fun compareTime(lhs: Long, rhs: Long, delta: Long = 0L): Int {
             return if (abs(lhs - rhs) <= delta) SAME else compare(lhs, rhs)
+        }
+
+        fun isDifferentTime(lhs: Long, rhs: Long, delta: Long = 0L): Boolean {
+            return compareTime(lhs, rhs, delta) != SAME
         }
     }
 }

@@ -15,17 +15,20 @@
  */
 package com.github.duplicates
 
+import android.content.Context
 import android.os.Build
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.view.ViewStub
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameItemBinding
+import com.github.android.removeduplicates.databinding.SameItemShadowBinding
+import com.github.duplicates.db.DuplicatesDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 /**
@@ -33,7 +36,8 @@ import java.util.*
  *
  * @author moshe.w
  */
-abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> : RecyclerView.Adapter<VH>(), DuplicateViewHolder.OnItemCheckedChangeListener<T>, Filterable {
+abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> :
+    RecyclerView.Adapter<VH>(), DuplicateViewHolder.OnItemCheckedChangeListener<T>, Filterable {
 
     private val pairsAll = ArrayList<DuplicateItemPair<T>>()
     private var pairs: MutableList<DuplicateItemPair<T>> = pairsAll
@@ -41,6 +45,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
     private var recyclerView: RecyclerView? = null
 
     init {
+        @Suppress("LeakingThis")
         setHasStableIds(true)
     }
 
@@ -86,10 +91,19 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
      * @param difference the array of differences.
      */
     fun add(item1: T, item2: T, match: Float = 1f, difference: BooleanArray) {
-        if (item1.isChecked && item2.isChecked) {
+        val pair = DuplicateItemPair(item1, item2, match, difference)
+        add(pair)
+    }
+
+    /**
+     * Add a pair.
+     *
+     * @param pair      the pair.
+     */
+    fun add(pair: DuplicateItemPair<T>) {
+        if (pair.item1.isChecked && pair.item2.isChecked) {
             return
         }
-        val pair = DuplicateItemPair(item1, item2, match, difference)
         if (pairs.add(pair)) {
             notifyItemInserted(pairs.size)
         }
@@ -218,6 +232,8 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
 
     override fun onItemCheckedChangeListener(item: T, checked: Boolean) {
         item.isChecked = checked
+        // update the database pair table `entity.isChecked = checked`
+        updateDatabase(item)
         notifyDataSetChanged()
     }
 
@@ -232,21 +248,44 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
         return filter!!
     }
 
-    protected fun createViewHolder(@LayoutRes layoutId: Int, parent: ViewGroup, viewType: Int): View {
-        val itemView = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            LayoutInflater.from(parent.context).inflate(R.layout.same_item_shadow, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        val context: Context = parent.context
+        val inflater = LayoutInflater.from(context)
+        val itemView: ViewGroup
+        val cardView: ViewGroup
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            val binding = SameItemShadowBinding.inflate(inflater, parent, false)
+            itemView = binding.root
+            cardView = binding.item.root
         } else {
-            LayoutInflater.from(parent.context).inflate(R.layout.same_item, parent, false)
+            val binding = SameItemBinding.inflate(inflater, parent, false)
+            itemView = binding.root
+            cardView = binding.root
         }
-        val stub = itemView.findViewById<ViewStub>(R.id.stub)
-        stub.layoutResource = layoutId
-        stub.inflate()
-        return itemView
+        return createCardViewHolder(context, inflater, itemView, cardView, viewType)
     }
+
+    protected abstract fun createCardViewHolder(
+        context: Context,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        cardView: ViewGroup,
+        viewType: Int
+    ): VH
 
     protected fun notifyDataSetChangedWithClear() {
         recyclerView?.recycledViewPool?.clear()
         notifyDataSetChanged()
+    }
+
+    private fun updateDatabase(item: T) {
+        val context: Context = recyclerView?.context ?: return
+        CoroutineScope(Dispatchers.IO).launch {
+            val db = DuplicatesDatabase.getDatabase(context)
+            val dao = db.pairDao()
+            dao.updateItemChecked1(item.itemType, item.id, item.isChecked)
+            dao.updateItemChecked2(item.itemType, item.id, item.isChecked)
+        }
     }
 
     private inner class DuplicateAdapterFilter : Filter() {
@@ -270,6 +309,7 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
             return results
         }
 
+        @Suppress("UNCHECKED_CAST")
         override fun publishResults(constraint: CharSequence, results: FilterResults) {
             pairs = results.values as MutableList<DuplicateItemPair<T>>
             notifyDataSetChangedWithClear()

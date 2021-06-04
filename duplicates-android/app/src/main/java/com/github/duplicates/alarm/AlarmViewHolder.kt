@@ -18,16 +18,16 @@ package com.github.duplicates.alarm
 import android.content.Context
 import android.text.format.DateFormat
 import android.text.format.DateUtils
-import android.view.View
+import android.view.ViewGroup
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameAlarmBinding
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
 import com.github.duplicates.alarm.AlarmComparator.Companion.ALARM_TIME
 import com.github.duplicates.alarm.AlarmComparator.Companion.ALERT_TIME
 import com.github.duplicates.alarm.AlarmComparator.Companion.NAME
 import com.github.duplicates.alarm.AlarmComparator.Companion.REPEAT
-import kotlinx.android.synthetic.main.same_alarm.view.*
 import java.util.*
 
 /**
@@ -35,21 +35,25 @@ import java.util.*
  *
  * @author moshe.w
  */
-class AlarmViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<AlarmItem>? = null) : DuplicateViewHolder<AlarmItem>(itemView, onCheckedChangeListener) {
+class AlarmViewHolder(
+    itemView: ViewGroup,
+    binding: SameAlarmBinding,
+    onCheckedChangeListener: OnItemCheckedChangeListener<AlarmItem>? = null
+) : DuplicateViewHolder<AlarmItem>(itemView, onCheckedChangeListener) {
 
-    private val match = itemView.match
+    private val match = binding.match
 
-    private val checkbox1 = itemView.checkbox1
-    private val alarm1 = itemView.alarm1
-    private val alert1 = itemView.alert1
-    private val repeat1 = itemView.repeat1
-    private val name1 = itemView.name1
+    private val checkbox1 = binding.item1.checkbox
+    private val alarm1 = binding.item1.alarm
+    private val alert1 = binding.item1.alert
+    private val repeat1 = binding.item1.repeat
+    private val name1 = binding.item1.name
 
-    private val checkbox2 = itemView.checkbox2
-    private val alarm2 = itemView.alarm2
-    private val alert2 = itemView.alert2
-    private val repeat2 = itemView.repeat2
-    private val name2 = itemView.name2
+    private val checkbox2 = binding.item2.checkbox
+    private val alarm2 = binding.item2.alarm
+    private val alert2 = binding.item2.alert
+    private val repeat2 = binding.item2.repeat
+    private val name2 = binding.item2.name
 
     init {
         checkbox1.setOnClickListener {
@@ -61,7 +65,8 @@ class AlarmViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChan
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<AlarmItem>) {
-        itemView.match.text = context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
+        match.text =
+            context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
     }
 
     override fun bindItem1(context: Context, item: AlarmItem) {

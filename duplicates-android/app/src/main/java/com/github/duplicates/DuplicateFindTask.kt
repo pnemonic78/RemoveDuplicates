@@ -17,18 +17,26 @@ package com.github.duplicates
 
 import android.content.Context
 import com.github.duplicates.DuplicateComparator.Companion.MATCH_SAME
+import com.github.duplicates.db.DuplicateItemPairEntity
+import com.github.duplicates.db.DuplicatesDatabase
 import java.util.*
-import java.util.concurrent.CancellationException
+import java.util.concurrent.*
+import kotlin.math.abs
 
 /**
  * Task to find duplicates.
  *
  * @author moshe.w
  */
-abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>, L : DuplicateFindTaskListener<I, VH>>(context: Context, listener: L) : DuplicateTask<I, Any, Any, List<I>, L>(context, listener) {
+abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>, L : DuplicateFindTaskListener<I, VH>>(
+    private val itemType: DuplicateItemType,
+    context: Context,
+    listener: L
+) : DuplicateTask<I, Any, Any, List<I>, L>(context, listener) {
 
     private var comparator: DuplicateComparator<I>? = null
     private val items = ArrayList<I>()
+    private val itemsCached = mutableMapOf<Long, I>()
 
     abstract fun createAdapter(): DuplicateAdapter<I, VH>
 
@@ -37,27 +45,61 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
     override fun onPreExecute() {
         super.onPreExecute()
         items.clear()
+        itemsCached.clear()
         this.comparator = createComparator()
     }
 
     override fun doInBackground(vararg params: Any): List<I> {
+        db = DuplicatesDatabase.getDatabase(context)
+        if (params.isNotEmpty()) {
+            val param0 = params[0]
+            if ((param0 is Boolean) && param0) {
+                doFindDatabase(db)
+                return items
+            }
+        }
+        doFind(db)
+        return items
+    }
+
+    private fun doFind(db: DuplicatesDatabase) {
+        clearDatabaseTable(db)
         try {
             provider.fetchItems(this)
         } catch (ignore: CancellationException) {
         }
-        return items
     }
 
-    override fun onProgressUpdate(vararg progress: Any) {
-        val listener = this.listener
-        if (progress.size == 1) {
-            listener.onDuplicateTaskProgress(this, progress[0] as Int)
-        } else {
-            val item1 = progress[1] as I
-            val item2 = progress[2] as I
-            val match = progress[3] as Float
-            val difference = progress[4] as BooleanArray
-            listener.onDuplicateTaskMatch(this, item1, item2, match, difference)
+    private fun doFindDatabase(db: DuplicatesDatabase) {
+        val dao = db.pairDao()
+        val entities = dao.queryAll(itemType)
+        val comparator = this.comparator ?: return
+        try {
+            for (entity in entities) {
+                val item1 = fetchItem(entity.id1) ?: continue
+                item1.isChecked = entity.isChecked1
+
+                val item2 = fetchItem(entity.id2) ?: continue
+                item2.isChecked = entity.isChecked2
+
+                if (item1.isChecked && item2.isChecked) continue
+
+                val difference = comparator.difference(item1, item2)
+                val match = comparator.match(item1, item2, difference)
+
+                // Did the data change in the interim?
+                if ((abs(match - entity.match) >= 0.01f)) continue
+
+                listener.onDuplicateTaskMatch(this, item1, item2, match, difference)
+                if (items.add(item1) && items.add(item2)) {
+                    publishProgress(items.size)
+                }
+
+                if (isCancelled) {
+                    break
+                }
+            }
+        } catch (ignore: CancellationException) {
         }
     }
 
@@ -79,7 +121,7 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         var bestDifference: BooleanArray? = null
         var difference: BooleanArray
         var match: Float
-        val comparator = this.comparator!!
+        val comparator = this.comparator ?: return
 
         // Most likely that a matching item is a neighbour, so count backwards.
         for (i in size - 1 downTo 0) {
@@ -96,7 +138,11 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
             }
         }
         if (bestItem != null) {
-            publishProgress(size, bestItem, item, bestMatch, bestDifference)
+            item1 = bestItem
+            match = bestMatch
+            difference = bestDifference!!
+            listener.onDuplicateTaskMatch(this, item1, item, match, difference)
+            insertDatabase(item1, item, match)
         }
 
         if (items.add(item)) {
@@ -108,7 +154,11 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         // Nothing to do.
     }
 
-    override fun onPairDeleted(provider: DuplicateProvider<I>, count: Int, pair: DuplicateItemPair<I>) {
+    override fun onPairDeleted(
+        provider: DuplicateProvider<I>,
+        count: Int,
+        pair: DuplicateItemPair<I>
+    ) {
         // Nothing to do.
     }
 
@@ -116,11 +166,41 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         return provider.getReadPermissions()
     }
 
+    private fun clearDatabaseTable(db: DuplicatesDatabase) {
+        val dao = db.pairDao()
+        dao.deleteAll(itemType)
+    }
+
+    private fun insertDatabase(item1: I, item2: I, match: Float) {
+        val isChecked2 = item2.isChecked or (match >= DuplicateItemPair.MATCH_GREAT)
+        val dao = db.pairDao()
+        val entity = DuplicateItemPairEntity(
+            type = itemType,
+            match = match,
+            id1 = item1.id,
+            isChecked1 = item1.isChecked,
+            id2 = item2.id,
+            isChecked2 = isChecked2
+        )
+        dao.insert(entity)
+    }
+
+    private fun fetchItem(id: Long): I? {
+        var item = itemsCached[id]
+        if (item == null) {
+            item = provider.fetchItem(id)
+            if (item != null) {
+                itemsCached[id] = item
+            }
+        }
+        return item
+    }
+
     companion object {
 
         /**
          * Percentage for two items to be considered a good match.
          */
-        const val MATCH_GOOD = 0.71f
+        const val MATCH_GOOD = 0.7f
     }
 }

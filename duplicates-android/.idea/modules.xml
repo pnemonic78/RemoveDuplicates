@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/android-lib/android-lib.iml" filepath="$PROJECT_DIR$/android-lib/android-lib.iml" group="duplicates-android/android-lib" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="duplicates-android/app" />
-      <module fileurl="file://$PROJECT_DIR$/duplicates-android.iml" filepath="$PROJECT_DIR$/duplicates-android.iml" group="duplicates-android" />
-      <module fileurl="file://$PROJECT_DIR$/android-lib/lib/lib.iml" filepath="$PROJECT_DIR$/android-lib/lib/lib.iml" group="duplicates-android/android-lib/lib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Remove_Duplicates.iml" filepath="$PROJECT_DIR$/.idea/modules/Remove_Duplicates.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-lib/Remove_Duplicates.android-lib.iml" filepath="$PROJECT_DIR$/.idea/modules/android-lib/Remove_Duplicates.android-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-lib/lib/Remove_Duplicates.android-lib.lib.iml" filepath="$PROJECT_DIR$/.idea/modules/android-lib/lib/Remove_Duplicates.android-lib.lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Remove_Duplicates.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Remove_Duplicates.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Remove_Duplicates.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/Remove_Duplicates.buildSrc.iml" />
     </modules>
   </component>
 </project>

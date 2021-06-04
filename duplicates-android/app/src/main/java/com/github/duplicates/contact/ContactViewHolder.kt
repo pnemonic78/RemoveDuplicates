@@ -16,9 +16,10 @@
 package com.github.duplicates.contact
 
 import android.content.Context
-import android.view.View
+import android.view.ViewGroup
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameContactBinding
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
 import com.github.duplicates.contact.ContactComparator.Companion.EMAIL
@@ -26,7 +27,6 @@ import com.github.duplicates.contact.ContactComparator.Companion.EVENT
 import com.github.duplicates.contact.ContactComparator.Companion.IM
 import com.github.duplicates.contact.ContactComparator.Companion.NAME
 import com.github.duplicates.contact.ContactComparator.Companion.PHONE
-import kotlinx.android.synthetic.main.same_contact.view.*
 import java.util.*
 
 /**
@@ -34,27 +34,31 @@ import java.util.*
  *
  * @author moshe.w
  */
-class ContactViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<ContactItem>? = null) : DuplicateViewHolder<ContactItem>(itemView, onCheckedChangeListener) {
+class ContactViewHolder(
+    itemView: ViewGroup,
+    binding: SameContactBinding,
+    onCheckedChangeListener: OnItemCheckedChangeListener<ContactItem>? = null
+) : DuplicateViewHolder<ContactItem>(itemView, onCheckedChangeListener) {
 
-    private val match = itemView.match
+    private val match = binding.match
 
-    private val checkbox1 = itemView.checkbox1
-    private val icon1 = itemView.icon1
-    private val account1 = itemView.account1
-    private val name1 = itemView.name1
-    private val email1 = itemView.email1
-    private val event1 = itemView.event1
-    private val im1 = itemView.im1
-    private val phone1 = itemView.phone1
+    private val checkbox1 = binding.item1.checkbox
+    private val icon1 = binding.item1.icon
+    private val account1 = binding.item1.account
+    private val name1 = binding.item1.name
+    private val email1 = binding.item1.email
+    private val event1 = binding.item1.event
+    private val im1 = binding.item1.im
+    private val phone1 = binding.item1.phone
 
-    private val checkbox2 = itemView.checkbox2
-    private val icon2 = itemView.icon2
-    private val account2 = itemView.account2
-    private val name2 = itemView.name2
-    private val email2 = itemView.email2
-    private val event2 = itemView.event2
-    private val im2 = itemView.im2
-    private val phone2 = itemView.phone1
+    private val checkbox2 = binding.item2.checkbox
+    private val icon2 = binding.item2.icon
+    private val account2 = binding.item2.account
+    private val name2 = binding.item2.name
+    private val email2 = binding.item2.email
+    private val event2 = binding.item2.event
+    private val im2 = binding.item2.im
+    private val phone2 = binding.item2.phone
 
     init {
         checkbox1.setOnClickListener {
@@ -66,18 +70,20 @@ class ContactViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<ContactItem>) {
-        match.text = context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
+        match.text =
+            context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
     }
 
     override fun bindItem1(context: Context, item: ContactItem) {
         checkbox1.isChecked = item.isChecked
         checkbox1.text = if (BuildConfig.DEBUG) item.id.toString() else ""
         if (item.photoThumbnailUri == null) {
-            icon1.setImageResource(R.drawable.ic_contact_picture)
+            icon1.setImageResource(R.drawable.ic_person_outline)
         } else {
             icon1.setImageURI(item.photoThumbnailUri)
         }
-        account1.text = context.getString(R.string.contacts_account, item.accountName, item.accountType)
+        account1.text =
+            context.getString(R.string.contacts_account, item.accountName, item.accountType)
         name1.text = item.displayName
         email1.text = formatData(item.emails)
         event1.text = formatData(item.events)
@@ -89,11 +95,12 @@ class ContactViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedCh
         checkbox2.isChecked = item.isChecked
         checkbox2.text = if (BuildConfig.DEBUG) item.id.toString() else ""
         if (item.photoThumbnailUri == null) {
-            icon2.setImageResource(R.drawable.ic_contact_picture)
+            icon2.setImageResource(R.drawable.ic_person_outline)
         } else {
             icon2.setImageURI(item.photoThumbnailUri)
         }
-        account2.text = context.getString(R.string.contacts_account, item.accountName, item.accountType)
+        account2.text =
+            context.getString(R.string.contacts_account, item.accountName, item.accountType)
         name2.text = item.displayName
         email2.text = formatData(item.emails)
         event2.text = formatData(item.events)

@@ -16,6 +16,7 @@
 package com.github.duplicates
 
 import android.content.Context
+import com.github.duplicates.db.DuplicatesDatabase
 import java.util.*
 import java.util.concurrent.CancellationException
 
@@ -24,7 +25,10 @@ import java.util.concurrent.CancellationException
  *
  * @author moshe.w
  */
-abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskListener<I>>(context: Context, listener: L) : DuplicateTask<I, DuplicateItemPair<I>, Any, Unit, L>(context, listener) {
+abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskListener<I>>(
+    context: Context,
+    listener: L
+) : DuplicateTask<I, DuplicateItemPair<I>, Any, Unit, L>(context, listener) {
 
     private val pairs = ArrayList<DuplicateItemPair<I>>()
 
@@ -34,29 +38,15 @@ abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskLis
     }
 
     override fun doInBackground(vararg params: DuplicateItemPair<I>) {
-        pairs.addAll(listOf(*params))
+        db = DuplicatesDatabase.getDatabase(context)
+        pairs += params
         publishProgress(pairs.size)
-        // Sort by descending id to avoid "index out of bounds" when displaying the list.
         pairs.sort()
+        // Sort by descending id to avoid "index out of bounds" when displaying the list.
         pairs.reverse()
         try {
             provider.deletePairs(pairs)
         } catch (ignore: CancellationException) {
-        }
-    }
-
-    override fun onProgressUpdate(vararg progress: Any) {
-        val listener = this.listener
-        listener.onDuplicateTaskProgress(this, progress[0] as Int)
-        if (progress.size > 1) {
-            val arg1 = progress[1]
-            if (arg1 is DuplicateItem) {
-                val item = arg1 as I
-                listener.onDuplicateTaskItemDeleted(this, item)
-            } else {
-                val pair = arg1 as DuplicateItemPair<I>
-                listener.onDuplicateTaskPairDeleted(this, pair)
-            }
         }
     }
 
@@ -65,14 +55,32 @@ abstract class DuplicateDeleteTask<I : DuplicateItem, L : DuplicateDeleteTaskLis
     }
 
     override fun onItemDeleted(provider: DuplicateProvider<I>, count: Int, item: I) {
+        listener.onDuplicateTaskItemDeleted(this, item)
+        deleteDatabase(item)
         publishProgress(count, item)
     }
 
-    override fun onPairDeleted(provider: DuplicateProvider<I>, count: Int, pair: DuplicateItemPair<I>) {
+    override fun onPairDeleted(
+        provider: DuplicateProvider<I>,
+        count: Int,
+        pair: DuplicateItemPair<I>
+    ) {
+        listener.onDuplicateTaskPairDeleted(this, pair)
+        deleteDatabase(pair.item1, pair.item2)
         publishProgress(count, pair)
     }
 
     override fun getPermissions(): Array<String>? {
         return provider.getDeletePermissions()
+    }
+
+    private fun deleteDatabase(item1: I, item2: I? = null) {
+        val dao = db.pairDao()
+        if (item1.isChecked) {
+            dao.deleteAll(item1.itemType, item1.id)
+        }
+        if ((item2 != null) && item2.isChecked) {
+            dao.deleteAll(item2.itemType, item2.id)
+        }
     }
 }

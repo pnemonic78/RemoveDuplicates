@@ -19,8 +19,10 @@ import android.content.Context
 import android.graphics.Color
 import android.text.format.DateUtils
 import android.view.View
+import android.view.ViewGroup
 import com.github.android.removeduplicates.BuildConfig
 import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameCalendarBinding
 import com.github.duplicates.DuplicateItemPair
 import com.github.duplicates.DuplicateViewHolder
 import com.github.duplicates.SHOW_DATE_TIME
@@ -30,7 +32,6 @@ import com.github.duplicates.calendar.CalendarComparator.Companion.DTSTART
 import com.github.duplicates.calendar.CalendarComparator.Companion.LOCATION
 import com.github.duplicates.calendar.CalendarComparator.Companion.TITLE
 import com.github.duplicates.calendar.CalendarItem.Companion.NEVER
-import kotlinx.android.synthetic.main.same_calendar.view.*
 import kotlin.math.min
 
 /**
@@ -38,29 +39,33 @@ import kotlin.math.min
  *
  * @author moshe.w
  */
-class CalendarViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedChangeListener<CalendarItem>? = null) : DuplicateViewHolder<CalendarItem>(itemView, onCheckedChangeListener) {
+class CalendarViewHolder(
+    itemView: ViewGroup,
+    binding: SameCalendarBinding,
+    onCheckedChangeListener: OnItemCheckedChangeListener<CalendarItem>? = null
+) : DuplicateViewHolder<CalendarItem>(itemView, onCheckedChangeListener) {
 
-    private val match = itemView.match
+    private val match = binding.match
 
-    private val checkbox1 = itemView.checkbox1
-    private val color1 = itemView.color1
-    private val start1 = itemView.start1
-    private val end1 = itemView.end1
-    private val recur1 = itemView.recur1
-    private val account1 = itemView.account1
-    private val title1 = itemView.title1
-    private val description1 = itemView.description1
-    private val location1 = itemView.location1
+    private val checkbox1 = binding.item1.checkbox
+    private val color1 = binding.item1.color
+    private val start1 = binding.item1.start
+    private val end1 = binding.item1.end
+    private val recur1 = binding.item1.recur
+    private val account1 = binding.item1.account
+    private val title1 = binding.item1.title
+    private val description1 = binding.item1.description
+    private val location1 = binding.item1.location
 
-    private val checkbox2 = itemView.checkbox2
-    private val color2 = itemView.color2
-    private val start2 = itemView.start2
-    private val end2 = itemView.end2
-    private val recur2 = itemView.recur2
-    private val account2 = itemView.account2
-    private val title2 = itemView.title2
-    private val description2 = itemView.description2
-    private val location2 = itemView.location2
+    private val checkbox2 = binding.item2.checkbox
+    private val color2 = binding.item2.color
+    private val start2 = binding.item2.start
+    private val end2 = binding.item2.end
+    private val recur2 = binding.item2.recur
+    private val account2 = binding.item2.account
+    private val title2 = binding.item2.title
+    private val description2 = binding.item2.description
+    private val location2 = binding.item2.location
 
     init {
         checkbox1.setOnClickListener {
@@ -72,7 +77,8 @@ class CalendarViewHolder(itemView: View, onCheckedChangeListener: OnItemCheckedC
     }
 
     override fun bindHeader(context: Context, pair: DuplicateItemPair<CalendarItem>) {
-        match.text = context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
+        match.text =
+            context.getString(R.string.match, percentFormatter.format(pair.match.toDouble()))
     }
 
     override fun bindItem1(context: Context, item: CalendarItem) {

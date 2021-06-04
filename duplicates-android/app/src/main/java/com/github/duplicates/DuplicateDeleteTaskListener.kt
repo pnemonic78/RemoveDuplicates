@@ -28,7 +28,10 @@ interface DuplicateDeleteTaskListener<I : DuplicateItem> : DuplicateTaskListener
      * @param task the task.
      * @param item the item.
      */
-    fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskItemDeleted(task: T, item: I)
+    fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskItemDeleted(
+        task: T,
+        item: I
+    )
 
     /**
      * Notification that the task has deleted a duplicate item.
@@ -36,5 +39,8 @@ interface DuplicateDeleteTaskListener<I : DuplicateItem> : DuplicateTaskListener
      * @param task the task.
      * @param pair the pair of items.
      */
-    fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskPairDeleted(task: T, pair: DuplicateItemPair<I>)
+    fun <L : DuplicateDeleteTaskListener<I>, T : DuplicateDeleteTask<I, L>> onDuplicateTaskPairDeleted(
+        task: T,
+        pair: DuplicateItemPair<I>
+    )
 }

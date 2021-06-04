@@ -15,8 +15,10 @@
  */
 package com.github.duplicates.call
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.github.android.removeduplicates.R
+import com.github.android.removeduplicates.databinding.SameCallBinding
 import com.github.duplicates.DuplicateAdapter
 
 /**
@@ -26,8 +28,14 @@ import com.github.duplicates.DuplicateAdapter
  */
 class CallLogAdapter : DuplicateAdapter<CallLogItem, CallLogViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CallLogViewHolder {
-        val itemView = createViewHolder(R.layout.same_call, parent, viewType)
-        return CallLogViewHolder(itemView, this)
+    override fun createCardViewHolder(
+        context: Context,
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        cardView: ViewGroup,
+        viewType: Int
+    ): CallLogViewHolder {
+        val binding = SameCallBinding.inflate(inflater, cardView, true)
+        return CallLogViewHolder(parent, binding, this)
     }
 }

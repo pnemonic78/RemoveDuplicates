@@ -22,6 +22,7 @@ import android.text.TextUtils
 import android.text.format.Time
 import com.android.calendarcommon2.RecurrenceSet
 import com.github.duplicates.DuplicateItem
+import com.github.duplicates.DuplicateItemType
 import com.github.duplicates.setToMax
 import java.util.*
 
@@ -30,7 +31,7 @@ import java.util.*
  *
  * @author moshe.w
  */
-class CalendarItem : DuplicateItem() {
+class CalendarItem : DuplicateItem(DuplicateItemType.CALENDAR) {
 
     var title: String = ""
     var location: String? = null
@@ -126,7 +127,8 @@ class CalendarItem : DuplicateItem() {
     var recurrenceSet: RecurrenceSet
         get() {
             if (_recurrenceSet == null) {
-                _recurrenceSet = RecurrenceSet(recurrenceRule, recurrenceDate, exceptionRule, exceptionDate)
+                _recurrenceSet =
+                    RecurrenceSet(recurrenceRule, recurrenceDate, exceptionRule, exceptionDate)
             }
             return _recurrenceSet!!
         }

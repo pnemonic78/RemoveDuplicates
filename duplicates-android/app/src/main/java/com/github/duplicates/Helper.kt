@@ -11,4 +11,7 @@ fun String?.toTimeZone(): TimeZone? {
     return if (this == null) null else TimeZone.getTimeZone(this)
 }
 
-const val SHOW_DATE_TIME = DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_MONTH or DateUtils.FORMAT_ABBREV_WEEKDAY
+const val SHOW_DATE_TIME = DateUtils.FORMAT_SHOW_DATE or
+    DateUtils.FORMAT_SHOW_TIME or
+    DateUtils.FORMAT_ABBREV_MONTH or
+    DateUtils.FORMAT_ABBREV_WEEKDAY

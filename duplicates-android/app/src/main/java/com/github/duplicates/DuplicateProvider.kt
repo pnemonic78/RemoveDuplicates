@@ -20,11 +20,10 @@ import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-
-import java.util.ArrayList
-import java.util.concurrent.CancellationException
-
+import androidx.annotation.MainThread
 import timber.log.Timber
+import java.util.*
+import java.util.concurrent.*
 
 /**
  * Provider of duplicate items.
@@ -67,7 +66,7 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
             throw CancellationException()
         }
         val items = ArrayList<T>()
-        val cr = context.contentResolver
+        val cr = context.contentResolver ?: return items
 
         val contentUri = getContentUri() ?: return items
         val cursor = cr.query(contentUri, getCursorProjection(), null, null, null)
@@ -102,10 +101,16 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
         if (isCancelled) {
             throw CancellationException()
         }
-        val cr = context.contentResolver
+        val cr = context.contentResolver ?: return
 
         val contentUri = getContentUri() ?: return
-        val cursor = cr.query(contentUri, getCursorProjection(), getCursorSelection(), null, getCursorOrder())
+        val cursor = cr.query(
+            contentUri,
+            getCursorProjection(),
+            getCursorSelection(),
+            null,
+            getCursorOrder()
+        )
         if (cursor != null) {
             try {
                 if (cursor.moveToFirst()) {
@@ -146,7 +151,7 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
             throw CancellationException()
         }
         val listener = this.listener ?: return
-        val cr = context.contentResolver
+        val cr = context.contentResolver ?: return
 
         var count = 0
         for (item in items) {
@@ -165,11 +170,7 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
      * @param item the item.
      */
     open fun deleteItem(item: T): Boolean {
-        return if (isCancelled) {
-            false
-        } else {
-            deleteItem(context.contentResolver, item)
-        }
+        return if (isCancelled) false else deleteItem(context.contentResolver, item)
     }
 
     /**
@@ -178,16 +179,32 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
      * @param cr   the content resolver.
      * @param item the item.
      */
-    open fun deleteItem(cr: ContentResolver, item: T): Boolean {
-        val contentUri = getContentUri()
+    private fun deleteItem(cr: ContentResolver, item: T): Boolean {
+        if (item.isDeleted) return true
+        val contentUri = getContentUri() ?: return false
         try {
             item.isError = false
-            return (contentUri != null) && cr.delete(ContentUris.withAppendedId(contentUri, item.id), null, null) > 0
+            if (deleteItem(cr, contentUri, item)) {
+                item.isDeleted = true
+                return true
+            }
         } catch (e: IllegalArgumentException) {
             item.isError = true
             Timber.e(e, "deleteItem: %s: %s", item, e.message)
         }
         return false
+    }
+
+    /**
+     * Delete an item from the system provider.
+     *
+     * @param cr   the content resolver.
+     * @param contentUri the content uri.
+     * @param item the item.
+     */
+    open fun deleteItem(cr: ContentResolver, contentUri: Uri, item: T): Boolean {
+        val uri = ContentUris.withAppendedId(contentUri, item.id)
+        return cr.delete(uri, null, null) > 0
     }
 
     /**
@@ -202,7 +219,7 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
             throw CancellationException()
         }
         val listener = this.listener ?: return
-        val cr = context.contentResolver
+        val cr = context.contentResolver ?: return
 
         var count = 0
         var item1: T
@@ -226,12 +243,16 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
     /**
      * Execute some code before task does background work.
      */
-    open fun onPreExecute() {}
+    @MainThread
+    open fun onPreExecute() {
+    }
 
     /**
      * Execute some code after the task did background work.
      */
-    open fun onPostExecute() {}
+    @MainThread
+    open fun onPostExecute() {
+    }
 
     /**
      * Get the permissions necessary for reading content from the system provider.
@@ -263,5 +284,30 @@ abstract class DuplicateProvider<T : DuplicateItem> protected constructor(privat
      */
     protected fun empty(cursor: Cursor, index: Int): String {
         return if (cursor.isNull(index)) "" else cursor.getString(index)
+    }
+
+    fun fetchItem(id: Long): T? {
+        val cr = context.contentResolver ?: return null
+        val contentUri = getContentUri() ?: return null
+        val uri = ContentUris.withAppendedId(contentUri, id)
+        val cursor = cr.query(
+            uri, getCursorProjection(), getCursorSelection(), null, getCursorOrder()
+        )
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    val item = createItem(cursor)
+                    if (item != null) {
+                        populateItem(cursor, item)
+                        return item
+                    }
+                }
+            } catch (e: RuntimeException) {
+                Timber.e(e, "Error fetching item: %s", e.message)
+            } finally {
+                cursor.close()
+            }
+        }
+        return null
     }
 }

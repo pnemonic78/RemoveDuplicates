@@ -24,7 +24,8 @@ import com.github.duplicates.DuplicateDeleteTaskListener
  *
  * @author moshe.w
  */
-class AlarmDeleteTask<L : DuplicateDeleteTaskListener<AlarmItem>>(context: Context, listener: L) : DuplicateDeleteTask<AlarmItem, L>(context, listener) {
+class AlarmDeleteTask<L : DuplicateDeleteTaskListener<AlarmItem>>(context: Context, listener: L) :
+    DuplicateDeleteTask<AlarmItem, L>(context, listener) {
 
     override fun createProvider(context: Context): AlarmProvider {
         return AlarmProvider(context)

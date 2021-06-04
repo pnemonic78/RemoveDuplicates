@@ -24,7 +24,10 @@ import com.github.duplicates.DuplicateDeleteTaskListener
  *
  * @author moshe.w
  */
-class ContactDeleteTask<L : DuplicateDeleteTaskListener<ContactItem>>(context: Context, listener: L) : DuplicateDeleteTask<ContactItem, L>(context, listener) {
+class ContactDeleteTask<L : DuplicateDeleteTaskListener<ContactItem>>(
+    context: Context,
+    listener: L
+) : DuplicateDeleteTask<ContactItem, L>(context, listener) {
 
     override fun createProvider(context: Context): ContactProvider {
         return ContactProvider(context)

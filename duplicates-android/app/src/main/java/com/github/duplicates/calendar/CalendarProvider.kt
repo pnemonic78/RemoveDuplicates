@@ -21,7 +21,30 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns._ID
-import android.provider.CalendarContract.Events.*
+import android.provider.CalendarContract.Events.ALL_DAY
+import android.provider.CalendarContract.Events.CALENDAR_ACCESS_LEVEL
+import android.provider.CalendarContract.Events.CALENDAR_COLOR
+import android.provider.CalendarContract.Events.CALENDAR_DISPLAY_NAME
+import android.provider.CalendarContract.Events.CALENDAR_ID
+import android.provider.CalendarContract.Events.CALENDAR_TIME_ZONE
+import android.provider.CalendarContract.Events.CONTENT_URI
+import android.provider.CalendarContract.Events.DELETED
+import android.provider.CalendarContract.Events.DESCRIPTION
+import android.provider.CalendarContract.Events.DTEND
+import android.provider.CalendarContract.Events.DTSTART
+import android.provider.CalendarContract.Events.EVENT_COLOR
+import android.provider.CalendarContract.Events.EVENT_END_TIMEZONE
+import android.provider.CalendarContract.Events.EVENT_LOCATION
+import android.provider.CalendarContract.Events.EVENT_TIMEZONE
+import android.provider.CalendarContract.Events.EXDATE
+import android.provider.CalendarContract.Events.EXRULE
+import android.provider.CalendarContract.Events.HAS_ATTENDEE_DATA
+import android.provider.CalendarContract.Events.LAST_DATE
+import android.provider.CalendarContract.Events.OWNER_ACCOUNT
+import android.provider.CalendarContract.Events.RDATE
+import android.provider.CalendarContract.Events.RRULE
+import android.provider.CalendarContract.Events.TITLE
+import android.provider.CalendarContract.Events.VISIBLE
 import android.util.LongSparseArray
 import com.github.android.removeduplicates.BuildConfig
 import com.github.duplicates.DuplicateProvider
@@ -41,15 +64,15 @@ class CalendarProvider(context: Context) : DuplicateProvider<CalendarItem>(conte
         return CONTENT_URI
     }
 
-    override fun getCursorProjection(): Array<String>? {
+    override fun getCursorProjection(): Array<String> {
         return PROJECTION
     }
 
-    override fun getCursorSelection(): String? {
+    override fun getCursorSelection(): String {
         return "$DELETED=0"
     }
 
-    override fun getCursorOrder(): String? {
+    override fun getCursorOrder(): String {
         return if (BuildConfig.DEBUG) {
             "$_ID ASC"
         } else {
@@ -57,7 +80,7 @@ class CalendarProvider(context: Context) : DuplicateProvider<CalendarItem>(conte
         }
     }
 
-    override fun createItem(cursor: Cursor): CalendarItem? {
+    override fun createItem(cursor: Cursor): CalendarItem {
         return CalendarItem()
     }
 
@@ -80,7 +103,8 @@ class CalendarProvider(context: Context) : DuplicateProvider<CalendarItem>(conte
         item.exceptionDate = cursor.getString(INDEX_EXDATE)
         item.exceptionRule = cursor.getString(INDEX_EXRULE)
         item.isHasAttendeeData = cursor.getInt(INDEX_HAS_ATTENDEE_DATA) != 0
-        item.lastDate = if (cursor.isNull(INDEX_LAST_DATE)) null else cursor.getLong(INDEX_LAST_DATE)
+        item.lastDate =
+            if (cursor.isNull(INDEX_LAST_DATE)) null else cursor.getLong(INDEX_LAST_DATE)
         item.recurrenceDate = cursor.getString(INDEX_RDATE)
         item.recurrenceRule = cursor.getString(INDEX_RRULE)
         item.title = empty(cursor, INDEX_TITLE)
@@ -102,15 +126,15 @@ class CalendarProvider(context: Context) : DuplicateProvider<CalendarItem>(conte
         item.calendar = cal
     }
 
-    override fun deleteItem(cr: ContentResolver, item: CalendarItem): Boolean {
-        return cr.delete(getContentUri(), _ID + "=" + item.id, null) > 0
+    override fun deleteItem(cr: ContentResolver, contentUri: Uri, item: CalendarItem): Boolean {
+        return cr.delete(contentUri, _ID + "=" + item.id, null) > 0
     }
 
-    override fun getReadPermissions(): Array<String>? {
+    override fun getReadPermissions(): Array<String> {
         return PERMISSIONS_READ
     }
 
-    override fun getDeletePermissions(): Array<String>? {
+    override fun getDeletePermissions(): Array<String> {
         return PERMISSIONS_WRITE
     }
 

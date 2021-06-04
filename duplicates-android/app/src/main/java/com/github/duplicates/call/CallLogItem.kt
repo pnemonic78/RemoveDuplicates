@@ -15,16 +15,15 @@
  */
 package com.github.duplicates.call
 
-import android.text.TextUtils
-
 import com.github.duplicates.DuplicateItem
+import com.github.duplicates.DuplicateItemType
 
 /**
  * Duplicate call log entry.
  *
  * @author moshe.w
  */
-class CallLogItem : DuplicateItem() {
+class CallLogItem : DuplicateItem(DuplicateItemType.CALL_LOG) {
 
     var name: String? = null
     var numberLabel: String? = null
@@ -44,12 +43,19 @@ class CallLogItem : DuplicateItem() {
 
     companion object {
 
-        const val ANSWERED_EXTERNALLY_TYPE = 7// android.provider.CallLog.Calls.ANSWERED_EXTERNALLY_TYPE; (Added in API level 25)
-        const val BLOCKED_TYPE = 6// android.provider.CallLog.Calls.BLOCKED_TYPE; (Added in API level 24)
+        // android.provider.CallLog.Calls.ANSWERED_EXTERNALLY_TYPE; (Added in API level 25)
+        const val ANSWERED_EXTERNALLY_TYPE = 7
+
+        // android.provider.CallLog.Calls.BLOCKED_TYPE; (Added in API level 24)
+        const val BLOCKED_TYPE = 6
         const val INCOMING_TYPE = android.provider.CallLog.Calls.INCOMING_TYPE
         const val MISSED_TYPE = android.provider.CallLog.Calls.MISSED_TYPE
         const val OUTGOING_TYPE = android.provider.CallLog.Calls.OUTGOING_TYPE
-        const val REJECTED_TYPE = 5// android.provider.CallLog.Calls.REJECTED_TYPE; (Added in API level 24)
-        const val VOICEMAIL_TYPE = 4// android.provider.CallLog.Calls.VOICEMAIL_TYPE; (Added in API level 21)
+
+        // android.provider.CallLog.Calls.REJECTED_TYPE; (Added in API level 24)
+        const val REJECTED_TYPE = 5
+
+        // android.provider.CallLog.Calls.VOICEMAIL_TYPE; (Added in API level 21)
+        const val VOICEMAIL_TYPE = 4
     }
 }

@@ -22,13 +22,18 @@ import com.github.duplicates.DuplicateComparator.Companion.SAME
  *
  * @author moshe.w
  */
-class DuplicateItemPair<T : DuplicateItem>(val item1: T, val item2: T, val match: Float = 1f, val difference: BooleanArray) : Comparable<DuplicateItemPair<T>> {
+class DuplicateItemPair<T : DuplicateItem>(
+    val item1: T,
+    val item2: T,
+    val match: Float = 0f,
+    val difference: BooleanArray
+) : Comparable<DuplicateItemPair<T>> {
 
     val id: Long
         get() {
             val id1 = item1.id
             val id2 = item2.id
-            return id1 and 0xFFFFFFFFL shl 32 or (id2 and 0xFFFFFFFFL)
+            return ((id1 and 0xFFFFFFFFL) shl 32) or (id2 and 0xFFFFFFFFL)
         }
 
     init {
@@ -41,9 +46,7 @@ class DuplicateItemPair<T : DuplicateItem>(val item1: T, val item2: T, val match
         val thisId1 = this.item1.id
         val thatId1 = other.item1.id
         val c = thisId1.compareTo(thatId1)
-        if (c != SAME) {
-            return c
-        }
+        if (c != SAME) return c
         val thisId2 = this.item2.id
         val thatId2 = other.item2.id
         return thisId2.compareTo(thatId2)

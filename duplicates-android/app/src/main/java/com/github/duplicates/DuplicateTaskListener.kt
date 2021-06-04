@@ -27,21 +27,27 @@ interface DuplicateTaskListener<I : DuplicateItem> {
      *
      * @param task the task.
      */
-    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskStarted(task: T)
+    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskStarted(
+        task: T
+    )
 
     /**
      * Notification that the task has finished executing.
      *
      * @param task the task.
      */
-    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskFinished(task: T)
+    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskFinished(
+        task: T
+    )
 
     /**
      * Notification that the task has been cancelled.
      *
      * @param task the task.
      */
-    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskCancelled(task: T)
+    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskCancelled(
+        task: T
+    )
 
     /**
      * Notification that the task has progressed.
@@ -49,5 +55,8 @@ interface DuplicateTaskListener<I : DuplicateItem> {
      * @param task  the task.
      * @param count the number of items processed.
      */
-    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskProgress(task: T, count: Int)
+    fun <Params, Progress, Result, L : DuplicateTaskListener<I>, T : DuplicateTask<I, Params, Progress, Result, L>> onDuplicateTaskProgress(
+        task: T,
+        count: Int
+    )
 }

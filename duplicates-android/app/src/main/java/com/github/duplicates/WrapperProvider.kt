@@ -26,7 +26,8 @@ import java.util.concurrent.CancellationException
  *
  * @author moshe.w
  */
-abstract class WrapperProvider<T : DuplicateItem>(private val context: Context) : DuplicateProvider<T>(context) {
+abstract class WrapperProvider<T : DuplicateItem>(private val context: Context) :
+    DuplicateProvider<T>(context) {
 
     private var _delegate: DuplicateProvider<T>? = null
     private val delegate: DuplicateProvider<T>
@@ -96,8 +97,8 @@ abstract class WrapperProvider<T : DuplicateItem>(private val context: Context) 
         return delegate.deleteItem(item)
     }
 
-    override fun deleteItem(cr: ContentResolver, item: T): Boolean {
-        return delegate.deleteItem(cr, item)
+    override fun deleteItem(cr: ContentResolver, contentUri: Uri, item: T): Boolean {
+        return delegate.deleteItem(cr, contentUri, item)
     }
 
     @Throws(CancellationException::class)

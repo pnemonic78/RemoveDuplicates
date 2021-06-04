@@ -20,6 +20,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.core.net.toUri
 import com.github.duplicates.DuplicateItem
+import com.github.duplicates.DuplicateItemType
 import java.io.ByteArrayOutputStream
 
 /**
@@ -27,7 +28,7 @@ import java.io.ByteArrayOutputStream
  *
  * @author moshe.w
  */
-class BookmarkItem : DuplicateItem() {
+class BookmarkItem : DuplicateItem(DuplicateItemType.BOOKMARK) {
 
     var created: Long = 0
     var date: Long = 0
