@@ -82,8 +82,6 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
                 val item2 = fetchItem(entity.id2) ?: continue
                 item2.isChecked = entity.isChecked2
 
-                if (item1.isChecked && item2.isChecked) continue
-
                 val difference = comparator.difference(item1, item2)
                 val match = comparator.match(item1, item2, difference)
 
@@ -105,6 +103,7 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
 
     override fun onItemFetched(provider: DuplicateProvider<I>, count: Int, item: I) {
         val size = items.size
+        val isChecked2 = item.isChecked
 
         // Maybe the item already exists in the list?
         var item1: I
@@ -126,6 +125,10 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
         // Most likely that a matching item is a neighbour, so count backwards.
         for (i in size - 1 downTo 0) {
             item1 = items[i]
+            // Are both items already paired?
+            if (item1.isChecked && isChecked2) {
+                continue
+            }
             difference = comparator.difference(item1, item)
             match = comparator.match(item1, item, difference)
             if (match >= MATCH_GOOD && match > bestMatch) {

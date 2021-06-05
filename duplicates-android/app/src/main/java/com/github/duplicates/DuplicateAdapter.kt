@@ -101,9 +101,6 @@ abstract class DuplicateAdapter<T : DuplicateItem, VH : DuplicateViewHolder<T>> 
      * @param pair      the pair.
      */
     fun add(pair: DuplicateItemPair<T>) {
-        if (pair.item1.isChecked && pair.item2.isChecked) {
-            return
-        }
         if (pairs.add(pair)) {
             notifyItemInserted(pairs.size)
         }

@@ -29,7 +29,7 @@ enum class MainSpinnerItem(
     val type: DuplicateItemType,
     @StringRes val label: Int,
     @DrawableRes val icon: Int,
-    val enabled: Boolean = true
+    val isVisible: Boolean = true
 ) {
 
     ALARMS(DuplicateItemType.ALARM, R.string.item_alarms, R.drawable.ic_alarm),
