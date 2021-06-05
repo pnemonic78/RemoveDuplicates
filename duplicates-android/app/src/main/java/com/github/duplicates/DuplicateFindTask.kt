@@ -82,8 +82,6 @@ abstract class DuplicateFindTask<I : DuplicateItem, VH : DuplicateViewHolder<I>,
                 val item2 = fetchItem(entity.id2) ?: continue
                 item2.isChecked = entity.isChecked2
 
-                if (item1.isChecked && item2.isChecked) continue
-
                 val difference = comparator.difference(item1, item2)
                 val match = comparator.match(item1, item2, difference)
 

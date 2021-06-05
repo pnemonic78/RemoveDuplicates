@@ -30,7 +30,7 @@ import com.github.android.removeduplicates.R
  */
 class MainSpinnerAdapter : BaseAdapter() {
 
-    private val items = MainSpinnerItem.values()
+    private val items = MainSpinnerItem.values().filter { it.isVisible }
 
     override fun getCount(): Int {
         return items.size
@@ -81,10 +81,9 @@ class MainSpinnerAdapter : BaseAdapter() {
         textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
         textView.compoundDrawablePadding =
             context.resources.getDimensionPixelSize(R.dimen.drawable_padding)
-        view.isEnabled = item.enabled
     }
 
     override fun isEnabled(position: Int): Boolean {
-        return getItem(position).enabled
+        return getItem(position).isVisible
     }
 }
