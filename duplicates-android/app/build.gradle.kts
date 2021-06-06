@@ -22,7 +22,26 @@ android {
 
         buildConfigField("Boolean", "FEATURE_CALL_LOGS", "true")
         buildConfigField("Boolean", "FEATURE_SMS", "true")
-        resConfigs("en")
+        resConfigs(
+            "ar",
+            "cs",
+            "de",
+            "el",
+            "es",
+            "fi",
+            "fr",
+            "hi",
+            "it",
+            "iw",
+            "ja",
+            "ko",
+            "nl",
+            "pl",
+            "pt",
+            "ru",
+            "vi",
+            "zh"
+        )
     }
 
     signingConfigs {
