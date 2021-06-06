@@ -46,11 +46,6 @@
     <string name="call_type_incoming" translatable="false">@string/content_description_recent_call_type_incoming</string>
     <string name="call_type_outgoing" translatable="false">@string/content_description_recent_call_type_outgoing</string>
     <string name="call_type_missed" translatable="false">@string/content_description_recent_call_type_missed</string>
-    <string name="call_type_voicemail" translatable="false">voicemail</string>
-    <string name="call_type_rejected" translatable="false">rejected</string>
-    <string name="call_type_blocked" translatable="false">blocked</string>
-    <string name="call_type_external" translatable="false">external</string>
-    <string name="call_type_other" translatable="false">other</string>
 
     <!-- Contacts -->
     <string name="contacts">Contacts</string>
