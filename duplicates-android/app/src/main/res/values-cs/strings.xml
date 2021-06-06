@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Odebrat Duplikáty</string>
+
+    <string name="match">%s match</string>
+    <string name="permissions_denied">Permission denied! Please grant application access.</string>
+    <string name="empty">No duplicate items found</string>
+    <string name="icon">Icon</string>
+
+    <!-- Alarms -->
+    <string name="alarm_settings" msgid="2947147071388290814">"Budíky"</string>
+
+    <!-- Bookmarks -->
+    <string name="bookmarks">Bookmarks</string>
+
+    <!-- Calendar -->
+    <string name="edit_event_calendar_label" msgid="4556498359505856900">"Kalendář"</string>
+    <string name="repeat_title" msgid="6473587828597786996">"Opakovat"</string>
+
+    <!-- >Call log -->
+    <string name="call_log">Call log</string>
+    <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"příchozí"</string>
+    <string name="call_type_outgoing">outgoing</string>
+    <string name="call_type_missed">missed</string>
+    <string name="call_type_voicemail">voicemail</string>
+    <string name="call_type_rejected">rejected</string>
+    <string name="call_type_blocked">blocked</string>
+    <string name="call_type_external">external</string>
+    <string name="call_type_other">other</string>
+
+    <!-- Contacts -->
+    <string name="contacts">Contacts</string>
+
+    <!-- Messages -->
+    <string name="messages">Messages</string>
+    <string name="message_type_all">all</string>
+    <string name="message_type_inbox">inbox</string>
+    <string name="message_type_sent">sent</string>
+    <string name="message_type_drafts">drafts</string>
+    <string name="message_type_outbox">outbox</string>
+    <string name="message_type_failed">failed</string>
+    <string name="message_type_queued">queued</string>
+
+</resources>
