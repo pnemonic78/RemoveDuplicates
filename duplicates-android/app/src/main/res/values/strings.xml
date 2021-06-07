@@ -32,7 +32,7 @@
     <string name="repeat_title" msgid="6473587828597786996">"Repeat"</string>
     <string name="calendar_recur" translatable="false">@string/repeat_title</string>
 
-    <!-- >Call log -->
+    <!-- Call log -->
     <string name="call_log">Call log</string>
     <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"incoming"</string>
     <string name="content_description_recent_call_type_outgoing" msgid="5156553338985232744">"outgoing"</string>
@@ -48,7 +48,7 @@
     <string name="call_type_missed" translatable="false">@string/content_description_recent_call_type_missed</string>
 
     <!-- Contacts -->
-    <string name="contacts">Contacts</string>
+    <string name="contacts" translatable="false">@string/contactsList</string>
     <string name="item_contacts" translatable="false">@string/contacts</string>
     <string name="contacts_account" translatable="false">%1$s (%2$s)</string>
     <string name="contact_icon" translatable="false">@string/icon</string>

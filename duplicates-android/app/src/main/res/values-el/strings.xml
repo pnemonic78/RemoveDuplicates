@@ -16,7 +16,7 @@
     <string name="edit_event_calendar_label" msgid="4556498359505856900">"Ημερολόγιο"</string>
     <string name="repeat_title" msgid="6473587828597786996">"Επανάληψη"</string>
 
-    <!-- >Call log -->
+    <!-- Call log -->
     <string name="call_log">Call log</string>
     <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"εισερχόμενες"</string>
     <string name="call_type_outgoing">outgoing</string>
@@ -26,9 +26,6 @@
     <string name="call_type_blocked">blocked</string>
     <string name="call_type_external">external</string>
     <string name="call_type_other">other</string>
-
-    <!-- Contacts -->
-    <string name="contacts">Contacts</string>
 
     <!-- Messages -->
     <string name="messages">Messages</string>
