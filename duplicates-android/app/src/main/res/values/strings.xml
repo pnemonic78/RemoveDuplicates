@@ -18,7 +18,6 @@
     <string name="bookmark_icon" translatable="false">@string/icon</string>
 
     <!-- Calendar -->
-    <string name="edit_event_calendar_label" msgid="4556498359505856900">"Calendar"</string>
     <string name="calendar" translatable="false">@string/edit_event_calendar_label</string>
     <string name="item_calendar" translatable="false">@string/calendar</string>
     <string name="repeat_title" msgid="6473587828597786996">"Repeat"</string>

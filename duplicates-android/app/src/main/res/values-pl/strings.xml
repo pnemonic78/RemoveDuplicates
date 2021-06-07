@@ -13,7 +13,6 @@
     <string name="bookmarks">Bookmarks</string>
 
     <!-- Calendar -->
-    <string name="edit_event_calendar_label" msgid="4556498359505856900">"Kalendarz"</string>
     <string name="repeat_title" msgid="6473587828597786996">"Powtórz"</string>
 
     <!-- Call log -->
