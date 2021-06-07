@@ -55,7 +55,7 @@
     <string name="message_type_outbox">outbox</string>
     <string name="message_type_failed">failed</string>
     <string name="message_type_queued">queued</string>
-9
+
     <!-- Menu -->
     <string name="menu_delete" translatable="false">@string/delete</string>
     <string name="menu_select_all" translatable="false">@string/select_all</string>
