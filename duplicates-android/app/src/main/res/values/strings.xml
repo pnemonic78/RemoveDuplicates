@@ -8,7 +8,6 @@
     <string name="icon">Icon</string>
 
     <!-- Alarms -->
-    <string name="alarm_settings">Alarms</string>
     <string name="alarms" translatable="false">@string/alarm_settings</string>
     <string name="item_alarms" translatable="false">@string/alarms</string>
 
@@ -20,11 +19,10 @@
     <!-- Calendar -->
     <string name="calendar" translatable="false">@string/edit_event_calendar_label</string>
     <string name="item_calendar" translatable="false">@string/calendar</string>
-    <string name="repeat_title" msgid="6473587828597786996">"Repeat"</string>
-    <string name="calendar_recur" translatable="false">@string/repeat_title</string>
+    <string name="calendar_recur" translatable="false">@string/repeats_label</string>
 
     <!-- Call log -->
-    <string name="call_log">Call log</string>
+    <string name="call_log">Call history</string>
     <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"incoming"</string>
     <string name="content_description_recent_call_type_outgoing" msgid="5156553338985232744">"outgoing"</string>
     <string name="content_description_recent_call_type_missed" msgid="7371810920196048204">"missed"</string>

@@ -7,16 +7,12 @@
     <string name="icon">Icon</string>
 
     <!-- Alarms -->
-    <string name="alarm_settings" msgid="2947147071388290814">"التنبيهات"</string>
-
     <!-- Bookmarks -->
     <string name="bookmarks">Bookmarks</string>
 
     <!-- Calendar -->
-    <string name="repeat_title" msgid="6473587828597786996">"التكرار"</string>
-
     <!-- Call log -->
-    <string name="call_log_title">Call log</string>
+    <string name="call_log_title">Call history</string>
     <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"الواردة"</string>
     <string name="content_description_recent_call_type_outgoing" msgid="5156553338985232744">"الصادرة"</string>
     <string name="call_type_missed">missed</string>

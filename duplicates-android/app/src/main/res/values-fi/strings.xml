@@ -7,14 +7,10 @@
     <string name="icon">Icon</string>
 
     <!-- Alarms -->
-    <string name="alarm_settings" msgid="2947147071388290814">"Herätykset"</string>
-
     <!-- Bookmarks -->
     <string name="bookmarks">Bookmarks</string>
 
     <!-- Calendar -->
-    <string name="repeat_title" msgid="6473587828597786996">"Toista"</string>
-
     <!-- Call log -->
     <string name="call_log">Call log</string>
     <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"saapuva"</string>
