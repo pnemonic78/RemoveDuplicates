@@ -7,14 +7,6 @@
     <string name="empty">No duplicate items found</string>
     <string name="icon">Icon</string>
 
-    <!-- Debug -->
-    <string name="dummy_match" translatable="false">80%</string>
-    <string name="dummy_text" translatable="false">@string/app_name</string>
-    <string name="dummy_text_long" translatable="false">The quick brown fox jumped over the lazy dog.</string>
-    <string name="dummy_text_long3" translatable="false">Hello, World!\nThe quick brown fox,\njumped over the lazy dog.</string>
-    <string name="dummy_date" translatable="false">2016/12/31</string>
-    <string name="dummy_date_time" translatable="false">2016/12/31 12:34</string>
-
     <!-- Alarms -->
     <string name="alarm_settings">Alarms</string>
     <string name="alarms" translatable="false">@string/alarm_settings</string>
@@ -51,7 +43,7 @@
     <string name="contacts" translatable="false">@string/contactsList</string>
     <string name="item_contacts" translatable="false">@string/contacts</string>
     <string name="contacts_account" translatable="false">%1$s (%2$s)</string>
-    <string name="contact_icon" translatable="false">@string/icon</string>
+    <string name="contact_icon" translatable="false">@string/editor_contact_photo_content_description</string>
 
     <!-- Messages -->
     <string name="messages">Messages</string>
@@ -63,7 +55,7 @@
     <string name="message_type_outbox">outbox</string>
     <string name="message_type_failed">failed</string>
     <string name="message_type_queued">queued</string>
-
+9
     <!-- Menu -->
     <string name="menu_delete" translatable="false">@string/delete</string>
     <string name="menu_select_all" translatable="false">@string/select_all</string>
