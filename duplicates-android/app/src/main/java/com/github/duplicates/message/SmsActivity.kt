@@ -15,11 +15,11 @@
  */
 package com.github.duplicates.message
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * Dummy SMS/MMs activity just to let system think we can be a default SMS app.
  *
  * @author moshe.w
  */
-class SmsActivity : Activity()
+class SmsActivity : AppCompatActivity()
