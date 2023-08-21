@@ -1,7 +1,8 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "1.8.22-1.0.11"
+    kotlin("android")
+
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
 }
@@ -10,21 +11,40 @@ val versionMajor = (project.properties["APP_VERSION_MAJOR"] as String).toInt()
 val versionMinor = (project.properties["APP_VERSION_MINOR"] as String).toInt()
 
 android {
-    compileSdkVersion(BuildVersions.compileSdkVersion)
+    compileSdk = BuildVersions.compileSdkVersion
 
     defaultConfig {
-        applicationId("com.github.android.removeduplicates")
-        minSdkVersion(BuildVersions.minSdkVersion)
-        targetSdkVersion(BuildVersions.targetSdkVersion)
+        applicationId = "com.github.android.removeduplicates"
+        minSdk = BuildVersions.minSdkVersion
+        targetSdk = BuildVersions.targetSdkVersion
         versionCode = versionMajor * 100 + versionMinor
         versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
-        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField("Boolean", "FEATURE_CALL_LOGS", "true")
         buildConfigField("Boolean", "FEATURE_SMS", "true")
-        resConfigs("en")
+        resConfigs(
+            "ar",
+            "cs",
+            "de",
+            "el",
+            "es",
+            "fi",
+            "fr",
+            "hi",
+            "it",
+            "iw",
+            "ja",
+            "ko",
+            "nl",
+            "pl",
+            "pt",
+            "ru",
+            "vi",
+            "zh"
+        )
     }
 
     signingConfigs {
@@ -60,16 +80,16 @@ android {
         viewBinding = true
     }
 
-    lintOptions {
-        disable("AllowBackup")
-        disable("GoogleAppIndexingWarning")
-        disable("InconsistentLayout")
-        disable("LocaleFolder")
-        disable("UnusedAttribute")
-        disable("UnusedResources")
+    lint {
+        disable += "AllowBackup"
+        disable += "GoogleAppIndexingWarning"
+        disable += "InconsistentLayout"
+        disable += "LocaleFolder"
+        disable += "UnusedAttribute"
+        disable += "UnusedResources"
     }
 
-    flavorDimensions("privacy")
+    flavorDimensions += "privacy"
 
     productFlavors {
         create("google") {
@@ -94,7 +114,7 @@ dependencies {
     implementation("androidx.room:room-common:${BuildVersions.roomVersion}")
     implementation("androidx.room:room-runtime:${BuildVersions.roomVersion}")
     implementation("androidx.room:room-ktx:${BuildVersions.roomVersion}")
-    kapt("androidx.room:room-compiler:${BuildVersions.roomVersion}")
+    ksp("androidx.room:room-compiler:${BuildVersions.roomVersion}")
 
     // Logging
     implementation("com.google.firebase:firebase-crashlytics:18.0.1")

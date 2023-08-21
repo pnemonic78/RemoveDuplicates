@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">إزالة التكرارات</string>
+
+    <string name="match">%s تطابق</string>
+    <string name="permissions_denied">تم رفض الإذن! يرجى منح حق الوصول للتطبيق.</string>
+    <string name="empty">لم يتم العثور على عناصر مكررة</string>
+    <string name="icon">أيقونة</string>
+
+    <!-- Alarms -->
+    <!-- Bookmarks -->
+    <string name="bookmarks">إشارات مرجعية</string>
+
+    <!-- Calendar -->
+    <!-- Call log -->
+    <string name="call_log">سجل المكالمات</string>
+    <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"الواردة"</string>
+    <string name="content_description_recent_call_type_outgoing" msgid="5156553338985232744">"الصادرة"</string>
+    <string name="content_description_recent_call_type_missed" msgid="7371810920196048204">"مٌفتَقد"</string>
+    <string name="call_type_voicemail">البريد الصوتي</string>
+    <string name="call_type_rejected">مرفوض</string>
+    <string name="call_type_blocked">منعت</string>
+    <string name="call_type_external">خارجي</string>
+    <string name="call_type_other">آخر</string>
+
+    <!-- Messages -->
+    <string name="messages">رسائل</string>
+    <string name="message_type_all">كافة</string>
+    <string name="message_type_inbox">صندوق الوارد</string>
+    <string name="message_type_sent">مرسل</string>
+    <string name="message_type_drafts">المسودات</string>
+    <string name="message_type_outbox">صندوق الصادر</string>
+    <string name="message_type_failed">فشل</string>
+    <string name="message_type_queued">في قائمة الانتظار</string>
+
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dummy_match" translatable="false">80%</string>
+    <string name="dummy_text" translatable="false">@string/app_name</string>
+    <string name="dummy_text_long" translatable="false">The quick brown fox jumped over the lazy dog.</string>
+    <string name="dummy_text_long3" translatable="false">Hello, World!\nThe quick brown fox,\njumped over the lazy dog.</string>
+    <string name="dummy_date" translatable="false">2016/12/31</string>
+    <string name="dummy_date_time" translatable="false">2016/12/31 12:34</string>
+</resources>
