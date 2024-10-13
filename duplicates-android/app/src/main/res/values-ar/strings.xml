@@ -13,9 +13,9 @@
     <!-- Calendar -->
     <!-- Call log -->
     <string name="call_log">سجل المكالمات</string>
-    <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"الواردة"</string>
-    <string name="content_description_recent_call_type_outgoing" msgid="5156553338985232744">"الصادرة"</string>
-    <string name="content_description_recent_call_type_missed" msgid="7371810920196048204">"مٌفتَقد"</string>
+    <string name="call_type_incoming">"الواردة"</string>
+    <string name="call_type_outgoing">"الصادرة"</string>
+    <string name="call_type_missed">"مٌفتَقد"</string>
     <string name="call_type_voicemail">البريد الصوتي</string>
     <string name="call_type_rejected">مرفوض</string>
     <string name="call_type_blocked">منعت</string>

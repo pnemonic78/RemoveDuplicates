@@ -13,7 +13,7 @@
     <!-- Calendar -->
     <!-- Call log -->
     <string name="call_log">Call log</string>
-    <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"recibida"</string>
+    <string name="call_type_incoming">"recibida"</string>
     <string name="call_type_outgoing">outgoing</string>
     <string name="call_type_missed">missed</string>
     <string name="call_type_voicemail">voicemail</string>

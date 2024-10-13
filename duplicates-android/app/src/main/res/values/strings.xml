@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="app_name">Remove Duplicates</string>
 
     <string name="counter" translatable="false">%d</string>
@@ -23,18 +23,15 @@
 
     <!-- Call log -->
     <string name="call_log">Call history</string>
-    <string name="content_description_recent_call_type_incoming" msgid="5210739096863511410">"incoming"</string>
-    <string name="content_description_recent_call_type_outgoing" msgid="5156553338985232744">"outgoing"</string>
-    <string name="content_description_recent_call_type_missed" msgid="7371810920196048204">"missed"</string>
+    <string name="call_type_incoming">"incoming"</string>
+    <string name="call_type_outgoing">"outgoing"</string>
+    <string name="call_type_missed">"missed"</string>
     <string name="call_type_voicemail">voicemail</string>
     <string name="call_type_rejected">rejected</string>
     <string name="call_type_blocked">blocked</string>
     <string name="call_type_external">external</string>
     <string name="call_type_other">other</string>
     <string name="item_call_log" translatable="false">@string/call_log</string>
-    <string name="call_type_incoming" translatable="false">@string/content_description_recent_call_type_incoming</string>
-    <string name="call_type_outgoing" translatable="false">@string/content_description_recent_call_type_outgoing</string>
-    <string name="call_type_missed" translatable="false">@string/content_description_recent_call_type_missed</string>
 
     <!-- Contacts -->
     <string name="contacts" translatable="false">@string/contactsList</string>
