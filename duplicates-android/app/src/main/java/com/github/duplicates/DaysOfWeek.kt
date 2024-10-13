@@ -47,14 +47,14 @@ class DaysOfWeek(days: Int) : Comparable<DaysOfWeek> {
         // no days
         if (days == 0) {
             return if (showNever)
-                context.getString(R.string.never)
+                context.getString(com.github.lib.R.string.never)
             else
                 ""
         }
 
         // every day
         if (days == 0x7f) {
-            return context.getString(R.string.every_day)
+            return context.getString(com.github.lib.R.string.every_day)
         }
 
         // count selected days
@@ -78,7 +78,7 @@ class DaysOfWeek(days: Int) : Comparable<DaysOfWeek> {
                 ret.append(dayList[DAY_MAP[i]])
                 dayCount -= 1
                 if (dayCount > 0)
-                    ret.append(context.getString(R.string.day_concat))
+                    ret.append(context.getString(com.github.lib.R.string.day_concat))
             }
         }
         return ret.toString()
