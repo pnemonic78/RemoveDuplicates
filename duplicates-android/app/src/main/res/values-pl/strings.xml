@@ -24,12 +24,12 @@
 
     <!-- Messages -->
     <string name="messages">Messages</string>
-    <string name="message_type_all">all</string>
-    <string name="message_type_inbox">inbox</string>
-    <string name="message_type_sent">sent</string>
-    <string name="message_type_drafts">drafts</string>
-    <string name="message_type_outbox">outbox</string>
-    <string name="message_type_failed">failed</string>
-    <string name="message_type_queued">queued</string>
+    <string name="message_type_all">wszystkie</string>
+    <string name="message_type_inbox">odbiorcza</string>
+    <string name="message_type_sent">wysłane</string>
+    <string name="message_type_drafts">robocze</string>
+    <string name="message_type_outbox">nadawcza</string>
+    <string name="message_type_failed">nieudane</string>
+    <string name="message_type_queued">kolejce</string>
 
 </resources>

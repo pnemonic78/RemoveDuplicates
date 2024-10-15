@@ -24,12 +24,12 @@
 
     <!-- Messages -->
     <string name="messages">Messages</string>
-    <string name="message_type_all">all</string>
-    <string name="message_type_inbox">inbox</string>
-    <string name="message_type_sent">sent</string>
-    <string name="message_type_drafts">drafts</string>
-    <string name="message_type_outbox">outbox</string>
-    <string name="message_type_failed">failed</string>
-    <string name="message_type_queued">queued</string>
+    <string name="message_type_all">vše</string>
+    <string name="message_type_inbox">doručená</string>
+    <string name="message_type_sent">odesláno</string>
+    <string name="message_type_drafts">návrhů</string>
+    <string name="message_type_outbox">odeslání</string>
+    <string name="message_type_failed">nepodařilo</string>
+    <string name="message_type_queued">ve frontě</string>
 
 </resources>

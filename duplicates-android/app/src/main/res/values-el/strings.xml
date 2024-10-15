@@ -24,12 +24,12 @@
 
     <!-- Messages -->
     <string name="messages">Messages</string>
-    <string name="message_type_all">all</string>
-    <string name="message_type_inbox">inbox</string>
-    <string name="message_type_sent">sent</string>
-    <string name="message_type_drafts">drafts</string>
-    <string name="message_type_outbox">outbox</string>
-    <string name="message_type_failed">failed</string>
-    <string name="message_type_queued">queued</string>
+    <string name="message_type_all">όλοι</string>
+    <string name="message_type_inbox">εισερχομένων</string>
+    <string name="message_type_sent">έστειλε</string>
+    <string name="message_type_drafts">προσχέδια</string>
+    <string name="message_type_outbox">εξερχόμενα</string>
+    <string name="message_type_failed">αποτυχημένος</string>
+    <string name="message_type_queued">στην ουρά</string>
 
 </resources>

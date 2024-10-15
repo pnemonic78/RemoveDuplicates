@@ -24,12 +24,12 @@
 
     <!-- Messages -->
     <string name="messages">Messages</string>
-    <string name="message_type_all">all</string>
-    <string name="message_type_inbox">inbox</string>
-    <string name="message_type_sent">sent</string>
-    <string name="message_type_drafts">drafts</string>
-    <string name="message_type_outbox">outbox</string>
-    <string name="message_type_failed">failed</string>
-    <string name="message_type_queued">queued</string>
+    <string name="message_type_all">הכל</string>
+    <string name="message_type_inbox">נכנס</string>
+    <string name="message_type_sent">נשלח</string>
+    <string name="message_type_drafts">טיוטות</string>
+    <string name="message_type_outbox">יוצא</string>
+    <string name="message_type_failed">נכשל</string>
+    <string name="message_type_queued">בתור</string>
 
 </resources>

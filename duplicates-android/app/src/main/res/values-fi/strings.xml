@@ -24,12 +24,13 @@
 
     <!-- Messages -->
     <string name="messages">Messages</string>
-    <string name="message_type_all">all</string>
-    <string name="message_type_inbox">inbox</string>
-    <string name="message_type_sent">sent</string>
-    <string name="message_type_drafts">drafts</string>
-    <string name="message_type_outbox">outbox</string>
-    <string name="message_type_failed">failed</string>
-    <string name="message_type_queued">queued</string>
+    <string name="message_type_all">kaikki</string>
+    <string name="message_type_inbox">postilaatikkoon</string>
+    <string name="message_type_sent">lähetetty</string>
+    <string name="message_type_sent">lähetetty</string>
+    <string name="message_type_drafts">luonnoksia</string>
+    <string name="message_type_outbox">lähtevät</string>
+    <string name="message_type_failed">epäonnistui</string>
+    <string name="message_type_queued">jonossa</string>
 
 </resources>

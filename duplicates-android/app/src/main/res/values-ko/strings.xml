@@ -24,12 +24,12 @@
 
     <!-- Messages -->
     <string name="messages">Messages</string>
-    <string name="message_type_all">all</string>
-    <string name="message_type_inbox">inbox</string>
-    <string name="message_type_sent">sent</string>
-    <string name="message_type_drafts">drafts</string>
-    <string name="message_type_outbox">outbox</string>
-    <string name="message_type_failed">failed</string>
-    <string name="message_type_queued">queued</string>
+    <string name="message_type_all">전체</string>
+    <string name="message_type_inbox">받은 편지함</string>
+    <string name="message_type_sent">보낸 편지함</string>
+    <string name="message_type_drafts">임시 보관함</string>
+    <string name="message_type_outbox">보낸 편지함</string>
+    <string name="message_type_failed">실패</string>
+    <string name="message_type_queued">대기 중</string>
 
 </resources>

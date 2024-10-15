@@ -24,12 +24,13 @@
 
     <!-- Messages -->
     <string name="messages">Messages</string>
-    <string name="message_type_all">all</string>
-    <string name="message_type_inbox">inbox</string>
-    <string name="message_type_sent">sent</string>
-    <string name="message_type_drafts">drafts</string>
-    <string name="message_type_outbox">outbox</string>
-    <string name="message_type_failed">failed</string>
-    <string name="message_type_queued">queued</string>
+    <string name="message_type_all">все</string>
+    <string name="message_type_inbox">входящие</string>
+    <string name="message_type_sent">отправлено</string>
+    <string name="message_type_drafts">черновики</string>
+    <string name="message_type_outbox">исходящие</string>
+    <string name="message_type_outbox">исходящие</string>
+    <string name="message_type_failed">не удалось</string>
+    <string name="message_type_queued">в очереди</string>
 
 </resources>

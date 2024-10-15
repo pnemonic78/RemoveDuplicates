@@ -24,12 +24,12 @@
 
     <!-- Messages -->
     <string name="messages">Messages</string>
-    <string name="message_type_all">all</string>
-    <string name="message_type_inbox">inbox</string>
-    <string name="message_type_sent">sent</string>
-    <string name="message_type_drafts">drafts</string>
-    <string name="message_type_outbox">outbox</string>
-    <string name="message_type_failed">failed</string>
-    <string name="message_type_queued">queued</string>
+    <string name="message_type_all">tất cả</string>
+    <string name="message_type_inbox">hộp thư đến</string>
+    <string name="message_type_sent">đã gửi</string>
+    <string name="message_type_drafts">bản nháp</string>
+    <string name="message_type_outbox">hộp thư đi</string>
+    <string name="message_type_failed">thất bại</string>
+    <string name="message_type_queued">đã xếp hàng</string>
 
 </resources>

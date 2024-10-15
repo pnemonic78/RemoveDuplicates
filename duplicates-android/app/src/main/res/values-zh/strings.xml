@@ -24,12 +24,12 @@
 
     <!-- Messages -->
     <string name="messages">Messages</string>
-    <string name="message_type_all">all</string>
-    <string name="message_type_inbox">inbox</string>
-    <string name="message_type_sent">sent</string>
-    <string name="message_type_drafts">drafts</string>
-    <string name="message_type_outbox">outbox</string>
-    <string name="message_type_failed">failed</string>
-    <string name="message_type_queued">queued</string>
+    <string name="message_type_all">全部</string>
+    <string name="message_type_inbox">收件箱</string>
+    <string name="message_type_sent">已发送</string>
+    <string name="message_type_drafts">草稿</string>
+    <string name="message_type_outbox">发件箱</string>
+    <string name="message_type_failed">失败</string>
+    <string name="message_type_queued">排队</string>
 
 </resources>
