@@ -29,7 +29,6 @@
     <string name="message_type_sent">отправлено</string>
     <string name="message_type_drafts">черновики</string>
     <string name="message_type_outbox">исходящие</string>
-    <string name="message_type_outbox">исходящие</string>
     <string name="message_type_failed">не удалось</string>
     <string name="message_type_queued">в очереди</string>
 

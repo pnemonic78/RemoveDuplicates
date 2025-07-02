@@ -34,8 +34,8 @@ class AlarmProvider(context: Context) : WrapperProvider<AlarmItem>(context) {
             try {
                 val packageInfo =
                     pm.getPackageInfo(SamsungAlarmProvider.PACKAGE, PackageManager.GET_PROVIDERS)
-                hasSamsungProvider =
-                    (packageInfo.providers != null) && packageInfo.providers.isNotEmpty()
+                val packageProviders = packageInfo.providers
+                hasSamsungProvider = (packageProviders != null) && packageProviders.isNotEmpty()
             } catch (e: PackageManager.NameNotFoundException) {
                 hasSamsungProvider = false
             }

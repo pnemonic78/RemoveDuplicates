@@ -122,7 +122,7 @@ class ContactViewHolder(
         if (data.isEmpty()) {
             return null
         }
-        val unique: MutableSet<String> = HashSet(data.size)
+        val unique = mutableSetOf<String>()
         for (datum in data) {
             unique.add(datum.toString())
         }

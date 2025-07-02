@@ -26,6 +26,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.github.android.removeduplicates.R
 import com.github.android.removeduplicates.databinding.ActivityMainBinding
 import com.github.duplicates.alarm.AlarmDeleteTask
@@ -92,6 +95,23 @@ class MainActivity<I : DuplicateItem, L : DuplicateTaskListener<I>, T : Duplicat
         }
         binding.spinnerAction.setOnClickListener { searchClicked() }
         searchStopped(false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout()
+            )
+            v.updatePadding(
+                left = bars.left,
+                top = bars.top,
+                right = bars.right,
+                bottom = bars.bottom,
+            )
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     override fun onDestroy() {

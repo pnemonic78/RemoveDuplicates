@@ -18,7 +18,6 @@ package com.github.duplicates.contact
 import android.telephony.PhoneNumberUtils
 import android.text.TextUtils
 import com.github.duplicates.DuplicateComparator
-import java.util.*
 
 /**
  * Compare duplicate contacts.
@@ -84,13 +83,13 @@ class ContactComparator : DuplicateComparator<ContactItem>() {
         if (rhs.isEmpty()) {
             return LHS
         }
-        val set1 = HashSet<String>(lhs.size)
+        val set1 = mutableSetOf<String>()
         for (datum in lhs) {
-            set1.add(datum.toString().toLowerCase(locale))
+            set1.add(datum.toString().lowercase(locale))
         }
-        val set2 = HashSet<String>(rhs.size)
+        val set2 = mutableSetOf<String>()
         for (datum in rhs) {
-            set2.add(datum.toString().toLowerCase(locale))
+            set2.add(datum.toString().lowercase(locale))
         }
         return compare(set1, set2)
     }

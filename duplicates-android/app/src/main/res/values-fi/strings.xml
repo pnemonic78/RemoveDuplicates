@@ -27,7 +27,6 @@
     <string name="message_type_all">kaikki</string>
     <string name="message_type_inbox">postilaatikkoon</string>
     <string name="message_type_sent">lähetetty</string>
-    <string name="message_type_sent">lähetetty</string>
     <string name="message_type_drafts">luonnoksia</string>
     <string name="message_type_outbox">lähtevät</string>
     <string name="message_type_failed">epäonnistui</string>

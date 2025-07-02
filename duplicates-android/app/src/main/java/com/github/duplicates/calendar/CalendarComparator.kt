@@ -71,7 +71,7 @@ class CalendarComparator : DuplicateComparator<CalendarItem>() {
         result[DTSTART] = isDifferent(lhs.start, rhs.start)
         result[DTEND] = isDifferent(lhs.endEffective, rhs.endEffective)
         result[LOCATION] = isDifferent(lhs.location, rhs.location)
-        result[TITLE] = isDifferent(lhs.title.toLowerCase(locale), rhs.title.toLowerCase(locale))
+        result[TITLE] = isDifferent(lhs.title.lowercase(locale), rhs.title.lowercase(locale))
 
         return result
     }

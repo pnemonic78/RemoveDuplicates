@@ -131,7 +131,7 @@ dependencies {
     ksp("androidx.room:room-compiler:${BuildVersions.room}")
 
     // Logging
-    implementation("com.google.firebase:firebase-crashlytics:19.2.0")
+    implementation("com.google.firebase:firebase-crashlytics:19.4.4")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junit}")
